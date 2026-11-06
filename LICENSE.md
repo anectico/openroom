@@ -6,7 +6,7 @@ FSL-1.1-MIT
 
 ## Notice
 
-Copyright 2026 Anectico
+Copyright 2026 Anectico Limited
 
 ## Terms and Conditions
 
