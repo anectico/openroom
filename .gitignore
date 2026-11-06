@@ -1,0 +1,12 @@
+PLAN.md
+FEATURES.md
+AGENTS.md
+CLAUDE.md
+node_modules/
+.svelte-kit/
+build/
+data/
+.env
+.env.*
+!.env.example
+.DS_Store
