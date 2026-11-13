@@ -10,9 +10,9 @@ Built by Anectico. Fair-source under [FSL-1.1-MIT](LICENSE.md).
 
 [Get started](#run-locally) · [Deploy](#deploy-on-your-server) · [Product guide](docs/using-openroom.md) · [API, MCP & CLI](docs/cli.md) · [Contribute](#contributing)
 
-![Investor room with a personal welcome and Start here documents](docs/images/investor-room.png)
+![Branded investor room with an Aster Robotics logo, personal welcome and Start here documents](docs/images/investor-room.png)
 
-_A fictional Series A room with 12 example documents, a personal investor welcome, one document marked reviewed, a team reply and a file request._
+_A fictional Aster Robotics room with its own logo and brand colour, a welcome for Maya’s team, 12 example documents and a personal review checklist._
 
 ## What you can do
 

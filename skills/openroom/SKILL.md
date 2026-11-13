@@ -88,7 +88,7 @@ PDF Find and paginated thumbnails use local document text; scanned PDFs need OCR
 These investor controls introduce no additional owner operations. See the product and privacy guides.
 
 Investor follow-through: home combines changed documents, unread replies and requests needing action.
-The welcome begins with an excerpt and Read full welcome, with explicit choices remembered within a tab. Requests
+Short welcomes open on arrival; messages over 600 plain-text characters begin with an excerpt and Read welcome. Explicit choices are remembered within a tab, independently of compact search/folder disclosure. Requests
 sorts action items by due date and puts submitted/closed items in history. PDF Pages uses a bounded
 dialog; Find retains selected results and sticky matching-page navigation. Conversation page references
 open the current authorized PDF page; reply drafts are tab-local and clear after success or sign-out.
@@ -119,3 +119,5 @@ For UI regression checks, include the maximum 5,000-character document question,
 When validating investor and owner recovery, check question drafts against the original file/page, failed-access submission feedback, offline authentication retries, and same-version versus replacement NDA messages. Sharing-link inputs lock while saving; destructive confirmations cannot be dismissed while their operation is pending. Verify completion through the operation result. Include native video keyboard controls, narrow-phone seek width and PDF tools returning focus to Reader options.
 
 For investor-home layout checks, verify the initial document count and Start review action without an empty progress bar, then Mark reviewed, Continue review, completion and Undo. Progress stays compact beside Start here; remaining cards fill their row. Questions and unread replies belong beside search, documents span the content width, and permitted ZIP downloads remain below the list. Check zero, one, three and six pins at 320, 390, 768 and desktop widths.
+
+Investor branding uses a prominent header logo and a brand-accented welcome panel. Use existing update_branding and link welcome operations to configure examples; do not simulate branding only in screenshots. Verify logo/colour inheritance, bright colours, first and return visits, new welcome revisions, safe Markdown and cross-link isolation. The appearance sample shares the header and welcome components.

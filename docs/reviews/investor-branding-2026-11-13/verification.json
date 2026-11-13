@@ -1,0 +1,139 @@
+{
+	"date": "2026-11-13",
+	"runtime": "Node 24.21.0",
+	"browser": "Chromium",
+	"storage": "real SQLite and local disk",
+	"productionBuild": "passed",
+	"lint": "passed; zero Svelte errors or warnings",
+	"checks": [
+		"Configured workspace logo, accent and personal welcome render on first arrival",
+		"Desktop, tablet and 320/390 px phone layouts fit without overflow",
+		"Explicit collapse survives reload",
+		"Review save preserves welcome choice and returns focus to progress",
+		"Welcome supports Enter and Space keyboard toggling",
+		"Search uses compact welcome without overwriting the full-page preference",
+		"Folder navigation keeps document browsing compact and restores welcome choice",
+		"Brand identity persists on questions and return navigation",
+		"Branded header and actual PDF reader remain usable on desktop and phone",
+		"A new welcome revision opens independently of an old collapsed choice",
+		"Long welcomes start with a bounded excerpt and remain expandable",
+		"Expanded Markdown escapes raw HTML, rejects executable links and protects safe external links",
+		"Separate links receive their own welcome; links without an override receive the room introduction",
+		"Unauthenticated room requests do not expose the personal welcome",
+		"Room colour overrides workspace colour and reset restores inheritance",
+		"Bright branding keeps dark foreground text and protected link colour",
+		"Wide and tall room logos stay within header bounds on small phones",
+		"Missing logo and colour use a clear default identity without overflow",
+		"Rooms without introduction text show useful fallback content",
+		"White-label setting still hides the product attribution",
+		"Welcome remains usable when browser storage is unavailable",
+		"Owner appearance previews share the brand header and open introduction at desktop and phone sizes",
+		"No browser page errors during the tested flows",
+		"Demo branding changes flow through audited owner operations"
+	],
+	"browserErrors": [],
+	"screenshots": [
+		{
+			"path": "screens/bright-accent.png",
+			"pixelWidth": 1440,
+			"pixelHeight": 1624,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/configured-demo-desktop.png",
+			"pixelWidth": 2560,
+			"pixelHeight": 3198,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/configured-demo-phone.png",
+			"pixelWidth": 780,
+			"pixelHeight": 3898,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/default-brand-phone.png",
+			"pixelWidth": 320,
+			"pixelHeight": 2122,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/long-welcome-excerpt.png",
+			"pixelWidth": 1440,
+			"pixelHeight": 1498,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/owner-preview-desktop.png",
+			"pixelWidth": 640,
+			"pixelHeight": 711,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/owner-preview-phone.png",
+			"pixelWidth": 640,
+			"pixelHeight": 927,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/questions-branded.png",
+			"pixelWidth": 1440,
+			"pixelHeight": 1000,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/reader-desktop.png",
+			"pixelWidth": 1440,
+			"pixelHeight": 1000,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/reader-phone.png",
+			"pixelWidth": 390,
+			"pixelHeight": 900,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/readme-preview-1000.png",
+			"pixelWidth": 1000,
+			"pixelHeight": 1474,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/readme-preview-390.png",
+			"pixelWidth": 390,
+			"pixelHeight": 1055,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/return-collapsed.png",
+			"pixelWidth": 1440,
+			"pixelHeight": 1420,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/welcome-1440.png",
+			"pixelWidth": 1440,
+			"pixelHeight": 1533,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/welcome-320.png",
+			"pixelWidth": 320,
+			"pixelHeight": 2150,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/welcome-390.png",
+			"pixelWidth": 390,
+			"pixelHeight": 1973,
+			"visuallyInspected": true
+		},
+		{
+			"path": "screens/welcome-768.png",
+			"pixelWidth": 768,
+			"pixelHeight": 1668,
+			"visuallyInspected": true
+		}
+	]
+}

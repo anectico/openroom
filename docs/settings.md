@@ -24,8 +24,9 @@ In **Room settings & branding**, edit the room name and welcome Markdown alongsi
 colour. The editor shows which values come from the workspace. **Use workspace logo/colour** stages
 a reset; save to apply it. Later workspace changes flow through to rooms without overrides.
 At email entry, the welcome is available below the form through **Read the welcome**, so long introductions never push access controls down the page. Inside the room it appears as a collapsible introduction, including
-returning visits. Introductions start with a two-line excerpt and **Read full welcome**, keeping documents
-within reach. An investor’s explicit open/closed choice is remembered for that note in the same tab. Empty introductions use a brief default explanation.
+returning visits. The logo is prominent in the header and the brand colour frames the introduction.
+Messages up to 600 plain-text characters open by default; longer introductions start with a two-line
+excerpt and **Read welcome**, keeping documents within reach. An investor’s explicit open/closed choice is remembered for that note in the same tab. Empty introductions use a brief default explanation.
 
 On phones and tablets, switch between **Edit** and **Preview** while retaining your draft; the save
 bar stays available. Desktop shows both together. The preview scrolls within a bounded frame and

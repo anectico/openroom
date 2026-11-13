@@ -153,8 +153,11 @@ Preview Documents or Entry screen at desktop/phone widths, then **Save appearanc
 changes together. **Cancel changes** discards your draft. Reset either logo or colour to inherit the
 workspace setting. Investor browser icons follow the effective logo.
 
-The introduction supports Markdown and remains available inside the room after entry. Investors can
-open the full note from its two-line excerpt; their choice is remembered within the tab. The room name is the document page's heading.
+The investor header gives your logo a prominent place alongside the room identity. Your brand colour
+also accents the welcome panel, navigation and primary actions. The introduction supports Markdown:
+short messages open on arrival, while messages over 600 plain-text characters start with a two-line
+excerpt and **Read welcome**. Investors can collapse the message with **Show less**; their explicit
+choice is remembered for that version of the note in the same tab. The room name remains the page heading.
 See [workspace settings](settings.md) for inheritance, white labeling and preview details.
 
 ### A personal welcome for an investor or audience
@@ -235,8 +238,9 @@ PDF contains text. Scanned PDFs without text need OCR outside OpenRoom before th
 ## Keep your review moving
 
 Your home brings changed documents, unread replies and requests needing action together. The welcome
-note collapses after you have seen it in this tab; an explicit open/closed choice is remembered until
-the note changes. Continue reading stays near the top.
+note opens on arrival when it is short; longer introductions begin with an excerpt. An explicit
+open/closed choice is remembered until the note changes. Search and folder browsing use a separate
+compact disclosure without overwriting that choice. Continue reading stays near the top.
 
 Use **Mark reviewed** on a Start here document when you decide you have finished reviewing it.
 The separate **Undo** action beside **Reviewed** reverses the choice. Before you begin, a compact document count and **Start review** point to the first item. Once you

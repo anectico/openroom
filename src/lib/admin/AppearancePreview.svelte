@@ -1,10 +1,11 @@
 <script lang="ts">
- import { ArrowRight, Check, FolderClosed, LockKeyhole, MessageSquare, Search } from '@lucide/svelte';
+ import { ArrowRight, Check, LockKeyhole, MessageSquare, Search } from '@lucide/svelte';
  import { type Brand, brandStyle } from '#lib/brand.ts';
  import { Button } from '#lib/components/ui/button/index.js';
  import { Input } from '#lib/components/ui/input/index.js';
  import * as Tabs from '#lib/components/ui/tabs/index.js';
  import { renderMarkdown } from '#lib/markdown.ts';
+ import BrandIdentity from '#lib/viewer/BrandIdentity.svelte';
  import DocumentListItem from '#lib/viewer/DocumentListItem.svelte';
  import PinnedDocument from '#lib/viewer/PinnedDocument.svelte';
  import RoomNavigation from '#lib/viewer/RoomNavigation.svelte';
@@ -31,7 +32,7 @@
   <section bind:clientWidth={availableWidth} class="max-h-[680px] w-full min-w-0 overflow-auto rounded-xl border bg-background shadow-sm" aria-label="Scrollable appearance sample">
    <div class="investor-brand @container/preview" data-preview-width={renderWidth} style={`${brandStyle(brand.accentColor)}; width: ${renderWidth}px; zoom: ${scale}`}>
     <Tabs.Content value="documents" class="m-0">
-     <header class="border-b bg-card"><div class="flex items-center gap-3 p-4">{#if brand.logoUrl}<img src={brand.logoUrl} alt="Logo preview" class="h-9 max-w-28 object-contain" />{:else}<span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/8 text-primary"><FolderClosed class="size-5" /></span>{/if}<span class="min-w-0 break-words text-sm font-semibold">{name || 'Your data room'}</span></div><RoomNavigation active={section} onselect={(value) => section = value} /></header>
+     <header class="border-b bg-card"><div class="flex items-center gap-3 p-4"><BrandIdentity name={name || 'Your data room'} logoUrl={brand.logoUrl} /></div><RoomNavigation active={section} onselect={(value) => section = value} /></header>
      <div class="p-4 @xl/preview:p-8">
       {#if section === 'documents'}
        <RoomWelcome name={name || 'Your data room'} {html}>{#snippet tools()}<div class="mt-4 mb-3 flex flex-wrap items-center gap-2"><div class="relative min-w-0 basis-full @sm/preview:flex-1 @sm/preview:basis-auto"><Search class="pointer-events-none absolute top-3.5 left-3 size-4 text-muted-foreground" /><Input readonly tabindex={-1} aria-label="Preview document search" placeholder="Find a document…" class="min-h-11 pl-9" /></div><Button variant="outline" size="sm" class="min-h-11" onclick={() => section = 'questions'}><MessageSquare data-icon="inline-start" />My questions</Button></div>{/snippet}</RoomWelcome>

@@ -129,7 +129,7 @@ Pages use the existing authorized file endpoint and require no owner operation o
 
 ## Investor follow-through checks
 
-With a real disposable investor session, check the combined home action summary, collapsed returning
+With a real disposable investor session, check the combined home action summary, remembered returning
 welcome, Requests navigation and due-date ordering. Submitted/closed requests belong in history;
 Uploaded confirms receipt only. On a phone, PDF Pages must keep close/pagination reachable, and Find
 must retain its matching-page navigator after selecting a result. Conversation page links should open
@@ -156,7 +156,7 @@ a screenshot manifest and inspect every retained image; automated overflow check
 For appearance verification, check Edit/Preview draft retention and saving from Preview on a phone,
 then inspect both columns on desktop. Check inherited workspace colour in the sample and real room.
 Personal welcome editing fills the phone screen; its preview uses the same safe Markdown renderer.
-Investor welcomes initially show an excerpt and Read full welcome. Test explicit expansion/collapse
+Investor welcomes up to 600 plain-text characters initially open; longer messages show an excerpt and Read welcome. Test explicit expansion/collapse
 through reload and review saves. Confirm visible Mark reviewed/Undo labels and file format/size/Section
 metadata. Use real investor sessions for reviews, unread replies and request counts.
 
@@ -165,3 +165,5 @@ When checking the owner UI, verify full document titles, protection summaries on
 For reliability checks, draft a page-specific question, move to another page, and confirm its original context before submitting. Navigate to another document and check for an empty draft. Exercise an access change while sending; confirm the draft survives and no false Sent message appears. Test offline authentication retries, unchanged and replacement NDA versions, native video keyboard controls, PDF tool return focus, and pending sharing/destructive actions. Do not treat a disabled pending confirmation as a cancelled operation; inspect its actual result.
 
 For investor-home layout checks, verify the initial document count and Start review action without an empty progress bar, then Mark reviewed, Continue review, completion and Undo. Progress stays compact beside Start here; remaining cards fill their row. Questions and unread replies belong beside search, documents span the content width, and permitted ZIP downloads remain below the list. Check zero, one, three and six pins at 320, 390, 768 and desktop widths.
+
+For branded investor-home checks, configure a real logo, a non-default workspace colour, a room introduction and a separate link-specific welcome through existing operations. Check room override/reset, bright-colour contrast, tall/wide logos, blank introductions and white labeling. Verify that a new note revision resets disclosure, that search/folders preserve the home preference, and that another investor link never receives the first link’s welcome. Inspect desktop and phone screenshots of both the real room and owner sample.

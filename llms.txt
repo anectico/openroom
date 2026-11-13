@@ -31,7 +31,7 @@ The installed server exposes its current REST description at /api/v1/openapi.jso
 Room appearance: `get_branding` includes workspace defaults and room overrides. `update_branding`
 saves optional room name, welcome Markdown, logo and colour together; null logo/colour restores
 inheritance. Workspace branding/white labeling require owner access. Investor favicons follow logos.
-Welcome text appears at entry and inside the room. See the settings guide for previews and draft saves.
+Welcome text appears at entry and in a branded investor-home panel. A prominent header logo and shared appearance sample use the effective workspace/room branding. Short welcomes open by default; longer notes start with an excerpt. Disclosure choices are remembered per revision and kept separate from compact search/folder state. See the settings guide for previews and draft saves.
 
 Investor personalization: `create_link`/`update_link` accept optional `welcomeMarkdown`, visible only
 after access checks to everyone using the link. Null or blank restores the room introduction;

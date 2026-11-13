@@ -23,3 +23,5 @@ The original capture is [before.png](screens/before.png). Compare [initial deskt
 ## Scope
 
 These are presentation changes. No database migration, permission rule or review-persistence behavior changed. Mobile checks use Chromium viewports rather than physical devices. This is not a release certification or a complete storage/access-control audit.
+
+The live README image was subsequently replaced by the [configured branding capture](../investor-branding-2026-11-13/README.md). The screenshots in this review directory preserve the earlier layout verification.
