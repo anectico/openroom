@@ -1,11 +1,11 @@
-FROM node:24.21.0-trixie-slim AS build
+FROM node:26.13.0-trixie-slim AS build
 WORKDIR /app
 COPY package.json package-lock.json .npmrc ./
 RUN npm ci
 COPY . .
 RUN npm run build && npm prune --omit=dev
 
-FROM node:24.21.0-trixie-slim AS litestream
+FROM node:26.13.0-trixie-slim AS litestream
 ARG TARGETARCH
 ARG LITESTREAM_VERSION=0.5.17
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl && rm -rf /var/lib/apt/lists/*
@@ -18,7 +18,7 @@ RUN set -eu; \
 	cd /tmp && grep " $file\$" checksums.txt | sha256sum -c -; \
 	tar -xzf "/tmp/$file" -C /usr/local/bin litestream
 
-FROM node:24.21.0-trixie-slim
+FROM node:26.13.0-trixie-slim
 RUN apt-get update && apt-get install -y --no-install-recommends tini ca-certificates && rm -rf /var/lib/apt/lists/*
 ARG OPENROOM_VERSION=dev
 ENV NODE_ENV=production DATA_DIR=/data PORT=3000 OPENROOM_VERSION=${OPENROOM_VERSION}
