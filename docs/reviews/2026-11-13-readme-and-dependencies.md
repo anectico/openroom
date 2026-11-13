@@ -6,13 +6,13 @@ The retained image is `docs/images/investor-room.png`, captured at a 1280 × 110
 
 ## Reviewed and merged
 
-| PR | Update | Focused verification |
-| --- | --- | --- |
-| [#2](https://github.com/anectico/openroom/pull/2) | svelte-sonner 1.2.3 | Real profile operation and visible success toast |
-| [#3](https://github.com/anectico/openroom/pull/3) | @lucide/svelte 1.71.0 | Build, type checking and rendered icons in screenshots |
-| [#4](https://github.com/anectico/openroom/pull/4) | S3 request presigner 3.1166.0 | Four old/new signing comparisons: GET and PUT, standard and custom path-style endpoints; signed URLs matched |
-| [#5](https://github.com/anectico/openroom/pull/5) | better-auth 1.7.20 | Member login, API key creation and immediate rejection after revocation, sign-out and subsequent owner-operation rejection |
-| [#6](https://github.com/anectico/openroom/pull/6) | markdown-it 15.0.3 | Twelve formatting and unsafe-input fixtures produced identical output to the previous renderer; real welcome rendered correctly |
+| PR                                                | Update                        | Focused verification                                                                                                            |
+| ------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| [#2](https://github.com/anectico/openroom/pull/2) | svelte-sonner 1.2.3           | Real profile operation and visible success toast                                                                                |
+| [#3](https://github.com/anectico/openroom/pull/3) | @lucide/svelte 1.71.0         | Build, type checking and rendered icons in screenshots                                                                          |
+| [#4](https://github.com/anectico/openroom/pull/4) | S3 request presigner 3.1166.0 | Four old/new signing comparisons: GET and PUT, standard and custom path-style endpoints; signed URLs matched                    |
+| [#5](https://github.com/anectico/openroom/pull/5) | better-auth 1.7.20            | Member login, API key creation and immediate rejection after revocation, sign-out and subsequent owner-operation rejection      |
+| [#6](https://github.com/anectico/openroom/pull/6) | markdown-it 15.0.3            | Twelve formatting and unsafe-input fixtures produced identical output to the previous renderer; real welcome rendered correctly |
 
 All five updates were installed and tested together before merging. `npm run build` and `npm run lint` passed, with zero Svelte errors or warnings and the no-comments check passing. Browser checks reported no page errors. Each PR's GitHub check and image jobs passed before merging. After merging, local package and lock files matched the tested combined files byte for byte.
 
