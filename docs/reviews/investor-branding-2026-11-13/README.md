@@ -55,3 +55,9 @@ The README image is a complete 1280 px-wide application page captured at device 
 ## Scope and limits
 
 No database schema, permission rule or owner operation changed. Browser checks used Chromium viewports, not physical phones or Safari. This is focused regression evidence for the changed surfaces, not a complete release, backup/restore or access-control audit. The pre-existing local server was left untouched; the configured screenshot fixture ran separately and was removed after verification.
+
+## Approved welcome border refinement
+
+After visual review, the coloured top rule was removed from the shared welcome component. The tinted title background, personal message and other branding remain. The current README image was recaptured from a production build using a fresh real SQLite/disk fixture with the same fictional company, 12 documents and one saved review. The screenshots in this directory retain the earlier design for comparison.
+
+The updated README capture and 390 px phone welcome were inspected visually. Build and lint passed with zero Svelte errors or warnings. Focused browser checks confirmed a zero-width top rule, no phone overflow, review saving, remembered collapse after reload and Enter-key expansion, with no page errors.
