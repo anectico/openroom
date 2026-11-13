@@ -59,7 +59,7 @@
 		"@cantoo/pdf-lib": "^2.11.1",
 		"@modelcontextprotocol/server": "2.4.0",
 		"archiver": "^8.0.0",
-		"better-auth": "^1.7.18",
+		"better-auth": "^1.7.20",
 		"better-sqlite3": "^13.0.3",
 		"drizzle-orm": "^0.45.4",
 		"file-type": "^22.3.0",
