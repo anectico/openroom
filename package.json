@@ -43,7 +43,7 @@
 		"shadcn-svelte": "^1.7.1",
 		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.8",
-		"svelte-sonner": "^1.2.1",
+		"svelte-sonner": "^1.2.3",
 		"tailwind-merge": "^3.7.0",
 		"tailwind-variants": "^3.3.1",
 		"tailwindcss": "^4.3.5",
