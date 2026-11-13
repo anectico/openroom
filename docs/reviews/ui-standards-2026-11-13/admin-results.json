@@ -1,0 +1,207 @@
+{
+	"shots": [
+		"appearance-fields-390",
+		"appearance-preview-390",
+		"appearance-1440",
+		"pinned-editor-390",
+		"pinned-search-390",
+		"welcome-editor-390",
+		"welcome-preview-390",
+		"sharing-editor-390",
+		"sharing-focus-390"
+	],
+	"focus": [
+		{
+			"label": "link-allow",
+			"top": 337.703125,
+			"bottom": 403.703125,
+			"centerVisible": true,
+			"width": 310,
+			"height": 66
+		},
+		{
+			"label": "link-open",
+			"top": 469.703125,
+			"bottom": 488.09375,
+			"centerVisible": true,
+			"width": 32,
+			"height": 18.390625
+		},
+		{
+			"label": "All documents in this room",
+			"top": 539.34375,
+			"bottom": 583.34375,
+			"centerVisible": true,
+			"width": 310,
+			"height": 44
+		},
+		{
+			"label": "Choose specific documents",
+			"top": 636.34375,
+			"bottom": 680.34375,
+			"centerVisible": true,
+			"width": 224.6875,
+			"height": 44
+		},
+		{
+			"label": "Refresh groups",
+			"top": 391.34375,
+			"bottom": 435.34375,
+			"centerVisible": true,
+			"width": 124.375,
+			"height": 44
+		},
+		{
+			"label": "Personal welcome\nUsing the room introduction",
+			"top": 510.34375,
+			"bottom": 574.34375,
+			"centerVisible": true,
+			"width": 308,
+			"height": 64
+		},
+		{
+			"label": "Link protection\nWatermarked · No NDA · No downloads",
+			"top": 617.34375,
+			"bottom": 681.046875,
+			"centerVisible": true,
+			"width": 308,
+			"height": 63.703125
+		},
+		{
+			"label": "Password, expiry & blocked emails",
+			"top": 616.046875,
+			"bottom": 660.046875,
+			"centerVisible": true,
+			"width": 308,
+			"height": 44
+		},
+		{
+			"label": "Cancel",
+			"top": 749.796875,
+			"bottom": 785.796875,
+			"centerVisible": true,
+			"width": 310,
+			"height": 36
+		},
+		{
+			"label": "Create link",
+			"top": 697.796875,
+			"bottom": 741.796875,
+			"centerVisible": true,
+			"width": 310,
+			"height": 44
+		},
+		{
+			"label": "Close",
+			"top": 58.203125,
+			"bottom": 90.203125,
+			"centerVisible": true,
+			"width": 32,
+			"height": 32
+		},
+		{
+			"label": "link-label",
+			"top": 196.453125,
+			"bottom": 232.453125,
+			"centerVisible": true,
+			"width": 310,
+			"height": 36
+		},
+		{
+			"label": "link-allow",
+			"top": 337.703125,
+			"bottom": 403.703125,
+			"centerVisible": true,
+			"width": 310,
+			"height": 66
+		},
+		{
+			"label": "link-open",
+			"top": 469.703125,
+			"bottom": 488.09375,
+			"centerVisible": true,
+			"width": 32,
+			"height": 18.390625
+		},
+		{
+			"label": "All documents in this room",
+			"top": 539.34375,
+			"bottom": 583.34375,
+			"centerVisible": true,
+			"width": 310,
+			"height": 44
+		},
+		{
+			"label": "Choose specific documents",
+			"top": 636.34375,
+			"bottom": 680.34375,
+			"centerVisible": true,
+			"width": 224.6875,
+			"height": 44
+		},
+		{
+			"label": "Refresh groups",
+			"top": 391.34375,
+			"bottom": 435.34375,
+			"centerVisible": true,
+			"width": 124.375,
+			"height": 44
+		},
+		{
+			"label": "Personal welcome\nUsing the room introduction",
+			"top": 510.34375,
+			"bottom": 574.34375,
+			"centerVisible": true,
+			"width": 308,
+			"height": 64
+		},
+		{
+			"label": "Link protection\nWatermarked · No NDA · No downloads",
+			"top": 617.34375,
+			"bottom": 681.046875,
+			"centerVisible": true,
+			"width": 308,
+			"height": 63.703125
+		},
+		{
+			"label": "Password, expiry & blocked emails",
+			"top": 616.046875,
+			"bottom": 660.046875,
+			"centerVisible": true,
+			"width": 308,
+			"height": 44
+		},
+		{
+			"label": "Cancel",
+			"top": 749.796875,
+			"bottom": 785.796875,
+			"centerVisible": true,
+			"width": 310,
+			"height": 36
+		},
+		{
+			"label": "Create link",
+			"top": 697.796875,
+			"bottom": 741.796875,
+			"centerVisible": true,
+			"width": 310,
+			"height": 44
+		},
+		{
+			"label": "Close",
+			"top": 58.203125,
+			"bottom": 90.203125,
+			"centerVisible": true,
+			"width": 32,
+			"height": 32
+		},
+		{
+			"label": "link-label",
+			"top": 196.453125,
+			"bottom": 232.453125,
+			"centerVisible": true,
+			"width": 310,
+			"height": 36
+		}
+	]
+}

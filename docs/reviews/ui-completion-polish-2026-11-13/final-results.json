@@ -1,0 +1,14 @@
+{
+	"checks": [
+		"Document anchor wins over saved return scroll",
+		"Keyboard welcome preference survives reload",
+		"Own submission opens history",
+		"Explicit history collapse survives background refresh",
+		"Closed request retains own receipt",
+		"Closed request removes additional upload control",
+		"Completion fits narrow screen",
+		"Completion opens next guide document",
+		"No final browser errors"
+	],
+	"errors": []
+}

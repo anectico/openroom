@@ -1,0 +1,248 @@
+{
+	"date": "2026-11-13",
+	"screenshots": [
+		{
+			"file": "appearance-1440.png",
+			"width": 1140,
+			"height": 1038,
+			"visionInspected": true
+		},
+		{
+			"file": "appearance-fields-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "appearance-preview-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "ask-document-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "completion-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "conversation-1440.png",
+			"width": 1440,
+			"height": 1359,
+			"visionInspected": true
+		},
+		{
+			"file": "conversation-320.png",
+			"width": 320,
+			"height": 740,
+			"visionInspected": true
+		},
+		{
+			"file": "conversation-390.png",
+			"width": 390,
+			"height": 1522,
+			"visionInspected": true
+		},
+		{
+			"file": "entry-1440.png",
+			"width": 1440,
+			"height": 900,
+			"visionInspected": true
+		},
+		{
+			"file": "entry-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "entry-unfocused-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "folder-390.png",
+			"width": 390,
+			"height": 995,
+			"visionInspected": true
+		},
+		{
+			"file": "home-first-320.png",
+			"width": 320,
+			"height": 740,
+			"visionInspected": true
+		},
+		{
+			"file": "home-first-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "home-one-reviewed-390.png",
+			"width": 390,
+			"height": 1447,
+			"visionInspected": true
+		},
+		{
+			"file": "home-return-1440.png",
+			"width": 1440,
+			"height": 1296,
+			"visionInspected": true
+		},
+		{
+			"file": "home-return-320.png",
+			"width": 320,
+			"height": 1451,
+			"visionInspected": true
+		},
+		{
+			"file": "home-return-390.png",
+			"width": 390,
+			"height": 1389,
+			"visionInspected": true
+		},
+		{
+			"file": "home-return-768.png",
+			"width": 768,
+			"height": 1676,
+			"visionInspected": true
+		},
+		{
+			"file": "home-unfocused-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "pdf-search-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "pinned-editor-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "pinned-search-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "question-compose-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "question-error-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "question-unfocused-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "questions-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "questions-empty-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "reader-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "receipt-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "request-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "requests-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "search-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "search-empty-390.png",
+			"width": 390,
+			"height": 1011,
+			"visionInspected": true
+		},
+		{
+			"file": "sharing-editor-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "sharing-focus-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "thumbnails-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "welcome-editor-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		},
+		{
+			"file": "welcome-preview-390.png",
+			"width": 390,
+			"height": 844,
+			"visionInspected": true
+		}
+	],
+	"scope": "Fresh isolated Chromium review; illustrative SQLite/disk fixtures; no product source changes",
+	"checks": {
+		"investorOverflowCaptures": 26,
+		"horizontalOverflowObserved": false,
+		"sharingKeyboardStops": 24,
+		"obscuredFocusCentersObserved": false,
+		"browserErrors": []
+	},
+	"limits": "Targeted review, not an accessibility conformance certification; no native-device or screen-reader audit."
+}

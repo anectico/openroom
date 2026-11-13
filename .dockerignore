@@ -1,0 +1,16 @@
+node_modules
+build
+.svelte-kit
+data
+artifacts
+.env
+.env.*
+.git
+PLAN.md
+FEATURES.md
+AGENTS.md
+CLAUDE.md
+docs
+cli
+
+*-this-session-is-being-continued-*.txt

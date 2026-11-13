@@ -1,0 +1,19 @@
+OpenRoom UI implementation verification — 2026-11-13
+
+npm run build: PASS
+Production app built with Node 24.21.0 and adapter-node. Existing dynamic-import bundling and FORCE_COLOR notices remain.
+
+npm run lint: PASS
+Biome: 471 files checked.
+svelte-check: 0 errors, 0 warnings.
+No-comments check: 972 files.
+
+Real-app browser verification: 14 final scenarios passed.
+166 recorded assertions passed, including targeted reruns.
+79 retained app screenshots captured and visually inspected.
+0 browser page errors; no horizontal page overflow in captured states.
+Screenshot SHA-256 hashes and changed-source hashes verified.
+
+See verification.json for scope, detailed checks and limitations.
+Throwaway scripts, authentication state and the disposable database are not part of this report.
+No deployment performed.

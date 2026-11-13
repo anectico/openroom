@@ -1,0 +1,9 @@
+{
+	"border": "oklch(0.89 0.008 140)",
+	"background": "rgba(0, 0, 0, 0)",
+	"outerBackground": "rgba(0, 0, 0, 0)",
+	"width": 300,
+	"height": 36,
+	"placeholder": null,
+	"shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px"
+}

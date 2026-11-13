@@ -1,0 +1,18 @@
+{
+	"checks": [
+		"Own unverified session receives prior review version",
+		"Other unverified session has no prior review version",
+		"Verified identity shares prior review explanation",
+		"Other verified investor has no prior version",
+		"Preview receives no personal review metadata",
+		"Old version write rejected",
+		"Hidden file has no review metadata",
+		"Hidden reader refused",
+		"Removed pin has no personal review explanation",
+		"Receipt return does not expose other session submissions",
+		"Closed empty request cannot claim receipt",
+		"Missing session cannot read version hints",
+		"Current version restoration restores own reviewed state",
+		"SQLite integrity preserved"
+	]
+}

@@ -1,0 +1,913 @@
+[
+	{
+		"name": "home",
+		"controls": [
+			{
+				"id": "",
+				"label": "Search file titles",
+				"border": "oklch(0.89 0.008 140)",
+				"borderRatio": 1.302162299480202,
+				"bgRatio": 1,
+				"height": 44
+			}
+		],
+		"text": [
+			{
+				"text": "Aurora · Investor room",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Sign out",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Documents",
+				"size": "12px",
+				"color": "rgb(40, 99, 68)",
+				"ratio": 7.0983587590245705,
+				"disabled": false
+			},
+			{
+				"text": "Questions",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "PREPARED FOR YOUR REVIEW",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "1 unread reply",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 15.505863861297794,
+				"disabled": false
+			},
+			{
+				"text": "1 request",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 15.505863861297794,
+				"disabled": false
+			},
+			{
+				"text": "Welcome, Alex",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Start with our investor overview, then review the product strategy and financial outl",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Ask us about any document or page.",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Jump to all documents",
+				"size": "14px",
+				"color": "rgb(40, 99, 68)",
+				"ratio": 6.663180770426995,
+				"disabled": false
+			},
+			{
+				"text": "1 of 6 reviewed",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Next to review",
+				"size": "14px",
+				"color": "rgb(255, 255, 255)",
+				"ratio": 7.0983587590245705,
+				"disabled": false
+			},
+			{
+				"text": "2",
+				"size": "14px",
+				"color": "rgb(40, 99, 68)",
+				"ratio": 6.177656342597671,
+				"disabled": false
+			},
+			{
+				"text": "Product strategy",
+				"size": "16px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "PDF · 10 KB",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Review",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "3",
+				"size": "14px",
+				"color": "rgb(40, 99, 68)",
+				"ratio": 6.177656342597671,
+				"disabled": false
+			},
+			{
+				"text": "Financial outlook",
+				"size": "16px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "PDF · 10 KB",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Review",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "4",
+				"size": "14px",
+				"color": "rgb(40, 99, 68)",
+				"ratio": 6.177656342597671,
+				"disabled": false
+			},
+			{
+				"text": "Market opportunity",
+				"size": "16px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "PDF · 10 KB",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Review",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Show all 5 remaining documents",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 15.505863861297794,
+				"disabled": false
+			},
+			{
+				"text": "8 documents",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Company overview",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "3 items",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Financials",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "3 items",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Legal & governance",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "2 items",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "My questions",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Private conversations with the team",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Download documents",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "A zip of the files shared with you",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Shared privately with you",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Powered by OpenRoom",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "OpenRoom",
+				"size": "12px",
+				"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+				"ratio": 15.505863861297794,
+				"disabled": false
+			}
+		]
+	},
+	{
+		"name": "question-form",
+		"controls": [
+			{
+				"id": "team-question",
+				"label": null,
+				"border": "oklch(0.89 0.008 140)",
+				"borderRatio": 1.3872076239040019,
+				"bgRatio": 1,
+				"height": 138
+			}
+		],
+		"text": [
+			{
+				"text": "Aurora · Investor room",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Sign out",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Documents",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Questions",
+				"size": "12px",
+				"color": "rgb(40, 99, 68)",
+				"ratio": 7.0983587590245705,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "Private conversations with the team.",
+				"size": "14px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Ask the team",
+				"size": "14px",
+				"color": "rgb(255, 255, 255)",
+				"ratio": 7.0983587590245705,
+				"disabled": false
+			},
+			{
+				"text": "Your email was not verified. Replies are available in this session only and won’t be ",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 14.376001722082028,
+				"disabled": false
+			},
+			{
+				"text": "1 unread",
+				"size": "12px",
+				"color": "rgb(255, 255, 255)",
+				"ratio": 7.0983587590245705,
+				"disabled": false
+			},
+			{
+				"text": "Replied",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "11/13/2026",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Can you explain the assumptions behind the revenue forecast?",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "About the room · 5 replies",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Shared privately with you",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Powered by OpenRoom",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "OpenRoom",
+				"size": "12px",
+				"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+				"ratio": 15.505863861297794,
+				"disabled": false
+			},
+			{
+				"text": "About",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 19.79814571052481,
+				"disabled": false
+			},
+			{
+				"text": "The room in general",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 19.79814571052481,
+				"disabled": false
+			},
+			{
+				"text": "Your question",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 19.79814571052481,
+				"disabled": false
+			},
+			{
+				"text": "Cancel",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 18.584383836723458,
+				"disabled": false
+			},
+			{
+				"text": "Send question",
+				"size": "14px",
+				"color": "oklch(0.995 0 0)",
+				"ratio": 7.46961973637615,
+				"disabled": true
+			},
+			{
+				"text": "Close",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 19.79814571052481,
+				"disabled": false
+			}
+		]
+	},
+	{
+		"name": "question-error",
+		"controls": [
+			{
+				"id": "team-question",
+				"label": null,
+				"border": "oklch(0.89 0.008 140)",
+				"borderRatio": 1.3872076239040019,
+				"bgRatio": 1,
+				"height": 138
+			}
+		],
+		"text": [
+			{
+				"text": "Aurora · Investor room",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Sign out",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Documents",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Questions",
+				"size": "12px",
+				"color": "rgb(40, 99, 68)",
+				"ratio": 7.0983587590245705,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "Private conversations with the team.",
+				"size": "14px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Ask the team",
+				"size": "14px",
+				"color": "rgb(255, 255, 255)",
+				"ratio": 7.0983587590245705,
+				"disabled": false
+			},
+			{
+				"text": "Your email was not verified. Replies are available in this session only and won’t be ",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 14.376001722082028,
+				"disabled": false
+			},
+			{
+				"text": "1 unread",
+				"size": "12px",
+				"color": "rgb(255, 255, 255)",
+				"ratio": 7.0983587590245705,
+				"disabled": false
+			},
+			{
+				"text": "Replied",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "11/13/2026",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Can you explain the assumptions behind the revenue forecast?",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "About the room · 5 replies",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Shared privately with you",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Powered by OpenRoom",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "OpenRoom",
+				"size": "12px",
+				"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+				"ratio": 15.505863861297794,
+				"disabled": false
+			},
+			{
+				"text": "About",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 19.79814571052481,
+				"disabled": false
+			},
+			{
+				"text": "The room in general",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 19.79814571052481,
+				"disabled": false
+			},
+			{
+				"text": "Your question",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 19.79814571052481,
+				"disabled": false
+			},
+			{
+				"text": "Connection interrupted. Your draft is still here. Try again.",
+				"size": "14px",
+				"color": "oklch(0.577 0.245 27.325)",
+				"ratio": 4.7698900124065196,
+				"disabled": false
+			},
+			{
+				"text": "Cancel",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 18.584383836723458,
+				"disabled": false
+			},
+			{
+				"text": "Send question",
+				"size": "14px",
+				"color": "oklch(0.995 0 0)",
+				"ratio": 7.46961973637615,
+				"disabled": false
+			},
+			{
+				"text": "Close",
+				"size": "14px",
+				"color": "oklch(0.145 0 0)",
+				"ratio": 19.79814571052481,
+				"disabled": false
+			}
+		]
+	},
+	{
+		"name": "request-status",
+		"controls": [],
+		"text": [
+			{
+				"text": "Aurora · Investor room",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Sign out",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Documents",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Questions",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "Files requested by the team. Your submissions stay private.",
+				"size": "14px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Action needed",
+				"size": "12px",
+				"color": "oklch(0.43 0.09 65)",
+				"ratio": 7.349899280341563,
+				"disabled": false
+			},
+			{
+				"text": "Due tomorrow",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Signed indication of interest",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Share your material privately with the team.",
+				"size": "14px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Shared privately with you",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Powered by OpenRoom",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "OpenRoom",
+				"size": "12px",
+				"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+				"ratio": 15.505863861297794,
+				"disabled": false
+			}
+		]
+	},
+	{
+		"name": "request-status-expanded",
+		"controls": [],
+		"text": [
+			{
+				"text": "Aurora · Investor room",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Sign out",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Documents",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Questions",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "1",
+				"size": "12px",
+				"color": "oklch(0.205 0 0)",
+				"ratio": 16.44407502596064,
+				"disabled": false
+			},
+			{
+				"text": "Files requested by the team. Your submissions stay private.",
+				"size": "14px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Action needed",
+				"size": "12px",
+				"color": "oklch(0.43 0.09 65)",
+				"ratio": 7.349899280341563,
+				"disabled": false
+			},
+			{
+				"text": "Due tomorrow",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Signed indication of interest",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Share your material privately with the team.",
+				"size": "14px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Uploaded confirms receipt, not review or approval. Open requests can accept additiona",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Uploaded",
+				"size": "12px",
+				"color": "oklch(0.37 0.075 155)",
+				"ratio": 8.82529047891348,
+				"disabled": false
+			},
+			{
+				"text": "Due tomorrow",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Committee questions",
+				"size": "14px",
+				"color": "oklch(0.235 0.018 150)",
+				"ratio": 16.518564983947208,
+				"disabled": false
+			},
+			{
+				"text": "Share your material privately with the team.",
+				"size": "14px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.339900110769663,
+				"disabled": false
+			},
+			{
+				"text": "Shared privately with you",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "Powered by OpenRoom",
+				"size": "12px",
+				"color": "oklch(0.525 0.015 150)",
+				"ratio": 5.012527676041379,
+				"disabled": false
+			},
+			{
+				"text": "OpenRoom",
+				"size": "12px",
+				"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+				"ratio": 15.505863861297794,
+				"disabled": false
+			}
+		]
+	}
+]

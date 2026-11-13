@@ -1,0 +1,170 @@
+{
+	"checks": [
+		"home-320 fits viewport",
+		"Narrow attention buttons stay on one row",
+		"Attention targets at least 44 pixels",
+		"home-390 fits viewport",
+		"home-768 fits viewport",
+		"All tablet rows retain flex layout",
+		"Tablet review controls align",
+		"Tablet utility cards are side by side",
+		"home-1440 fits viewport",
+		"home-reviewed-expanded-390 fits viewport",
+		"home-remaining-390 fits viewport",
+		"home-new-version-390 fits viewport",
+		"home-new-version-320 fits viewport",
+		"All documents anchor overrides saved scroll",
+		"home-all-reviewed-390 fits viewport",
+		"home-all-reviewed-1440 fits viewport",
+		"Completed guide retains undo in disclosure",
+		"conversation-320 fits viewport",
+		"Narrow conversation shortcuts remain one row",
+		"Compact draft shortcut preserves focus",
+		"conversation-draft-320 fits viewport",
+		"requests-custom-brand-390 fits viewport",
+		"Custom branding keeps status colors distinct",
+		"Hidden pinned document disappears",
+		"Hidden reader denied",
+		"Other unverified session cannot see receipt",
+		"Private conversation denied to other session",
+		"No final browser errors"
+	],
+	"errors": [],
+	"shots": [
+		"home-320",
+		"home-390",
+		"home-768",
+		"home-1440",
+		"home-reviewed-expanded-390",
+		"home-remaining-390",
+		"home-new-version-390",
+		"home-new-version-320",
+		"home-all-reviewed-390",
+		"home-all-reviewed-1440",
+		"conversation-320",
+		"conversation-draft-320",
+		"requests-custom-brand-390"
+	],
+	"metrics": [
+		{
+			"width": 320,
+			"rows": [
+				{
+					"x": 16,
+					"y": 485,
+					"height": 90,
+					"width": 288
+				},
+				{
+					"x": 16,
+					"y": 583,
+					"height": 90,
+					"width": 288
+				},
+				{
+					"x": 16,
+					"y": 681,
+					"height": 90,
+					"width": 288
+				}
+			],
+			"documentsTop": 905
+		},
+		{
+			"width": 390,
+			"rows": [
+				{
+					"x": 16,
+					"y": 485,
+					"height": 82,
+					"width": 358
+				},
+				{
+					"x": 16,
+					"y": 575,
+					"height": 82,
+					"width": 358
+				},
+				{
+					"x": 16,
+					"y": 665,
+					"height": 82,
+					"width": 358
+				}
+			],
+			"documentsTop": 881
+		},
+		{
+			"width": 768,
+			"rows": [
+				{
+					"x": 32,
+					"y": 533,
+					"height": 82,
+					"width": 704
+				},
+				{
+					"x": 32,
+					"y": 623,
+					"height": 82,
+					"width": 704
+				},
+				{
+					"x": 32,
+					"y": 713,
+					"height": 82,
+					"width": 704
+				},
+				{
+					"x": 32,
+					"y": 803,
+					"height": 82,
+					"width": 704
+				},
+				{
+					"x": 32,
+					"y": 893,
+					"height": 82,
+					"width": 704
+				}
+			],
+			"documentsTop": 1057
+		},
+		{
+			"width": 1440,
+			"rows": [
+				{
+					"x": 176,
+					"y": 533,
+					"height": 127,
+					"width": 357.328125
+				},
+				{
+					"x": 541.328125,
+					"y": 533,
+					"height": 127,
+					"width": 357.328125
+				},
+				{
+					"x": 906.65625,
+					"y": 533,
+					"height": 127,
+					"width": 357.34375
+				},
+				{
+					"x": 176,
+					"y": 668,
+					"height": 127,
+					"width": 357.328125
+				},
+				{
+					"x": 541.328125,
+					"y": 668,
+					"height": 127,
+					"width": 357.328125
+				}
+			],
+			"documentsTop": 877
+		}
+	]
+}

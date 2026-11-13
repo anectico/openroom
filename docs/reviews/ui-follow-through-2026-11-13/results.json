@@ -1,0 +1,257 @@
+{
+	"date": "2026-11-13",
+	"environment": "Disposable local production build; Node 24, real SQLite and disk storage, Chromium",
+	"checksPassed": 137,
+	"screenshotsRetained": 20,
+	"runs": {
+		"browser": {
+			"checks": [
+				"First visit hides change filter",
+				"Welcome initially open",
+				"Checklist starts unreviewed",
+				"Returning welcome collapses",
+				"Explicit welcome expansion remembered",
+				"Mark review updates progress",
+				"Next unreviewed changes",
+				"Undo updates progress",
+				"Opening does not mark reviewed",
+				"Thumbnails bounded",
+				"Thumbnail pagination advances",
+				"Search result opens page",
+				"Persistent result navigator",
+				"Next result changes page",
+				"Only matched text highlighted",
+				"Selected result remains visible",
+				"Clear removes highlights",
+				"Exact page overrides resume",
+				"Private question posts",
+				"Home shows unread action",
+				"Requests nav active",
+				"Earliest due request first",
+				"Closed requests start collapsed",
+				"Closed empty history accurate",
+				"Real request upload received",
+				"Uploaded request moves to history",
+				"Reply draft restored",
+				"Offline reply preserves draft",
+				"Successful reply clears draft",
+				"Sent draft stays cleared",
+				"Conversation timestamp has exact time",
+				"Page reference includes destination",
+				"Conversation page reference opens page 4",
+				"No home overflow 320",
+				"No requests overflow 320",
+				"No home overflow 390",
+				"No requests overflow 390",
+				"No home overflow 768",
+				"No requests overflow 768",
+				"No home overflow 1440",
+				"No requests overflow 1440",
+				"No browser JavaScript errors"
+			],
+			"errors": []
+		},
+		"boundary": {
+			"checks": [
+				"Review endpoint saves explicit action",
+				"Unverified session owns review",
+				"Unverified same email isolated",
+				"Unverified not shared with verified",
+				"Verified review saves",
+				"Verified sessions share personal review",
+				"Other verified investor isolated",
+				"Verified review follows identity across authorized links",
+				"Undo persists",
+				"Wrong origin forbidden",
+				"Invalid boolean rejected",
+				"Invalid version rejected",
+				"Unknown document unavailable",
+				"Unpinned document unavailable",
+				"Missing session denied",
+				"Preview cannot persist reviews",
+				"Hidden document review denied",
+				"Hidden reviewed document excluded from counts",
+				"Hidden file bytes denied",
+				"Removed pin cannot be reviewed",
+				"Removed pin excluded from progress",
+				"New version resets review",
+				"Stale review action rejected",
+				"Current version review accepted",
+				"Block rechecked on review",
+				"Allow list rechecked on review",
+				"New verification gate blocks unverified session",
+				"New NDA gate blocks review",
+				"Expired session denied",
+				"Expired link denied",
+				"Data export includes verified and session reviews",
+				"Erasure removes both review scopes",
+				"Erased session denied",
+				"Revoked link denied",
+				"Database retains integrity"
+			]
+		},
+		"extra": {
+			"checks": [
+				"Unicode ligature maps back precisely",
+				"Combining accent maps back precisely",
+				"Collapsed whitespace spans match",
+				"Excerpt adds ellipsis around context",
+				"Text parts preserve literal markup",
+				"Reader fits viewport 320",
+				"Mobile toolbar at most two rows",
+				"Reader fits viewport 390",
+				"Reader fits viewport 768",
+				"Reader fits viewport 1440",
+				"Thumbnail pagination visible",
+				"Thumbnail modal in viewport",
+				"Dialog traps keyboard focus",
+				"Dialog restores trigger focus",
+				"Mobile zoom menu has fit action",
+				"Zoom keeps current page",
+				"Search input receives focus",
+				"Selected page below sticky toolbar",
+				"Previous result returns to selected page",
+				"No match search message",
+				"Large page destination clamps",
+				"Invalid page parameter safely ignored",
+				"Explicit welcome collapse remembered",
+				"Changed welcome opens afresh",
+				"Welcome raw HTML is not executed",
+				"Completed checklist shows all reviewed",
+				"Completed checklist removes next action",
+				"Undo restores next review action",
+				"Review network failure keeps state",
+				"Returning summary includes changed count",
+				"Change summary filters documents",
+				"Overdue request first",
+				"Relative overdue label",
+				"Single character draft persists",
+				"Investor text stays literal",
+				"Sign-out removes reply drafts",
+				"No additional browser JavaScript errors"
+			],
+			"errors": [],
+			"geometry": [
+				{
+					"screen": "reader",
+					"width": 320,
+					"toolbar": {
+						"x": 16,
+						"y": 0,
+						"width": 288,
+						"height": 114
+					}
+				},
+				{
+					"screen": "reader",
+					"width": 390,
+					"toolbar": {
+						"x": 16,
+						"y": 0,
+						"width": 358,
+						"height": 114
+					}
+				},
+				{
+					"screen": "reader",
+					"width": 768,
+					"toolbar": {
+						"x": 32,
+						"y": 0,
+						"width": 704,
+						"height": 90
+					}
+				},
+				{
+					"screen": "reader",
+					"width": 1440,
+					"toolbar": {
+						"x": 176,
+						"y": 0,
+						"width": 1088,
+						"height": 50
+					}
+				}
+			]
+		},
+		"migration": {
+			"checks": [
+				"Review migration applies",
+				"Pre-upgrade snapshot exists",
+				"New review table exists",
+				"Upgrade retains document bytes",
+				"Upgrade retains encrypted setting",
+				"Upgrade SQLite integrity",
+				"Older journal refuses newer DB",
+				"Launcher completes real rollback",
+				"Rollback restores old schema",
+				"Rollback retains room",
+				"Rollback retains document bytes",
+				"Rollback retains encrypted setting",
+				"Rollback SQLite integrity",
+				"Rollback creates replication CURRENT"
+			]
+		},
+		"unicode": {
+			"checks": [
+				"Repeated normalized matches do not duplicate ligature glyphs",
+				"Greek uppercase final sigma highlights consistently",
+				"Greek sigma forms match consistently"
+			]
+		},
+		"final": {
+			"checks": [
+				"Single request action uses correct copy",
+				"Final selected result is indicated",
+				"Final home fits 320",
+				"Final home fits 390",
+				"Final home fits 1440",
+				"Final screenshots have no JavaScript errors"
+			],
+			"errors": [],
+			"measurements": [
+				{
+					"screen": "reader",
+					"width": 320,
+					"toolbarHeight": 114
+				},
+				{
+					"screen": "thumbnails",
+					"width": 320,
+					"height": 636.390625
+				},
+				{
+					"screen": "reader",
+					"width": 390,
+					"toolbarHeight": 114
+				},
+				{
+					"screen": "thumbnails",
+					"width": 390,
+					"height": 725.828125
+				},
+				{
+					"screen": "reader",
+					"width": 768,
+					"toolbarHeight": 90
+				},
+				{
+					"screen": "reader",
+					"width": 1440,
+					"toolbarHeight": 50
+				},
+				{
+					"screen": "thumbnails",
+					"width": 1440,
+					"height": 562
+				}
+			]
+		}
+	},
+	"validation": {
+		"lint": "passed: Biome, svelte-check, no-comments",
+		"build": "passed",
+		"cliHelp": "passed",
+		"gitDiffCheck": "passed"
+	}
+}

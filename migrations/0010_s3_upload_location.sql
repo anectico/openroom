@@ -1,0 +1,1 @@
+ALTER TABLE `uploads` ADD `location` text DEFAULT 'disk' NOT NULL;

@@ -1,0 +1,34 @@
+{
+	"name": "@anectico/openroom",
+	"version": "0.1.0",
+	"description": "Run and automate your self-hosted OpenRoom investor data room",
+	"type": "module",
+	"license": "SEE LICENSE IN LICENSE.md",
+	"engines": {
+		"node": ">=24"
+	},
+	"bin": {
+		"openroom": "bin/openroom.js"
+	},
+	"files": [
+		"bin",
+		"catalog.json",
+		"README.md",
+		"LICENSE.md"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/anectico/openroom.git",
+		"directory": "cli"
+	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"scripts": {
+		"prepack": "node bin/openroom.js --help > /dev/null"
+	},
+	"dependencies": {
+		"commander": "14.0.2"
+	}
+}

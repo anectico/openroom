@@ -1,0 +1,3915 @@
+{
+	"date": "2026-11-13",
+	"scope": "Implementation of F1\u2013F10 from the deep UI audit",
+	"environment": {
+		"runtime": "Node 24.21.0",
+		"browser": "Playwright Chromium, headless",
+		"storage": "Disposable real SQLite database and local disk",
+		"origin": "http://127.0.0.1:4140",
+		"data": "Synthetic room, investor and PDF content; no production accounts",
+		"viewports": [
+			"320\u00d7740",
+			"320\u00d7500",
+			"390\u00d7844",
+			"390\u00d7500",
+			"768\u00d71024",
+			"1440\u00d71000"
+		]
+	},
+	"result": {
+		"scenariosPassed": 14,
+		"recordedPassingAssertions": 166,
+		"assertionsIncludeTargetedReruns": true,
+		"uniqueAssertionNames": 154,
+		"screenshots": 79,
+		"screenshotsVisionReviewed": 79,
+		"browserPageErrors": 0,
+		"horizontalPageOverflowInCapturedStates": false
+	},
+	"commands": {
+		"npm run build": "PASS; existing dynamic-import bundling and FORCE_COLOR notices remain",
+		"npm run lint": "PASS; Biome, svelte-check and no-comments check"
+	},
+	"metrics": {
+		"firstSearchResultY": 312,
+		"previewDesktop": {
+			"width": 1280,
+			"scale": "0.196875",
+			"columns": "400px 400.079px 400px"
+		},
+		"previewPhone": {
+			"width": 360,
+			"scale": "0.7",
+			"columns": "328.036px"
+		},
+		"toolbar390": 115,
+		"toolbar320": 115
+	},
+	"scenarios": [
+		{
+			"name": "F1 bounded long question and private submission",
+			"pass": true
+		},
+		{
+			"name": "F2 titles and F5 compact navigation",
+			"pass": true
+		},
+		{
+			"name": "F3 keyboard focus and validation",
+			"pass": true
+		},
+		{
+			"name": "F4 entry long introduction and safe rendering",
+			"pass": true
+		},
+		{
+			"name": "F6 draft protection",
+			"pass": true
+		},
+		{
+			"name": "F7 truthful preview dimensions",
+			"pass": true
+		},
+		{
+			"name": "F8 compact PDF search",
+			"pass": true
+		},
+		{
+			"name": "F9 document tools and F10 mobile protection",
+			"pass": true
+		},
+		{
+			"name": "Access gates and private conversations",
+			"pass": true
+		},
+		{
+			"name": "Investor responsive sweep and review state",
+			"pass": true
+		},
+		{
+			"name": "Questions and real request upload",
+			"pass": true
+		},
+		{
+			"name": "Owner screen sweep and toolbar actions",
+			"pass": true
+		},
+		{
+			"name": "Empty room entry and search recovery",
+			"pass": true
+		},
+		{
+			"name": "Full title geometry and reload draft protection",
+			"pass": true
+		}
+	],
+	"checks": [
+		{
+			"name": "question-5000-390x844 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 6231
+				}
+			}
+		},
+		{
+			"name": "Question dialog bounded 390x844",
+			"pass": true,
+			"detail": {
+				"x": 16,
+				"y": 202.375,
+				"width": 358,
+				"height": 439.25
+			}
+		},
+		{
+			"name": "Reachable Send question 390x844",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 40,
+					"y": 521.625,
+					"width": 310,
+					"height": 44,
+					"top": 521.625,
+					"right": 350,
+					"bottom": 565.625,
+					"left": 40
+				}
+			}
+		},
+		{
+			"name": "Reachable Cancel 390x844",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 40,
+					"y": 573.625,
+					"width": 310,
+					"height": 44,
+					"top": 573.625,
+					"right": 350,
+					"bottom": 617.625,
+					"left": 40
+				}
+			}
+		},
+		{
+			"name": "Reachable Close 390x844",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 322,
+					"y": 210.375,
+					"width": 44,
+					"height": 44,
+					"top": 210.375,
+					"right": 366,
+					"bottom": 254.375,
+					"left": 322
+				}
+			}
+		},
+		{
+			"name": "question-5000-320x740 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 235
+				},
+				"page": {
+					"width": 320,
+					"height": 5172
+				}
+			}
+		},
+		{
+			"name": "Question dialog bounded 320x740",
+			"pass": true,
+			"detail": {
+				"x": 16,
+				"y": 140.375,
+				"width": 288,
+				"height": 459.25
+			}
+		},
+		{
+			"name": "Reachable Send question 320x740",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 40,
+					"y": 479.625,
+					"width": 240,
+					"height": 44,
+					"top": 479.625,
+					"right": 280,
+					"bottom": 523.625,
+					"left": 40
+				}
+			}
+		},
+		{
+			"name": "Reachable Cancel 320x740",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 40,
+					"y": 531.625,
+					"width": 240,
+					"height": 44,
+					"top": 531.625,
+					"right": 280,
+					"bottom": 575.625,
+					"left": 40
+				}
+			}
+		},
+		{
+			"name": "Reachable Close 320x740",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 252,
+					"y": 148.375,
+					"width": 44,
+					"height": 44,
+					"top": 148.375,
+					"right": 296,
+					"bottom": 192.375,
+					"left": 252
+				}
+			}
+		},
+		{
+			"name": "question-5000-390x500 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 235
+				},
+				"page": {
+					"width": 390,
+					"height": 6231
+				}
+			}
+		},
+		{
+			"name": "Question dialog bounded 390x500",
+			"pass": true,
+			"detail": {
+				"x": 16,
+				"y": 30.375,
+				"width": 358,
+				"height": 439.25
+			}
+		},
+		{
+			"name": "Reachable Send question 390x500",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 40,
+					"y": 349.625,
+					"width": 310,
+					"height": 44,
+					"top": 349.625,
+					"right": 350,
+					"bottom": 393.625,
+					"left": 40
+				}
+			}
+		},
+		{
+			"name": "Reachable Cancel 390x500",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 40,
+					"y": 401.625,
+					"width": 310,
+					"height": 44,
+					"top": 401.625,
+					"right": 350,
+					"bottom": 445.625,
+					"left": 40
+				}
+			}
+		},
+		{
+			"name": "Reachable Close 390x500",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 322,
+					"y": 38.375,
+					"width": 44,
+					"height": 44,
+					"top": 38.375,
+					"right": 366,
+					"bottom": 82.375,
+					"left": 322
+				}
+			}
+		},
+		{
+			"name": "Question draft survives closing",
+			"pass": true
+		},
+		{
+			"name": "question-sent-short no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 12
+				},
+				"page": {
+					"width": 390,
+					"height": 6231
+				}
+			}
+		},
+		{
+			"name": "Full question stored privately",
+			"pass": true
+		},
+		{
+			"name": "search-similar-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 1107
+				}
+			}
+		},
+		{
+			"name": "search-similar-full-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 1107
+				}
+			}
+		},
+		{
+			"name": "Three quarter documents found",
+			"pass": true
+		},
+		{
+			"name": "Search results above 400px",
+			"pass": true,
+			"detail": 312
+		},
+		{
+			"name": "search-q2-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 793
+				}
+			}
+		},
+		{
+			"name": "Back preserves query",
+			"pass": true
+		},
+		{
+			"name": "folder-top-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 2107
+				}
+			}
+		},
+		{
+			"name": "folder-quarters-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 768
+				},
+				"page": {
+					"width": 320,
+					"height": 2107
+				}
+			}
+		},
+		{
+			"name": "folder-text-spacing-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 999
+				},
+				"page": {
+					"width": 320,
+					"height": 2967
+				}
+			}
+		},
+		{
+			"name": "Appearance focused control visible 0",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 33,
+					"y": 582.75,
+					"width": 254,
+					"height": 44,
+					"top": 582.75,
+					"right": 287,
+					"bottom": 626.75,
+					"left": 33
+				}
+			}
+		},
+		{
+			"name": "Appearance focused control visible 1",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 33,
+					"y": 229,
+					"width": 254,
+					"height": 162,
+					"top": 229,
+					"right": 287,
+					"bottom": 391,
+					"left": 33
+				}
+			}
+		},
+		{
+			"name": "Appearance focused control visible 2",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 33,
+					"y": 588.25,
+					"width": 106.234375,
+					"height": 44,
+					"top": 588.25,
+					"right": 139.234375,
+					"bottom": 632.25,
+					"left": 33
+				}
+			}
+		},
+		{
+			"name": "appearance-logo-focus-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 566
+				},
+				"page": {
+					"width": 320,
+					"height": 2524
+				}
+			}
+		},
+		{
+			"name": "Appearance focused control visible 3",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 33,
+					"y": 588.25,
+					"width": 158.578125,
+					"height": 44,
+					"top": 588.25,
+					"right": 191.578125,
+					"bottom": 632.25,
+					"left": 33
+				}
+			}
+		},
+		{
+			"name": "Appearance focused control visible 4",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 33,
+					"y": 587.5,
+					"width": 56,
+					"height": 44,
+					"top": 587.5,
+					"right": 89,
+					"bottom": 631.5,
+					"left": 33
+				}
+			}
+		},
+		{
+			"name": "Appearance focused control visible 5",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 101,
+					"y": 587.5,
+					"width": 128,
+					"height": 44,
+					"top": 587.5,
+					"right": 229,
+					"bottom": 631.5,
+					"left": 101
+				}
+			}
+		},
+		{
+			"name": "Appearance focused control visible 6",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 33,
+					"y": 587.5,
+					"width": 171.828125,
+					"height": 44,
+					"top": 587.5,
+					"right": 204.828125,
+					"bottom": 631.5,
+					"left": 33
+				}
+			}
+		},
+		{
+			"name": "Invalid color receives focus",
+			"pass": true
+		},
+		{
+			"name": "Invalid color visible",
+			"pass": true,
+			"detail": {
+				"visible": true,
+				"rect": {
+					"x": 101,
+					"y": 460.5,
+					"width": 128,
+					"height": 44,
+					"top": 460.5,
+					"right": 229,
+					"bottom": 504.5,
+					"left": 101
+				}
+			}
+		},
+		{
+			"name": "Inline validation exists",
+			"pass": true
+		},
+		{
+			"name": "appearance-invalid-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 924
+				},
+				"page": {
+					"width": 320,
+					"height": 2584
+				}
+			}
+		},
+		{
+			"name": "Branding saved through operation",
+			"pass": true
+		},
+		{
+			"name": "appearance-saved-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 924
+				},
+				"page": {
+					"width": 320,
+					"height": 2540
+				}
+			}
+		},
+		{
+			"name": "Email entry first screen",
+			"pass": true,
+			"detail": {
+				"email": {
+					"x": 45,
+					"y": 333.984375,
+					"width": 230,
+					"height": 44
+				},
+				"next": {
+					"x": 45,
+					"y": 397.984375,
+					"width": 230,
+					"height": 44
+				}
+			}
+		},
+		{
+			"name": "entry-long-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 740
+				}
+			}
+		},
+		{
+			"name": "entry-long-expanded-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 3318
+				}
+			}
+		},
+		{
+			"name": "Disclosure preserves email",
+			"pass": true
+		},
+		{
+			"name": "Owner Markdown sanitized",
+			"pass": true
+		},
+		{
+			"name": "Entry still works",
+			"pass": true
+		},
+		{
+			"name": "draft-discard-confirm-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Escape keep preserves draft",
+			"pass": true
+		},
+		{
+			"name": "personal-draft-preview-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Refresh preserves draft",
+			"pass": true
+		},
+		{
+			"name": "Desktop render width",
+			"pass": true,
+			"detail": {
+				"width": 1280,
+				"scale": "0.196875",
+				"columns": "400px 400.079px 400px"
+			}
+		},
+		{
+			"name": "preview-desktop-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 533
+				},
+				"page": {
+					"width": 320,
+					"height": 1966
+				}
+			}
+		},
+		{
+			"name": "Phone render width",
+			"pass": true,
+			"detail": {
+				"width": 360,
+				"scale": "0.7",
+				"columns": "328.036px"
+			}
+		},
+		{
+			"name": "preview-phone-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 731
+				},
+				"page": {
+					"width": 320,
+					"height": 2424
+				}
+			}
+		},
+		{
+			"name": "preview-phone-actual-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 716
+				},
+				"page": {
+					"width": 320,
+					"height": 2424
+				}
+			}
+		},
+		{
+			"name": "Actual-size preview remains contained",
+			"pass": true
+		},
+		{
+			"name": "preview-entry-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 320
+				},
+				"page": {
+					"width": 320,
+					"height": 2099
+				}
+			}
+		},
+		{
+			"name": "appearance-preview-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 492
+				},
+				"page": {
+					"width": 1440,
+					"height": 2011
+				}
+			}
+		},
+		{
+			"name": "pdf-search-390x500 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 694
+				},
+				"page": {
+					"width": 390,
+					"height": 6236
+				}
+			}
+		},
+		{
+			"name": "Compact toolbar 390",
+			"pass": true,
+			"detail": {
+				"x": 16,
+				"y": 0,
+				"width": 358,
+				"height": 115
+			}
+		},
+		{
+			"name": "pdf-search-320x500 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 603
+				},
+				"page": {
+					"width": 320,
+					"height": 5177
+				}
+			}
+		},
+		{
+			"name": "Compact toolbar 320",
+			"pass": true,
+			"detail": {
+				"x": 16,
+				"y": 0,
+				"width": 288,
+				"height": 115
+			}
+		},
+		{
+			"name": "Next match navigates page",
+			"pass": true
+		},
+		{
+			"name": "pdf-reader-options-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 971
+				},
+				"page": {
+					"width": 320,
+					"height": 5177
+				}
+			}
+		},
+		{
+			"name": "pdf-search-cleared-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 1142
+				},
+				"page": {
+					"width": 320,
+					"height": 6228
+				}
+			}
+		},
+		{
+			"name": "Find restored",
+			"pass": true
+		},
+		{
+			"name": "admin-documents-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Upload first screen 320",
+			"pass": true,
+			"detail": {
+				"x": 104.03125,
+				"y": 430.5,
+				"width": 117.640625,
+				"height": 44
+			}
+		},
+		{
+			"name": "Pins initially collapsed 320",
+			"pass": true
+		},
+		{
+			"name": "admin-pins-expanded-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 1095
+				}
+			}
+		},
+		{
+			"name": "admin-sharing-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Mobile protection summary 320",
+			"pass": true
+		},
+		{
+			"name": "admin-documents-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Upload first screen 390",
+			"pass": true,
+			"detail": {
+				"x": 104.03125,
+				"y": 430.5,
+				"width": 117.640625,
+				"height": 44
+			}
+		},
+		{
+			"name": "Pins initially collapsed 390",
+			"pass": true
+		},
+		{
+			"name": "admin-pins-expanded-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 1063
+				}
+			}
+		},
+		{
+			"name": "admin-sharing-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Mobile protection summary 390",
+			"pass": true
+		},
+		{
+			"name": "admin-documents-1440 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1000
+				}
+			}
+		},
+		{
+			"name": "Upload first screen 1440",
+			"pass": true,
+			"detail": {
+				"x": 1246.359375,
+				"y": 392.5,
+				"width": 117.640625,
+				"height": 32
+			}
+		},
+		{
+			"name": "admin-sharing-1440 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1000
+				}
+			}
+		},
+		{
+			"name": "Unauthenticated file refused",
+			"pass": true,
+			"detail": 401
+		},
+		{
+			"name": "gate-password-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 740
+				}
+			}
+		},
+		{
+			"name": "gate-nda-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 910
+				}
+			}
+		},
+		{
+			"name": "NDA still gates files",
+			"pass": true,
+			"detail": 401
+		},
+		{
+			"name": "Accepted NDA grants permitted file",
+			"pass": true
+		},
+		{
+			"name": "Other session cannot read private thread",
+			"pass": true,
+			"detail": 401
+		},
+		{
+			"name": "draft-discard-confirm-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Escape keep preserves draft",
+			"pass": true
+		},
+		{
+			"name": "personal-draft-preview-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Refresh preserves draft",
+			"pass": true
+		},
+		{
+			"name": "Draft isolated across links",
+			"pass": true
+		},
+		{
+			"name": "Discard restores saved welcome",
+			"pass": true
+		},
+		{
+			"name": "Welcome save succeeds",
+			"pass": true
+		},
+		{
+			"name": "home-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 1474
+				}
+			}
+		},
+		{
+			"name": "home-full-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 1474
+				}
+			}
+		},
+		{
+			"name": "welcome-expanded-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 740
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 320,
+					"height": 1646
+				}
+			}
+		},
+		{
+			"name": "home-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 1414
+				}
+			}
+		},
+		{
+			"name": "welcome-expanded-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 1564
+				}
+			}
+		},
+		{
+			"name": "home-768 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 768,
+					"height": 1024
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 768,
+					"height": 1538
+				}
+			}
+		},
+		{
+			"name": "welcome-expanded-768 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 768,
+					"height": 1024
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 768,
+					"height": 1642
+				}
+			}
+		},
+		{
+			"name": "home-1440 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1199
+				}
+			}
+		},
+		{
+			"name": "welcome-expanded-1440 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1258
+				}
+			}
+		},
+		{
+			"name": "all-reviewed-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 1001
+				}
+			}
+		},
+		{
+			"name": "Six reviews complete",
+			"pass": true
+		},
+		{
+			"name": "reviewed-expanded-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 1387
+				}
+			}
+		},
+		{
+			"name": "Undo remains functional",
+			"pass": true
+		},
+		{
+			"name": "reader-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 6231
+				}
+			}
+		},
+		{
+			"name": "reader-1440 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 235
+				},
+				"page": {
+					"width": 1440,
+					"height": 17487
+				}
+			}
+		},
+		{
+			"name": "reader-thumbnails-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 235
+				},
+				"page": {
+					"width": 1440,
+					"height": 17487
+				}
+			}
+		},
+		{
+			"name": "pdf-no-matches-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 292
+				},
+				"page": {
+					"width": 390,
+					"height": 6231
+				}
+			}
+		},
+		{
+			"name": "questions-list-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "room-question-compose-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Investor content remains plain text",
+			"pass": true
+		},
+		{
+			"name": "conversation-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 885
+				}
+			}
+		},
+		{
+			"name": "conversation-draft-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 887
+				}
+			}
+		},
+		{
+			"name": "Conversation draft survives reload",
+			"pass": true
+		},
+		{
+			"name": "requests-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "request-detail-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "request-upload-receipt-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "request-receipt-reloaded-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Real request upload stored",
+			"pass": true
+		},
+		{
+			"name": "Private upload download protected",
+			"pass": true,
+			"detail": 303
+		},
+		{
+			"name": "owner-overview-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1275
+				}
+			}
+		},
+		{
+			"name": "owner-rooms-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1000
+				}
+			}
+		},
+		{
+			"name": "owner-analytics-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1000
+				}
+			}
+		},
+		{
+			"name": "owner-questions-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1000
+				}
+			}
+		},
+		{
+			"name": "owner-requests-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1000
+				}
+			}
+		},
+		{
+			"name": "owner-groups-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1000
+				}
+			}
+		},
+		{
+			"name": "owner-investors-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1000
+				}
+			}
+		},
+		{
+			"name": "owner-notifications-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1590
+				}
+			}
+		},
+		{
+			"name": "owner-audit-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 3342
+				}
+			}
+		},
+		{
+			"name": "owner-settings-desktop no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 1440,
+					"height": 1000
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 1440,
+					"height": 1973
+				}
+			}
+		},
+		{
+			"name": "owner-overview-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 1733
+				}
+			}
+		},
+		{
+			"name": "server-backup-details-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 1825
+				}
+			}
+		},
+		{
+			"name": "owner-folder-dialog-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "owner-pins-editor-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "owner-upload-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 956
+				}
+			}
+		},
+		{
+			"name": "Owner upload stored",
+			"pass": true
+		},
+		{
+			"name": "appearance-edit-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 2289
+				}
+			}
+		},
+		{
+			"name": "appearance-fit-preview-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 563
+				},
+				"page": {
+					"width": 390,
+					"height": 2280
+				}
+			}
+		},
+		{
+			"name": "empty-room-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "empty-search-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "Clear restores empty room",
+			"pass": true
+		},
+		{
+			"name": "questions-empty-390 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 844
+				},
+				"scroll": {
+					"x": 0,
+					"y": 0
+				},
+				"page": {
+					"width": 390,
+					"height": 844
+				}
+			}
+		},
+		{
+			"name": "pdf-search-390x500 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 390,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 694
+				},
+				"page": {
+					"width": 390,
+					"height": 6236
+				}
+			}
+		},
+		{
+			"name": "Compact toolbar 390",
+			"pass": true,
+			"detail": {
+				"x": 16,
+				"y": 0,
+				"width": 358,
+				"height": 115
+			}
+		},
+		{
+			"name": "pdf-search-320x500 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 603
+				},
+				"page": {
+					"width": 320,
+					"height": 5177
+				}
+			}
+		},
+		{
+			"name": "Compact toolbar 320",
+			"pass": true,
+			"detail": {
+				"x": 16,
+				"y": 0,
+				"width": 288,
+				"height": 115
+			}
+		},
+		{
+			"name": "Next match navigates page",
+			"pass": true
+		},
+		{
+			"name": "pdf-reader-options-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 971
+				},
+				"page": {
+					"width": 320,
+					"height": 5177
+				}
+			}
+		},
+		{
+			"name": "pdf-search-cleared-320 no page overflow",
+			"pass": true,
+			"detail": {
+				"viewport": {
+					"width": 320,
+					"height": 500
+				},
+				"scroll": {
+					"x": 0,
+					"y": 1142
+				},
+				"page": {
+					"width": 320,
+					"height": 6228
+				}
+			}
+		},
+		{
+			"name": "Find restored",
+			"pass": true
+		},
+		{
+			"name": "Three rendered titles false",
+			"pass": true
+		},
+		{
+			"name": "Full quarter text fits row 0 spacing false",
+			"pass": true,
+			"detail": {
+				"text": "Consolidated financial statements and management accounts \u2014 Q1 2026",
+				"bottom": 390,
+				"rowBottom": 457,
+				"left": 85,
+				"right": 223.46875,
+				"width": 320,
+				"clamp": "none"
+			}
+		},
+		{
+			"name": "Full quarter text fits row 1 spacing false",
+			"pass": true,
+			"detail": {
+				"text": "Consolidated financial statements and management accounts \u2014 Q2 2026",
+				"bottom": 547,
+				"rowBottom": 614,
+				"left": 85,
+				"right": 226.296875,
+				"width": 320,
+				"clamp": "none"
+			}
+		},
+		{
+			"name": "Full quarter text fits row 2 spacing false",
+			"pass": true,
+			"detail": {
+				"text": "Consolidated financial statements and management accounts \u2014 Q3 2026",
+				"bottom": 704,
+				"rowBottom": 770,
+				"left": 85,
+				"right": 226.4375,
+				"width": 320,
+				"clamp": "none"
+			}
+		},
+		{
+			"name": "Three rendered titles true",
+			"pass": true
+		},
+		{
+			"name": "Full quarter text fits row 0 spacing true",
+			"pass": true,
+			"detail": {
+				"text": "Consolidated financial statements and management accounts \u2014 Q1 2026",
+				"bottom": 436,
+				"rowBottom": 571,
+				"left": 85,
+				"right": 213.9375,
+				"width": 320,
+				"clamp": "none"
+			}
+		},
+		{
+			"name": "Full quarter text fits row 1 spacing true",
+			"pass": true,
+			"detail": {
+				"text": "Consolidated financial statements and management accounts \u2014 Q2 2026",
+				"bottom": 707,
+				"rowBottom": 842,
+				"left": 85,
+				"right": 213.9375,
+				"width": 320,
+				"clamp": "none"
+			}
+		},
+		{
+			"name": "Full quarter text fits row 2 spacing true",
+			"pass": true,
+			"detail": {
+				"text": "Consolidated financial statements and management accounts \u2014 Q3 2026",
+				"bottom": 431,
+				"rowBottom": 565,
+				"left": 85,
+				"right": 213.9375,
+				"width": 320,
+				"clamp": "none"
+			}
+		},
+		{
+			"name": "Reload asks before leaving unsaved draft",
+			"pass": true,
+			"detail": "beforeunload"
+		},
+		{
+			"name": "Cancelled reload preserves draft",
+			"pass": true
+		},
+		{
+			"name": "Cancel can return to draft",
+			"pass": true
+		},
+		{
+			"name": "Reload and Cancel did not save changes",
+			"pass": true
+		}
+	],
+	"fixesDuringVerification": [
+		"Fixed the nested discard dialog closing sequence; the full discard/reopen/save scenario passed on rerun.",
+		"Simplified question-sent content so its actions stay visible on short screens.",
+		"Allowed mobile protection summaries to wrap instead of inheriting table nowrap.",
+		"Widened Reader options so labels fit on one line; refreshed all affected PDF screenshots and reran search/navigation checks."
+	],
+	"limitations": [
+		"Chromium viewport simulation, not a physical phone or Safari/WebKit run. Software keyboard, browser chrome and orientation behavior on actual devices remain unverified.",
+		"Appearance previews are explicit-width sample canvases, not full browser/device emulators. Real link preview is the access-check surface.",
+		"No email provider, S3 migration, backup/restore, Docker install or release deployment was exercised in this UI task.",
+		"Screenshots were captured during the final verification pass. Affected states were refreshed after fixes; fixture counts reflect actual operations at capture time.",
+		"This is regression evidence for changed flows and adjacent UI, not an exhaustive accessibility or security certification."
+	],
+	"changedSourceFiles": [
+		{
+			"path": "src/lib/admin/AppearancePreview.svelte",
+			"beforeSha256": "1cc7da55e2ceefc2813c59fc0b6d26752d4306d66de620204bd660fd01f16962",
+			"afterSha256": "204693811055649b45f58ea1a9291804a19b4787ec931d199c4bfadf20a6cc33"
+		},
+		{
+			"path": "src/lib/admin/BrandingForm.svelte",
+			"beforeSha256": "021ed8c8e3363ffdb0e8afb3e34373648ddfd9f630f6ca80337e15beb9ec6976",
+			"afterSha256": "5014eaadc22b5fcc9169683b702c18a7ec033fe66609049228caa05abcacf075"
+		},
+		{
+			"path": "src/lib/admin/LinkEditor.svelte",
+			"beforeSha256": "262382d0e5ddb672dedc32e76a0738a5035f0cfd8fa5197db55d417731772e4c",
+			"afterSha256": "f57d0f6e0919790252a7ea64bfa25f998c2a3f785e6e5a261a7630d398a161cb"
+		},
+		{
+			"path": "src/lib/admin/PinnedDocuments.svelte",
+			"beforeSha256": "2fc857ff707b94a5d7b519682537c09515cded88279e53edb19df2723221c48f",
+			"afterSha256": "f5251afc5b91cf11859e7d9f1d37e98e4b48c9537e0dfbb3ade80064bd0a2471"
+		},
+		{
+			"path": "src/lib/viewer/DocumentListItem.svelte",
+			"beforeSha256": "4fe40cea447fb72decd1ad4da268cd98ece6096c27c9b55fa8973c9085c57cf8",
+			"afterSha256": "7297f5fcad4ef021e7312fb0ce3094eb122086cb2ace2f292c710353c538efe0"
+		},
+		{
+			"path": "src/lib/viewer/PdfViewer.svelte",
+			"beforeSha256": "e0b34d508db11999cc2642346ae857e4c8f8c9f87e6e344c030d07184ddeba16",
+			"afterSha256": "b2650bca44750432d162f6d80f9fcbd8572b5ac4857152277853d79739dde01f"
+		},
+		{
+			"path": "src/lib/viewer/RoomWelcome.svelte",
+			"beforeSha256": "8fda85f58b5c268f4bd013a6bcfc3bfa8aadf4b36e851609eea6601be35fd99a",
+			"afterSha256": "1547875295fa28a66ff40b591b4e3185507799bf3a66edd441c5d91b03d69d34"
+		},
+		{
+			"path": "src/routes/admin/+layout.svelte",
+			"beforeSha256": "dde21b3d48fe16f59dbebccff970b30fd2782c568bb4acdeed6e16ef65b6f55f",
+			"afterSha256": "a402c6eb49ca25986986af055cd0b7c49c03293ee011656967eb8dbea8989ed5"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/+layout.svelte",
+			"beforeSha256": "436fe3b76afca1b4f3543d6390efe3d9db3de63e8cab31857044d0685e11f95c",
+			"afterSha256": "5877ae0d951412ac592d6c4a83a436f2c6c70e14c972400cc4457d5a347499aa"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/+page.svelte",
+			"beforeSha256": "9c788edc04162f73c3bd534556f9670a801cea5383c1592469b07f64ebfc27bf",
+			"afterSha256": "1817477c71fda1ca126e557c0e06237b817be4279eaddec2d351cfe3482b73ad"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/links/+page.svelte",
+			"beforeSha256": "8bc584a3492a949d0fbddd1e098fd5f7fca509876975c855cdbfee644a7407eb",
+			"afterSha256": "73f3aa03e7ecb2fec5de936879642d4d845861ef95ea2f8dc2e39388e296c311"
+		},
+		{
+			"path": "src/routes/r/[token]/+page.svelte",
+			"beforeSha256": "71426e81c6d48f1112282171cd020679e6875b74e4b707dbc88bd35d547306f4",
+			"afterSha256": "2467d4929d673089cf0b0050c9430e3826669f79a4a5a6d552ebc58c304afbf7"
+		},
+		{
+			"path": "src/routes/v/[linkId]/+page.svelte",
+			"beforeSha256": "25b6bd794ce6311aceb81e8836080c665198fe54c354906c2e3173d9c68e55fe",
+			"afterSha256": "b9e234933ad37756dad460d8dc4e988b178c83b4007413e047b731cee0d3622b"
+		},
+		{
+			"path": "src/routes/v/[linkId]/view/[fileId]/+page.svelte",
+			"beforeSha256": "96a966ee289d854bf582ab057988deaa97ec9508448eb754ce6b987cf001240c",
+			"afterSha256": "aa6943725e856a4ba232c4ad186d5ca978e1a5f43d6d070fa07ac78c0a219f14"
+		}
+	],
+	"screenshots": [
+		{
+			"name": "question-5000-390x844",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 6231
+			},
+			"sha256": "a6d9d0e0b043ed0fbc55c4a910d7cb87272a75c579dfbc46d3647ddb748ca36d",
+			"visionReviewed": true,
+			"path": "screens/question-5000-390x844.png"
+		},
+		{
+			"name": "question-5000-320x740",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 235
+			},
+			"page": {
+				"width": 320,
+				"height": 5172
+			},
+			"sha256": "177ce9f85532af658ab0e0fb88ae5c2a25f49eacf08b97187c7a9597ec6ed8c3",
+			"visionReviewed": true,
+			"path": "screens/question-5000-320x740.png"
+		},
+		{
+			"name": "question-5000-390x500",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 235
+			},
+			"page": {
+				"width": 390,
+				"height": 6231
+			},
+			"sha256": "ba629b0b209ce4083df71cf3d30b905c2d44ac36596c7c70775de2123053ffcc",
+			"visionReviewed": true,
+			"path": "screens/question-5000-390x500.png"
+		},
+		{
+			"name": "question-sent-short",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 12
+			},
+			"page": {
+				"width": 390,
+				"height": 6231
+			},
+			"sha256": "1a1e0c045c6ab5c3dcbeec70fd2620a16f46e277ad9e5975b3e43d9a5e89ae86",
+			"visionReviewed": true,
+			"path": "screens/question-sent-short.png"
+		},
+		{
+			"name": "search-similar-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 1107
+			},
+			"sha256": "3fa0bb3813355da58d0b411cb7b8dd9491fdf79b24922fe41eaaaf38b8541f72",
+			"visionReviewed": true,
+			"path": "screens/search-similar-320.png"
+		},
+		{
+			"name": "search-similar-full-320",
+			"fullPage": true,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 1107
+			},
+			"sha256": "49f1142fb2c33fcf9bdb8528f218d020cc24b8c588f995aa785da708063654af",
+			"visionReviewed": true,
+			"path": "screens/search-similar-full-320.png"
+		},
+		{
+			"name": "search-q2-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 793
+			},
+			"sha256": "ae794b1c99eb31584b42fcbc3646f1926570a115626b4fd8908abea912ea65e5",
+			"visionReviewed": true,
+			"path": "screens/search-q2-320.png"
+		},
+		{
+			"name": "folder-top-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 2107
+			},
+			"sha256": "df8fc57c4af7a5a911597f47ed691f671db1e9ef30d8801f11320c8bea6e0ab4",
+			"visionReviewed": true,
+			"path": "screens/folder-top-320.png"
+		},
+		{
+			"name": "folder-quarters-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 768
+			},
+			"page": {
+				"width": 320,
+				"height": 2107
+			},
+			"sha256": "94fba076b03f5b2b00f1c1d10c97706e632d3fee33045618000cdfbc9c335c5f",
+			"visionReviewed": true,
+			"path": "screens/folder-quarters-320.png"
+		},
+		{
+			"name": "folder-text-spacing-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 999
+			},
+			"page": {
+				"width": 320,
+				"height": 2967
+			},
+			"sha256": "d9f384cc9533cf909d6aae61cbb5e9ae004af8d65ef72586749681cfb827a9b1",
+			"visionReviewed": true,
+			"path": "screens/folder-text-spacing-320.png"
+		},
+		{
+			"name": "appearance-logo-focus-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 566
+			},
+			"page": {
+				"width": 320,
+				"height": 2524
+			},
+			"sha256": "81adcb2f2c7c4762535575c37a4880fdafb698611fc88edb1a5d9b1fd10840c8",
+			"visionReviewed": true,
+			"path": "screens/appearance-logo-focus-320.png"
+		},
+		{
+			"name": "appearance-invalid-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 924
+			},
+			"page": {
+				"width": 320,
+				"height": 2584
+			},
+			"sha256": "51c9e0115db7cf79110822be876460a7c30ec1acd5f7062b2349cafac83d28f6",
+			"visionReviewed": true,
+			"path": "screens/appearance-invalid-320.png"
+		},
+		{
+			"name": "appearance-saved-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 924
+			},
+			"page": {
+				"width": 320,
+				"height": 2540
+			},
+			"sha256": "9e098b7b36c22e09c1a5f531132e810e685273d11b9071caa9f345cddef876d6",
+			"visionReviewed": true,
+			"path": "screens/appearance-saved-320.png"
+		},
+		{
+			"name": "entry-long-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 740
+			},
+			"sha256": "789a0f86818e26985f34bd934b03faf7ce444ece12fadfdb2bffe112a2a23f35",
+			"visionReviewed": true,
+			"path": "screens/entry-long-320.png"
+		},
+		{
+			"name": "entry-long-expanded-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 3318
+			},
+			"sha256": "1a31e7ba3081cb4a2c72bfcddb835829df085984c1ec33d8637ecfaa9a3f3f20",
+			"visionReviewed": true,
+			"path": "screens/entry-long-expanded-320.png"
+		},
+		{
+			"name": "preview-desktop-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 533
+			},
+			"page": {
+				"width": 320,
+				"height": 1966
+			},
+			"sha256": "f58813184c06a36cf2fe61c6a20be291b5ff5bc32f0ccba1b9e4988b7cbf93da",
+			"visionReviewed": true,
+			"path": "screens/preview-desktop-320.png"
+		},
+		{
+			"name": "preview-phone-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 731
+			},
+			"page": {
+				"width": 320,
+				"height": 2424
+			},
+			"sha256": "ab926f3a1b7a50d014928775a4060276bf17101d0c852d0adc1a7ea2d0a015bd",
+			"visionReviewed": true,
+			"path": "screens/preview-phone-320.png"
+		},
+		{
+			"name": "preview-phone-actual-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 716
+			},
+			"page": {
+				"width": 320,
+				"height": 2424
+			},
+			"sha256": "759a645b76a2fac82e9eeb955677e98e0ca4a6b294a9cb90b5738635668caa81",
+			"visionReviewed": true,
+			"path": "screens/preview-phone-actual-320.png"
+		},
+		{
+			"name": "preview-entry-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 320
+			},
+			"page": {
+				"width": 320,
+				"height": 2099
+			},
+			"sha256": "1207b6f6500e39ea9f58c4156291d44d64404df78791ccd969b4e8cbf7acd098",
+			"visionReviewed": true,
+			"path": "screens/preview-entry-320.png"
+		},
+		{
+			"name": "appearance-preview-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 492
+			},
+			"page": {
+				"width": 1440,
+				"height": 2011
+			},
+			"sha256": "f7a454c3dda4bc9b7c6cfa9e2bd445ad3f2dc36533a33ae2e4b021fc3697b0fc",
+			"visionReviewed": true,
+			"path": "screens/appearance-preview-desktop.png"
+		},
+		{
+			"name": "admin-documents-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 844
+			},
+			"sha256": "49d5315d94f30fd999a2f6cf42eabb5150ae9884f2df655cc66d11296dcba551",
+			"visionReviewed": true,
+			"path": "screens/admin-documents-320.png"
+		},
+		{
+			"name": "admin-pins-expanded-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 1095
+			},
+			"sha256": "0f685e6ccb8f0edf836e068f9df576b3b52f0825801f278e987c53730eefd7e0",
+			"visionReviewed": true,
+			"path": "screens/admin-pins-expanded-320.png"
+		},
+		{
+			"name": "admin-sharing-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 844
+			},
+			"sha256": "b598b7facbcd5fcd6cc3f943173c78c90d312d0d72af8fb2802a0ab253142e37",
+			"visionReviewed": true,
+			"path": "screens/admin-sharing-320.png"
+		},
+		{
+			"name": "admin-documents-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "89b911ea3b6512cd363148f84065eae14da4985f06b923f549464570fec7a266",
+			"visionReviewed": true,
+			"path": "screens/admin-documents-390.png"
+		},
+		{
+			"name": "admin-pins-expanded-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 1063
+			},
+			"sha256": "57d3c54ca7ea2cf44cc2ccf5e0221f7aa64105bfd82110a679db5554f2c98934",
+			"visionReviewed": true,
+			"path": "screens/admin-pins-expanded-390.png"
+		},
+		{
+			"name": "admin-sharing-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "a41e02ab16e119fa292d91e94dbb293cf51d83e0b153bf6522fec6e97ea6db3f",
+			"visionReviewed": true,
+			"path": "screens/admin-sharing-390.png"
+		},
+		{
+			"name": "admin-documents-1440",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1000
+			},
+			"sha256": "3cf9aca1b9a1fde4070ed4d6092c86cf6cf5a4cd005909dd113b79c097dea4d0",
+			"visionReviewed": true,
+			"path": "screens/admin-documents-1440.png"
+		},
+		{
+			"name": "admin-sharing-1440",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1000
+			},
+			"sha256": "4c663b88d469579cbf3ca6b9cdf693897ef87d56a70ff12be02904cbf566114d",
+			"visionReviewed": true,
+			"path": "screens/admin-sharing-1440.png"
+		},
+		{
+			"name": "gate-password-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 740
+			},
+			"sha256": "7e2c6e4c756080f5f5f17a4592ea63da91197c29ad508ca90b2d99a6fa1a6dd9",
+			"visionReviewed": true,
+			"path": "screens/gate-password-320.png"
+		},
+		{
+			"name": "gate-nda-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 910
+			},
+			"sha256": "ca5c5e704419b8459e1a4384ed228ae246e71059e7cd319b4b438a70e91cccff",
+			"visionReviewed": true,
+			"path": "screens/gate-nda-320.png"
+		},
+		{
+			"name": "draft-discard-confirm-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "d59915b1c1503f286e22a9b919f5b0265ec03e517d42b497bd8bafbad9ceb7dc",
+			"visionReviewed": true,
+			"path": "screens/draft-discard-confirm-390.png"
+		},
+		{
+			"name": "personal-draft-preview-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "ce5a9b4753fcf6c49f0006f3186e069ebe5a14efd3ce7eb6ef8f2941f90615b5",
+			"visionReviewed": true,
+			"path": "screens/personal-draft-preview-390.png"
+		},
+		{
+			"name": "home-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 1474
+			},
+			"sha256": "edeb7ec2f232c5ebdde98093d492be1d362532666fdc5029a71c0e50f4cd2fe1",
+			"visionReviewed": true,
+			"path": "screens/home-320.png"
+		},
+		{
+			"name": "home-full-320",
+			"fullPage": true,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 1474
+			},
+			"sha256": "780bb88c177a9d8289b93254dce2fde884f2ac7c0d998e87438fe06b4585d7d3",
+			"visionReviewed": true,
+			"path": "screens/home-full-320.png"
+		},
+		{
+			"name": "welcome-expanded-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 320,
+				"height": 1646
+			},
+			"sha256": "950b8f8f2d0f1e9465ec7a3ea1c672185e775c5b9279b3daa4d4a54522ae8aba",
+			"visionReviewed": true,
+			"path": "screens/welcome-expanded-320.png"
+		},
+		{
+			"name": "home-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 1414
+			},
+			"sha256": "03dd5f05a807edb973d55d23321cd2e5ae666cf1167482ca13e4575ec2c841d3",
+			"visionReviewed": true,
+			"path": "screens/home-390.png"
+		},
+		{
+			"name": "welcome-expanded-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 1564
+			},
+			"sha256": "868d50f981878923ae87f3a2ad275a8b09b31900d53a23fa460417e37bc57407",
+			"visionReviewed": true,
+			"path": "screens/welcome-expanded-390.png"
+		},
+		{
+			"name": "home-768",
+			"fullPage": false,
+			"viewport": {
+				"width": 768,
+				"height": 1024
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 768,
+				"height": 1538
+			},
+			"sha256": "71b0d435c7ba8305748f458c42c632cee82e5744bf6bf9e78041859069c17a82",
+			"visionReviewed": true,
+			"path": "screens/home-768.png"
+		},
+		{
+			"name": "welcome-expanded-768",
+			"fullPage": false,
+			"viewport": {
+				"width": 768,
+				"height": 1024
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 768,
+				"height": 1642
+			},
+			"sha256": "9591a9e88c664e474288bc8291687f9a8c47477e998b95245687f8aad39f484d",
+			"visionReviewed": true,
+			"path": "screens/welcome-expanded-768.png"
+		},
+		{
+			"name": "home-1440",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1199
+			},
+			"sha256": "1b721e884c811a1a11fd1a30aca8bd43c8edbca76e0f2420a3267b3a24e34c85",
+			"visionReviewed": true,
+			"path": "screens/home-1440.png"
+		},
+		{
+			"name": "welcome-expanded-1440",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1258
+			},
+			"sha256": "4c18d32385d82cf8961f0bcac50fbc89a9dd944ebf529f5958cc02c08fc3c40c",
+			"visionReviewed": true,
+			"path": "screens/welcome-expanded-1440.png"
+		},
+		{
+			"name": "all-reviewed-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 1001
+			},
+			"sha256": "4a852829fabb85db23a346f7f6419ae7d2b2c64f43b98f182f545c6979dfad33",
+			"visionReviewed": true,
+			"path": "screens/all-reviewed-390.png"
+		},
+		{
+			"name": "reviewed-expanded-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 1387
+			},
+			"sha256": "8eab7bb502925d78b329305133f50b0ed9ada3d569f478463b6bd095f6a0f84a",
+			"visionReviewed": true,
+			"path": "screens/reviewed-expanded-390.png"
+		},
+		{
+			"name": "reader-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 6231
+			},
+			"sha256": "3251197de4db00c9914f09f9db3692deca5856a1493909d5a6cd708cf4b0c3e3",
+			"visionReviewed": true,
+			"path": "screens/reader-390.png"
+		},
+		{
+			"name": "reader-1440",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 235
+			},
+			"page": {
+				"width": 1440,
+				"height": 17487
+			},
+			"sha256": "a33016300525b3eb1e663f06cd6d9f4109e873fd411654400979d676af22b3b6",
+			"visionReviewed": true,
+			"path": "screens/reader-1440.png"
+		},
+		{
+			"name": "reader-thumbnails-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 235
+			},
+			"page": {
+				"width": 1440,
+				"height": 17487
+			},
+			"sha256": "c05d3fda33103a2112903e5b0dbfcb02fb1b96aeb741f3a8a07378b346e9d090",
+			"visionReviewed": true,
+			"path": "screens/reader-thumbnails-desktop.png"
+		},
+		{
+			"name": "pdf-no-matches-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 292
+			},
+			"page": {
+				"width": 390,
+				"height": 6231
+			},
+			"sha256": "e8c80f1eb5623ab950a8a925c16ce1328812c080af24dff69f691053559fa20c",
+			"visionReviewed": true,
+			"path": "screens/pdf-no-matches-390.png"
+		},
+		{
+			"name": "questions-list-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "2d94cb086f60e6afe9e643110855da71ec2be5352665abede10a9ab9301ff2cc",
+			"visionReviewed": true,
+			"path": "screens/questions-list-390.png"
+		},
+		{
+			"name": "room-question-compose-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "dc4ecffa9a23cb76481743a49002a3ea6a3968a32af12954a3c6f49658a4a0d7",
+			"visionReviewed": true,
+			"path": "screens/room-question-compose-390.png"
+		},
+		{
+			"name": "conversation-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 885
+			},
+			"sha256": "1ad39510a9d9f166375a015fe0a2473d2bedaf758e321de915516da0d0ecae09",
+			"visionReviewed": true,
+			"path": "screens/conversation-390.png"
+		},
+		{
+			"name": "conversation-draft-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 887
+			},
+			"sha256": "5fca3953e431dcfcf96786b44b7514f5a85ed85766292ec7910159cf907799e6",
+			"visionReviewed": true,
+			"path": "screens/conversation-draft-390.png"
+		},
+		{
+			"name": "requests-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "c0f79282b631e2deca742d1a6b0d987f93d0e976e424c81cd3834394f906fd87",
+			"visionReviewed": true,
+			"path": "screens/requests-390.png"
+		},
+		{
+			"name": "request-detail-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "654f3b3f31505d2ca348d06d8861a60df02b608518b6f7ed64bd42434d0f17bf",
+			"visionReviewed": true,
+			"path": "screens/request-detail-390.png"
+		},
+		{
+			"name": "request-upload-receipt-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "38b7e1b2cb73f76e4de0dcfaba3911ea7a220ac8387b4b70718f7c794e921746",
+			"visionReviewed": true,
+			"path": "screens/request-upload-receipt-390.png"
+		},
+		{
+			"name": "request-receipt-reloaded-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "bfd5019f16d4ddf1305532813a68ca28cb89f3b374eba00f2784a08d8678f0b0",
+			"visionReviewed": true,
+			"path": "screens/request-receipt-reloaded-390.png"
+		},
+		{
+			"name": "owner-overview-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1275
+			},
+			"sha256": "bd613bcf376d27fc8ef826dcf48b7bb5ed2249da1144bab5b845e9b8b6961089",
+			"visionReviewed": true,
+			"path": "screens/owner-overview-desktop.png"
+		},
+		{
+			"name": "owner-rooms-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1000
+			},
+			"sha256": "9443b41adbe783f4dd52d655d3d437314b4168523a293003ab601768641ba0cd",
+			"visionReviewed": true,
+			"path": "screens/owner-rooms-desktop.png"
+		},
+		{
+			"name": "owner-analytics-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1000
+			},
+			"sha256": "40f514748f08877aba4ac81f97d67e3433ad0e1038154eeb60e53a0adf35909c",
+			"visionReviewed": true,
+			"path": "screens/owner-analytics-desktop.png"
+		},
+		{
+			"name": "owner-questions-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1000
+			},
+			"sha256": "f9d0db0ca59e7f92417e76a273ebbd2adb5276fa15f469f4218bb1721aae7bfc",
+			"visionReviewed": true,
+			"path": "screens/owner-questions-desktop.png"
+		},
+		{
+			"name": "owner-requests-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1000
+			},
+			"sha256": "a6bf2ae811aaf55f0f5d5b65834f6ea7ca4c5c4ed32335ce6a6ef0eb89d216ea",
+			"visionReviewed": true,
+			"path": "screens/owner-requests-desktop.png"
+		},
+		{
+			"name": "owner-groups-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1000
+			},
+			"sha256": "a347609848044545000d70b8be288c3d7f9280c58542e539960cb4ee7ba03266",
+			"visionReviewed": true,
+			"path": "screens/owner-groups-desktop.png"
+		},
+		{
+			"name": "owner-investors-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1000
+			},
+			"sha256": "9aef4151a552b295e26231ae317876ba63b033062083682ba231d93d85304de5",
+			"visionReviewed": true,
+			"path": "screens/owner-investors-desktop.png"
+		},
+		{
+			"name": "owner-notifications-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1590
+			},
+			"sha256": "e91673289790e70b064d9b7231d91bdf69af3695750c68268c10a5331e25dcd2",
+			"visionReviewed": true,
+			"path": "screens/owner-notifications-desktop.png"
+		},
+		{
+			"name": "owner-audit-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 3342
+			},
+			"sha256": "2c25331b11cc0bbaba9dbe062d8803171494d9c45d3c20e90b4215eed785a1fd",
+			"visionReviewed": true,
+			"path": "screens/owner-audit-desktop.png"
+		},
+		{
+			"name": "owner-settings-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 1440,
+				"height": 1973
+			},
+			"sha256": "c30325620a4551dcbeef9fdaf5365458491fa65709b6b8c98363c1925a05134a",
+			"visionReviewed": true,
+			"path": "screens/owner-settings-desktop.png"
+		},
+		{
+			"name": "owner-overview-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 1733
+			},
+			"sha256": "0cb93e10e4b73dc493640f76f23735364df6cf57d15cbd0fdcd6e199f001cd38",
+			"visionReviewed": true,
+			"path": "screens/owner-overview-390.png"
+		},
+		{
+			"name": "server-backup-details-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 1825
+			},
+			"sha256": "31cd89c842add6eccfb3fdbda91d9af5d5f4a5059f0c9213bab92b47f6976afb",
+			"visionReviewed": true,
+			"path": "screens/server-backup-details-390.png"
+		},
+		{
+			"name": "owner-folder-dialog-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "d9b78453e16cb9fc9e2fd7ac48345d24364eb0483dc877b3f46564bbebe5f8fe",
+			"visionReviewed": true,
+			"path": "screens/owner-folder-dialog-390.png"
+		},
+		{
+			"name": "owner-pins-editor-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "78c05587934d0f925b578d0e98b87683b36e736fac4e293fb1a5453f5680d689",
+			"visionReviewed": true,
+			"path": "screens/owner-pins-editor-390.png"
+		},
+		{
+			"name": "owner-upload-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 956
+			},
+			"sha256": "727e690e9b020888f135e46dcc962749af2863119b99402ced0aa453815d321b",
+			"visionReviewed": true,
+			"path": "screens/owner-upload-390.png"
+		},
+		{
+			"name": "appearance-edit-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 2289
+			},
+			"sha256": "e62aab4e8e848beabfb5a8d361ba8dfd447fe69471b6f131357f2879ab047ad7",
+			"visionReviewed": true,
+			"path": "screens/appearance-edit-390.png"
+		},
+		{
+			"name": "appearance-fit-preview-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 563
+			},
+			"page": {
+				"width": 390,
+				"height": 2280
+			},
+			"sha256": "dab36f3d2aaee439719b2d096462156dc44f7a6988250846a5c99c66aaa69481",
+			"visionReviewed": true,
+			"path": "screens/appearance-fit-preview-390.png"
+		},
+		{
+			"name": "empty-room-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "39ca05155a06d8daa1ca39ccaffb4ac7940b7600dadecd19a5a7264c20a39187",
+			"visionReviewed": true,
+			"path": "screens/empty-room-390.png"
+		},
+		{
+			"name": "empty-search-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "3e4514f6d35a678f7c2037635b7ea97d7b5d3e26b4b23be7d8ce9f80f700d893",
+			"visionReviewed": true,
+			"path": "screens/empty-search-390.png"
+		},
+		{
+			"name": "questions-empty-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"page": {
+				"width": 390,
+				"height": 844
+			},
+			"sha256": "614217db68914531cca662d1f46c11fe2c618e664ecfe99f9eeccfb010b0fb09",
+			"visionReviewed": true,
+			"path": "screens/questions-empty-390.png"
+		},
+		{
+			"name": "pdf-search-390x500",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 694
+			},
+			"page": {
+				"width": 390,
+				"height": 6236
+			},
+			"sha256": "87632a2cccfc5080db01e9d4a9d837cc0dd4ec29311259e6d48015e91e8ec36b",
+			"visionReviewed": true,
+			"path": "screens/pdf-search-390x500.png"
+		},
+		{
+			"name": "pdf-search-320x500",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 603
+			},
+			"page": {
+				"width": 320,
+				"height": 5177
+			},
+			"sha256": "8f38ab8c7a8a9c4a1b69ed144fe549f48da2d07963f671ba2f4a42c5983d0c73",
+			"visionReviewed": true,
+			"path": "screens/pdf-search-320x500.png"
+		},
+		{
+			"name": "pdf-reader-options-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 971
+			},
+			"page": {
+				"width": 320,
+				"height": 5177
+			},
+			"sha256": "68eb04fa62eb674e5c5d02d109261dcf25e0aa149434a87d588506fba50ec7f7",
+			"visionReviewed": true,
+			"path": "screens/pdf-reader-options-320.png"
+		},
+		{
+			"name": "pdf-search-cleared-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 1142
+			},
+			"page": {
+				"width": 320,
+				"height": 6228
+			},
+			"sha256": "544d28b9761c67c5ed95bbf2fc0f4e7b9c84f675dc912c95436036e8c6ab9372",
+			"visionReviewed": true,
+			"path": "screens/pdf-search-cleared-320.png"
+		}
+	]
+}

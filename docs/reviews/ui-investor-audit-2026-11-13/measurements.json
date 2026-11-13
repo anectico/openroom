@@ -1,0 +1,21 @@
+{
+	"metrics": {
+		"mobileHome": {
+			"height": 1935,
+			"viewport": 844,
+			"pinsTop": 735.25,
+			"filesTop": 1129.25
+		},
+		"thumbnails": {
+			"height": 930,
+			"bottom": 1106,
+			"viewport": 844
+		},
+		"reader320": {
+			"viewport": 740,
+			"overflow": false,
+			"toolbarHeight": [162]
+		}
+	},
+	"errors": []
+}

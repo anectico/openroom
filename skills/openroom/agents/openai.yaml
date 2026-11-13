@@ -1,0 +1,4 @@
+interface:
+  display_name: OpenRoom
+  short_description: Install and operate an investor data room
+  default_prompt: Use $openroom to manage my OpenRoom data room through its current MCP tools and runbooks.

@@ -1,0 +1,1117 @@
+{
+	"assertions": [
+		{
+			"name": "Owner login",
+			"ok": true
+		},
+		{
+			"name": "home-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Complete first card visible at 320x740",
+			"ok": true
+		},
+		{
+			"name": "home-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "home-768 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "home-1440 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "welcome-expanded-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Welcome expansion remembered on reload",
+			"ok": true
+		},
+		{
+			"name": "Welcome collapse remembered",
+			"ok": true
+		},
+		{
+			"name": "Review saved on reload",
+			"ok": true
+		},
+		{
+			"name": "reviewed-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Undo persisted",
+			"ok": true
+		},
+		{
+			"name": "Expand all pins",
+			"ok": true
+		},
+		{
+			"name": "all-pins-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "folder-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Outline explicitly labeled",
+			"ok": true
+		},
+		{
+			"name": "Mobile file sizes visible",
+			"ok": true
+		},
+		{
+			"name": "search-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Title search results",
+			"ok": true
+		},
+		{
+			"name": "search-empty-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "pdf-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Send question phone target 44px",
+			"ok": true
+		},
+		{
+			"name": "Cancel phone target 44px",
+			"ok": true
+		},
+		{
+			"name": "Close phone target 44px",
+			"ok": true
+		},
+		{
+			"name": "pdf-ask-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "pdf-ask-sent-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "pdf-search-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "pdf-match-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "pdf-pages-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "pdf-completion-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "pdf-1440 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "questions-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "question-compose-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "home-attention-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Unread reply attention is a link",
+			"ok": true
+		},
+		{
+			"name": "question-thread-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "requests-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "request-detail-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "request-receipt-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "appearance-desktop no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Desktop edit fields visible",
+			"ok": true
+		},
+		{
+			"name": "Desktop preview visible",
+			"ok": true
+		},
+		{
+			"name": "Preview inherits workspace accent",
+			"ok": true
+		},
+		{
+			"name": "appearance-phone-preview-desktop no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "appearance-requests-preview no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "appearance-questions-preview no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "appearance-edit-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "appearance-preview-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Edit fields hidden in phone preview",
+			"ok": true
+		},
+		{
+			"name": "appearance-entry-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Save from preview tab",
+			"ok": true
+		},
+		{
+			"name": "Invalid required field returns to Edit",
+			"ok": true
+		},
+		{
+			"name": "Cancel restores name",
+			"ok": true
+		},
+		{
+			"name": "appearance-invalid-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Invalid color error",
+			"ok": true
+		},
+		{
+			"name": "Full screen personal editor at 320",
+			"ok": true
+		},
+		{
+			"name": "link-editor-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "personal-edit-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "personal-preview-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Personal Markdown strips executable markup",
+			"ok": true
+		},
+		{
+			"name": "Unsafe Markdown URL excluded",
+			"ok": true
+		},
+		{
+			"name": "Draft retained across tabs",
+			"ok": true
+		},
+		{
+			"name": "Personal welcome saved from preview",
+			"ok": true
+		},
+		{
+			"name": "link-editor-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "link-editor-desktop no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Allowed pin visible",
+			"ok": true
+		},
+		{
+			"name": "Hidden pin absent",
+			"ok": true
+		},
+		{
+			"name": "restricted-home-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Hidden file fetch denied",
+			"ok": true
+		},
+		{
+			"name": "Real owner preview banner",
+			"ok": true
+		},
+		{
+			"name": "Owner preview cannot mark reviewed",
+			"ok": true
+		},
+		{
+			"name": "owner-preview-desktop no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "entry-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Entry input/button 44px",
+			"ok": true
+		},
+		{
+			"name": "Entry input/button 44px",
+			"ok": true
+		},
+		{
+			"name": "Unfocused light control border contrast 3.36",
+			"ok": true
+		},
+		{
+			"name": "entry-dark-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Unfocused dark control border contrast 4.93",
+			"ok": true
+		},
+		{
+			"name": "Owner login",
+			"ok": true
+		},
+		{
+			"name": "Other unverified session does not inherit review",
+			"ok": true
+		},
+		{
+			"name": "New version resets review",
+			"ok": true
+		},
+		{
+			"name": "Version explanation present",
+			"ok": true
+		},
+		{
+			"name": "new-version-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Revised long welcome starts collapsed",
+			"ok": true
+		},
+		{
+			"name": "HTML in welcome is plain text",
+			"ok": true
+		},
+		{
+			"name": "Unsafe welcome URL rejected",
+			"ok": true
+		},
+		{
+			"name": "Welcome excerpt decodes entities",
+			"ok": true
+		},
+		{
+			"name": "long-welcome-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "long-welcome-expanded-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "zip-ready-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Real ZIP downloaded",
+			"ok": true
+		},
+		{
+			"name": "password-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "password-error-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Personal note not visible before NDA",
+			"ok": true
+		},
+		{
+			"name": "nda-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Personal note appears after gates",
+			"ok": true
+		},
+		{
+			"name": "gated-home-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Revoked open session cannot fetch file",
+			"ok": true
+		},
+		{
+			"name": "revoked-link-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 0",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 1",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 2",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 3",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 4",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 5",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 6",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 7",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 8",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 9",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 10",
+			"ok": true
+		},
+		{
+			"name": "Dialog contains keyboard focus 11",
+			"ok": true
+		},
+		{
+			"name": "Escape restores editor trigger focus",
+			"ok": true
+		},
+		{
+			"name": "Other link cannot open private request",
+			"ok": true
+		},
+		{
+			"name": "Hidden file review rejected",
+			"ok": true
+		},
+		{
+			"name": "workspace-settings-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "workspace-settings-desktop no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "appearance-desktop-lower no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "appearance-preview-full-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "No uncaught browser page errors",
+			"ok": true
+		},
+		{
+			"name": "Owner login",
+			"ok": true
+		},
+		{
+			"name": "Final real ZIP download",
+			"ok": true
+		},
+		{
+			"name": "Sign out and re-enter invitation",
+			"ok": true
+		},
+		{
+			"name": "returning-home-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Real image fixture exists",
+			"ok": true
+		},
+		{
+			"name": "image-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "image viewer loaded",
+			"ok": true
+		},
+		{
+			"name": "Real video fixture exists",
+			"ok": true
+		},
+		{
+			"name": "video-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "video viewer loaded",
+			"ok": true
+		},
+		{
+			"name": "Real download fixture exists",
+			"ok": true
+		},
+		{
+			"name": "download-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "download viewer loaded",
+			"ok": true
+		},
+		{
+			"name": "mixed-search-390 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "reviewed-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Reviewed guide number does not wrap",
+			"ok": true
+		},
+		{
+			"name": "Clear search target 44px",
+			"ok": true
+		},
+		{
+			"name": "search-empty-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Appearance error visible in phone viewport",
+			"ok": true
+		},
+		{
+			"name": "appearance-invalid-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Singular document count",
+			"ok": true
+		},
+		{
+			"name": "Singular folder count",
+			"ok": true
+		},
+		{
+			"name": "restricted-home-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "owner-preview-desktop no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "PDF canvas refits from phone to desktop",
+			"ok": true
+		},
+		{
+			"name": "pdf-1440 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "entry-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "entry-dark-focus-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "entry-dark-320 no horizontal overflow",
+			"ok": true
+		},
+		{
+			"name": "Final browser page errors absent",
+			"ok": true
+		},
+		{
+			"name": "update_branding recorded in audit log",
+			"ok": true
+		},
+		{
+			"name": "update_link recorded in audit log",
+			"ok": true
+		},
+		{
+			"name": "upload_inline recorded in audit log",
+			"ok": true
+		},
+		{
+			"name": "create_link recorded in audit log",
+			"ok": true
+		},
+		{
+			"name": "reply_to_conversation recorded in audit log",
+			"ok": true
+		}
+	],
+	"browserErrors": [],
+	"contrastAgainstCard": {
+		"light": 3.3590144171522933,
+		"dark": 4.929673369673192
+	},
+	"screenshots": [
+		{
+			"name": "all-pins-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "all-pins-320.png",
+			"visionInspected": true,
+			"sha256": "dba8909b019940bf72f9f9e6c016d974c8e3d97058b55c4a70d0150004021b62"
+		},
+		{
+			"name": "appearance-desktop-lower",
+			"width": 1440,
+			"fullPage": false,
+			"file": "appearance-desktop-lower.png",
+			"visionInspected": true,
+			"sha256": "3e76d061e1f0aca83c9c7eeb073e57837a5f6266ed40e4dda2edfcc4daa49f46"
+		},
+		{
+			"name": "appearance-desktop",
+			"width": 1440,
+			"fullPage": false,
+			"file": "appearance-desktop.png",
+			"visionInspected": true,
+			"sha256": "87869f8f8972fa76af989b1927fcb30332440a650d4663ea6954216215129614"
+		},
+		{
+			"name": "appearance-edit-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "appearance-edit-320.png",
+			"visionInspected": true,
+			"sha256": "05074a97810c6ae225ca6ff506eedec8375f64fa105bb6983476ff021180268a"
+		},
+		{
+			"name": "appearance-entry-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "appearance-entry-320.png",
+			"visionInspected": true,
+			"sha256": "26b227ed6419d8b50c6927ea4274967fd74db9d829e92591215755b805c4dc05"
+		},
+		{
+			"name": "appearance-invalid-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "appearance-invalid-320.png",
+			"visionInspected": true,
+			"sha256": "8d59c126f881b862028c6de97cb9125d187dfecf196e618fd918927fff518928"
+		},
+		{
+			"name": "appearance-phone-preview-desktop",
+			"width": 1440,
+			"fullPage": false,
+			"file": "appearance-phone-preview-desktop.png",
+			"visionInspected": true,
+			"sha256": "7a1a1a7d27109fff38d63aea837f90bf6484964851a9cc967c6514dab2ae4f06"
+		},
+		{
+			"name": "appearance-preview-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "appearance-preview-320.png",
+			"visionInspected": true,
+			"sha256": "49e7abac62f6d616856105f9c252940815a2c9353a453b305183f106e3f48eb5"
+		},
+		{
+			"name": "appearance-preview-full-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "appearance-preview-full-320.png",
+			"visionInspected": true,
+			"sha256": "0431f0b71da5815a7a2781111c6456f5aabb2b173ed74626f60c3c9945ae94b8"
+		},
+		{
+			"name": "appearance-questions-preview",
+			"width": 1440,
+			"fullPage": false,
+			"file": "appearance-questions-preview.png",
+			"visionInspected": true,
+			"sha256": "60bee782c40c908cb23b3824c54db7bda9d19341e98b879d6415d12ca0ecdca3"
+		},
+		{
+			"name": "appearance-requests-preview",
+			"width": 1440,
+			"fullPage": false,
+			"file": "appearance-requests-preview.png",
+			"visionInspected": true,
+			"sha256": "1873ac6798c204ab3b27f290f8943c6b2d04aa4aca832cab57ffaf1252177465"
+		},
+		{
+			"name": "download-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "download-390.png",
+			"visionInspected": true,
+			"sha256": "852df3453e562291681e0694ada1b592284cff3f5bef4d1349f4ab2be4602844"
+		},
+		{
+			"name": "entry-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "entry-320.png",
+			"visionInspected": true,
+			"sha256": "27133bb1be491216a0e4f60e0688bd0f1521f339db75d98354c1460fbf45bdc9"
+		},
+		{
+			"name": "entry-dark-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "entry-dark-320.png",
+			"visionInspected": true,
+			"sha256": "38593c6d3821b76e1cc491d0ad0711d33d103624cc8480c737dbb551ef5ea2fc"
+		},
+		{
+			"name": "entry-dark-focus-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "entry-dark-focus-320.png",
+			"visionInspected": true,
+			"sha256": "e5454621f36a7f511507c299d2d982654b959b5746e42a3f483da50ae40c9a98"
+		},
+		{
+			"name": "folder-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "folder-320.png",
+			"visionInspected": true,
+			"sha256": "97e24915dcfd8c3712308491c021632a361fa73e41c1df9abdce3570a714c933"
+		},
+		{
+			"name": "gated-home-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "gated-home-320.png",
+			"visionInspected": true,
+			"sha256": "b48f8e6dc0fec0169842c461d1a506fbb142c53b358adc4d979531c831dc57b3"
+		},
+		{
+			"name": "home-1440",
+			"width": 1440,
+			"fullPage": true,
+			"file": "home-1440.png",
+			"visionInspected": true,
+			"sha256": "a7a838447bdeacad3063a2bf92bbd4a2370c6f55951b5e4d4f531695c4653bb1"
+		},
+		{
+			"name": "home-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "home-320.png",
+			"visionInspected": true,
+			"sha256": "13ed129e35b7ef6d228f00f683d534f0241670f5fa2bd897a7b8f87e1bf7f6dc"
+		},
+		{
+			"name": "home-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "home-390.png",
+			"visionInspected": true,
+			"sha256": "f5227a2bbcf2377c05b28a808c5711f91392b82f06b9949f423cf09f3c66935b"
+		},
+		{
+			"name": "home-768",
+			"width": 768,
+			"fullPage": true,
+			"file": "home-768.png",
+			"visionInspected": true,
+			"sha256": "9088cb3f3c5922eb8fcce5ff0b2a42054aecd95049b2c20c64cd08cce2fcf2e5"
+		},
+		{
+			"name": "home-attention-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "home-attention-390.png",
+			"visionInspected": true,
+			"sha256": "3b435f73fa0048c9af98e5023d260dc2318795de47e1c7448a9105c1fe183b6c"
+		},
+		{
+			"name": "image-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "image-390.png",
+			"visionInspected": true,
+			"sha256": "15121dcc64178da7a3a5a1e579dd8bcd7efb9e6d48eb291d988bb3580901baaa"
+		},
+		{
+			"name": "link-editor-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "link-editor-320.png",
+			"visionInspected": true,
+			"sha256": "18ac73f8bbc8798f83b2a81370d163aeac0059b7dc2c841e5ef6dd9eeda005e9"
+		},
+		{
+			"name": "link-editor-390",
+			"width": 390,
+			"fullPage": false,
+			"file": "link-editor-390.png",
+			"visionInspected": true,
+			"sha256": "a50a61f8b3d2dffd058df4246412a49c2648504dfd90043a5ce91a2881dd96be"
+		},
+		{
+			"name": "link-editor-desktop",
+			"width": 1440,
+			"fullPage": false,
+			"file": "link-editor-desktop.png",
+			"visionInspected": true,
+			"sha256": "9d401a1e1dbf774052fd506d1e21cebd5b3d8a521871f7cd6eaac16baa320b80"
+		},
+		{
+			"name": "long-welcome-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "long-welcome-390.png",
+			"visionInspected": true,
+			"sha256": "6c5d6c4e14dbe6fc8e00b7d06b022c249345efbaa2308e6569e0ba99f57d5f39"
+		},
+		{
+			"name": "long-welcome-expanded-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "long-welcome-expanded-390.png",
+			"visionInspected": true,
+			"sha256": "68d46340d40956adc87e4d8736afa703a073fd370729f7e6b6de5157248a5b99"
+		},
+		{
+			"name": "mixed-search-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "mixed-search-390.png",
+			"visionInspected": true,
+			"sha256": "0448ad60d320dd329d7386b1851ad2a72c15c164b154a10ce5899671f885726e"
+		},
+		{
+			"name": "nda-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "nda-320.png",
+			"visionInspected": true,
+			"sha256": "27d61cf4a84e9b99c08370d16a51516ed9a2aae1ebf3f1c9d4af6a0480ee07bc"
+		},
+		{
+			"name": "new-version-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "new-version-390.png",
+			"visionInspected": true,
+			"sha256": "346906fed3b6c557ebcfa413f3d1878892e320cd3c01d9aa45efbba3aca9b18c"
+		},
+		{
+			"name": "owner-preview-desktop",
+			"width": 1440,
+			"fullPage": true,
+			"file": "owner-preview-desktop.png",
+			"visionInspected": true,
+			"sha256": "79963334ae97a46dd10795919b6cedef4a1884a37463a89088890443eb14aa72"
+		},
+		{
+			"name": "password-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "password-320.png",
+			"visionInspected": true,
+			"sha256": "51da76744b284a223ddb7013da2f9e8bde6b9891144cbd3620a56d1985741fad"
+		},
+		{
+			"name": "password-error-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "password-error-320.png",
+			"visionInspected": true,
+			"sha256": "c2348896e46fe6a74deb8e63591f33a1515425ab1c0d1840d5ada80b29760027"
+		},
+		{
+			"name": "pdf-1440",
+			"width": 1440,
+			"fullPage": false,
+			"file": "pdf-1440.png",
+			"visionInspected": true,
+			"sha256": "4197abdd972237bcbb48adb5c08f7d8d1245f9ff67f64903a22f989a2411f887"
+		},
+		{
+			"name": "pdf-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "pdf-320.png",
+			"visionInspected": true,
+			"sha256": "93cec4af6faf0e5179fc63ddab4b2b88408b28d2a245bcf7ea2bd03d389f651f"
+		},
+		{
+			"name": "pdf-ask-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "pdf-ask-320.png",
+			"visionInspected": true,
+			"sha256": "4d82dda39b922baa1619500bc8b4af2ca57dba6704fc6497e6a835fd42989d16"
+		},
+		{
+			"name": "pdf-ask-sent-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "pdf-ask-sent-320.png",
+			"visionInspected": true,
+			"sha256": "46d4d94517490e6689319e290769fb73f639464c66470bcf48d7a86165fd2b3a"
+		},
+		{
+			"name": "pdf-completion-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "pdf-completion-320.png",
+			"visionInspected": true,
+			"sha256": "5da39525220abbb4b01e706d3d1a9b0011ee74afedc1fbf8cb14b3c4e29197a4"
+		},
+		{
+			"name": "pdf-match-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "pdf-match-320.png",
+			"visionInspected": true,
+			"sha256": "050c70317d49a60a859948a96b08b5ec42df9a1df2bc47a22bd4afc1ac7e6d23"
+		},
+		{
+			"name": "pdf-pages-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "pdf-pages-320.png",
+			"visionInspected": true,
+			"sha256": "733917c945655862264f82588c0aff7259e382be02bf53ca4e915b8cccbce560"
+		},
+		{
+			"name": "pdf-search-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "pdf-search-320.png",
+			"visionInspected": true,
+			"sha256": "34beb04af55b1774ce92a63ab6f51434d481fe217d3389d389a25c9d11467c7e"
+		},
+		{
+			"name": "personal-edit-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "personal-edit-320.png",
+			"visionInspected": true,
+			"sha256": "c4e345177ead9ce5bcde25c8e7efa255eb2b6bc3bf9c2c8406dbdedffcf74591"
+		},
+		{
+			"name": "personal-preview-320",
+			"width": 320,
+			"fullPage": false,
+			"file": "personal-preview-320.png",
+			"visionInspected": true,
+			"sha256": "80a6221398364bec592678bf7552b2e8e5a16fde420cd9088a775cdd2240e5a9"
+		},
+		{
+			"name": "question-compose-390",
+			"width": 390,
+			"fullPage": false,
+			"file": "question-compose-390.png",
+			"visionInspected": true,
+			"sha256": "decbf5275ae4566c8159c138b282f758d9a76113665675b0774163c690c0ccab"
+		},
+		{
+			"name": "question-thread-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "question-thread-390.png",
+			"visionInspected": true,
+			"sha256": "38978b7c4f1e61207e3af4c688c8e16503569a4dcea946918d77e8ab67f40388"
+		},
+		{
+			"name": "questions-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "questions-390.png",
+			"visionInspected": true,
+			"sha256": "c1d90963527f5b666d01ccbd31821a91fe28568c1eca37321957ca7765ea8a55"
+		},
+		{
+			"name": "request-detail-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "request-detail-390.png",
+			"visionInspected": true,
+			"sha256": "affb238f8065bda360a286667513eb6ee4dff99c2020ce643173927ca23eaa48"
+		},
+		{
+			"name": "request-receipt-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "request-receipt-390.png",
+			"visionInspected": true,
+			"sha256": "4c31ef523356977d397c98f2bdacb057688a88fc40ca3f03547a53851b350890"
+		},
+		{
+			"name": "requests-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "requests-390.png",
+			"visionInspected": true,
+			"sha256": "cd9792cc2e30300d9a18f1c97e2b02de31d3a237bb8f3e199ee98d79c0b69ec6"
+		},
+		{
+			"name": "restricted-home-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "restricted-home-320.png",
+			"visionInspected": true,
+			"sha256": "cf199e7755693ed79ba195aef3de961d46aca6c311094bf2c1b76898732b9e13"
+		},
+		{
+			"name": "returning-home-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "returning-home-390.png",
+			"visionInspected": true,
+			"sha256": "5acf1508c22bdd5794c605114b30bf544b6555943930d3fb23e6535967866ecb"
+		},
+		{
+			"name": "reviewed-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "reviewed-320.png",
+			"visionInspected": true,
+			"sha256": "070dfb1345202c4f5bcd4ae02a00f00e9753de4e23a373741c99da2f9a4be43a"
+		},
+		{
+			"name": "revoked-link-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "revoked-link-320.png",
+			"visionInspected": true,
+			"sha256": "9a03d0d083227b1d7b54005d41496f9ecc0d27de45861306b5e69927a268fd6b"
+		},
+		{
+			"name": "search-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "search-320.png",
+			"visionInspected": true,
+			"sha256": "9a9477c4bd61fc00d9cc9956c2ea54d60d186080cebbebaeb11966c460991830"
+		},
+		{
+			"name": "search-empty-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "search-empty-320.png",
+			"visionInspected": true,
+			"sha256": "27780d62b8dc675a55754da6885013331fba1b00eb92c3176d3ee989191c1e1e"
+		},
+		{
+			"name": "video-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "video-390.png",
+			"visionInspected": true,
+			"sha256": "81bc89cfa254de43ee4a9ea28c7603cddbeb4b50938e3c9ab0d7f755e58acfd2"
+		},
+		{
+			"name": "welcome-expanded-320",
+			"width": 320,
+			"fullPage": true,
+			"file": "welcome-expanded-320.png",
+			"visionInspected": true,
+			"sha256": "53564c121a6804eeca22f6b6d6d6dc3ba8f91cd1a2c5a75731f40f8670c11fd7"
+		},
+		{
+			"name": "workspace-settings-390",
+			"width": 390,
+			"fullPage": true,
+			"file": "workspace-settings-390.png",
+			"visionInspected": true,
+			"sha256": "e71e017f64bb35249698ad0661bd9245003433ecd9fa5bb2f5d5c8be0f1f5689"
+		},
+		{
+			"name": "workspace-settings-desktop",
+			"width": 1440,
+			"fullPage": true,
+			"file": "workspace-settings-desktop.png",
+			"visionInspected": true,
+			"sha256": "e789d43caff0e2293638ecf36560b483f7b017b2df67e3972fdfd00b8ca55ece"
+		},
+		{
+			"name": "zip-ready-390",
+			"width": 390,
+			"fullPage": false,
+			"file": "zip-ready-390.png",
+			"visionInspected": true,
+			"sha256": "72dcd3d1fd20e165d951b9195783c190ca66eb59fb4f7f45d7d5f0342e262023"
+		}
+	],
+	"environment": "Built app, Chromium, Node 24.21.0, disposable SQLite and disk storage; synthetic investor content.",
+	"scope": "UI and affected investor flows. Not a complete release, WCAG, SMTP, S3 or cross-browser certification."
+}

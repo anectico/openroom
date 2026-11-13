@@ -1,0 +1,238 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+OPENROOM_DIR="${OPENROOM_DIR:-/opt/openroom}"
+ENV_FILE="$OPENROOM_DIR/.env"
+REPO="anectico/openroom"
+IMAGE_REPO="ghcr.io/anectico/openroom"
+
+die() { echo "openroom-server: $*" >&2; exit 1; }
+compose() { docker compose --project-directory "$OPENROOM_DIR" -f "$OPENROOM_DIR/docker-compose.yml" "$@"; }
+env_get() { grep -E "^$1=" "$ENV_FILE" | tail -n1 | cut -d= -f2- || true; }
+env_set() {
+	local key="$1" value="$2" tmp
+	tmp="$(mktemp)"
+	grep -vE "^$key=" "$ENV_FILE" > "$tmp" || true
+	printf '%s=%s\n' "$key" "$value" >> "$tmp"
+	cat "$tmp" > "$ENV_FILE"
+	rm -f "$tmp"
+}
+env_unset() {
+	local tmp
+	tmp="$(mktemp)"
+	grep -vE "^$1=" "$ENV_FILE" > "$tmp" || true
+	cat "$tmp" > "$ENV_FILE"
+	rm -f "$tmp"
+}
+in_app() {
+	if [[ -n "$(compose ps -q --status running app 2>/dev/null)" ]]; then
+		compose exec -T app node src/launcher/tools.ts "$@"
+	else
+		compose run --rm --no-deps -T --entrypoint node app src/launcher/tools.ts "$@"
+	fi
+}
+confirm() {
+	[[ "${YES:-0}" == "1" ]] && return 0
+	read -r -p "$1 [y/N] " answer
+	[[ "$answer" =~ ^[Yy]$ ]]
+}
+
+wait_healthy() {
+	local id status
+	for _ in $(seq 1 90); do
+		id="$(compose ps -q app 2>/dev/null || true)"
+		status="$(docker inspect --format '{{.State.Health.Status}}' "$id" 2>/dev/null || echo starting)"
+		[[ "$status" == "healthy" ]] && return 0
+		[[ "$status" == "unhealthy" ]] && break
+		sleep 2
+	done
+	compose logs --tail 40 app >&2 || true
+	die "the app did not become healthy"
+}
+
+stop_app() { compose stop -t 60 app; }
+ensure_image() { docker image inspect "$1" >/dev/null 2>&1 || docker pull "$1" >/dev/null; }
+
+latest_version() {
+	curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" 2>/dev/null | grep -m1 '"tag_name"' | cut -d'"' -f4 || true
+}
+
+refresh_deploy_files() {
+	local tag="$1" source="${2:-}" base tmp
+	base="https://raw.githubusercontent.com/$REPO/$tag/deploy"
+	tmp="$(mktemp -d)"
+	for f in docker-compose.yml Caddyfile openroom-server; do
+		if [[ -n "$source" ]]; then
+			[[ "$source" == /* ]] || die "--source must be an absolute deploy folder"
+			cp "$source/$f" "$tmp/$f"
+		else
+			curl -fsSL "$base/$f" -o "$tmp/$f" || { rm -rf "$tmp"; die "could not download $f for $tag"; }
+		fi
+	done
+	cp "$tmp/docker-compose.yml" "$OPENROOM_DIR/docker-compose.yml"
+	cp "$tmp/Caddyfile" "$OPENROOM_DIR/Caddyfile"
+	install -m 755 "$tmp/openroom-server" /usr/local/bin/openroom-server
+	rm -rf "$tmp"
+}
+
+cmd_update() {
+	local version="" source="" current next
+	while [[ $# -gt 0 ]]; do
+		case "$1" in
+			--source) source="$2"; shift 2 ;;
+			--*) die "unknown update option $1" ;;
+			*) [[ -z "$version" ]] || die "give one version"; version="$1"; shift ;;
+		esac
+	done
+	[[ -n "$version" ]] || version="$(latest_version)"
+	[[ -n "$version" ]] || die "could not find the latest version; pass one: openroom-server update v1.2.3"
+	version="v${version#v}"
+	current="$(env_get OPENROOM_IMAGE)"
+	next="$IMAGE_REPO:${version#v}"
+	[[ "$current" == "$next" ]] && { echo "Already on $next."; return 0; }
+	ensure_image "$next"
+	refresh_deploy_files "$version" "$source"
+	echo "Updating $current -> $next"
+	stop_app
+	env_set OPENROOM_PREVIOUS_IMAGE "$current"
+	env_set OPENROOM_IMAGE "$next"
+	compose up -d
+	wait_healthy
+	cmd_doctor || true
+}
+
+cmd_rollback() {
+	local current previous journal plan action capabilities
+	current="$(env_get OPENROOM_IMAGE)"
+	previous="$(env_get OPENROOM_PREVIOUS_IMAGE)"
+	[[ -n "$previous" ]] || die "there is no previous version to roll back to"
+	ensure_image "$previous"
+	journal="$(mktemp)"
+	docker run --rm --entrypoint cat "$previous" migrations/meta/_journal.json > "$journal"
+	plan="$(in_app rollback-plan - < "$journal")"
+	if printf '%s' "$plan" | grep -q '"requiresS3":true'; then
+		capabilities="$(docker run --rm --entrypoint node "$previous" src/launcher/tools.ts capabilities 2>/dev/null || true)"
+		printf '%s' "$capabilities" | grep -q '"s3":true' || die "the previous image cannot confirm S3 support. Keep the current image and bucket; rolling back would make stored documents unavailable."
+	fi
+	action="$(printf '%s' "$plan" | sed -n 's/.*"action":"\([a-z]*\)".*/\1/p')"
+	echo "Rolling back $current -> $previous"
+	if [[ "$action" == "swap" ]]; then
+		echo "The database goes back to the snapshot taken before the update. Every change made since then is discarded:"
+		echo "$plan"
+	else
+		echo "The previous version can read the current database; no data is discarded."
+	fi
+	confirm "Continue?" || { echo "Cancelled."; rm -f "$journal"; return 1; }
+	stop_app
+	if [[ "$action" == "swap" ]]; then
+		trap 'in_app cancel-rollback >/dev/null 2>&1 || true; echo "openroom-server: rollback failed; nothing was swapped. Start again with: openroom-server update ${current##*:}" >&2' ERR
+		in_app rollback-plan - --apply < "$journal" >/dev/null
+	fi
+	rm -f "$journal"
+	env_set OPENROOM_IMAGE "$previous"
+	env_set OPENROOM_PREVIOUS_IMAGE "$current"
+	trap - ERR
+	compose up -d
+	wait_healthy
+	cmd_doctor || true
+}
+
+cmd_doctor() {
+ local domain code app_json app_status=0 containers_ok=false host_json image result
+ domain="$(env_get DOMAIN)"
+ code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "https://$domain/healthz" || true)"
+ if [[ -n "$(compose ps -q --status running app 2>/dev/null)" && -n "$(compose ps -q --status running caddy 2>/dev/null)" ]]; then containers_ok=true; fi
+ app_json="$(in_app doctor --json)" || app_status=$?
+ [[ -n "$app_json" ]] || app_json='[]'
+ host_json="$(printf '[{"name":"containers","ok":%s,"detail":"App and Caddy running","fix":"Run docker compose ps and inspect the app and Caddy logs."},{"name":"HTTPS","ok":%s,"detail":"https://%s/healthz returned %s","fix":"Point the domain at this server, open ports 80 and 443, and inspect Caddy certificate logs."}]' "$containers_ok" "$([[ "$code" == '200' ]] && echo true || echo false)" "$domain" "${code:-unreachable}")"
+ image="$(env_get OPENROOM_IMAGE)"
+ result="$(docker run --rm --entrypoint node "$image" -e 'const app=JSON.parse(process.argv[2]);const checks=[...JSON.parse(process.argv[1]),...app];if(!app.length)checks.push({name:"app doctor",ok:false,detail:"App checks could not be read",fix:"Inspect openroom-server logs and run doctor again."});console.log(JSON.stringify(checks));' "$host_json" "$app_json")"
+ if [[ "${1:-}" == "--json" ]]; then
+  printf '%s\n' "$result"
+ else
+  docker run --rm --entrypoint node "$image" -e 'for(const c of JSON.parse(process.argv[1]))console.log(`${c.ok?"ok  ":"FAIL"} ${c.name}: ${c.detail}${!c.ok&&c.fix?`\n     ${c.fix}`:""}`);' "$result"
+ fi
+ if [[ "$containers_ok" == 'true' && "$code" == '200' && "$app_status" == '0' ]]; then return 0; else return 2; fi
+}
+
+cmd_set_domain() {
+	local domain="${1:-}"
+	[[ -n "$domain" ]] || die "usage: openroom-server set-domain dataroom.example.com"
+	[[ "$domain" =~ ^[A-Za-z0-9.-]+$ ]] || die "not a domain name: $domain"
+	env_set DOMAIN "$domain"
+	compose up -d
+	wait_healthy
+	cmd_doctor || true
+}
+
+cmd_restore() {
+	local at="" from="file:///data/replica"
+	while [[ $# -gt 0 ]]; do
+		case "$1" in
+			--at) at="$2"; shift 2 ;;
+			--from) from="$2"; shift 2 ;;
+			*) die "unknown option $1" ;;
+		esac
+	done
+	[[ "$from" == "file:///data/replica" || "$from" =~ ^s3://[a-z0-9.-]+/db$ ]] || die "--from must be file:///data/replica or s3://bucket/db"
+	[[ "$at" != *$'\n'* && "$at" != *$'\r'* && "$at" != *"'"* ]] || die "--at cannot contain line breaks or single quotes"
+	if compose run --rm --no-deps --entrypoint test app -e /data/db/openroom.db; then
+		die "this install already has a database; restore runs on a fresh install only"
+	fi
+	echo "Restoring from $from${at:+ at $at}. The old server must be stopped first, or both will write to the same replica."
+	confirm "Continue?" || { echo "Cancelled."; return 1; }
+	env_set RESTORE_FROM "'$from'"
+	if [[ -n "$at" ]]; then env_set RESTORE_AT "'$at'"; else env_unset RESTORE_AT; fi
+	compose up -d
+	wait_healthy
+	in_app verify-restore
+	env_unset RESTORE_FROM
+	env_unset RESTORE_AT
+	if [[ "$from" == s3://* ]]; then
+		for key in S3_BUCKET S3_REGION S3_ENDPOINT S3_ACCESS_KEY_ID S3_SECRET_ACCESS_KEY S3_FORCE_PATH_STYLE; do env_unset "$key"; done
+	fi
+	compose up -d
+	wait_healthy
+	in_app verify-restore
+	cmd_doctor || true
+}
+
+usage() {
+	cat <<'USAGE'
+Usage: openroom-server <command> [--yes]
+
+  update [version] [--source DIR]
+                       pull a new version and restart (local deploy folder for offline validation)
+  rollback              go back to the previous version, restoring the database if needed
+  doctor [--json]       check containers, disk, HTTPS, the database and backups
+  set-domain <domain>   switch to your own domain
+  restore [--at TIME] [--from URL]
+                       restore a fresh data volume using the existing secret key
+  reset-password EMAIL  print a one-time link that sets a member's new password
+  create-api-key EMAIL  print a new API key for that member [--name NAME] [--json]
+  cancel-rollback       drop a pending rollback so the next start keeps the current database
+  logs                  follow the app's logs
+USAGE
+}
+
+[[ -f "$ENV_FILE" ]] || die "no OpenRoom install found in $OPENROOM_DIR"
+YES=0
+args=()
+for a in "$@"; do
+	if [[ "$a" == "--yes" || "$a" == "-y" ]]; then YES=1; else args+=("$a"); fi
+done
+set -- "${args[@]+"${args[@]}"}"
+command="${1:-}"
+shift || true
+case "$command" in
+	update) cmd_update "$@" ;;
+	rollback) cmd_rollback ;;
+	doctor) cmd_doctor "$@" ;;
+	set-domain) cmd_set_domain "$@" ;;
+	restore) cmd_restore "$@" ;;
+	reset-password) [[ -n "${1:-}" ]] || die "usage: reset-password EMAIL"; in_app reset-password "$@" ;;
+	create-api-key) [[ -n "${1:-}" ]] || die "usage: create-api-key EMAIL [--name NAME]"; in_app create-api-key "$@" ;;
+	cancel-rollback) in_app cancel-rollback ;;
+	logs) compose logs -f app ;;
+	*) usage; [[ -z "$command" ]] || exit 64 ;;
+esac

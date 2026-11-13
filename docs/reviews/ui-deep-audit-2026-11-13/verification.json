@@ -1,0 +1,3177 @@
+{
+	"date": "2026-11-13",
+	"method": "Fresh local production build; isolated real SQLite and disk storage; synthetic room and investor data; Chromium screenshots visually inspected by the assistant. No source edits.",
+	"screenshotsCapturedAndVisuallyReviewed": 65,
+	"screenshotsRetained": 61,
+	"excludedCaptures": {
+		"appearance-error-320": "Calibration: bad is a valid three-digit hex colour, so this capture shows a successful save, not an error. Replaced with zzzzzz validation capture.",
+		"dark-default-390, dark-blue-390, dark-yellow-390": "Calibration: room override masked workspace changes. Replaced by explicit room-level green/blue/yellow diagnostic captures."
+	},
+	"sourceFilesVerifiedUnchanged": 383,
+	"sourceHashes": [
+		{
+			"path": "src/app.d.ts",
+			"sha256": "d85a388a3daea41083ce778d4a096a1cf4117d076ddc7faeb3b3723655ceef5e"
+		},
+		{
+			"path": "src/app.html",
+			"sha256": "824aebe3df873b559437d5e9dbf97f09f35c3b006608950cb582bcfbeae85faa"
+		},
+		{
+			"path": "src/hooks.server.ts",
+			"sha256": "e52d66aeaafe54c9d8d2b0111f672fefce6737285da36243316ffbb1f7f2cc75"
+		},
+		{
+			"path": "src/launcher/file-check.ts",
+			"sha256": "d6380c37fca57750b56afb69273fb109aee4132373360c85c0487e4ff3298d1b"
+		},
+		{
+			"path": "src/launcher/replica.ts",
+			"sha256": "af8937c8f8d8f003268505c7aba7983408132c6411e9a7302f7fc16a05f2b2b0"
+		},
+		{
+			"path": "src/launcher/tools.ts",
+			"sha256": "aa41a0e9a2e0c144355a831aea8c2d0899fb2e13b5cdb1c482d618153e785582"
+		},
+		{
+			"path": "src/launcher/health.ts",
+			"sha256": "a318804fa15498d4471646bd48b69952ee615276584469cddc04fd296340cf6a"
+		},
+		{
+			"path": "src/launcher/index.ts",
+			"sha256": "51486a67675a2c7aefa9a2392df7dd6ca51e6461e057f254dcd3cd5f6e3ad603"
+		},
+		{
+			"path": "src/launcher/member-tools.ts",
+			"sha256": "46a5fd2d33acbd60c25196d835d0cf381b70cf2a0234a573903f86076e1d994c"
+		},
+		{
+			"path": "src/launcher/startup.ts",
+			"sha256": "2fdc66efb124519eabf78517ef43da60d1a25a7ed104a56bd4fb038f823b91cf"
+		},
+		{
+			"path": "src/server/index.ts",
+			"sha256": "fd6f9b86eea0eb3748509c3c8d069d9e4fa4d0a8ea4d6a94176f1b3bc7416321"
+		},
+		{
+			"path": "src/lib/brand.ts",
+			"sha256": "5281bbbab777703ec1db77ffa31671d3a8206f7257607d122f4431893d5a8229"
+		},
+		{
+			"path": "src/lib/markdown.ts",
+			"sha256": "3c3ee41ec73eeef35bcd720c74cd28e48a9c8b81bfa6c86d129e4835bab7b70f"
+		},
+		{
+			"path": "src/lib/utils.ts",
+			"sha256": "6815388745f41a3d716b13c24f60143eee527a8c98660a5d02203256def23562"
+		},
+		{
+			"path": "src/routes/+page.svelte",
+			"sha256": "80bfe85bd8f02e43803177b4c3653f4d47dd240541945d783b250effb78176db"
+		},
+		{
+			"path": "src/routes/layout.css",
+			"sha256": "65356947e3540cf36d7d1ea1b7c7708a54a573202d599e5943f35c4c88a88e69"
+		},
+		{
+			"path": "src/routes/+layout.svelte",
+			"sha256": "55b8fdd8bef4ef129047596a7cd6e6eb6b7b712f44506106cc298bb13b769c83"
+		},
+		{
+			"path": "src/routes/llms.txt/+server.ts",
+			"sha256": "ac12b18aee2200aee8c80d42c06df6389f0568de1959d9f93a9729b02b58c551"
+		},
+		{
+			"path": "src/routes/admin/+page.server.ts",
+			"sha256": "0d6d16699cd802570b1c674524b6fb2f451aa8b5856602794462b452a40b8795"
+		},
+		{
+			"path": "src/routes/admin/+page.svelte",
+			"sha256": "c8e5f5ab76ecbd8dc00732d40311d234397389950266aa5d4ec5a4f76ea3db93"
+		},
+		{
+			"path": "src/routes/admin/+layout.server.ts",
+			"sha256": "96185b2669fa9f96a7d1f986f754ec85c2ca8269d84e47f782e846b7c4f2f4f6"
+		},
+		{
+			"path": "src/routes/admin/+layout.svelte",
+			"sha256": "dde21b3d48fe16f59dbebccff970b30fd2782c568bb4acdeed6e16ef65b6f55f"
+		},
+		{
+			"path": "src/routes/r/+error.svelte",
+			"sha256": "ca08db1d1c987fe57d4ae36b98634edc0056efab5a5145d6c9ac548848150c0f"
+		},
+		{
+			"path": "src/routes/r/+layout.server.ts",
+			"sha256": "e55ec4d91992e5809d916817b1b617de8605331d6cf03a5b7bb0d8e0fe7509c3"
+		},
+		{
+			"path": "src/routes/mcp/+server.ts",
+			"sha256": "2cad0b115f77d92ab945f6c8160348d11ecc5b029f554b1eaba1fe812033d478"
+		},
+		{
+			"path": "src/routes/healthz/+server.ts",
+			"sha256": "2cc27a6ee9335c017727156e8c58e08923af306a6b4fae167ab431570ad87365"
+		},
+		{
+			"path": "src/routes/v/+error.svelte",
+			"sha256": "d428ed0abe7b44c783700621c050446b5bedd0eff98f424d169b02865aa7da4c"
+		},
+		{
+			"path": "src/routes/v/+layout.server.ts",
+			"sha256": "e55ec4d91992e5809d916817b1b617de8605331d6cf03a5b7bb0d8e0fe7509c3"
+		},
+		{
+			"path": "src/routes/upload/[token]/+server.ts",
+			"sha256": "031515be9ce50d2d2f7eb26ff8153bfd39e263393c41cd0a68590a6063d6ddc4"
+		},
+		{
+			"path": "src/routes/b/logo/[...key]/+server.ts",
+			"sha256": "a348a78a04f1059310902a93327493a2a2e92fae9d438f4124738baf69fa3108"
+		},
+		{
+			"path": "src/routes/v/[linkId]/+page.server.ts",
+			"sha256": "e43c9a430155a9e4c4144aea306ed28c0c203318497a99a7d31f4a4fbd6d865f"
+		},
+		{
+			"path": "src/routes/v/[linkId]/+page.svelte",
+			"sha256": "25b6bd794ce6311aceb81e8836080c665198fe54c354906c2e3173d9c68e55fe"
+		},
+		{
+			"path": "src/routes/v/[linkId]/+layout.server.ts",
+			"sha256": "2c9f4cb8eceeea28b51177224aab7e2d8f7c3929d0bf30124fc9366c8dca4cfa"
+		},
+		{
+			"path": "src/routes/v/[linkId]/+layout.svelte",
+			"sha256": "fa7232084d7017b456f3b2e241e1a53946c8ed90f73893f3b9f90daaa54f5dae"
+		},
+		{
+			"path": "src/routes/v/[linkId]/ask/+server.ts",
+			"sha256": "6a02fae4b5654796dc442e416e807302905d76a1bf5aa5940070808e11fb6a13"
+		},
+		{
+			"path": "src/routes/v/[linkId]/requests/+page.server.ts",
+			"sha256": "f9475ff89d900a3e83382b73732c97a92fa2d14b66b1e56010505bb6ac79244a"
+		},
+		{
+			"path": "src/routes/v/[linkId]/requests/+page.svelte",
+			"sha256": "04068749fac6844e3fd8726c6e0bf6752d8aaef9a53af9fcc5643d7425aa7f94"
+		},
+		{
+			"path": "src/routes/v/[linkId]/signout/+server.ts",
+			"sha256": "9904c03e3f34cbe21cd3b9603d0440e583bd18d2de09453689262fe4d7c9d923"
+		},
+		{
+			"path": "src/routes/v/[linkId]/zip/+server.ts",
+			"sha256": "8583115a4d52b1933b5a2c56ed8966ba34c68881733990ce4993eb3c9670e432"
+		},
+		{
+			"path": "src/routes/v/[linkId]/review/+server.ts",
+			"sha256": "8f7f219c8c5feebd8e7421f663a0c4b863449bd3c2c0008970814b9420234213"
+		},
+		{
+			"path": "src/routes/v/[linkId]/nda/+page.server.ts",
+			"sha256": "4700bc9368689a2223970149a456601730327e520a454fe4d26eeebbd614ddef"
+		},
+		{
+			"path": "src/routes/v/[linkId]/nda/+page.svelte",
+			"sha256": "b4ec729d4b474147b411bf1df7e8d65975c2d9fbc574e2054a2f66bbfdeef9af"
+		},
+		{
+			"path": "src/routes/v/[linkId]/questions/+page.server.ts",
+			"sha256": "67bd6151902a12e1a4c2590f99f37dd9f4ff8d1ea46d5fec2223ec249dc0773a"
+		},
+		{
+			"path": "src/routes/v/[linkId]/questions/+page.svelte",
+			"sha256": "fe32d0bbddf1948f0f75248d372de9c7e79123cbbb31e705ca802562d54f66bb"
+		},
+		{
+			"path": "src/routes/v/[linkId]/beacon/+server.ts",
+			"sha256": "f8b4e445c4838389b12dada3ba39c608308e733ccf1152cd1da7f2101414faa2"
+		},
+		{
+			"path": "src/routes/v/[linkId]/questions/[conversationId]/+page.server.ts",
+			"sha256": "9fdedc03a490a3dc787547d5af7fddf890cec78ea16f3999ef16a57778c2c6f4"
+		},
+		{
+			"path": "src/routes/v/[linkId]/questions/[conversationId]/+page.svelte",
+			"sha256": "ace7a6990625413f66e0931339fb2c066643f0361b8fcc5f3d9f7682061a72db"
+		},
+		{
+			"path": "src/routes/v/[linkId]/questions/[conversationId]/read/+server.ts",
+			"sha256": "0778b533d887588916865002a3b1585280f20c3f21d2ce64a615927e39620712"
+		},
+		{
+			"path": "src/routes/v/[linkId]/preview/[token]/+server.ts",
+			"sha256": "f1a5d93aa2bfd5295b5bc7e8725ff9e18f7fd81a1e9a39b4c2b3b2188e7f2ad4"
+		},
+		{
+			"path": "src/routes/v/[linkId]/files/[fileId]/+server.ts",
+			"sha256": "91f2dc4fe8b9f45fa280dbac3aefd778a450a3f8d8cf1577e633481e822872ec"
+		},
+		{
+			"path": "src/routes/v/[linkId]/view/[fileId]/+page.server.ts",
+			"sha256": "a90fb0ea84c3d0c91b2235cc07004e69e1d565bc5f5f85385d3ce17075e0343c"
+		},
+		{
+			"path": "src/routes/v/[linkId]/view/[fileId]/+page.svelte",
+			"sha256": "96a966ee289d854bf582ab057988deaa97ec9508448eb754ce6b987cf001240c"
+		},
+		{
+			"path": "src/routes/v/[linkId]/zip/[exportId]/+server.ts",
+			"sha256": "b990c6f4ce2a3a825805033a7e9fa5e9249a240f490a04aa6ab9cbaacf7cc7d0"
+		},
+		{
+			"path": "src/routes/v/[linkId]/requests/[requestId]/+page.server.ts",
+			"sha256": "cb92ddfce99aef6988296dd4cc3439a7646f7891825375b374ebfb64c0f2408f"
+		},
+		{
+			"path": "src/routes/v/[linkId]/requests/[requestId]/+page.svelte",
+			"sha256": "474e785ab749f95ccd18ace107c62d28cf483c52714eb2b9ba5f4453debbce7c"
+		},
+		{
+			"path": "src/routes/v/[linkId]/requests/[requestId]/finish/+server.ts",
+			"sha256": "90e535340fca7befe72fe5fa8dc098f7268910335c01e35b92a7df7fe0727f0b"
+		},
+		{
+			"path": "src/routes/v/[linkId]/requests/[requestId]/upload/+server.ts",
+			"sha256": "6b7f418fac700043115a70882e80da96eb02c68f5cf12020c686b7f99007606b"
+		},
+		{
+			"path": "src/routes/api/v1/[...path]/+server.ts",
+			"sha256": "45752d828d437dbb7c0a306d6f2c96c9104d8bd9dacf75d4494f31c961cd235a"
+		},
+		{
+			"path": "src/routes/api/v1/openapi.json/+server.ts",
+			"sha256": "f269c4798f3f607c39cca7dc2834b71e54ce0feaba78cdc721e04f506ed8baff"
+		},
+		{
+			"path": "src/routes/api/v1/rooms/[roomId]/archive/download/+server.ts",
+			"sha256": "2e400fb08ed32d753e0d03d0863d1309ca77bac4c44b1cfefdfc92ad4ff0fcaf"
+		},
+		{
+			"path": "src/routes/api/v1/exports/[exportId]/download/+server.ts",
+			"sha256": "1309f53cf25e182b49ae197361060fcc7011cd674f9d1c08200793d6fe7468b5"
+		},
+		{
+			"path": "src/routes/api/v1/request-uploads/[uploadId]/download/+server.ts",
+			"sha256": "c0f8f3dab8bec5959e56ae9f01bcef6eaf39fdbe934e43d19da8469f76ed24ac"
+		},
+		{
+			"path": "src/routes/pdfjs/[...path]/+server.ts",
+			"sha256": "b5de81af976fd77ab5d584188378f403c197f744031315d49a5b2111b19a0871"
+		},
+		{
+			"path": "src/routes/r/[token]/+page.server.ts",
+			"sha256": "40a88745ef238e3f377ddc93900df9ee094fca40c4dd0243f627d8b6166ec53b"
+		},
+		{
+			"path": "src/routes/r/[token]/+page.svelte",
+			"sha256": "71426e81c6d48f1112282171cd020679e6875b74e4b707dbc88bd35d547306f4"
+		},
+		{
+			"path": "src/routes/admin/settings/+page.server.ts",
+			"sha256": "2bebc347d75050d8b881289a480a40a97a99c3681d82a495786ba60d700e6438"
+		},
+		{
+			"path": "src/routes/admin/settings/+page.svelte",
+			"sha256": "5ed01a761421f3f89a644ef139d65544ee7ffa543ab75595941b18a157856f6c"
+		},
+		{
+			"path": "src/routes/admin/settings/+layout.svelte",
+			"sha256": "7b47805d5c36d7618f68bb2ae08c859cee09b09456c1456b4458f7ff4b4d10ac"
+		},
+		{
+			"path": "src/routes/admin/audit/+page.server.ts",
+			"sha256": "b9ea4310fb3feb8e36c0dfcdfa3f461bc5ed807c8739f6bf225ad41a40728808"
+		},
+		{
+			"path": "src/routes/admin/audit/+page.svelte",
+			"sha256": "5b5c1a56c341c13e70585bcc80f08990e4f2ed8d6eb48959723417793442eeb8"
+		},
+		{
+			"path": "src/routes/admin/rooms/+page.server.ts",
+			"sha256": "e7e86fdcda57aae1e64778dee76388b4b60a3b62ad6a4e8192aff16b3006766f"
+		},
+		{
+			"path": "src/routes/admin/rooms/+page.svelte",
+			"sha256": "33fe130181dc53d5bb686261df58e0bb0ccc706ce5ce6724824a46c0b51c7a56"
+		},
+		{
+			"path": "src/routes/admin/account/+page.svelte",
+			"sha256": "9bcc2c4b2053ca3a620e8ecfa7474b4d26233a243939acde21714824b0516304"
+		},
+		{
+			"path": "src/routes/admin/notifications/+page.server.ts",
+			"sha256": "c1ca0b6ce01b1aa840b179c1f1139450dfe22cc9671e87e23d3308f520ee6961"
+		},
+		{
+			"path": "src/routes/admin/notifications/+page.svelte",
+			"sha256": "88cef47b24f8357a96f2b41e87b6a61240ff8b7880e52d9843617b8a80623026"
+		},
+		{
+			"path": "src/routes/admin/login/+page.server.ts",
+			"sha256": "d689b6735e921efb57473a27ad51a05e49aa57e4db80b7ebdf11587aa0fe2175"
+		},
+		{
+			"path": "src/routes/admin/login/+page.svelte",
+			"sha256": "52510af470e0306c40920824100b0851acef58ce14f6ea5b16d9668fbfc178d1"
+		},
+		{
+			"path": "src/routes/admin/investors/+page.server.ts",
+			"sha256": "c10327a25d6e2fb605c8a537db7839ec15224fb32aa047dde2727e8b426e9c30"
+		},
+		{
+			"path": "src/routes/admin/investors/+page.svelte",
+			"sha256": "ecdbddea393f5c0ded8bb8adc0b0d8bb867ea6f1afce005217a8deeb4f34354a"
+		},
+		{
+			"path": "src/routes/admin/investors/[viewerId]/+page.server.ts",
+			"sha256": "8db77a637bac0f3547fcac117f7336ec0387514b09266bafae1955b161f961b7"
+		},
+		{
+			"path": "src/routes/admin/investors/[viewerId]/+page.svelte",
+			"sha256": "713cf7c72851110c993137497c36cf2fc098b8794222897b2d32a8fd2ce521a9"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/+page.svelte",
+			"sha256": "9c788edc04162f73c3bd534556f9670a801cea5383c1592469b07f64ebfc27bf"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/+layout.server.ts",
+			"sha256": "31dde127c7b33c3dea10546a7cfb5daa4e928bf10371e9779bd55b43496b46c6"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/+layout.svelte",
+			"sha256": "436fe3b76afca1b4f3543d6390efe3d9db3de63e8cab31857044d0685e11f95c"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/settings/+page.server.ts",
+			"sha256": "865e15638432576a67707c92e22980502412227a7cacdd578156193cd14bee9b"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/settings/+page.svelte",
+			"sha256": "5aa54c1802f1cb415852a2a16201c71d78ad45403643d4df78148441384cccae"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/archive/+server.ts",
+			"sha256": "332ed4f5a2cdc60c79768389a16f3ac7a675bee51ef5d8c178cc40573bb97a6e"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/activity/+page.server.ts",
+			"sha256": "df222414fea32d78dd6d38d44f1349ad4e4eb49f07ac2ce108bc5ca6fb732764"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/activity/+page.svelte",
+			"sha256": "554c7bf7a25a2ffc0c13d62dcb5b7dfc5f27eb91ffe89bbdcc7288f1a1162f3b"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/groups/+page.server.ts",
+			"sha256": "09514a0a298c6e74db22f798d21721c73b1c38a619aec5c17488516bba32f89f"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/groups/+page.svelte",
+			"sha256": "6c79c1b9fb145cea01caf59aabe60782e63e25e6271186e271b144db533a6a75"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/requests/+page.server.ts",
+			"sha256": "d6dd5db53b5e9118c01902163e82d90a56bcd0824ee18ec7d7735663f778bd67"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/requests/+page.svelte",
+			"sha256": "a35a5477b1811a3e9c6091bf305bc0e6a1a5e14d986b930e7e500f6cf18d5dde"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/defaults/+page.svelte",
+			"sha256": "18494ba3ddddaeb3e8b926b3fcb9de5945f3bcb7b10530063a01dbd612f3f114"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/links/+page.server.ts",
+			"sha256": "d5b9ab998148ba2506469b0ef66054c4ef3224c3e0cc44088ebaf62b1e38fca8"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/links/+page.svelte",
+			"sha256": "8bc584a3492a949d0fbddd1e098fd5f7fca509876975c855cdbfee644a7407eb"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/nda/+page.server.ts",
+			"sha256": "3f39d4ba64ef89703dae98db3cbbf284352b397b96c847b23120e8f409374c9a"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/nda/+page.svelte",
+			"sha256": "77bc654a48c2b75bc907793a01c1566c324aa3198f3d2fe2285dc73aff672018"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/questions/+page.server.ts",
+			"sha256": "170f36b9f4033e84b099e3130a8a6b2fea3196761753d0342fad85cfd5a42f85"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/questions/+page.svelte",
+			"sha256": "01a414aa1eaee89350ebc83a984a110c6f4a3c63fae1a82d02760918a962ec28"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/questions/[conversationId]/+page.server.ts",
+			"sha256": "3a09db6d834d94803ed7c84bd8d3a6f9e1156c792a29cea4d43b0e3373cceb74"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/questions/[conversationId]/+page.svelte",
+			"sha256": "daf833e349f1d0d8c44c53a011309adea6ef5ff279fa6a51837576c4e766f483"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/files/[fileId]/+server.ts",
+			"sha256": "f8b33f88d3e0c5ab533f27eacdb0961379115e1e187b47300398f30815559c90"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/requests/uploads/[uploadId]/+server.ts",
+			"sha256": "9fabcd5a21b13a7d00f35aa9c70cb363d243026396cf9e6af6152590a7c7ce8d"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/groups/[groupId]/+page.server.ts",
+			"sha256": "72d026c8763992614fa55225976a48d805260fbbbcbcb4c2509e6e2758a38512"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/groups/[groupId]/+page.svelte",
+			"sha256": "5ca4f2d87ebcc868af7adac7b0fc23bf10918c2af6a353f2ef3b93250bdf73b6"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/activity/csv/+server.ts",
+			"sha256": "52725445dec2f7df7bfb34e8994e121ad6e4212b8e8860e4b6e6613b440956ba"
+		},
+		{
+			"path": "src/routes/admin/api/[operation]/+server.ts",
+			"sha256": "70cfb40fc252ee8fda7ce394239a25787a18333cac1b771b1315aa4676dc241c"
+		},
+		{
+			"path": "src/routes/admin/audit/csv/+server.ts",
+			"sha256": "d2a2dc0960654f526c51bb2988d4886f4d11688b9b15e4379c3d82e3cfd647e2"
+		},
+		{
+			"path": "src/routes/admin/invite/[token]/+page.server.ts",
+			"sha256": "63b738dbb8c0fa08643c0ad15b1a38caaf755c91c4e67b29d8ece96aae09a00a"
+		},
+		{
+			"path": "src/routes/admin/invite/[token]/+page.svelte",
+			"sha256": "933cae65f0c1fea47ee8d740cfed8e7c995008e6cc844530d9be5c9e66daf8a8"
+		},
+		{
+			"path": "src/routes/admin/exports/[exportId]/+server.ts",
+			"sha256": "b9ae1822d98698297852a22c88e67931229617b719cedbd31cf3278c50e2815e"
+		},
+		{
+			"path": "src/routes/admin/settings/api-keys/+page.server.ts",
+			"sha256": "835ecf792d7fc106e3845751d7517a02f93913d4622fd3e44c92828866f828e4"
+		},
+		{
+			"path": "src/routes/admin/settings/api-keys/+page.svelte",
+			"sha256": "5704aa2c1f7d912662f3db05785ca2f46a8bc0e92a7c83deb6569967932c6823"
+		},
+		{
+			"path": "src/routes/admin/settings/storage/+page.server.ts",
+			"sha256": "865d455bba9c7779d1b9fd5e963a8ab32451af86cb46e85d3007afa1a8a6b2b7"
+		},
+		{
+			"path": "src/routes/admin/settings/storage/+page.svelte",
+			"sha256": "839be6e8a445d3622fcea38c2b3192a774edc98646d35ce353cce91d79437b4e"
+		},
+		{
+			"path": "src/routes/admin/settings/members/+page.server.ts",
+			"sha256": "a46e4e51eb71643ae7157df76ad3969d6ade709bde93d7a1c947010bd4f10916"
+		},
+		{
+			"path": "src/routes/admin/settings/members/+page.svelte",
+			"sha256": "e0b193a4b8659d02f25d21972796b8a842af447bbd4f2baab627f92d5deefcf5"
+		},
+		{
+			"path": "src/routes/admin/settings/webhooks/+page.server.ts",
+			"sha256": "3be6873ef85fe95ad1a982d2fe33008b70854ee45fb2d0cdd2ad0bef82ceb7a9"
+		},
+		{
+			"path": "src/routes/admin/settings/webhooks/+page.svelte",
+			"sha256": "326337468c717d334c875aa8620c9f883bb7da76f3d6f8c95c2466f710672466"
+		},
+		{
+			"path": "src/lib/admin/FaqEditor.svelte",
+			"sha256": "6b61fca09fde91634c382323b8096c0d12387f41c96603ca3faf339a4545a1eb"
+		},
+		{
+			"path": "src/lib/admin/PinnedDocuments.svelte",
+			"sha256": "2fc857ff707b94a5d7b519682537c09515cded88279e53edb19df2723221c48f"
+		},
+		{
+			"path": "src/lib/admin/FileIcon.svelte",
+			"sha256": "8ce0bc76d173683b0c696f5591388e7dec484cf57dc96718456d95d95e438935"
+		},
+		{
+			"path": "src/lib/admin/AppearancePreview.svelte",
+			"sha256": "1cc7da55e2ceefc2813c59fc0b6d26752d4306d66de620204bd660fd01f16962"
+		},
+		{
+			"path": "src/lib/admin/When.svelte",
+			"sha256": "6b5fa581ff7c3423482fe87017b0df51e9168994a77875e88e367cbe9712a49a"
+		},
+		{
+			"path": "src/lib/admin/ViewingNow.svelte",
+			"sha256": "b3324551a7014f2377264a90a773e774df4d4aa7856462189a57bd9281e0b2b0"
+		},
+		{
+			"path": "src/lib/admin/uploads.svelte.ts",
+			"sha256": "8af447f86942bb8b09b000ea6b868cdb0135d935baf9b8f8acbef0af3724d698"
+		},
+		{
+			"path": "src/lib/admin/op.ts",
+			"sha256": "2916cf4763c89f6ef1468f6920496a5f1e9f28aa1cdddb568ad8950690a2b66f"
+		},
+		{
+			"path": "src/lib/admin/DangerAction.svelte",
+			"sha256": "5d0bec08be60ba56a923179005607a50716d69b4f9e5b2ba7b30b580003c0caf"
+		},
+		{
+			"path": "src/lib/admin/LinkEditor.svelte",
+			"sha256": "262382d0e5ddb672dedc32e76a0738a5035f0cfd8fa5197db55d417731772e4c"
+		},
+		{
+			"path": "src/lib/admin/types.ts",
+			"sha256": "ace9f557eb78e7130ea6b299400fbafd93fb74c14dab8990fa2737a3bb9faa4e"
+		},
+		{
+			"path": "src/lib/admin/Brand.svelte",
+			"sha256": "d5178146f892837c4365ce88384dae1a0f57bc8ed5b0d4406f19e99d6354c798"
+		},
+		{
+			"path": "src/lib/admin/BrandingForm.svelte",
+			"sha256": "021ed8c8e3363ffdb0e8afb3e34373648ddfd9f630f6ca80337e15beb9ec6976"
+		},
+		{
+			"path": "src/lib/admin/audit.ts",
+			"sha256": "b306f052693c7a17224629e1a1aa263d75744e21c38568feb75b59f41f5be407"
+		},
+		{
+			"path": "src/lib/admin/UploadTray.svelte",
+			"sha256": "4ca66332c5c72941e8daead57caf91c6103e207d4c7facf9b7653e6f1ab970a8"
+		},
+		{
+			"path": "src/lib/admin/PageHeading.svelte",
+			"sha256": "fd914d2dfae720e62d8b8f5ba437857a8b0865aa4907273a6397b856841098d7"
+		},
+		{
+			"path": "src/lib/admin/preview.ts",
+			"sha256": "51c6550b79c786eb60d19186c7d31845e7241d318f5cbfe0d4edd0b6e50804ef"
+		},
+		{
+			"path": "src/lib/server/system-health.ts",
+			"sha256": "161fa59aac2edf3a90cfbcc475fea5983e62752560cf83a7a429810eb2f8054e"
+		},
+		{
+			"path": "src/lib/server/room-index.ts",
+			"sha256": "751056812b139ed0c7950bc868dab5e6a56263e0e374f7f2915dffca86bd51f3"
+		},
+		{
+			"path": "src/lib/server/s3.ts",
+			"sha256": "d3419eb4188158fc91dc1632d8c4b54a716fca75f04273512f62ca5ae8caaf22"
+		},
+		{
+			"path": "src/lib/server/object-cleanup.ts",
+			"sha256": "780ff02c5f3fde8b77e5b464b319a3c6ff9063133024931f74f4ea709d3d1c6c"
+		},
+		{
+			"path": "src/lib/server/rotation.ts",
+			"sha256": "638787c1724eae0a97e5b67164b876b0eb9f5845b2ce0862c788c4439507a040"
+		},
+		{
+			"path": "src/lib/server/requests.ts",
+			"sha256": "240068e269f6f6905ac543b77ad6557fb2862154c0ca3387246f7c75b470d448"
+		},
+		{
+			"path": "src/lib/server/erasure.ts",
+			"sha256": "4c5a41f7a36effda66e875e03e25d9cd903ccba62f6b72f44789284b82f88d2b"
+		},
+		{
+			"path": "src/lib/server/origin.ts",
+			"sha256": "5ca92daee01e313cda3e7ea9c78b1a1d884f9aa9003481d450a32767d5c0c67a"
+		},
+		{
+			"path": "src/lib/server/ids.ts",
+			"sha256": "95d78dd0dac0bc431a92030e9c08daccbf63734a9b44b837e2dbceba9693731b"
+		},
+		{
+			"path": "src/lib/server/webhooks.ts",
+			"sha256": "b56e21de2e9cecd801ac17ee2f0aad1086b39fc93c081b34ec55eb82ecf1bb5c"
+		},
+		{
+			"path": "src/lib/server/uploads.ts",
+			"sha256": "973be6a51b9b796337a0a1015b1b14d4ed956df92585b862fa719dcb27d2ea4b"
+		},
+		{
+			"path": "src/lib/server/archive.ts",
+			"sha256": "27b9545626425dcd49fccc994cd902fabb7d91df95983254cecae71eb650116a"
+		},
+		{
+			"path": "src/lib/server/settings.ts",
+			"sha256": "a37405e0bb37424d7cb3bce7f9dffb176d4e6b019545bbdca55fca4e282ff84f"
+		},
+		{
+			"path": "src/lib/server/storage.ts",
+			"sha256": "8d4846f6f7df6cb70279331db8f2ee2740df693a331716388ed19aa6dbcfb8b4"
+		},
+		{
+			"path": "src/lib/server/api-keys.ts",
+			"sha256": "12420412ff03dce9d5c6056870e29890411851c8ec22e10d7768a39969234b25"
+		},
+		{
+			"path": "src/lib/server/markdown.ts",
+			"sha256": "7cb28ea7756ab282d6aa909a3b6b6e3e822ddd24c96c394e56222a6c01199c6f"
+		},
+		{
+			"path": "src/lib/server/email.ts",
+			"sha256": "f4533de80e2cc53ddd3c064dab34a757e937aaa1ee979ba42aabf56f68125f8b"
+		},
+		{
+			"path": "src/lib/server/secrets.ts",
+			"sha256": "351a9c4621c416db728a7898b5419df815a3b493a325a51d99fc67a8478ac6ba"
+		},
+		{
+			"path": "src/lib/server/seed.ts",
+			"sha256": "2d86b8234f0458b5177834a065ceea6e7699600dbd28742fc791881bbfd53a2f"
+		},
+		{
+			"path": "src/lib/server/outbound.ts",
+			"sha256": "9d6f791862e6b4e58963f70fe5dda1b5f764331b5a47074e19fd83f4f84df30a"
+		},
+		{
+			"path": "src/lib/server/duplicate.ts",
+			"sha256": "3601e4c37f7e6d8513ebcbf6b29fb13b48a26f56197a5d2c6faa14d2a2f1c86a"
+		},
+		{
+			"path": "src/lib/server/activity-views.ts",
+			"sha256": "546c7744de5cb3bd6a5d904793ea2a1237c1e9cb555773621db7c2049d811c3f"
+		},
+		{
+			"path": "src/lib/server/jobs.ts",
+			"sha256": "acab47da5fde642503d1f9370e123a0a80e172b425b02c534accf63a5a9a14e1"
+		},
+		{
+			"path": "src/lib/server/zip.ts",
+			"sha256": "330b339eca33cfd1457979528c3cfd49518f1fd795d576e516dbdb15bb725c08"
+		},
+		{
+			"path": "src/lib/server/runtime.ts",
+			"sha256": "277f4e17880c6884b0e94425060c3e975c05be1a2c6449c8a76a0df2b9d352aa"
+		},
+		{
+			"path": "src/lib/server/pins.ts",
+			"sha256": "2a3c415e7c159bd601eceda8f4f8cd94b37ef28b18f730cf24003783ead6d81f"
+		},
+		{
+			"path": "src/lib/server/pdf.ts",
+			"sha256": "6ae14f0348252e8f29e24dd114754170c70320d7bbf4d7f4ac77dbb1091008ca"
+		},
+		{
+			"path": "src/lib/server/questions.ts",
+			"sha256": "7604bad9c5da584be903c2d03df1e6f293458b4067d72af3f9444ba3fe9105cd"
+		},
+		{
+			"path": "src/lib/server/activity.ts",
+			"sha256": "092501a68f183d5e27c5295c296e2be4c048f2eb1a2c36c89649eff204b24927"
+		},
+		{
+			"path": "src/lib/server/access.ts",
+			"sha256": "0405e5dd0f14df93c491dae719f63eaff63993b81fd90c574588d4ef71f1e60a"
+		},
+		{
+			"path": "src/lib/server/emails.ts",
+			"sha256": "ecf2bbc8b5bdb738efc9a20a66868141447644f3a64526c509d84fc4a95e4780"
+		},
+		{
+			"path": "src/lib/server/viewer-data.ts",
+			"sha256": "cd85a49cd37bfbd3363aef4a52ae03ad7fbe7d4fdaa3c6dafc04585bcc23775c"
+		},
+		{
+			"path": "src/lib/server/members.ts",
+			"sha256": "035f4964ff7345a896903364cb7d9ee0274aff885c064af203fddb29cf871276"
+		},
+		{
+			"path": "src/lib/server/branding.ts",
+			"sha256": "03baca1cb2e3f4180fc7acd1204ab34a7f034a4673ac12bcc9174f50b2ecccec"
+		},
+		{
+			"path": "src/lib/server/storage-transfer.ts",
+			"sha256": "8774029d656258c49aa0c3c1219a93e3e8c89e02013f22656b84b7b6d780d410"
+		},
+		{
+			"path": "src/lib/server/paths.ts",
+			"sha256": "71966003f5586721441afb01b3e79b115f320034c5193e43b3556275efb552c3"
+		},
+		{
+			"path": "src/lib/server/document-reviews.ts",
+			"sha256": "fba5a04856fefbbffcb85a46bf2175260ae80798b9b119a0a6a67b1a18d41b0f"
+		},
+		{
+			"path": "src/lib/server/investor-attention.ts",
+			"sha256": "3674c6de4c3b104302a8a95f3b7dfac14120203e7b1b282075bfe49239d73e7d"
+		},
+		{
+			"path": "src/lib/server/audit.ts",
+			"sha256": "28a2aa39a793fdb5b2323e119b439a22c08c89a2f9fc46c548f998197e49e576"
+		},
+		{
+			"path": "src/lib/server/email-copy.ts",
+			"sha256": "32e95f98b66a9d9bf69189db701bbd6638ee886b47ee87dd1f40aabcf64c1acc"
+		},
+		{
+			"path": "src/lib/server/auth.ts",
+			"sha256": "c7942fce6f255be926e2b4e27dbc2edc90f1a1ba155a1ac87a24d7c65de58074"
+		},
+		{
+			"path": "src/lib/server/disk-space.ts",
+			"sha256": "e57e1cc3e1e0d3f08f9c33d081824c7b7dcb3e85e76bba83d35b9139f1f24d5c"
+		},
+		{
+			"path": "src/lib/server/exports.ts",
+			"sha256": "f4b18b53c4cc31a73cf0fb747fc2f055994c02bd308aba38cb613f492b0e11f6"
+		},
+		{
+			"path": "src/lib/server/storage-move.ts",
+			"sha256": "edbc47f86d012728c065f10d00c1cb3d79f5268b3d6ceba33ac043cd4c2ebcd1"
+		},
+		{
+			"path": "src/lib/server/rooms.ts",
+			"sha256": "acaaf08a7240511dc7d6940df9a425b3594a3f634480ea614c346725a3fcf9eb"
+		},
+		{
+			"path": "src/lib/operations/privacy.ts",
+			"sha256": "8a7a0383b47d388cf3ad0a7420ee82f5d53754795c790fff3f3aa3e974fd4da8"
+		},
+		{
+			"path": "src/lib/operations/nda.ts",
+			"sha256": "1a92cadbf1c4ded07518d5f36287b9818e504da42c2b5c2bbdf870e0a3de62c1"
+		},
+		{
+			"path": "src/lib/operations/requests.ts",
+			"sha256": "0227ecf3f61edc83da4e96874618dc8244fddfbad7b4f740be0184fad5cf9505"
+		},
+		{
+			"path": "src/lib/operations/blocks.ts",
+			"sha256": "27b1336ee2159b4085acf5fcfbce59674c625c62a8c751a589afa78d23e5ed0c"
+		},
+		{
+			"path": "src/lib/operations/webhooks.ts",
+			"sha256": "f31a26d88f9ae07a3bd2bc8762d71e4a1d67671ee159510ae2b833e876b961fd"
+		},
+		{
+			"path": "src/lib/operations/uploads.ts",
+			"sha256": "1512fbe37ea4a6376dae732d0835c2f500c3e8db6f017c3d8cc47bdbded7e962"
+		},
+		{
+			"path": "src/lib/operations/settings.ts",
+			"sha256": "bb992c9fb73618adad42599a8a2f059d2308847cd1f4a6c75e1407690e993e06"
+		},
+		{
+			"path": "src/lib/operations/storage.ts",
+			"sha256": "986d051066d25127e866ddcf466f83b88b966fd7fec91c2c0d9bc44956ff8393"
+		},
+		{
+			"path": "src/lib/operations/api-keys.ts",
+			"sha256": "ab0bbcc4d8b6b214c73927d09b9ba4803ae2039352ecc6535fc8dcbddedc2b7e"
+		},
+		{
+			"path": "src/lib/operations/pins.ts",
+			"sha256": "f11244a529a7fcec3ea203716d25ee78cb2fb1b7088e241491dca56b850ca982"
+		},
+		{
+			"path": "src/lib/operations/groups.ts",
+			"sha256": "c3c957ab8513bb19495c3f514774b5c70efec27d68bb1fb51173f2853b53a998"
+		},
+		{
+			"path": "src/lib/operations/links.ts",
+			"sha256": "b3f6607e7b4d4a8daeb3034a59031716ca1689ed63f4e22fcda3030b81834bd6"
+		},
+		{
+			"path": "src/lib/operations/questions.ts",
+			"sha256": "371b5aac685d392d7c3ae7c878cde962211c53b6ed305d3e6862938437927415"
+		},
+		{
+			"path": "src/lib/operations/activity.ts",
+			"sha256": "d3021d1e880423155d55809d73a5337ff876e3257e4b3169ff6d37a71b872780"
+		},
+		{
+			"path": "src/lib/operations/execute.ts",
+			"sha256": "bace19dd29f1476acfc50e91d49a5f6c8d52c615350fac1f23405b007ca92f15"
+		},
+		{
+			"path": "src/lib/operations/members.ts",
+			"sha256": "a2fa6ab1fd7cbced731ff7ccf382ff80f05fd00eaedb09808e5556b6c52d9114"
+		},
+		{
+			"path": "src/lib/operations/index.ts",
+			"sha256": "fe4ed3770d6cf36659e70c2932acd95ac03c7ab96305582d04df6a50ead221fc"
+		},
+		{
+			"path": "src/lib/operations/branding.ts",
+			"sha256": "902c23cc3373727edb605ae7a64dce31dd3c84e70328860d09ef4a0d0a97e975"
+		},
+		{
+			"path": "src/lib/operations/define.ts",
+			"sha256": "8a181a824652793498f0f1074d5f93ed3c6c258b7a474cb24ca9464e2603c680"
+		},
+		{
+			"path": "src/lib/operations/audit.ts",
+			"sha256": "c7a9f95817adcf287063b7e6c514380cb8c9325a1e7940654cc2c7b070c0fe61"
+		},
+		{
+			"path": "src/lib/operations/system.ts",
+			"sha256": "4eb4e181b3bc440046153d808f2cf92e21377600db5838f0efaeb7b177fb9581"
+		},
+		{
+			"path": "src/lib/operations/files.ts",
+			"sha256": "321b66a9af1286dd9ac0769cc619249394a545569f8f2e7e8f91b238e9f9237c"
+		},
+		{
+			"path": "src/lib/operations/ingestion.ts",
+			"sha256": "f7bfc09f31162954084a29d316a3d3de10cc03b112499eaccee7a48161b0e0a0"
+		},
+		{
+			"path": "src/lib/operations/exports.ts",
+			"sha256": "fc9a874348324857a6ee2ea44a0b4c348c147f68059ca4a41f4b976c735c4ed2"
+		},
+		{
+			"path": "src/lib/operations/rooms.ts",
+			"sha256": "bd93b8b77b89550c1995eb35476705664abdd709ba0beef8e9339192152d0dc1"
+		},
+		{
+			"path": "src/lib/schemas/link-settings.ts",
+			"sha256": "fd11da084770055ec6b5862f6f204f7c445b67a02c09ae7630d720ae0eed4258"
+		},
+		{
+			"path": "src/lib/schemas/personalization.ts",
+			"sha256": "17f96a98a44e14212cc34ae47c95ae448dc265264babccdd382bfee0f25684bf"
+		},
+		{
+			"path": "src/lib/schemas/storage.ts",
+			"sha256": "9d7fbb712a2b5bef3aa729c1678ddec2f736ac9e491b0b10efff1cf69e609962"
+		},
+		{
+			"path": "src/lib/viewer/PinnedDocument.svelte",
+			"sha256": "cf52ff2e3a6095404197330546832da895bdda4e88bd00890eba9034917ae2db"
+		},
+		{
+			"path": "src/lib/viewer/PdfThumbnail.svelte",
+			"sha256": "dfd84f44c3f31c9970328f053f82b5543ed304cd264d189cf03a07ad3fe6ed6a"
+		},
+		{
+			"path": "src/lib/viewer/navigation.ts",
+			"sha256": "867321350e81edaa780acd5fca3d109e0fdd1bc48e1a974d50f17b1c3c3da118"
+		},
+		{
+			"path": "src/lib/viewer/RequestList.svelte",
+			"sha256": "a157fa293561fdb439160caf2cac38322ee735469197041bdd72991dcc483f8f"
+		},
+		{
+			"path": "src/lib/viewer/Watermark.svelte",
+			"sha256": "f22ba63a07f052241bf34909c062654118c2dea62804f275c29e5e73563fed84"
+		},
+		{
+			"path": "src/lib/viewer/tracker.ts",
+			"sha256": "8f263d0ef441dd1ef1c892dabd852ccab87d882af3104f6bc9bc7cd9ea02b42c"
+		},
+		{
+			"path": "src/lib/viewer/ReviewVersion.svelte",
+			"sha256": "df8e168479d0a99399ae33ef5bec84b4826313e548b9a7e13f9eb1cc2c0dfc2d"
+		},
+		{
+			"path": "src/lib/viewer/PdfViewer.svelte",
+			"sha256": "e0b34d508db11999cc2642346ae857e4c8f8c9f87e6e344c030d07184ddeba16"
+		},
+		{
+			"path": "src/lib/viewer/ReviewButton.svelte",
+			"sha256": "1ad0c5eb86792b68d48817e76de809b7f3196adddb06d55db419c783eba16bf3"
+		},
+		{
+			"path": "src/lib/viewer/LocalTime.svelte",
+			"sha256": "c342b3e45382f599f36509e82194fdb83377935025ff8a6a9600e30882f03e2a"
+		},
+		{
+			"path": "src/lib/viewer/RequestStatus.svelte",
+			"sha256": "4af2f30b767f9e83816108ad7fae392f467f7b29d8e3806ecde3114ff12ca55b"
+		},
+		{
+			"path": "src/lib/viewer/DocumentListItem.svelte",
+			"sha256": "4fe40cea447fb72decd1ad4da268cd98ece6096c27c9b55fa8973c9085c57cf8"
+		},
+		{
+			"path": "src/lib/viewer/reading.ts",
+			"sha256": "1783e45815a46f6813256f1e0450e4360c8dc6aa0516f5aa3f2c7c7a3e50703d"
+		},
+		{
+			"path": "src/lib/viewer/pdf-text.ts",
+			"sha256": "e3260f793fc9f30122bec6ccb71fa914681b17bb49247a782b19908dc32dbf64"
+		},
+		{
+			"path": "src/lib/viewer/ReplyComposer.svelte",
+			"sha256": "893cda744b491cf5e3198a5d8257137dfd3815a2f4c0bc557539e8dd7ad89037"
+		},
+		{
+			"path": "src/lib/viewer/PdfTools.svelte",
+			"sha256": "8e8e35e4af50d7faa997d6778ae139e4565f756866698f4d29e9f8cf73d19522"
+		},
+		{
+			"path": "src/lib/viewer/VideoPlayer.svelte",
+			"sha256": "f2ecb7980b3b0ccdfcb9d56582b2b3a325018440c3af99871959a7c1f6a8cde7"
+		},
+		{
+			"path": "src/lib/viewer/DownloadRoom.svelte",
+			"sha256": "b82add96fcc1d2ad54bc7dc3aebd3e39111135b053b9ab0f5b7f091a2d03fd4c"
+		},
+		{
+			"path": "src/lib/viewer/RoomNavigation.svelte",
+			"sha256": "9f2bc848dd93f7189df6213dbe008fd15da851d87cc9efb25b4206ef6727a65b"
+		},
+		{
+			"path": "src/lib/viewer/DueDate.svelte",
+			"sha256": "26a87b4fff25c1f946071bb78c7d62b1357ac6ecc2cdb3e30c5d91ba6652a187"
+		},
+		{
+			"path": "src/lib/viewer/RoomWelcome.svelte",
+			"sha256": "8fda85f58b5c268f4bd013a6bcfc3bfa8aadf4b36e851609eea6601be35fd99a"
+		},
+		{
+			"path": "src/lib/assets/favicon.svg",
+			"sha256": "d7d9227f0fe5bfb4189fb6ba4dd9e2d524f6a1dfd02bd901c65330987675c0b3"
+		},
+		{
+			"path": "src/lib/components/ui/tabs/tabs-list.svelte",
+			"sha256": "ed3ad148d0fed09935b3423a970edff5de8d82c5cf64563b1c66625a11589292"
+		},
+		{
+			"path": "src/lib/components/ui/tabs/tabs.svelte",
+			"sha256": "4302799e63cdd3181e9b3aa47a0be2db0c7890953ca240e2123bf0286a64bab8"
+		},
+		{
+			"path": "src/lib/components/ui/tabs/tabs-content.svelte",
+			"sha256": "6b93cc6a1e97ff42120f4232832a057ad204364b93f324eaa68168ddc1abbbcc"
+		},
+		{
+			"path": "src/lib/components/ui/tabs/index.ts",
+			"sha256": "68c754fb7ddc2cd2bdf96fc2fd3eb17d592b51a588e4a175464a197589e22749"
+		},
+		{
+			"path": "src/lib/components/ui/tabs/tabs-trigger.svelte",
+			"sha256": "6e0abc74143bb3634613b8e78c2f6537cea9c87e05d0cb537ed2dcb8d918c1d7"
+		},
+		{
+			"path": "src/lib/components/ui/tooltip/tooltip.svelte",
+			"sha256": "a33d843a5e4e6e5fe426654f6742a453f44f4ff928e94a21d188d9035e4d02f8"
+		},
+		{
+			"path": "src/lib/components/ui/tooltip/tooltip-content.svelte",
+			"sha256": "218cb21561c7d436edfe3773689b3160c70516655403946745feca8f0a440bc3"
+		},
+		{
+			"path": "src/lib/components/ui/tooltip/tooltip-provider.svelte",
+			"sha256": "3599daffb73460dc3377582b99fb04503cc1f3facd660f99db5e9c785c48367e"
+		},
+		{
+			"path": "src/lib/components/ui/tooltip/tooltip-portal.svelte",
+			"sha256": "d38e62fa30732ba5ea79df440badb59331d22c13a19fdc1ad777857f6039b648"
+		},
+		{
+			"path": "src/lib/components/ui/tooltip/tooltip-trigger.svelte",
+			"sha256": "139ecd079c457f1318a8cfee9495143859a84fda92b0b811e893a738b46dddbd"
+		},
+		{
+			"path": "src/lib/components/ui/tooltip/index.ts",
+			"sha256": "e1c8a35024858b8e5ccb2a3076da472f986060e0e78980895bb6ed85ce353c97"
+		},
+		{
+			"path": "src/lib/components/ui/card/card-title.svelte",
+			"sha256": "153cb859083938ec7bdcad51fbf9bbf0c145098a2a8e8422ea92eb04a8d56c97"
+		},
+		{
+			"path": "src/lib/components/ui/card/card-header.svelte",
+			"sha256": "2a5546d85668ae8ea749e3be1a04f0ecb47c99aa4455bb667246cc56d924e9a5"
+		},
+		{
+			"path": "src/lib/components/ui/card/card-description.svelte",
+			"sha256": "710a82068f246fae1b3ed688c759a36564f136a0258bf13a8d10d66c64ac305e"
+		},
+		{
+			"path": "src/lib/components/ui/card/card.svelte",
+			"sha256": "bb628854c927deeacd6e5a984726277db8291ec2fff72b1d6bff3f0709cc7e74"
+		},
+		{
+			"path": "src/lib/components/ui/card/card-action.svelte",
+			"sha256": "bd9bafcc1bd0fdcc75958b2f8c89f03a3b38eed3733aad161ff932d0ad13bc46"
+		},
+		{
+			"path": "src/lib/components/ui/card/index.ts",
+			"sha256": "dcc2d19fd0eb3c3340af271f2301008e9d9b783068c2a9b2d97779c32d56a5d8"
+		},
+		{
+			"path": "src/lib/components/ui/card/card-content.svelte",
+			"sha256": "7f408431df5f96147563ec020435fb805315187ff9b9528fdbb336d9d89e366e"
+		},
+		{
+			"path": "src/lib/components/ui/card/card-footer.svelte",
+			"sha256": "1f55dbe6a54b31ff360b90b04e5c51eee2889a787231d19e9ca1b70b6db8da71"
+		},
+		{
+			"path": "src/lib/components/ui/empty/empty.svelte",
+			"sha256": "768455334ec986e185995be3783e9ad5bd90583f975ab5ed7a7a197d088024f7"
+		},
+		{
+			"path": "src/lib/components/ui/empty/empty-media.svelte",
+			"sha256": "dbe544069b72ee19463d06bb5fed8d31d3d74d978886487c11ccc588899f6689"
+		},
+		{
+			"path": "src/lib/components/ui/empty/empty-title.svelte",
+			"sha256": "7e9f664a0a90987ce4afb89e70036ca82fd28bfac2ced1cd0f1676c0cb6a9f02"
+		},
+		{
+			"path": "src/lib/components/ui/empty/empty-content.svelte",
+			"sha256": "b70846ca4183dacdff38d2136aaea1d7cb6a4b111fc4bba5d9cc4f4a9951c1e2"
+		},
+		{
+			"path": "src/lib/components/ui/empty/empty-description.svelte",
+			"sha256": "cacddb3dbb169e0782a335edd3b5d6c461b5da358429013c6e34a7bacf07dbe6"
+		},
+		{
+			"path": "src/lib/components/ui/empty/index.ts",
+			"sha256": "8bf3697736888bdcb1a079529ecee3213e032581fc345d377c63dbb77617135d"
+		},
+		{
+			"path": "src/lib/components/ui/empty/empty-header.svelte",
+			"sha256": "0bc0d3f726b3b248c3aa69d4465fa92612c29120ddaf6ed8b5e774eea64f3c3f"
+		},
+		{
+			"path": "src/lib/components/ui/progress/progress.svelte",
+			"sha256": "a7527e043e44492537548435a48dd54eb9c54ab939ee7a7cb0ac4949ee9c246b"
+		},
+		{
+			"path": "src/lib/components/ui/progress/index.ts",
+			"sha256": "0fc89e528d14d13cf602ed1655a06945f41af193f4d8de9705517b3420ca9b9a"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-cancel.svelte",
+			"sha256": "92112c9c8dbe3e79682ca940173796107b367f1424f9f3fadcda36ed87049ad1"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-overlay.svelte",
+			"sha256": "caaf2f9e0e4adf1038ed4d49b5cb5dab13cea4939341aaa979d23748903fc0ec"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog.svelte",
+			"sha256": "3c1fcf5e5ce4fe37c365f2bda61a9dd42c1f3aa5c97074908f661a5760f7191b"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-portal.svelte",
+			"sha256": "0979d2c7fb096434b1339c047f2d0c6bb8b5894e23cb82f3d304644c3c855f46"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-footer.svelte",
+			"sha256": "b2afdd2730ce6d1eb06b604e963e8c2fd1f512c51a923dff0a5d73a00fe66420"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-content.svelte",
+			"sha256": "7de376441463fe1c95730bdd89d9acdd20265daa7f0f9b72ffc66b2b63dc74ce"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-action.svelte",
+			"sha256": "4ece9618139193f4441918d8b8f27988adb248f0fe6d2ce7dfd19bffee633958"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-title.svelte",
+			"sha256": "a2b38d42f17871adca709dce73475fa77a082b9f5be03f6ed1c905bff7ee1e90"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/index.ts",
+			"sha256": "27e62267954813a225ab79e5ebc7b6716b63a684556718d5ebcce03e510a72a2"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-header.svelte",
+			"sha256": "7694a0187dda58a769ed36d533f512a1073411a7dac5a5db302f60ac1941a3e0"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-trigger.svelte",
+			"sha256": "e752721879d70621d40095eff1758f843fc35444554c85d91d55c1f6413e115d"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-media.svelte",
+			"sha256": "6a8e325fdb1affc2741cfa602a61a80533a962e3f42b7e84504f4e023e000c35"
+		},
+		{
+			"path": "src/lib/components/ui/alert-dialog/alert-dialog-description.svelte",
+			"sha256": "384a22aacde77f8a7c87fa3e3a91c30b9d5516b1e33915392620580bea1cd753"
+		},
+		{
+			"path": "src/lib/components/ui/input/input.svelte",
+			"sha256": "5b1a89de2cdd7f66232e1424052d5041336256a27a17ad9b5eec392fae38c4ef"
+		},
+		{
+			"path": "src/lib/components/ui/input/index.ts",
+			"sha256": "bb465962ccf7aee2a148669f82629033ba7a3fa844010acb2f97c212b13c765a"
+		},
+		{
+			"path": "src/lib/components/ui/alert/alert-description.svelte",
+			"sha256": "84813af15fa4a3b2bd7ff2dd1221189172695d318a20ecb1b726d9bf8987448d"
+		},
+		{
+			"path": "src/lib/components/ui/alert/alert-action.svelte",
+			"sha256": "3d985cb15876a6a9b60a7321cfa4d6fe2b1bbabb01daebec9a8f0361e82559f3"
+		},
+		{
+			"path": "src/lib/components/ui/alert/alert-title.svelte",
+			"sha256": "865c0261602c75ce8a7c069288e8433080c22b68256b9985fdce8fc9a01318e1"
+		},
+		{
+			"path": "src/lib/components/ui/alert/index.ts",
+			"sha256": "4a0e331282a3403d9d0cb6f8f69fb76dafcfc1153ec1a13e16ed8ffa1ebc0e4a"
+		},
+		{
+			"path": "src/lib/components/ui/alert/alert.svelte",
+			"sha256": "8bbdff4bfc19206b0bd2765445b60596f3d1b72cdfe41f413212dd7ad6e68ddb"
+		},
+		{
+			"path": "src/lib/components/ui/separator/separator.svelte",
+			"sha256": "09dcdc6bcf02d30be0c3ab46d17c6c6c39fc0a693dc3787c7ff1d25f6cec181f"
+		},
+		{
+			"path": "src/lib/components/ui/separator/index.ts",
+			"sha256": "3ee78fefd8c2e29e2811a3b6c7a0012f7a023cc246b8e4a56551c3519b973a41"
+		},
+		{
+			"path": "src/lib/components/ui/checkbox/checkbox.svelte",
+			"sha256": "1b458fd8ee7195a195e3d9be8a6508933669ebd37561ea9703dc2907c911284e"
+		},
+		{
+			"path": "src/lib/components/ui/checkbox/index.ts",
+			"sha256": "daadae7efff3f5f8f76efa510378a801db35e3404aa2135efde645df74c515e7"
+		},
+		{
+			"path": "src/lib/components/ui/label/index.ts",
+			"sha256": "f75cc35a902ebab2b12ccc9c7515671608155b40efb89aee77e60365b877650d"
+		},
+		{
+			"path": "src/lib/components/ui/label/label.svelte",
+			"sha256": "d5b56cb1d4c517686f02c93183c8ce1e7bf0e14ebc7056d4b05c06bce668e1e8"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-sub.svelte",
+			"sha256": "1208155828183ef72dc8c96ff58c90fcd5584cce28d938a23545253013cfb9c5"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-checkbox-item.svelte",
+			"sha256": "46bba6693905647cee5b88703f27e50b8b4b45a863de52ccad28ae3013bcb25b"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-sub-trigger.svelte",
+			"sha256": "72a83fde259322bbc90e2f2da0964d46f14eb6a8f1bac1f2b4be085b4e5fa21e"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-group.svelte",
+			"sha256": "75f1eaeff2b3cf25f957d7f9137d3addb409815ec480e1a3bb4036bb82e8d60c"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-label.svelte",
+			"sha256": "2512c71a1f59c290fab295acad93087d0cd491f92f0e41c84e505e259bc5bfbc"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-portal.svelte",
+			"sha256": "38f6abf9c1d47d2ab4912556d05845ec9ba1ee6825405adb5f8831d6a30ac08b"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-content.svelte",
+			"sha256": "07260d69d44f5084a10a32cc297047343af49bddebdc82149076b6665455a9a4"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-checkbox-group.svelte",
+			"sha256": "96f8cf7d2ce72fd2fd4ff5e579067b1a32101abbbe5a20612aa00a69e5df205d"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-radio-item.svelte",
+			"sha256": "eafd57beba78ecd43bd5fcd08f3a1e59db905cc5c816e63f34d4b9f59898ac22"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-item.svelte",
+			"sha256": "235276bdfc5a66f6ffa9d8e3d1726bf514e3ba3c84f4e21f1d3954d55ca1f1c1"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu.svelte",
+			"sha256": "d49b60f3d9832a870e5eed726d39f9c0e09abb2bc061deb1ef0dfec97aa319e5"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-group-heading.svelte",
+			"sha256": "e1ac5b27ef461e03310564e6ed0dcac0b804a41e9f90241a42c9c00ee0354713"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-shortcut.svelte",
+			"sha256": "1de7fa9149aca23058215a797470d629a1c50fddd73a47728db1ec71c6551c83"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-sub-content.svelte",
+			"sha256": "d0a653477dfa06388bf462ee2f9dcf99942fd687d7b296c9d2a56aabbe2c59d4"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-radio-group.svelte",
+			"sha256": "ac025c63e0ade7c26cef7db98de2fe217208fe9387eb8bfaf97730ab3f013da2"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/index.ts",
+			"sha256": "5c6f4908ccfeb1a1fd65de450270e35b606812e9abcee069cc8a213895fa1b91"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-separator.svelte",
+			"sha256": "a602b19d179cb1c3f9da32ee9794950002960e48bac947601096d21457d9bd64"
+		},
+		{
+			"path": "src/lib/components/ui/dropdown-menu/dropdown-menu-trigger.svelte",
+			"sha256": "bdad1ff46fd23466dec6d1212186e9ac4e34edf862987308821956c6b24f709c"
+		},
+		{
+			"path": "src/lib/components/ui/field/field-separator.svelte",
+			"sha256": "1928a1fa73fad93a4089cd20ba42a19d78571a2fba0d4e3ead96695cbf65fe4c"
+		},
+		{
+			"path": "src/lib/components/ui/field/field-group.svelte",
+			"sha256": "df879509dba1ad4df8478fc8909dcf9c8913c629da14a4b0e9e6a3a0d334cf6d"
+		},
+		{
+			"path": "src/lib/components/ui/field/field-label.svelte",
+			"sha256": "a38cdbb548c2d159745354b1722a01409adc30b98cc8c9ed41564d59171faa11"
+		},
+		{
+			"path": "src/lib/components/ui/field/field-content.svelte",
+			"sha256": "fe7b7eec0af0a31aafa81c2d2a7029f86c96c7ec02578483e18601d96b96fa80"
+		},
+		{
+			"path": "src/lib/components/ui/field/field-legend.svelte",
+			"sha256": "0466877e3727769652669a15eed4fee8557d6734fb8712f950722bda79bfefc7"
+		},
+		{
+			"path": "src/lib/components/ui/field/field.svelte",
+			"sha256": "6de90da68dd1546c645207257f66eb26ab333fd9efabfc17070c8afe38f770b1"
+		},
+		{
+			"path": "src/lib/components/ui/field/field-error.svelte",
+			"sha256": "2c4a2dc162686929f5a44589f8e1bf81b748c4b2514068e8400d355fc65c921f"
+		},
+		{
+			"path": "src/lib/components/ui/field/field-title.svelte",
+			"sha256": "d7008682b3cab6162a4371628bb2e684d46a7fac07b9b5df4ba50c07dab82705"
+		},
+		{
+			"path": "src/lib/components/ui/field/field-description.svelte",
+			"sha256": "b702bab9d83d28c5ebb75cfd5588883fa09a71b81f2994e0581ffdd1c5576714"
+		},
+		{
+			"path": "src/lib/components/ui/field/field-set.svelte",
+			"sha256": "a0b6e232b40db69eecfd12d5753436bb8c69da620296ac4f1cf28965173da596"
+		},
+		{
+			"path": "src/lib/components/ui/field/index.ts",
+			"sha256": "523aa9c953879649cefa833844e9a2873aeb1e138d93fdd67170bc13115355b2"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog-trigger.svelte",
+			"sha256": "7b72b3d7fc35bf00f331716f723ee711125263ab09329952728483bb3237dd09"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog-description.svelte",
+			"sha256": "e7faca98f43ab6b76fa020d48e1a1834619ae4446c06e3ae60ebc5bacaf94a75"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog-portal.svelte",
+			"sha256": "718c0b6672a2911d7f9398e4ef14813cceabcf0be02b7920f10028d213a674b6"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog-title.svelte",
+			"sha256": "5c944a74ffa63cd2a548bc842d6421d4b503bf35004869702b90b948c7d963fb"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog-footer.svelte",
+			"sha256": "07e3a2c86fd9c4d9965a3ea0751c6b80d94a17edab2ea55dd00223a52caa7be5"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog-content.svelte",
+			"sha256": "f8a345ac8d5ef5501fd4386010885741dc6b9e146984ec1e1849c2dffd5a9bd5"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog-close.svelte",
+			"sha256": "4a9a1a6327d4e68fd87e8292dcb176eab244ba8da455f15997d2308b1fa03d46"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/index.ts",
+			"sha256": "eb916233312b5a90d7221f3ee73dbfc94dddc104005942bab83b717e47f7a2e2"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog.svelte",
+			"sha256": "cc60100e895410b9b5f17b6071c933dfc950e5dbf4d00b261edec1e443008a27"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog-header.svelte",
+			"sha256": "5d1c48416c8a4ca5d35e160842ceefa98abcaebc1bf5f4f4416d08c0cb777aee"
+		},
+		{
+			"path": "src/lib/components/ui/dialog/dialog-overlay.svelte",
+			"sha256": "f1a6a8949b0e78f534410c3b0b75caabbafb4f520361855d5e4d786ed14d344c"
+		},
+		{
+			"path": "src/lib/components/ui/sonner/sonner.svelte",
+			"sha256": "b92584dcab6c6a41ad43740180c2047d34d2b6163873b070bf5407fce2b62bba"
+		},
+		{
+			"path": "src/lib/components/ui/sonner/index.ts",
+			"sha256": "3af7640e0031e9b177c1f659ca6a010a5926b116d3c08e47161b8fbad1d63c7b"
+		},
+		{
+			"path": "src/lib/components/ui/textarea/textarea.svelte",
+			"sha256": "ae6854d243c21f7313cba8be1c11b8b1ca19e4be9e2150173df3652d13845b9b"
+		},
+		{
+			"path": "src/lib/components/ui/textarea/index.ts",
+			"sha256": "6ac8e889b28b288b76febaa556d6edab9887138699931e27b88439c21c7d2730"
+		},
+		{
+			"path": "src/lib/components/ui/button/button.svelte",
+			"sha256": "92247d39a3ce8c6a8d5af762e5ff8cb1ff51226f7148adde02e5acf4975ac8fb"
+		},
+		{
+			"path": "src/lib/components/ui/button/index.ts",
+			"sha256": "ab681c8abb0e15ff55fbd2f0ad0ccfe916dfe0cdddb3ffecc8fefb7328eb3c6a"
+		},
+		{
+			"path": "src/lib/components/ui/table/table-body.svelte",
+			"sha256": "a37cdc3b72176d1ecbf9ffe387fb920b0335c26abab5e67d788e9518d0f9d44b"
+		},
+		{
+			"path": "src/lib/components/ui/table/table-header.svelte",
+			"sha256": "31c597d55f6edf1fb6f5e4b6df71108d304b3745795b986affe7a5afe4459ce7"
+		},
+		{
+			"path": "src/lib/components/ui/table/table-head.svelte",
+			"sha256": "fa13ad77a727c40f2553fc51da5e06ebca54f8a47b9535ed4e278f726d692463"
+		},
+		{
+			"path": "src/lib/components/ui/table/table-row.svelte",
+			"sha256": "ad41772a691807678a2b6f6de89af15977f6552b5b565899d6542fab71103ef8"
+		},
+		{
+			"path": "src/lib/components/ui/table/index.ts",
+			"sha256": "f050439008d7242a4549fe6f17e4906945bd4541100f70de5a15127ee50ebc1f"
+		},
+		{
+			"path": "src/lib/components/ui/table/table.svelte",
+			"sha256": "558223acba20467d7512e6150d7360926a194df52f5635d3b25b346d23726b77"
+		},
+		{
+			"path": "src/lib/components/ui/table/table-caption.svelte",
+			"sha256": "b5a8ce667718685ba97072f07dea3644ada391557dd88fe4473774b3beba3b15"
+		},
+		{
+			"path": "src/lib/components/ui/table/table-cell.svelte",
+			"sha256": "d9ff54fe6875bd0e9c635f304b5b1ba15645610504f1c6b82b12eb3251e8b6fc"
+		},
+		{
+			"path": "src/lib/components/ui/table/table-footer.svelte",
+			"sha256": "e9050496f1c6256e45f866d92b1876d1213e4d9af105aa4376d36ad6b6dd23d0"
+		},
+		{
+			"path": "src/lib/components/ui/switch/switch.svelte",
+			"sha256": "16181b2ed4cc861554cd0ea008effdada31a341cde58c484ff6687232264f91f"
+		},
+		{
+			"path": "src/lib/components/ui/switch/index.ts",
+			"sha256": "8e69c96cdfa84cd568cdd05c8dcc78bd5fdd3ea9a119d0e06894c48be93a4506"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-separator.svelte",
+			"sha256": "dd47231dfad229b9a6990be4a3bc6b716ce7aea3941b389255ec7425ac7a333b"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-group.svelte",
+			"sha256": "2632759123358732e0caa36eb0c882612a0de05f25ef4e775db53d5cb14bb0f1"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-label.svelte",
+			"sha256": "12dd561b5548c7f4e30d27f62f03c90c78523a8a7b57c38e119ec88f0964acfa"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-group-heading.svelte",
+			"sha256": "bb51463c4f40225d1fea7db8a15d49e149f250b42c43a121c2e3981de0934b8d"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-item.svelte",
+			"sha256": "41bc57355e268d386d5b3890f6805e544986951309a7d2c968385450d30222ce"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-content.svelte",
+			"sha256": "b3082f690c565cdadd95a860749e47bfb50eb25f54878500c12d7af9ad0d3351"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-value.svelte",
+			"sha256": "d74206c96be85eb35c08d88bfefc082db217a164f1e13ff83536363edf28a455"
+		},
+		{
+			"path": "src/lib/components/ui/select/select.svelte",
+			"sha256": "4a7062d01d4cd23edfb5667f3da7a829626c169dff46846d713af524ebf30704"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-portal.svelte",
+			"sha256": "3ad1139eaca3b9c989495982493c99f42893d1aafbbf2f4aaab6fd117fbab742"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-scroll-up-button.svelte",
+			"sha256": "ad01be7130cb937c1706efbb36a18e81a03ffdabfbfd9074ffd6d4a998f19fc8"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-trigger.svelte",
+			"sha256": "859ab5cdfbfa964e54b6a1f4d9c5aa659dc9835376b9da22d2113f698c82fe90"
+		},
+		{
+			"path": "src/lib/components/ui/select/index.ts",
+			"sha256": "35e6d0753bd92c4d4636d425925a772ec8af0430d37e3854da802214322c0a7e"
+		},
+		{
+			"path": "src/lib/components/ui/select/select-scroll-down-button.svelte",
+			"sha256": "f844217f528cc6c67fd62e4b79c3fa81d3b588535d3600196dd633ca7f16547e"
+		},
+		{
+			"path": "src/lib/components/ui/badge/index.ts",
+			"sha256": "cda0dac0d259309d8c927fc98392c0753952ce439e64ada74f97d5e17cf2add3"
+		},
+		{
+			"path": "src/lib/components/ui/badge/badge.svelte",
+			"sha256": "4a9b2253e599711ad94290ba90efc51bc807fb514b53d92b717cd9317fe44f53"
+		},
+		{
+			"path": "src/lib/server/viewer/tracking.ts",
+			"sha256": "e1d74fec34ffa87abdb07f43642fb9e85d7f393142e2b3155fb36db4447e5640"
+		},
+		{
+			"path": "src/lib/server/viewer/archive-download.ts",
+			"sha256": "8d3a8034899dc138adc95f3b1ce1830a0df7d11858691f6e3c542796b30d29de"
+		},
+		{
+			"path": "src/lib/server/viewer/http.ts",
+			"sha256": "99313afa85b2d37c84f2cfcd507555c9de012a2b6aa7f227855e6c9b00064721"
+		},
+		{
+			"path": "src/lib/server/viewer/context.ts",
+			"sha256": "453b2f7c920c4c6c7aaba1a7a13d93950e7a3a32d7bc66f77474801d93814e95"
+		},
+		{
+			"path": "src/lib/server/viewer/request-download.ts",
+			"sha256": "b0bd33423faae123c615389ce46e0683fe7170b2fefa4b85b911aebf6d7b42ba"
+		},
+		{
+			"path": "src/lib/server/viewer/request-routes.ts",
+			"sha256": "1f1482ec7a3e4f246d22250f51ca84feeb0fb21267e0ef245b36c2e2dbf8b5b3"
+		},
+		{
+			"path": "src/lib/server/viewer/ratelimit.ts",
+			"sha256": "f750705d3a1b3a9e5b909426ab564cc4e25dd466226fa283afac6eb835b94fe3"
+		},
+		{
+			"path": "src/lib/server/viewer/serve.ts",
+			"sha256": "9cd7e0f8bae9382468852ef4d83d871c72ab97f778f19b7cf7c17d7a8685b88c"
+		},
+		{
+			"path": "src/lib/server/viewer/gates.ts",
+			"sha256": "077fd503ac3a05adf363d533e9351dffe5be88254c39baaad882e704f3dd190a"
+		},
+		{
+			"path": "src/lib/server/viewer/access.ts",
+			"sha256": "09c024cdf4b11649df60f4e5f5ef11805934e7c9412691d2620a0725ff8e2fae"
+		},
+		{
+			"path": "src/lib/server/http/mcp.ts",
+			"sha256": "7db73363a80d82f1038fd48710ef7984681a6cd1f1e33eb1ef61bd1296eb4afb"
+		},
+		{
+			"path": "src/lib/server/http/admin.ts",
+			"sha256": "24d96ab0811dc633e3f1f44afc10aa852424bf628c38170670a2fcc35b82dcd7"
+		},
+		{
+			"path": "src/lib/server/http/rest.ts",
+			"sha256": "d16a0df0de0085b223f68c4cf37413d739485c3f099ee0aba07975da93681e33"
+		},
+		{
+			"path": "src/lib/server/http/openapi.ts",
+			"sha256": "16b048930cb58b0084a1b7e20c6dce1e72d000162043612e8fa1bb3ea46b59b2"
+		},
+		{
+			"path": "src/lib/server/db/migrate.ts",
+			"sha256": "dfe54db5bc5a77519192b6efb042e61be725eadbaf5abe79cd45c3a605401ccb"
+		},
+		{
+			"path": "src/lib/server/db/connection.ts",
+			"sha256": "c963c20dbb8e0b4ec5cacd4dec60137ba3067003a307078fc3c6ab2fc12da919"
+		},
+		{
+			"path": "src/lib/server/db/index.ts",
+			"sha256": "9df7ef677e320967e3a1a3e8ca06f402c7d4d46863adbcd7c4ebe57b430dd126"
+		},
+		{
+			"path": "src/lib/server/db/schema/jobs.ts",
+			"sha256": "6b545e3e4b1184d9f78b929deeaadfcb96de505b636e27efead68f624752612e"
+		},
+		{
+			"path": "src/lib/server/db/schema/core.ts",
+			"sha256": "179d4349c9961947ef36bf560ee588309394ac66e2dbe335e8ef31bdba13e430"
+		},
+		{
+			"path": "src/lib/server/db/schema/activity.ts",
+			"sha256": "60d51280ee8861a3acbc9e2a1cea12b87a5a9c5b854776b37672931673014cfe"
+		},
+		{
+			"path": "src/lib/server/db/schema/access.ts",
+			"sha256": "50edd8bd2972b517339215c511f2988a24f519bf10ecce188c122b107a43960f"
+		},
+		{
+			"path": "src/lib/server/db/schema/index.ts",
+			"sha256": "6ce4fc680be47b462f57be7f605ca1d89ef40a57b946901a3cd04ae9caeba6d7"
+		},
+		{
+			"path": "src/lib/server/db/schema/deals.ts",
+			"sha256": "e9405f70fd7d15dc045fea00a991e98813d3e2b4c9184982433069c320fd3c0d"
+		},
+		{
+			"path": "src/lib/server/db/schema/attention.ts",
+			"sha256": "2f8153a3018a49514b1b5460a8d3e2ab79b03212974e72bd3810997ee4ba36b3"
+		},
+		{
+			"path": "src/lib/server/db/schema/auth.ts",
+			"sha256": "122be45b90c33adcbef9785e76132e0fa24a7e0887d6d15b855a5bf13100b777"
+		}
+	],
+	"build": "npm run build passed",
+	"pageErrors": [],
+	"metrics": {
+		"home320": {
+			"x": 16,
+			"y": 513,
+			"width": 288,
+			"height": 127
+		},
+		"titles": [
+			{
+				"title": "Consolidated financial statements and management accounts — Q1 2026",
+				"visible": "Consolidated financial statements and management accounts — Q1 2026",
+				"width": 146,
+				"spanHeight": 40,
+				"scrollHeight": 80
+			},
+			{
+				"title": "Consolidated financial statements and management accounts — Q2 2026",
+				"visible": "Consolidated financial statements and management accounts — Q2 2026",
+				"width": 146,
+				"spanHeight": 40,
+				"scrollHeight": 80
+			},
+			{
+				"title": "Consolidated financial statements and management accounts — Q3 2026",
+				"visible": "Consolidated financial statements and management accounts — Q3 2026",
+				"width": 146,
+				"spanHeight": 40,
+				"scrollHeight": 80
+			}
+		],
+		"longQuestion": {
+			"dialog": {
+				"top": -241.625,
+				"bottom": 1085.625,
+				"height": 1327.25
+			},
+			"submit": {
+				"top": 965.625,
+				"bottom": 1009.625
+			},
+			"viewport": 844,
+			"scrollHeight": 1327,
+			"overflow": "visible"
+		},
+		"longQuestionFocus": {
+			"x": 40,
+			"y": 965.625,
+			"width": 310,
+			"height": 44
+		},
+		"logoFocus": {
+			"label": "Choose logo",
+			"rect": {
+				"x": 33,
+				"y": 642.65625,
+				"width": 106.234375,
+				"height": 44,
+				"top": 642.65625,
+				"right": 139.234375,
+				"bottom": 686.65625,
+				"left": 33
+			},
+			"footer": {
+				"x": 33,
+				"y": 647,
+				"width": 254,
+				"height": 93,
+				"top": 647,
+				"right": 287,
+				"bottom": 740,
+				"left": 33
+			},
+			"uncoveredHeight": 4.34375
+		},
+		"invalidColor": {
+			"focus": "BUTTON",
+			"input": {
+				"x": 101,
+				"y": 708.90625,
+				"width": 128,
+				"height": 44,
+				"top": 708.90625,
+				"right": 229,
+				"bottom": 752.90625,
+				"left": 101
+			},
+			"error": {
+				"x": 33,
+				"y": 632,
+				"width": 254,
+				"height": 20,
+				"top": 632,
+				"right": 287,
+				"bottom": 652,
+				"left": 33
+			}
+		},
+		"previewWidths": {
+			"desktop": {
+				"x": 33,
+				"y": 571.90625,
+				"width": 254,
+				"height": 680
+			},
+			"phone": {
+				"x": 33,
+				"y": 571.90625,
+				"width": 254,
+				"height": 680
+			}
+		},
+		"escapeClosedEditor": true,
+		"confirmedDraftLost": true,
+		"longEntry": {
+			"x": 45,
+			"y": 2658.1875,
+			"width": 230,
+			"height": 44
+		},
+		"textSpacingOverflow": {
+			"width": 320,
+			"scrollWidth": 320
+		},
+		"defaultText": [
+			{
+				"selector": "nav a",
+				"text": "Documents",
+				"foreground": "oklch(0.525 0.015 150)",
+				"background": [255, 255, 255, 1],
+				"ratio": 5.339900110769663,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 16,
+					"y": 68,
+					"w": 65.421875,
+					"h": 46
+				}
+			},
+			{
+				"selector": "nav a",
+				"text": "Questions",
+				"foreground": "oklch(0.525 0.015 150)",
+				"background": [255, 255, 255, 1],
+				"ratio": 5.339900110769663,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 93.421875,
+					"y": 68,
+					"w": 58,
+					"h": 46
+				}
+			},
+			{
+				"selector": "nav a",
+				"text": "Requests3",
+				"foreground": "rgb(40, 99, 68)",
+				"background": [255, 255, 255, 1],
+				"ratio": 7.0983587590245705,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 163.421875,
+					"y": 68,
+					"w": 82.78125,
+					"h": 46
+				}
+			},
+			{
+				"selector": "h1",
+				"text": "Investment mandate",
+				"foreground": "oklch(0.235 0.018 150)",
+				"background": [247, 248, 246, 1],
+				"ratio": 15.505863861297794,
+				"font": "20px",
+				"weight": "600",
+				"rect": {
+					"x": 16,
+					"y": 231,
+					"w": 358,
+					"h": 28
+				}
+			},
+			{
+				"selector": ".text-muted-foreground",
+				"text": "Sign out",
+				"foreground": "oklch(0.525 0.015 150)",
+				"background": [255, 255, 255, 1],
+				"ratio": 5.339900110769663,
+				"font": "12px",
+				"weight": "400",
+				"rect": {
+					"x": 291.34375,
+					"y": 12,
+					"w": 82.65625,
+					"h": 44
+				}
+			},
+			{
+				"selector": ".text-muted-foreground",
+				"text": "Documents",
+				"foreground": "oklch(0.525 0.015 150)",
+				"background": [255, 255, 255, 1],
+				"ratio": 5.339900110769663,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 16,
+					"y": 68,
+					"w": 65.421875,
+					"h": 46
+				}
+			},
+			{
+				"selector": ".text-muted-foreground",
+				"text": "Questions",
+				"foreground": "oklch(0.525 0.015 150)",
+				"background": [255, 255, 255, 1],
+				"ratio": 5.339900110769663,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 93.421875,
+					"y": 68,
+					"w": 58,
+					"h": 46
+				}
+			},
+			{
+				"selector": ".text-muted-foreground",
+				"text": "Back to requests",
+				"foreground": "oklch(0.525 0.015 150)",
+				"background": [247, 248, 246, 1],
+				"ratio": 5.012527676041379,
+				"font": "14px",
+				"weight": "400",
+				"rect": {
+					"x": 16,
+					"y": 131,
+					"w": 358,
+					"h": 44
+				}
+			},
+			{
+				"selector": ".text-muted-foreground",
+				"text": "Up to 100 MB· Due in 2 days. Only the team running this room sees what you upload.",
+				"foreground": "oklch(0.525 0.015 150)",
+				"background": [247, 248, 246, 1],
+				"ratio": 5.012527676041379,
+				"font": "14px",
+				"weight": "400",
+				"rect": {
+					"x": 16,
+					"y": 339,
+					"w": 358,
+					"h": 40
+				}
+			},
+			{
+				"selector": ".text-muted-foreground",
+				"text": "Shared privately with youPowered by OpenRoom",
+				"foreground": "oklch(0.525 0.015 150)",
+				"background": [247, 248, 246, 1],
+				"ratio": 5.012527676041379,
+				"font": "12px",
+				"weight": "400",
+				"rect": {
+					"x": 0,
+					"y": 575,
+					"w": 390,
+					"h": 80
+				}
+			}
+		],
+		"warningContrast": [
+			{
+				"selector": "[data-slot=\"alert-description\"] span",
+				"text": "Backups stay on this server",
+				"foreground": "oklch(0.525 0.015 150)",
+				"background": [255, 255, 255, 1],
+				"ratio": 5.339900110769663,
+				"font": "11px",
+				"weight": "400",
+				"rect": {
+					"x": 55,
+					"y": 85.140625,
+					"w": 143.5,
+					"h": 15.703125
+				}
+			},
+			{
+				"selector": "[data-slot=\"alert-description\"] span",
+				"text": "Set up",
+				"foreground": "oklch(0.235 0.018 150)",
+				"background": [255, 255, 255, 1],
+				"ratio": 16.518564983947208,
+				"font": "11px",
+				"weight": "500",
+				"rect": {
+					"x": 327.328125,
+					"y": 85.140625,
+					"w": 33.671875,
+					"h": 15.703125
+				}
+			},
+			{
+				"selector": "[data-slot=\"alert-description\"] span",
+				"text": "The server is running low on disk space. Free space or move files to S3.",
+				"foreground": "oklab(0.577 0.217662 0.112464 / 0.9)",
+				"background": [255, 255, 255, 1],
+				"ratio": 4.5260091020223925,
+				"font": "11px",
+				"weight": "400",
+				"rect": {
+					"x": 55,
+					"y": 133,
+					"w": 306,
+					"h": 31.40625
+				}
+			},
+			{
+				"selector": "[data-slot=\"alert-description\"] span",
+				"text": "View settings",
+				"foreground": "oklch(0.235 0.018 150)",
+				"background": [255, 255, 255, 1],
+				"ratio": 16.518564983947208,
+				"font": "11px",
+				"weight": "500",
+				"rect": {
+					"x": 55,
+					"y": 172.546875,
+					"w": 70.859375,
+					"h": 15.703125
+				}
+			}
+		],
+		"diagnostic-dark-green": [
+			{
+				"selector": "nav a",
+				"text": "Documents",
+				"foreground": "rgb(40, 99, 68)",
+				"background": [23, 23, 23, 1],
+				"ratio": 2.5256317497667835,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 16,
+					"y": 68,
+					"w": 65.421875,
+					"h": 46
+				}
+			},
+			{
+				"selector": "nav a",
+				"text": "Questions",
+				"foreground": "oklch(0.708 0 0)",
+				"background": [23, 23, 23, 1],
+				"ratio": 6.938930345767489,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 93.421875,
+					"y": 68,
+					"w": 58,
+					"h": 46
+				}
+			},
+			{
+				"selector": "nav a",
+				"text": "Requests3",
+				"foreground": "oklch(0.708 0 0)",
+				"background": [23, 23, 23, 1],
+				"ratio": 6.938930345767489,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 163.421875,
+					"y": 68,
+					"w": 82.78125,
+					"h": 46
+				}
+			},
+			{
+				"selector": "summary .text-primary",
+				"text": "Read full welcome",
+				"foreground": "rgb(40, 99, 68)",
+				"background": [23, 23, 23, 1],
+				"ratio": 2.5256317497667835,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 29,
+					"y": 440,
+					"w": 332,
+					"h": 16
+				}
+			}
+		],
+		"diagnostic-dark-blue": [
+			{
+				"selector": "nav a",
+				"text": "Documents",
+				"foreground": "rgb(52, 86, 161)",
+				"background": [23, 23, 23, 1],
+				"ratio": 2.55409409101293,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 16,
+					"y": 68,
+					"w": 65.421875,
+					"h": 46
+				}
+			},
+			{
+				"selector": "nav a",
+				"text": "Questions",
+				"foreground": "oklch(0.708 0 0)",
+				"background": [23, 23, 23, 1],
+				"ratio": 6.938930345767489,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 93.421875,
+					"y": 68,
+					"w": 58,
+					"h": 46
+				}
+			},
+			{
+				"selector": "nav a",
+				"text": "Requests3",
+				"foreground": "oklch(0.708 0 0)",
+				"background": [23, 23, 23, 1],
+				"ratio": 6.938930345767489,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 163.421875,
+					"y": 68,
+					"w": 82.78125,
+					"h": 46
+				}
+			},
+			{
+				"selector": "summary .text-primary",
+				"text": "Read full welcome",
+				"foreground": "rgb(52, 86, 161)",
+				"background": [23, 23, 23, 1],
+				"ratio": 2.55409409101293,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 29,
+					"y": 440,
+					"w": 332,
+					"h": 16
+				}
+			}
+		],
+		"diagnostic-dark-yellow": [
+			{
+				"selector": "nav a",
+				"text": "Documents",
+				"foreground": "rgb(116, 99, 30)",
+				"background": [23, 23, 23, 1],
+				"ratio": 3.0273158821591615,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 16,
+					"y": 68,
+					"w": 65.421875,
+					"h": 46
+				}
+			},
+			{
+				"selector": "nav a",
+				"text": "Questions",
+				"foreground": "oklch(0.708 0 0)",
+				"background": [23, 23, 23, 1],
+				"ratio": 6.938930345767489,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 93.421875,
+					"y": 68,
+					"w": 58,
+					"h": 46
+				}
+			},
+			{
+				"selector": "nav a",
+				"text": "Requests3",
+				"foreground": "oklch(0.708 0 0)",
+				"background": [23, 23, 23, 1],
+				"ratio": 6.938930345767489,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 163.421875,
+					"y": 68,
+					"w": 82.78125,
+					"h": 46
+				}
+			},
+			{
+				"selector": "summary .text-primary",
+				"text": "Read full welcome",
+				"foreground": "rgb(116, 99, 30)",
+				"background": [23, 23, 23, 1],
+				"ratio": 3.0273158821591615,
+				"font": "12px",
+				"weight": "500",
+				"rect": {
+					"x": 29,
+					"y": 440,
+					"w": 332,
+					"h": 16
+				}
+			}
+		]
+	},
+	"shots": [
+		{
+			"name": "home-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 1414
+			},
+			"focus": "BODY",
+			"sha256": "fdd2761be201a86c5245891a04ee28e4954a868a18af5964808cad21b316c492"
+		},
+		{
+			"name": "home-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 320,
+				"height": 1474
+			},
+			"focus": "BODY",
+			"sha256": "76f96ce5b618161741b01b9463258a825a4b96b0366694ce0bc10feb5991f1f6"
+		},
+		{
+			"name": "home-320-full",
+			"fullPage": true,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 320,
+				"height": 1474
+			},
+			"focus": "BODY",
+			"sha256": "eb1cc28ad5ea5325968d9d510bfe78929162b224f9437be177c9e01a0d093f86"
+		},
+		{
+			"name": "home-768",
+			"fullPage": false,
+			"viewport": {
+				"width": 768,
+				"height": 1024
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 768,
+				"height": 1538
+			},
+			"focus": "BODY",
+			"sha256": "0fc6f78cfe5691d07d83d298a7241daa8545734511a5ec38455ae6fac7479a54"
+		},
+		{
+			"name": "home-1440",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1199
+			},
+			"focus": "BODY",
+			"sha256": "1c3cc333834880cd3a370935a25b3528971b2078853492a303460972f05f600b"
+		},
+		{
+			"name": "folder-top-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 106
+			},
+			"document": {
+				"width": 320,
+				"height": 2061
+			},
+			"focus": "BODY",
+			"sha256": "821bd34e2621e1fce1c5bb2cd7bc7326bccef1d75b04c4725128150aa7481681"
+		},
+		{
+			"name": "similar-titles-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 864
+			},
+			"document": {
+				"width": 320,
+				"height": 2061
+			},
+			"focus": "BODY",
+			"sha256": "71ec7d899a1491fc952b109b952dacbb9d78faff71b37a1476377203ad1f89f7"
+		},
+		{
+			"name": "similar-search-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 320,
+				"height": 1141
+			},
+			"focus": "Search file titles",
+			"sha256": "d4a44865876304b5cdf60c2e9d6fb9fe016b61b6ec652862c57a22070ac7251d"
+		},
+		{
+			"name": "targeted-search-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 320,
+				"height": 899
+			},
+			"focus": "Search file titles",
+			"sha256": "7c049015c4d3275eef803077ec70dc252099179be7de4a21df4c6e82c2f79f04"
+		},
+		{
+			"name": "pdf-entry-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 320,
+				"height": 5643
+			},
+			"focus": "BODY",
+			"sha256": "128a3ac71fbdc1b6c8d78d7c34cb0a604c2037603ec35e0a4c44b3f5456bf70d"
+		},
+		{
+			"name": "pdf-short-height-reading",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 785
+			},
+			"document": {
+				"width": 390,
+				"height": 6752
+			},
+			"focus": "BODY",
+			"sha256": "705ff1cd4c34bf595770020ba25e0ca7a36ca8e7db1cefa49ed7f1c7b7c298ed"
+		},
+		{
+			"name": "pdf-short-height-search-active",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 755
+			},
+			"document": {
+				"width": 390,
+				"height": 6813
+			},
+			"focus": "Find in PDF",
+			"sha256": "f9c33be3b7b52e4dfbc2224f01762030c88666bc387a518ce9f57eb392708e49"
+		},
+		{
+			"name": "pdf-question-short-height",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 755
+			},
+			"document": {
+				"width": 390,
+				"height": 6813
+			},
+			"focus": "question",
+			"sha256": "202d7c8eeaa0ee70f8e193dbf12ac3858b6d37e8fe896dbab0d4f0e7d3ae4f25"
+		},
+		{
+			"name": "pdf-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 19101
+			},
+			"focus": "Ask about page 1",
+			"sha256": "fd719d49f7654f6706cf7d9786017613e18a3d92f356479ead4e2acfeba10bdd"
+		},
+		{
+			"name": "questions-empty-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 844
+			},
+			"focus": "BODY",
+			"sha256": "2d94cb086f60e6afe9e643110855da71ec2be5352665abede10a9ab9301ff2cc"
+		},
+		{
+			"name": "question-compose-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 844
+			},
+			"focus": "team-question",
+			"sha256": "0c211b53b7a83e8b1ba530aaf5f20aef2b4d25d1975c9ca233644eae65d5c232"
+		},
+		{
+			"name": "conversation-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 908
+			},
+			"focus": "BODY",
+			"sha256": "ec02dc55595356a442f1b19733b4bc43c339e6f7b9f4fab2096d221e11d3a12e"
+		},
+		{
+			"name": "conversation-short-height",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 910
+			},
+			"focus": "reply",
+			"sha256": "c2941dff15c6a427f14e5505717d330e8c1ab4f299deab9860d78c1af747f83a"
+		},
+		{
+			"name": "requests-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 844
+			},
+			"focus": "BODY",
+			"sha256": "1f87d9608434498636a2e9a2e1937ec655806a28b56f867f69752eefb7860e45"
+		},
+		{
+			"name": "request-detail-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 844
+			},
+			"focus": "BODY",
+			"sha256": "654f3b3f31505d2ca348d06d8861a60df02b608518b6f7ed64bd42434d0f17bf"
+		},
+		{
+			"name": "admin-overview-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1154
+			},
+			"focus": "BODY",
+			"sha256": "e8a9f644db214988f89e1dcf4637586043f1970f811f8082d23bec537d8b39ea"
+		},
+		{
+			"name": "admin-rooms-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1000
+			},
+			"focus": "BODY",
+			"sha256": "49e622b19d886a8ca42a98849e1b802afa9bc025c06d77f9a7a54696d78562cc"
+		},
+		{
+			"name": "admin-documents-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1000
+			},
+			"focus": "BODY",
+			"sha256": "1cfe77edf540f604a89161f5d917bac3580c4798fe10eb82f487223aa05dce8a"
+		},
+		{
+			"name": "admin-sharing-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1000
+			},
+			"focus": "BODY",
+			"sha256": "a06515eaad1155f60e2b69df22b7d541d3269343d402a5141725914ac99ca8fb"
+		},
+		{
+			"name": "admin-analytics-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1000
+			},
+			"focus": "BODY",
+			"sha256": "dfb49abb613da6139de2a83af09fe25608207228c97f95c6adcdecca8f6a141e"
+		},
+		{
+			"name": "admin-questions-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1000
+			},
+			"focus": "BODY",
+			"sha256": "d334fcf747d04642e117b50c5a7f0ac176ea597a08b5eb93fb933f17fa73f243"
+		},
+		{
+			"name": "admin-requests-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1000
+			},
+			"focus": "BODY",
+			"sha256": "a4e3915002a2db80733f94e817ddac2f1a071aeb09c86db0ed1a743f23fa6fd8"
+		},
+		{
+			"name": "admin-groups-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1000
+			},
+			"focus": "BODY",
+			"sha256": "8e88520750d561563143dbf7b709b1d3e841a94ab4ea9649fb50266e05e3dc9d"
+		},
+		{
+			"name": "admin-overview-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 1580
+			},
+			"focus": "BODY",
+			"sha256": "1839a2f2095a22d50c2757da377b27e441d031ca34dd1e7320194d709fb0899c"
+		},
+		{
+			"name": "admin-documents-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 1045
+			},
+			"focus": "BODY",
+			"sha256": "79b717e31b6a0054ffe394c6f5a4b40b8a65c5a759ad7f5fb9f771f5abd32157"
+		},
+		{
+			"name": "admin-sharing-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 844
+			},
+			"focus": "BODY",
+			"sha256": "8dba63c8edd27992235a42f5b8ec9be63a8bdfdcff7221beee5de953109d05db"
+		},
+		{
+			"name": "admin-analytics-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 953
+			},
+			"focus": "BODY",
+			"sha256": "2d643ccf0904eb087915e71c748e2e42889a01105071621d988e1f6eb8898016"
+		},
+		{
+			"name": "personal-edit-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 844
+			},
+			"focus": "link-label",
+			"sha256": "146efa202fb00deb1f4231efec68e89e201fec04467054c5509c874b5d6fcd1a"
+		},
+		{
+			"name": "personal-edit-short-height",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 500
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 607
+			},
+			"focus": "link-label",
+			"sha256": "c04a85c6aa14267088fa47c555a956319c9e736c54d13266589465cd1be74082"
+		},
+		{
+			"name": "appearance-entry-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 2288
+			},
+			"focus": "BODY",
+			"sha256": "f7fa0c15c2352e59b67c11f3f206ed5e98839cefb82afa71302f0e67c49d39e0"
+		},
+		{
+			"name": "appearance-preview-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 531
+			},
+			"document": {
+				"width": 390,
+				"height": 2243
+			},
+			"focus": "bits-s8",
+			"sha256": "d733d8d04716571bb7d8a6382a70ff72ca049d1075decfb2ac6f16a58a7dce5a"
+		},
+		{
+			"name": "appearance-desktop",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 399
+			},
+			"document": {
+				"width": 1440,
+				"height": 2046
+			},
+			"focus": "BODY",
+			"sha256": "296efed3860e71e5e2497d82ef82966e7e354258eb7d420e254c1f2c651ee2ec"
+		},
+		{
+			"name": "room-empty-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 844
+			},
+			"focus": "Search file titles",
+			"sha256": "39ca05155a06d8daa1ca39ccaffb4ac7940b7600dadecd19a5a7264c20a39187"
+		},
+		{
+			"name": "pdf-question-long-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 6732
+			},
+			"focus": "question",
+			"sha256": "0a3829603378df0e0312080b39e9c7574903f49ffc0780665b751d10d509128d"
+		},
+		{
+			"name": "appearance-tab-2-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 511
+			},
+			"document": {
+				"width": 320,
+				"height": 2523
+			},
+			"focus": "BUTTON",
+			"sha256": "2ff736a47598fabdcb3c1debd58f00d4a2da678ce5478063f6b8652104b544e7"
+		},
+		{
+			"name": "appearance-tab-5-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 933
+			},
+			"document": {
+				"width": 320,
+				"height": 2523
+			},
+			"focus": "appearance-color",
+			"sha256": "840c29ce86898400d101fe8b72dcb475172883e8d55c2eb27f989449c330e56b"
+		},
+		{
+			"name": "personal-draft-before-escape",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 844
+			},
+			"focus": "link-welcome",
+			"sha256": "00b7047791d8453546eb92f4b9de13570c086afa0180b4223916f42d05991289"
+		},
+		{
+			"name": "personal-draft-after-reopen",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 844
+			},
+			"focus": "link-label",
+			"sha256": "146efa202fb00deb1f4231efec68e89e201fec04467054c5509c874b5d6fcd1a"
+		},
+		{
+			"name": "entry-long-welcome-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 320,
+				"height": 2919
+			},
+			"focus": "BODY",
+			"sha256": "3915a35af3af9ec7dfd56d9bd83535ffab78fba976056ff379f6f06ea2e6e6b3"
+		},
+		{
+			"name": "entry-long-welcome-full-320",
+			"fullPage": true,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 320,
+				"height": 2919
+			},
+			"focus": "BODY",
+			"sha256": "0cb43a851dc42418bbae8492fa3c21b13de805159fc70d16088d0d53576d947e"
+		},
+		{
+			"name": "entry-long-welcome-form-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 2179
+			},
+			"document": {
+				"width": 320,
+				"height": 2919
+			},
+			"focus": "BODY",
+			"sha256": "d6746b07e8cdc624801e9ada7e2d2644804eebcbd2a6a2476c95a31b06cdad77"
+		},
+		{
+			"name": "text-spacing-home-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 320,
+				"height": 1814
+			},
+			"focus": "BODY",
+			"sha256": "516c997465b60d0df76d2fde58473261cbafb8e426b7e8fafabf318fbb9ad2d0"
+		},
+		{
+			"name": "all-reviewed-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 1079
+			},
+			"focus": "review-progress",
+			"sha256": "a6abca85b9e7fa3c344821d54c504158e793b96d3ea6ec7af2f6a3389138665c"
+		},
+		{
+			"name": "all-reviewed-expanded-390",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 1465
+			},
+			"focus": "SUMMARY",
+			"sha256": "1111d736c1b59ecf9058c5f867d1de0801793f2b1c0ca9ae611ef02a3d3b7a1f"
+		},
+		{
+			"name": "appearance-invalid-color-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 675
+			},
+			"document": {
+				"width": 320,
+				"height": 2551
+			},
+			"focus": "BUTTON",
+			"sha256": "f06d434dd090bb2b4421f81ab3fcfaeae76728f19d4e2ed3ac25f2ba4be2ec30"
+		},
+		{
+			"name": "preview-desktop-at-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 155
+			},
+			"document": {
+				"width": 320,
+				"height": 2359
+			},
+			"focus": "bits-s18",
+			"sha256": "985b4c6e751aa2974d949f359f581206e50aab4ec0e7017f16934f25018041d7"
+		},
+		{
+			"name": "preview-phone-at-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 155
+			},
+			"document": {
+				"width": 320,
+				"height": 2359
+			},
+			"focus": "bits-s19",
+			"sha256": "46758bcf3758c066fcfed8b7852cdfb2b99c6d3b5e514d9c9e57c9653957e3cb"
+		},
+		{
+			"name": "pdf-long-question-submit-focus",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 6732
+			},
+			"focus": "BUTTON",
+			"sha256": "f3deef982d91dee7ea83267e7898cbb6a95f12c84799f4a05f46a65ef43554dd"
+		},
+		{
+			"name": "diagnostic-dark-green",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 1079
+			},
+			"focus": "BODY",
+			"sha256": "9c2f76acf840c604a9e8a6fa512acba9b7b371c22d6efa32c2572ad222c94f27"
+		},
+		{
+			"name": "diagnostic-dark-blue",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 1079
+			},
+			"focus": "BODY",
+			"sha256": "8dc2097b1eafe0958de411345d86c626bee7bfc5a7522df8d35913f555d3f763"
+		},
+		{
+			"name": "diagnostic-dark-yellow",
+			"fullPage": false,
+			"viewport": {
+				"width": 390,
+				"height": 844
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 390,
+				"height": 1079
+			},
+			"focus": "BODY",
+			"sha256": "62014aa8ece484b6be2a4a9a5452ca06860c7224550b56195f1c2350b39b8a26"
+		},
+		{
+			"name": "appearance-logo-focused-320",
+			"fullPage": false,
+			"viewport": {
+				"width": 320,
+				"height": 740
+			},
+			"scroll": {
+				"x": 0,
+				"y": 511
+			},
+			"document": {
+				"width": 320,
+				"height": 2523
+			},
+			"focus": "BUTTON",
+			"sha256": "2ff736a47598fabdcb3c1debd58f00d4a2da678ce5478063f6b8652104b544e7"
+		},
+		{
+			"name": "admin-investors",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1000
+			},
+			"focus": "BODY",
+			"sha256": "ba916b9125cfc85e11bb04f7a31a3bd8be3beab516fb51f0f2976a17c72da16c"
+		},
+		{
+			"name": "admin-notifications",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1125
+			},
+			"focus": "BODY",
+			"sha256": "bc84c47d4badd8293b8dff50888966425640940d8244fa62f21b75210fe46b60"
+		},
+		{
+			"name": "admin-audit",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 3084
+			},
+			"focus": "BODY",
+			"sha256": "075f9ee62efde5896b5e4979d6e81902abe9c6b9ad21c866e73f54ca6c88d981"
+		},
+		{
+			"name": "admin-workspace-settings",
+			"fullPage": false,
+			"viewport": {
+				"width": 1440,
+				"height": 1000
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"document": {
+				"width": 1440,
+				"height": 1949
+			},
+			"focus": "BODY",
+			"sha256": "30baf1d40071f5813f6abc1f224950eed01956c244bd62a3442209aa8a9c390d"
+		}
+	],
+	"limits": [
+		"Viewport checks are Chromium simulations, not physical phone/keyboard or Safari testing.",
+		"Dark class was deliberately injected for diagnostic checks; no shipped theme switch was found.",
+		"No full accessibility conformance audit, user study, security audit, or exhaustive application test suite.",
+		"NDA/verification gates, expired/revoked links, video/image viewing, upload completion/failure, every workspace settings tab, large datasets and real network failures were not exhaustively rechecked."
+	]
+}

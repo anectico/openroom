@@ -1,0 +1,223 @@
+{
+	"checks": [
+		"entry-email-390 fits viewport",
+		"entry-email-1440 fits viewport",
+		"home-first-390 fits viewport",
+		"Welcome collapses on return",
+		"Review saves and keeps welcome collapsed",
+		"Review focus retained",
+		"home-320 fits viewport",
+		"Narrow search fills content width",
+		"Attention actions have comfortable targets",
+		"home-390 fits viewport",
+		"home-768 fits viewport",
+		"Tablet uses one aligned document column",
+		"Tablet utilities share one row",
+		"home-1440 fits viewport",
+		"home-reviewed-expanded-390 fits viewport",
+		"Reviewed status separated from Undo",
+		"Undo returns document to remaining list",
+		"Jump reaches document heading",
+		"folder-390 fits viewport",
+		"search-results-390 fits viewport",
+		"search-empty-390 fits viewport",
+		"Search empty state offers recovery",
+		"New version explains review reset",
+		"home-new-version-390 fits viewport",
+		"reader-320 fits viewport",
+		"Current thumbnail visible 320",
+		"Current thumbnail has visible text 320",
+		"thumbnails-320 fits viewport",
+		"Thumbnail close restores focus 320",
+		"reader-390 fits viewport",
+		"Current thumbnail visible 390",
+		"Current thumbnail has visible text 390",
+		"thumbnails-390 fits viewport",
+		"Thumbnail close restores focus 390",
+		"reader-768 fits viewport",
+		"Current thumbnail visible 768",
+		"Current thumbnail has visible text 768",
+		"thumbnails-768 fits viewport",
+		"Thumbnail close restores focus 768",
+		"reader-1440 fits viewport",
+		"Current thumbnail visible 1440",
+		"Current thumbnail has visible text 1440",
+		"thumbnails-1440 fits viewport",
+		"Thumbnail close restores focus 1440",
+		"Late result visible on reopen",
+		"Match color differs from selected row",
+		"pdf-search-selected-320 fits viewport",
+		"pdf-search-selected-1440 fits viewport",
+		"pdf-completion-320 fits viewport",
+		"pdf-completion-390 fits viewport",
+		"pdf-completion-1440 fits viewport",
+		"Completion review updates both controls",
+		"pdf-completion-reviewed-320 fits viewport",
+		"Completion opens next guide document",
+		"ask-document-390 fits viewport",
+		"reader-image-390 fits viewport",
+		"image reader loads",
+		"reader-video-390 fits viewport",
+		"video reader loads",
+		"reader-download-390 fits viewport",
+		"download reader loads",
+		"pdf-no-text-390 fits viewport",
+		"No browser errors in reading flows"
+	],
+	"errors": [],
+	"shots": [
+		"entry-email-390",
+		"entry-email-1440",
+		"home-first-390",
+		"home-320",
+		"home-390",
+		"home-768",
+		"home-1440",
+		"home-reviewed-expanded-390",
+		"folder-390",
+		"search-results-390",
+		"search-empty-390",
+		"home-new-version-390",
+		"reader-320",
+		"thumbnails-320",
+		"reader-390",
+		"thumbnails-390",
+		"reader-768",
+		"thumbnails-768",
+		"reader-1440",
+		"thumbnails-1440",
+		"pdf-search-selected-320",
+		"pdf-search-selected-1440",
+		"pdf-completion-320",
+		"pdf-completion-390",
+		"pdf-completion-1440",
+		"pdf-completion-reviewed-320",
+		"ask-document-390",
+		"reader-image-390",
+		"reader-video-390",
+		"reader-download-390",
+		"pdf-no-text-390"
+	],
+	"measurements": [
+		{
+			"width": 320,
+			"pins": [
+				{
+					"x": 16,
+					"y": 485,
+					"width": 288,
+					"height": 90
+				},
+				{
+					"x": 16,
+					"y": 583,
+					"width": 288,
+					"height": 90
+				},
+				{
+					"x": 16,
+					"y": 681,
+					"width": 288,
+					"height": 90
+				}
+			],
+			"documentsTop": 905
+		},
+		{
+			"width": 390,
+			"pins": [
+				{
+					"x": 16,
+					"y": 485,
+					"width": 358,
+					"height": 82
+				},
+				{
+					"x": 16,
+					"y": 575,
+					"width": 358,
+					"height": 82
+				},
+				{
+					"x": 16,
+					"y": 665,
+					"width": 358,
+					"height": 82
+				}
+			],
+			"documentsTop": 881
+		},
+		{
+			"width": 768,
+			"pins": [
+				{
+					"x": 32,
+					"y": 533,
+					"width": 704,
+					"height": 82
+				},
+				{
+					"x": 32,
+					"y": 623,
+					"width": 704,
+					"height": 82
+				},
+				{
+					"x": 32,
+					"y": 713,
+					"width": 704,
+					"height": 82
+				},
+				{
+					"x": 32,
+					"y": 803,
+					"width": 704,
+					"height": 82
+				},
+				{
+					"x": 32,
+					"y": 893,
+					"width": 704,
+					"height": 82
+				}
+			],
+			"documentsTop": 1057
+		},
+		{
+			"width": 1440,
+			"pins": [
+				{
+					"x": 176,
+					"y": 533,
+					"width": 357.328125,
+					"height": 127
+				},
+				{
+					"x": 541.328125,
+					"y": 533,
+					"width": 357.328125,
+					"height": 127
+				},
+				{
+					"x": 906.65625,
+					"y": 533,
+					"width": 357.34375,
+					"height": 127
+				},
+				{
+					"x": 176,
+					"y": 668,
+					"width": 357.328125,
+					"height": 127
+				},
+				{
+					"x": 541.328125,
+					"y": 668,
+					"width": 357.328125,
+					"height": 127
+				}
+			],
+			"documentsTop": 877
+		}
+	]
+}

@@ -1,0 +1,28 @@
+Production build
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Run npm run preview to preview your production build locally.
+
+> Using @sveltejs/adapter-node
+Copying assets
+Compressing and hashing assets
+✔ done
+
+Final lint
+
+> openroom@0.0.0 lint
+> biome check . && npm run check && node scripts/check-no-comments.ts
+
+Checked 466 files in 158ms. No fixes applied.
+
+> openroom@0.0.0 check
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: /Users/sn/code/mains/openroom
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+No comments in 826 files.
+
+Browser verification
+154 passing assertions; 61 retained screenshots inspected with vision; zero uncaught browser page errors.

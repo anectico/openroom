@@ -1,0 +1,48 @@
+{
+	"date": "2026-11-13",
+	"runtime": "Node 24, Chromium, production build, real SQLite and disk storage, loopback SMTP",
+	"suites": [
+		{
+			"file": "browser-results.json",
+			"checks": 63,
+			"result": "passed"
+		},
+		{
+			"file": "flows-results.json",
+			"checks": 38,
+			"result": "passed"
+		},
+		{
+			"file": "gates-results.json",
+			"checks": 15,
+			"result": "passed"
+		},
+		{
+			"file": "final-results.json",
+			"checks": 28,
+			"result": "passed"
+		},
+		{
+			"file": "admin-results.json",
+			"checks": 12,
+			"result": "passed"
+		},
+		{
+			"file": "polish-results.json",
+			"checks": 7,
+			"result": "passed"
+		}
+	],
+	"totalAssertions": 163,
+	"screenshots": 79,
+	"visionInspected": 79,
+	"staticChecks": {
+		"lint": "passed",
+		"biome": "passed",
+		"svelteCheck": "0 errors, 0 warnings",
+		"noComments": "passed",
+		"productionBuild": "passed"
+	},
+	"scope": "Investor journey and related owner personalization screens; not an exhaustive release audit",
+	"deployment": "none"
+}

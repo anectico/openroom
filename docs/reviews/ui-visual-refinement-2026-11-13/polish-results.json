@@ -1,0 +1,19 @@
+{
+	"checks": [
+		"home-new-version-320 fits viewport",
+		"New version explanation uses full narrow card width",
+		"Closed request sentence spacing",
+		"request-closed-empty-390 fits viewport",
+		"request-closed-receipt-390 fits viewport",
+		"Personal welcome editor visible desktop and mobile",
+		"Sharing link creation completes"
+	],
+	"shots": [
+		"home-new-version-320",
+		"request-closed-empty-390",
+		"request-closed-receipt-390",
+		"admin-personal-welcome-1440",
+		"admin-personal-welcome-390",
+		"admin-share-ready-390"
+	]
+}

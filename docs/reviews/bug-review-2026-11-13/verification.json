@@ -1,0 +1,567 @@
+{
+	"date": "2026-11-13",
+	"findingsFixed": 13,
+	"checks": [
+		{
+			"name": "Access redirects retain question drafts without false success",
+			"passed": true
+		},
+		{
+			"name": "Question drafts are reset between documents",
+			"passed": true
+		},
+		{
+			"name": "Question draft retains its original page",
+			"passed": true
+		},
+		{
+			"name": "Native video keyboard controls keep intended behavior",
+			"passed": true
+		},
+		{
+			"name": "320px video seek track is usable without page overflow",
+			"passed": true
+		},
+		{
+			"name": "Reading time is flushed when visibility changes",
+			"passed": true
+		},
+		{
+			"name": "Network failures release all three authentication forms",
+			"passed": true
+		},
+		{
+			"name": "HTTP 429 reset failure is not labelled sent",
+			"passed": true
+		},
+		{
+			"name": "Same NDA version does not show changed warning",
+			"passed": true
+		},
+		{
+			"name": "Sharing link inputs are disabled until save resolves",
+			"passed": true
+		},
+		{
+			"name": "Observers do not see editable retention controls",
+			"passed": true
+		},
+		{
+			"name": "Pending destructive operation cannot be dismissed as cancelled",
+			"passed": true
+		},
+		{
+			"name": "PDF menu restores focus to connected trigger",
+			"passed": true
+		},
+		{
+			"name": "Successful question retains original page and PDF resume",
+			"passed": true
+		},
+		{
+			"name": "Login retries successfully without reload",
+			"passed": true
+		},
+		{
+			"name": "Invite and password forms retry; password changes; signout and one-time link",
+			"passed": true
+		},
+		{
+			"name": "Hidden time excluded and visible reading resumes",
+			"passed": true
+		},
+		{
+			"name": "Updated NDA warning and reacceptance enforce file access",
+			"passed": true
+		},
+		{
+			"name": "Video native seek and responsive layouts",
+			"passed": true
+		},
+		{
+			"name": "Replacement NDA warning appears at invitation entry",
+			"passed": true
+		},
+		{
+			"name": "Unverified upload receipts remain isolated from verified sessions",
+			"passed": true
+		}
+	],
+	"observations": [
+		{
+			"name": "Draft page context",
+			"title": "Ask about page 1Your question about \u201cOverview\u201d is shared privately with the team running this room.Your questionCancelSend question   Close",
+			"draft": "Draft about the overview page one."
+		},
+		{
+			"name": "Cross-document question draft",
+			"draft": ""
+		},
+		{
+			"name": "Space on Mute",
+			"state": {
+				"muted": true,
+				"paused": true
+			}
+		},
+		{
+			"name": "Arrow on Volume",
+			"state": {
+				"time": 7,
+				"volume": 0.95
+			}
+		},
+		{
+			"name": "Video controls overflow",
+			"overflow": false,
+			"positionWidth": 264
+		},
+		{
+			"name": "Login offline recoverable",
+			"disabled": false,
+			"alert": ["Connection interrupted. Check your connection and try again."]
+		},
+		{
+			"name": "Observer retention controls",
+			"count": 0
+		},
+		{
+			"name": "Link editor inputs while saving",
+			"disabled": true
+		},
+		{
+			"name": "Unverified receipt in verified session",
+			"visible": 0
+		},
+		{
+			"name": "Unchanged NDA reports change",
+			"visible": 0
+		},
+		{
+			"name": "NDA redirect false question success",
+			"sent": 0,
+			"draft": "Do not discard this question when NDA access changes.",
+			"stored": 0
+		},
+		{
+			"name": "Visible time flushed on hide",
+			"creditedMs": 1587
+		},
+		{
+			"name": "Password change offline recoverable",
+			"disabled": false,
+			"alert": [
+				"The server is running low on disk space. Free space or move files to S3.View settings",
+				"Connection interrupted. Check your connection and try again."
+			]
+		},
+		{
+			"name": "Password setup offline recoverable",
+			"disabled": false,
+			"alert": ["Connection interrupted. Check your connection and try again."]
+		},
+		{
+			"name": "PDF menu returns focus",
+			"active": {
+				"tag": "BUTTON",
+				"label": "Reader options"
+			}
+		},
+		{
+			"name": "Destructive pending can cancel",
+			"cancelEnabled": false
+		},
+		{
+			"name": "Destructive pending Escape keeps confirmation",
+			"visible": true
+		},
+		{
+			"name": "Freeze still executes after Cancel",
+			"frozen": true
+		},
+		{
+			"name": "Reset rate limit reached",
+			"status": 429
+		},
+		{
+			"name": "Reset failure shown as sent",
+			"sent": 0,
+			"alerts": ["Too many attempts. Wait a minute and try again."]
+		},
+		{
+			"name": "Successful question retains original page and PDF resume",
+			"passed": true,
+			"length": 5000,
+			"page": 1,
+			"resumed": 3
+		},
+		{
+			"name": "Invite and password forms retry; password changes; signout and one-time link",
+			"passed": true
+		},
+		{
+			"name": "Updated NDA warning and reacceptance enforce file access",
+			"passed": true,
+			"oldAccess": 303,
+			"restored": 200,
+			"unauthenticated": 401
+		},
+		{
+			"name": "Login retries successfully without reload",
+			"passed": true
+		},
+		{
+			"name": "Hidden time excluded and visible reading resumes",
+			"passed": true,
+			"resumedMs": 604,
+			"hiddenMs": 1200
+		},
+		{
+			"name": "Video native seek and responsive layouts",
+			"passed": true
+		},
+		{
+			"name": "Replacement NDA warning appears at invitation entry",
+			"passed": true
+		}
+	],
+	"browserErrors": [],
+	"method": "Chromium against production build, real disposable SQLite and disk storage. Visibility state was injected at the browser API boundary; network offline and delayed real requests tested failures. Test scripts were temporary.",
+	"limitations": [
+		"Mobile viewport emulation, not physical devices.",
+		"External GLM and DeepSeek reviews did not start: OpenRouter API key unavailable.",
+		"No Docker install, S3, restore or production deployment in this scoped review."
+	],
+	"findings": [
+		{
+			"id": 1,
+			"title": "Question falsely marked sent after access changes",
+			"severity": "P2",
+			"source": "routes/v/[linkId]/view/[fileId]/+page.svelte",
+			"trigger": "Enable an NDA requirement while an investor has a document question open. The POST follows an access redirect to HTML with HTTP 200; the draft was cleared and Sent displayed although SQLite contained no message.",
+			"fix": "Require the question endpoint\u2019s JSON conversation ID before acknowledging success. Keep the draft and explain the access change.",
+			"evidence": "Before: sent=1, stored=0, draft gone. After: sent=0, stored=0, full draft retained.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 2,
+			"title": "Question draft follows navigation to a different document",
+			"severity": "P2",
+			"source": "routes/v/[linkId]/+layout.svelte",
+			"trigger": "Draft a question on Overview, close it, and use Next file. The reused page retained the question while submitting it against Financial model.",
+			"fix": "Remount viewer children when the file or investor session changes, resetting file-local UI state.",
+			"evidence": "Next document now opens an empty question; PDF resume and successful posting also checked.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 3,
+			"title": "Reopening a question silently changes its page",
+			"severity": "P2",
+			"source": "routes/v/[linkId]/view/[fileId]/+page.svelte",
+			"trigger": "Draft on page 1, close the dialog, navigate to page 3, and reopen. The old text was silently relabelled as a page 3 question.",
+			"fix": "Preserve the original page while a nonempty draft exists.",
+			"evidence": "A real 5,000-character submission was stored once for Overview page 1, after navigating to page 3.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 4,
+			"title": "Video shortcuts override native buttons and sliders",
+			"severity": "P2",
+			"source": "lib/viewer/VideoPlayer.svelte",
+			"trigger": "Space on Mute started playback instead of toggling mute. ArrowLeft on Volume sought from 7 to 2 seconds.",
+			"fix": "Leave native input keys and button activation alone; ignore modified shortcuts.",
+			"evidence": "Space muted while paused; ArrowLeft reduced volume from 1 to 0.95 while time stayed at 7; seek slider also worked.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 5,
+			"title": "Video seek track collapses on small phones",
+			"severity": "P2",
+			"source": "lib/viewer/VideoPlayer.svelte",
+			"trigger": "At a 320 px viewport, fixed-width toolbar controls squeezed the seek input to zero width.",
+			"fix": "Wrap the toolbar and give the seek slider a full-width row on phones.",
+			"evidence": "320 px screenshot: track width 264 px, no horizontal page overflow. Also checked 390 and 1440 px.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 6,
+			"title": "Final visible reading interval is lost on tab hide",
+			"severity": "P2",
+			"source": "lib/viewer/tracker.ts",
+			"trigger": "Visibility changes to hidden before the event handler runs. Checking the new visibility inside account() discarded the interval that had just been read.",
+			"fix": "Track the previous visibility, account before changing it, flush on hide, and reset timing on page show.",
+			"evidence": "Before: 0 ms. After: 1,587 ms credited. A 1,200 ms hidden interval added nothing; resumed visible time added about 600 ms.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 7,
+			"title": "Authentication forms remain disabled after network failure",
+			"severity": "P2",
+			"source": "routes/admin/login/+page.svelte; routes/admin/invite/[token]/+page.svelte; routes/admin/account/+page.svelte",
+			"trigger": "Disconnect before signing in, setting a password, or changing a password. An unhandled fetch rejection left busy=true and no recovery message.",
+			"fix": "Catch failures, clear busy in finally, retain entered values, and handle sign-out failures.",
+			"evidence": "All three forms became enabled with an error. Reconnecting completed sign-in, invitation setup and password change without a reload. Sign-out and one-time reset-link consumption checked.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 8,
+			"title": "Password-reset HTTP errors report successful delivery",
+			"severity": "P2",
+			"source": "routes/admin/login/+page.svelte",
+			"trigger": "Trigger the real request-password-reset rate limit. The page ignored HTTP 429 and said a reset link had been sent.",
+			"fix": "Only show reset success for an OK response; render HTTP and connection failures in the form.",
+			"evidence": "Real HTTP 429 now shows Too many attempts, retains the email, and shows no sent confirmation.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 9,
+			"title": "Unchanged NDA is described as changed on repeat entry",
+			"severity": "P3",
+			"source": "lib/server/viewer/gates.ts; routes/r/[token]/+page.server.ts",
+			"trigger": "Clear the session and reenter after accepting the current NDA. Any earlier acceptance was treated as proof of a new version.",
+			"fix": "Read the accepted NDA version ID and compare it with the current version.",
+			"evidence": "Same version: no changed warning. Replacement version: warning and HTTP 303 file gate; accepting restores HTTP 200. Unauthenticated file request remains HTTP 401.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 10,
+			"title": "Sharing-link edits made during save are discarded",
+			"severity": "P2",
+			"source": "lib/admin/LinkEditor.svelte",
+			"trigger": "With a slow save request, inputs remained editable after the request body had been captured. A later edit appeared accepted but vanished when the save completed.",
+			"fix": "Disable the form fieldset while saving, alongside the existing footer and dismissal guards.",
+			"evidence": "Held then continued a real update_link request: input disabled while pending, operation completed normally.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 11,
+			"title": "Observer is offered editable retention controls",
+			"severity": "P3",
+			"source": "routes/admin/rooms/[roomId]/settings/+page.svelte",
+			"trigger": "An observer opening an active room fell into the frozen-room retention branch and saw a form for an operation their role cannot perform.",
+			"fix": "Only render retention editing for frozen rooms and a writable member role.",
+			"evidence": "Observer retention heading count changed from 1 to 0. Existing server authorization was already enforcing this restriction.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 12,
+			"title": "Pending destructive action can appear cancelled",
+			"severity": "P2",
+			"source": "lib/admin/DangerAction.svelte",
+			"trigger": "Start freezing a room, then click Cancel while its request is pending. The dialog closed, but the real freeze still completed.",
+			"fix": "Disable Cancel and prevent closing the confirmation while busy; guard duplicate starts and submissions.",
+			"evidence": "During a delayed real freeze request, Cancel was disabled and Escape kept the dialog visible. Releasing the request froze the disposable room.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		},
+		{
+			"id": 13,
+			"title": "PDF tools opened from a menu lose return focus",
+			"severity": "P2",
+			"source": "lib/viewer/PdfViewer.svelte",
+			"trigger": "Open Page thumbnails from Reader options, then close tools. Focus was returned to a menu item removed from the DOM, leaving BODY active.",
+			"fix": "Capture the stable Reader options trigger when tools are opened from its menu.",
+			"evidence": "Before active element BODY; after BUTTON with aria-label Reader options.",
+			"verdict": "confirmed",
+			"confidence": "high",
+			"attribution": "Codex",
+			"origin": "Present in the source snapshot at the start of this review; historical introduction not assigned."
+		}
+	],
+	"screenshots": [
+		{
+			"file": "screens/final-account-offline.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-controls-reset-rate-limit.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-freeze-pending.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-invite-offline.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-link-saving.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-login-offline.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-nda-entry-updated.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-nda-unchanged.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-nda-updated.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-observer-settings.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-password-changed.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-pdf-resumed-desktop.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-pdf-resumed-phone.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-pdf-return-focus.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-question-long-draft.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-question-sent.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-room-desktop.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-room-phone.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-video-desktop.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-video-phone.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/final-video-small.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/after-more-question-access-change.png",
+			"visionReviewed": true
+		},
+		{
+			"file": "screens/after-question-context.png",
+			"visionReviewed": true
+		}
+	],
+	"changedSource": [
+		{
+			"path": "src/routes/v/[linkId]/+layout.svelte",
+			"beforeSha256": "fa7232084d7017b456f3b2e241e1a53946c8ed90f73893f3b9f90daaa54f5dae",
+			"afterSha256": "086cd96de1b9383ac631ec2946add03f03323594b1c9d61dd55ed01cb586a4b5"
+		},
+		{
+			"path": "src/routes/v/[linkId]/view/[fileId]/+page.svelte",
+			"beforeSha256": "aa6943725e856a4ba232c4ad186d5ca978e1a5f43d6d070fa07ac78c0a219f14",
+			"afterSha256": "1434781472ec9a0b9713d0023c1c40818dc5ff6b0e2b081eee135e9dd91b86b1"
+		},
+		{
+			"path": "src/routes/r/[token]/+page.server.ts",
+			"beforeSha256": "40a88745ef238e3f377ddc93900df9ee094fca40c4dd0243f627d8b6166ec53b",
+			"afterSha256": "98866d78ddccf14e95667b1465f68a0de613ac20c0eb8aabc105b73c29017ac4"
+		},
+		{
+			"path": "src/routes/admin/account/+page.svelte",
+			"beforeSha256": "9bcc2c4b2053ca3a620e8ecfa7474b4d26233a243939acde21714824b0516304",
+			"afterSha256": "e59ecb18b490b50775480b7d4ac29dda0945cf7311e0b765156c8c260cbeb981"
+		},
+		{
+			"path": "src/routes/admin/login/+page.svelte",
+			"beforeSha256": "52510af470e0306c40920824100b0851acef58ce14f6ea5b16d9668fbfc178d1",
+			"afterSha256": "308cf869f3aa7710ee380347717e81cd728a813b4d65dadbaac0f4a6d6143ac3"
+		},
+		{
+			"path": "src/routes/admin/rooms/[roomId]/settings/+page.svelte",
+			"beforeSha256": "5aa54c1802f1cb415852a2a16201c71d78ad45403643d4df78148441384cccae",
+			"afterSha256": "50dbf84e85a0e564d09a118580b8050c4424d7f67652d88eccc1faca51a15916"
+		},
+		{
+			"path": "src/routes/admin/invite/[token]/+page.svelte",
+			"beforeSha256": "933cae65f0c1fea47ee8d740cfed8e7c995008e6cc844530d9be5c9e66daf8a8",
+			"afterSha256": "54818f086a0e3b02e31bea1d032b04be26846328901cb3a4e8482759034897d1"
+		},
+		{
+			"path": "src/lib/admin/DangerAction.svelte",
+			"beforeSha256": "5d0bec08be60ba56a923179005607a50716d69b4f9e5b2ba7b30b580003c0caf",
+			"afterSha256": "8d4ba01541e5cd1cb3dfcc7079aa4381ad646d7fe85ddc09ad8298d118628c26"
+		},
+		{
+			"path": "src/lib/admin/LinkEditor.svelte",
+			"beforeSha256": "f57d0f6e0919790252a7ea64bfa25f998c2a3f785e6e5a261a7630d398a161cb",
+			"afterSha256": "4f6c6e744e83c447fbc12b9a83dcc237efa406004be4e9b2c76ca301c270db91"
+		},
+		{
+			"path": "src/lib/viewer/tracker.ts",
+			"beforeSha256": "8f263d0ef441dd1ef1c892dabd852ccab87d882af3104f6bc9bc7cd9ea02b42c",
+			"afterSha256": "da501773c72a0aaa4caf6ce3a002a96f4edcbfef914bdaaa14f71a26d4e40dd6"
+		},
+		{
+			"path": "src/lib/viewer/PdfViewer.svelte",
+			"beforeSha256": "b2650bca44750432d162f6d80f9fcbd8572b5ac4857152277853d79739dde01f",
+			"afterSha256": "3052aa4fe6663751c62aa6d0ffd4c7b3435b1f0af1c8153eb7f733f40b9e551d"
+		},
+		{
+			"path": "src/lib/viewer/VideoPlayer.svelte",
+			"beforeSha256": "f2ecb7980b3b0ccdfcb9d56582b2b3a325018440c3af99871959a7c1f6a8cde7",
+			"afterSha256": "bdd0cdc581e7cfb6f85a8973021c14343a4b38ea132c9c110cede7f3822d744f"
+		},
+		{
+			"path": "src/lib/server/viewer/gates.ts",
+			"beforeSha256": "077fd503ac3a05adf363d533e9351dffe5be88254c39baaad882e704f3dd190a",
+			"afterSha256": "3c813a2708e53fd7d037ca0ca14ccca83586aeb61145962fa1d15e99a380bd34"
+		}
+	]
+}

@@ -1,0 +1,33 @@
+{
+	"checks": [
+		"entry-password-390 fits viewport",
+		"entry-password-error-390 fits viewport",
+		"entry-fields-390 fits viewport",
+		"entry-nda-390 fits viewport",
+		"Password fields and NDA flow completes",
+		"nda-renewal-390 fits viewport",
+		"Changed NDA can be accepted",
+		"entry-code-390 fits viewport",
+		"entry-code-error-390 fits viewport",
+		"Email code delivered to local SMTP and accepted",
+		"empty-room-390 fits viewport",
+		"requests-empty-390 fits viewport",
+		"questions-empty-room-390 fits viewport",
+		"entry-unavailable-390 fits viewport",
+		"No browser errors in gates and empty states"
+	],
+	"errors": [],
+	"shots": [
+		"entry-password-390",
+		"entry-password-error-390",
+		"entry-fields-390",
+		"entry-nda-390",
+		"nda-renewal-390",
+		"entry-code-390",
+		"entry-code-error-390",
+		"empty-room-390",
+		"requests-empty-390",
+		"questions-empty-room-390",
+		"entry-unavailable-390"
+	]
+}

@@ -1,0 +1,139 @@
+{
+	"errors": [],
+	"observations": [
+		{
+			"name": "reader end actions",
+			"review": {
+				"top": -4929,
+				"bottom": -4885,
+				"clip": {
+					"top": 0,
+					"bottom": 844
+				},
+				"visible": false
+			},
+			"next": {
+				"top": -4929,
+				"bottom": -4885,
+				"clip": {
+					"top": 0,
+					"bottom": 844
+				},
+				"visible": false
+			}
+		},
+		{
+			"name": "home returning geometry",
+			"startHere": {
+				"x": 16,
+				"y": 475,
+				"width": 358,
+				"height": 24
+			},
+			"folders": {
+				"x": 16,
+				"y": 1017,
+				"width": 358,
+				"height": 44
+			},
+			"resume": {
+				"x": 16,
+				"y": 323,
+				"width": 358,
+				"height": 66
+			}
+		},
+		{
+			"name": "thumbnail current page 8 on open",
+			"selected": {
+				"top": 719.8046875,
+				"bottom": 895.8046875,
+				"clip": {
+					"top": 155.8046875,
+					"bottom": 612.1953125
+				},
+				"visible": false
+			}
+		},
+		{
+			"name": "search result 12 on reopen",
+			"selected": {
+				"top": 1403.8046875,
+				"bottom": 1507.8046875,
+				"clip": {
+					"top": 247.8046875,
+					"bottom": 672.1953125
+				},
+				"visible": false
+			}
+		},
+		{
+			"name": "upload receipt placement",
+			"receipt": {
+				"x": 16,
+				"y": 659,
+				"width": 358,
+				"height": 170
+			},
+			"upload": {
+				"x": 16,
+				"y": 439,
+				"width": 358,
+				"height": 160
+			}
+		},
+		{
+			"name": "long conversation entry",
+			"draft": {
+				"top": 1783.25,
+				"bottom": 1849.25,
+				"clip": {
+					"top": 0,
+					"bottom": 844
+				},
+				"visible": false
+			},
+			"lastMessage": {
+				"top": 1501,
+				"bottom": 1719,
+				"clip": {
+					"top": 0,
+					"bottom": 844
+				},
+				"visible": false
+			}
+		},
+		{
+			"name": "new version feedback",
+			"status": 1,
+			"newOrUpdatedBadges": 0
+		},
+		{
+			"name": "home horizontal overflow 320",
+			"overflow": false
+		}
+	],
+	"followup": {
+		"errors": [],
+		"findings": [
+			{
+				"name": "welcome unexpectedly opens after review invalidation",
+				"beforeOpen": false,
+				"afterOpen": true
+			},
+			{
+				"name": "conversation with long URL",
+				"viewport": 390,
+				"documentWidth": 1895
+			},
+			{
+				"name": "question list with long URL",
+				"viewport": 390,
+				"documentWidth": 390
+			}
+		]
+	},
+	"screenshots": 24,
+	"viewports": [320, 390, 1440],
+	"scope": "UX review on disposable local production build, real SQLite and disk storage. No application changes."
+}

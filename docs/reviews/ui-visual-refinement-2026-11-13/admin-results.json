@@ -1,0 +1,29 @@
+{
+	"checks": [
+		"admin-appearance-1440 fits viewport",
+		"admin-appearance-390 fits viewport",
+		"admin-appearance-preview-390 fits viewport",
+		"admin-pins-390 fits viewport",
+		"admin-pins-1440 fits viewport",
+		"admin-personal-welcome-1440 fits viewport",
+		"admin-personal-welcome-390 fits viewport",
+		"admin-share-create-390 fits viewport",
+		"investor-preview-390 fits viewport",
+		"investor-preview-1440 fits viewport",
+		"Owner preview has no personal review controls",
+		"No browser errors in owner previews"
+	],
+	"shots": [
+		"admin-appearance-1440",
+		"admin-appearance-390",
+		"admin-appearance-preview-390",
+		"admin-pins-390",
+		"admin-pins-1440",
+		"admin-personal-welcome-1440",
+		"admin-personal-welcome-390",
+		"admin-share-create-390",
+		"investor-preview-390",
+		"investor-preview-1440"
+	],
+	"errors": []
+}

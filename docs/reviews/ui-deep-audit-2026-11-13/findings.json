@@ -1,0 +1,136 @@
+{
+	"findings": [
+		{
+			"id": "F1",
+			"phase": "Fix first",
+			"title": "Keep long document questions inside the viewport",
+			"observed": "At 390 \u00d7 844, a roughly 1,440-character question expands the PDF question dialog to 1,327 px. Its top is \u2212242 px and Send begins at y=966. Focusing Send and requesting scroll into view does not bring it onscreen. Title, close control and submission controls are outside the visible area.",
+			"change": "Use the bounded, scrollable dialog pattern already present in the general \u201cAsk the team\u201d composer. Bound the textarea, give the body one intentional scroll region, and keep the title and actions reachable.",
+			"accept": "At 320 px width and a 390 \u00d7 500 viewport, enter the full allowed 5,000 characters. Reach Close, Cancel and Send with touch and Tab; no control remains outside an unscrollable dialog. Preserve the draft when opening and closing context controls.",
+			"images": ["pdf-question-long-390", "pdf-long-question-submit-focus", "question-compose-390"],
+			"source": "src/routes/v/[linkId]/view/[fileId]/+page.svelte:105",
+			"basis": "Visible controls and focus; this is a reproduced task blocker, not a spacing preference."
+		},
+		{
+			"id": "F2",
+			"phase": "Fix first",
+			"title": "Show the part of a document title that distinguishes it",
+			"observed": "At 320 px, Q1, Q2 and Q3 financial statements all display the same truncated title. The title span is 40 px tall with 80 px of content. The quarter disappears in both folder rows and search results; even a \u201cq2\u201d query returns a card whose visible title omits Q2.",
+			"change": "Allow full titles in narrow document rows, or provide an explicit reveal that works on touch. Use a layout that gives the title more width; keep period/version context visible where it is already known. Do not rely on a hover title or infer metadata unreliably from filenames.",
+			"accept": "An investor can distinguish Q1/Q2/Q3 before opening a file at 320 px, with touch, keyboard and increased text spacing. The same rule applies to search results and reviewed-document lists.",
+			"images": ["similar-titles-320", "similar-search-320", "targeted-search-320"],
+			"source": "src/lib/viewer/DocumentListItem.svelte:14",
+			"basis": "Recognition rather than recall: expose the information needed to choose correctly."
+		},
+		{
+			"id": "F3",
+			"phase": "Fix first",
+			"title": "Make sticky form actions cooperate with focus and errors",
+			"observed": "Tabbing through room appearance places \u201cChoose logo\u201d behind the save footer: only 4.34 px of its 44 px height remains uncovered. The label is hidden. Submitting an invalid colour shows a visible footer error, but leaves focus on Save while the invalid input sits at y=709, behind the footer and partly below the 740 px viewport.",
+			"change": "Reserve space for the footer and use scroll padding/margins or focus-aware scrolling. Put the colour error beside its field as well as in the summary, and focus or link directly to the invalid field. Keep the existing persistent save actions.",
+			"accept": "Every keyboard-focused control and its focus indicator are fully visible at 320 \u00d7 740. Invalid-colour submission reveals the input and message without manual hunting, and preserves all other draft values.",
+			"images": ["appearance-logo-focused-320", "appearance-invalid-color-320", "appearance-tab-5-320"],
+			"source": "src/lib/admin/BrandingForm.svelte:133",
+			"basis": "W3C focus-obscuration guidance and GOV.UK error recovery. The logo control is partially visible, so this audit does not label that particular case a failure of the AA \u201centirely hidden\u201d criterion."
+		},
+		{
+			"id": "F4",
+			"phase": "Fix first",
+			"title": "Keep entry possible when a welcome is long",
+			"observed": "A valid welcome of roughly 3,000 characters puts the email field at y=2,658 on a 320 \u00d7 740 screen. The entry page renders the entire message above the form. Inside the room the same type of content already has a compact excerpt and disclosure.",
+			"change": "Place email and Continue ahead of the extended introduction, or use a short welcome excerpt with an explicit \u201cRead full welcome\u201d disclosure. Keep the privacy notice next to entry.",
+			"accept": "For short, long and empty introductions, email and Continue remain easy to find on the first phone screen. Opening the full message must not lose entered email or move focus unexpectedly.",
+			"images": ["entry-long-welcome-320", "entry-long-welcome-full-320", "entry-long-welcome-form-320"],
+			"source": "src/routes/r/[token]/+page.svelte:68",
+			"basis": "Progressive disclosure: introductory detail should not bury the action that grants entry."
+		},
+		{
+			"id": "F5",
+			"phase": "Next",
+			"title": "Let search and folder browsing become the main task",
+			"observed": "At 320 px the first pinned card begins at y=513. Search results still sit below the room title, requests chip and personal note; a folder view repeats the room introduction, folder heading and breadcrumb before its list. These elements are readable but impose repeated vertical work.",
+			"change": "Use a compact room context while a query or folder is active. Put search, result count and folder breadcrumb directly above documents. Keep the personal note accessible as a small disclosure and restore the welcome presentation when returning home.",
+			"accept": "Compare time and scroll distance to find the Q2 document in home search and folder browsing. No lost query, folder or scroll position on Back. Keep all existing requests and questions entry points discoverable.",
+			"images": ["home-320", "folder-top-320", "similar-search-320"],
+			"source": "src/routes/v/[linkId]/+page.svelte:88",
+			"basis": "Visual hierarchy and progressive disclosure. This is a design recommendation supported by the layout, not a measured user-performance result."
+		},
+		{
+			"id": "F6",
+			"phase": "Next",
+			"title": "Preserve unsaved personal-welcome drafts on accidental dismissal",
+			"observed": "Editing the link welcome, pressing Escape, waiting for the editor to close and reopening restores the old saved welcome. The unsaved text is lost. The existing conversation composer already communicates that its draft is saved in the tab.",
+			"change": "Keep the draft in memory or session storage until Save or explicit Discard. Alternatively, show a concise unsaved-changes choice for Escape, close and navigation. Keep explicit Cancel/Discard semantics clear.",
+			"accept": "Escape, close, switching preview and opening related group controls preserve the draft or ask before discarding it. Saved content and draft content remain distinguishable; one investor link never inherits another link\u2019s draft.",
+			"images": ["personal-draft-before-escape", "personal-draft-after-reopen", "conversation-390"],
+			"source": "src/lib/admin/LinkEditor.svelte:184",
+			"basis": "Recoverability and consistent draft behavior; reproduced loss of unsaved text, not loss of persisted data."
+		},
+		{
+			"id": "F7",
+			"phase": "Next",
+			"title": "Make device preview labels truthful",
+			"observed": "At a 320 px admin viewport, Desktop and Phone both produce a 254 px-wide preview. At desktop width the \u201cDesktop\u201d preview is still constrained to the form\u2019s right column. The shared components improve appearance fidelity, but these controls do not simulate their named viewport widths.",
+			"change": "Use \u201cFit to panel\u201d for the current adaptive view and expose explicit dimensions for actual device previews. If offering Desktop, render an isolated viewport at a real width and scale the canvas, or open a dedicated preview. Keep real-link \u201cPreview as investor\u201d distinct from sample content.",
+			"accept": "Show actual render dimensions. Desktop and Phone produce the same breakpoints as real investor views at those dimensions, even when the owner is editing on a phone. Avoid nested scrolling that hides the preview\u2019s useful content.",
+			"images": ["preview-desktop-at-320", "preview-phone-at-320", "appearance-desktop"],
+			"source": "src/lib/admin/AppearancePreview.svelte:27",
+			"basis": "Accurate feedback and correspondence between a control\u2019s label and its effect."
+		},
+		{
+			"id": "F8",
+			"phase": "Next",
+			"title": "Reduce PDF toolbar height while searching on short screens",
+			"observed": "At 390 \u00d7 500 the normal sticky reader toolbar occupies about 114 px. Search adds a third row, bringing it to roughly 174 px\u2014about 35% of the viewport before document content. Controls remain present; the issue is the reduced reading area.",
+			"change": "Design an explicit compact reading/search mode. Combine related navigation, put less frequent zoom/page tools in the existing overflow surface, and let search replace a row instead of continually adding rows. Preserve an obvious search close action and page position.",
+			"accept": "On short viewports, search, next match, current page and exit search remain reachable while the document keeps most of the reading area. Check orientation, keyboard viewport changes and zoom on an actual phone before shipping.",
+			"images": ["pdf-short-height-reading", "pdf-short-height-search-active", "pdf-entry-320"],
+			"source": "src/routes/v/[linkId]/view/[fileId]/+page.svelte",
+			"basis": "Reflow guidance and task-focused hierarchy. The measured toolbar height is not, by itself, a WCAG failure."
+		},
+		{
+			"id": "F9",
+			"phase": "Next",
+			"title": "Bring mobile admin document work above setup summaries",
+			"observed": "At 390 \u00d7 844, the room document screen shows global warnings, room identity/navigation and a large six-item Start here summary. Document search only begins at the bottom of the first screen, and upload controls are farther down. Other admin pages also repeat the warning stack. The warnings reflect the actual disposable environment, not a fabricated fault.",
+			"change": "Place Search and Upload/New folder before the pinned summary, and collapse that summary to a count plus Manage action on phones. Consolidate persistent system status while keeping urgent disk warnings visible and actionable. Use distinct labels for the section selector and room-options menu.",
+			"accept": "Upload and document search are immediately discoverable on a typical phone. Owners can still see active urgent warnings and understand how to resolve them. Optional email/storage integrations stay optional.",
+			"images": ["admin-documents-390", "admin-overview-390", "admin-analytics-390"],
+			"source": "src/routes/admin/rooms/[roomId]/+page.svelte:256",
+			"basis": "Progressive disclosure: operational controls first; supporting configuration detail on demand."
+		},
+		{
+			"id": "F10",
+			"phase": "Next",
+			"title": "Preserve protection context in mobile sharing rows",
+			"observed": "The desktop sharing table shows Watermark and Email entry. At 390 px the Protection column disappears, leaving link name, audience and actions. Responsive simplification removes information useful when deciding whether a link is ready to copy.",
+			"change": "Add a compact protection summary under each mobile link name, with the essential verification/NDA/password states and a route to full details. Reflow important facts rather than removing the whole column.",
+			"accept": "Before copying a link on a phone, the owner can identify its verification and NDA/password protection without opening every editor. Test contrasting protected and unverified links, expired states and long labels.",
+			"images": ["admin-sharing-desktop", "admin-sharing-390"],
+			"source": "src/routes/admin/rooms/[roomId]/links/+page.svelte:87",
+			"basis": "Recognition and visible decision context. This is a presentation gap; this audit found no access-control bypass."
+		}
+	],
+	"secondary": [
+		{
+			"title": "Question-list triage",
+			"detail": "The admin question list shows the latest message without a clear conversation status or question subject. Use a concise original-question subject, unread/replied status and labelled last reply so a founder can scan what needs attention.",
+			"screenshot": "admin-questions-desktop"
+		},
+		{
+			"title": "Readable audit targets",
+			"detail": "Several audit rows say \u201cupdate branding\u201d with a target simply labelled \u201croom\u201d. Show the room name and, when useful, the changed setting so similar events are distinguishable without opening each target.",
+			"screenshot": "admin-audit"
+		},
+		{
+			"title": "Empty and completed states",
+			"detail": "The empty room retains a search box despite containing no documents, and says to explore shared documents. Hide or disable irrelevant search and give a context-specific explanation. After all pinned documents are reviewed, distinguish \u201cStart here complete\u201d from reviewing every document; offer the existing Questions/Requests routes as relevant next actions.",
+			"screenshot": "room-empty-390"
+		},
+		{
+			"title": "Dark-theme readiness \u2014 conditional",
+			"detail": "Forcing the existing dark CSS class produces active navigation/welcome-link contrast of 2.53:1 with default green, 2.55:1 with blue and 3.03:1 with yellow against the dark card, below 4.5:1 for normal text. No current theme switch was found. Resolve theme-aware brand ink before exposing dark mode; do not treat these injected states as the default experience.",
+			"screenshot": "diagnostic-dark-green"
+		}
+	]
+}

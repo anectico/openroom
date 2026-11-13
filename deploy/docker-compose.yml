@@ -1,0 +1,39 @@
+name: openroom
+
+services:
+  app:
+    image: ${OPENROOM_IMAGE:?set OPENROOM_IMAGE in .env}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+      ORIGIN: https://${DOMAIN:?set DOMAIN in .env}
+      ADDRESS_HEADER: x-forwarded-for
+      XFF_DEPTH: "1"
+    volumes:
+      - data:/data
+    stop_grace_period: 60s
+    expose:
+      - "3000"
+
+  caddy:
+    image: caddy:2.11.8
+    restart: unless-stopped
+    depends_on:
+      - app
+    environment:
+      DOMAIN: ${DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  data:
+  caddy_data:
+  caddy_config:

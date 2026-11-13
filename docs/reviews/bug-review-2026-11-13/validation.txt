@@ -1,0 +1,24 @@
+OpenRoom bug review — 2026-11-13
+
+21 behavioral checks passed for 13 confirmed fixes.
+23 fresh screenshots inspected with vision.
+Production build: npm run build — exit 0.
+Build warnings: existing dynamic/static import notices and FORCE_COLOR overriding NO_COLOR; no build errors.
+
+Final lint output:
+
+> openroom@0.0.0 lint
+> biome check . && npm run check && node scripts/check-no-comments.ts
+
+Checked 473 files in 141ms. No fixes applied.
+
+> openroom@0.0.0 check
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: /Users/sn/code/mains/openroom
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+No comments in 998 files.
+
+No tests were added to the repository. Temporary scripts, credentials and SQLite/disk fixtures were removed after validation. No deployment or migration.

@@ -1,0 +1,3033 @@
+{
+	"shots": [
+		"entry-390",
+		"entry-1440",
+		"home-first-390",
+		"home-first-320",
+		"home-return-320",
+		"home-return-390",
+		"home-return-768",
+		"home-return-1440",
+		"home-one-reviewed-390",
+		"folder-390",
+		"search-390",
+		"search-empty-390",
+		"questions-empty-390",
+		"question-compose-390",
+		"conversation-390",
+		"conversation-320",
+		"conversation-1440",
+		"questions-390",
+		"requests-390",
+		"request-390",
+		"receipt-390",
+		"reader-390",
+		"thumbnails-390",
+		"pdf-search-390",
+		"completion-390",
+		"ask-document-390"
+	],
+	"measurements": [
+		{
+			"screen": "entry-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "",
+					"w": 300,
+					"h": 36,
+					"font": "16px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Continue",
+					"w": 300,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "entry-1440",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "",
+					"w": 370,
+					"h": 36,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Continue",
+					"w": 370,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "home-first-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 358,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 356,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to all documents",
+					"w": 150.171875,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Next to review",
+					"w": 138.140625,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "1\nInvestor overview\nPDF · 10 KB",
+					"w": 261,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Investor overview",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2\nProduct strategy\nPDF · 10 KB",
+					"w": 261,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Product strategy",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "home-first-320",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 193.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 288,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 286,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to all documents",
+					"w": 150.171875,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Next to review",
+					"w": 138.140625,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "1\nInvestor overview\nPDF · 10 KB",
+					"w": 191,
+					"h": 88,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Investor overview",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "home-return-320",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 193.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 288,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 286,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to all documents",
+					"w": 150.171875,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Next to review",
+					"w": 138.140625,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "1\nInvestor overview\nPDF · 10 KB",
+					"w": 191,
+					"h": 88,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Investor overview",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2\nProduct strategy\nPDF · 10 KB",
+					"w": 191,
+					"h": 88,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Product strategy",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "3\nFinancial outlook\nPDF · 10 KB",
+					"w": 191,
+					"h": 88,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Financial outlook",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "home-return-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 358,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 356,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to all documents",
+					"w": 150.171875,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Next to review",
+					"w": 138.140625,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "1\nInvestor overview\nPDF · 10 KB",
+					"w": 261,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Investor overview",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2\nProduct strategy\nPDF · 10 KB",
+					"w": 261,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Product strategy",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "3\nFinancial outlook\nPDF · 10 KB",
+					"w": 261,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Financial outlook",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Show all 6 remaining documents",
+					"w": 358,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "home-return-768",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "PRIVATE DATA ROOM\nAurora · Investor room",
+					"w": 501.578125,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 87.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "My questions",
+					"w": 99.328125,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 108.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 512,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 702,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to all documents",
+					"w": 150.171875,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Next to review",
+					"w": 138.140625,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "1\nInvestor overview\nPDF · 10 KB",
+					"w": 607,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Investor overview",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2\nProduct strategy\nPDF · 10 KB",
+					"w": 607,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Product strategy",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "3\nFinancial outlook\nPDF · 10 KB",
+					"w": 607,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Financial outlook",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "4\nMarket opportunity\nPDF · 10 KB",
+					"w": 607,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Market opportunity",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "5\nTeam & governance\nPDF · 10 KB",
+					"w": 607,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "home-return-1440",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "PRIVATE DATA ROOM\nAurora · Investor room",
+					"w": 885.578125,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 87.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "My questions",
+					"w": 99.328125,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 108.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 512,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 1086,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to all documents",
+					"w": 150.171875,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Next to review",
+					"w": 138.140625,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "1\nInvestor overview\nPDF · 10 KB",
+					"w": 355.328125,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Investor overview",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2\nProduct strategy\nPDF · 10 KB",
+					"w": 355.328125,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Product strategy",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "3\nFinancial outlook\nPDF · 10 KB",
+					"w": 355.34375,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Financial outlook",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "4\nMarket opportunity\nPDF · 10 KB",
+					"w": 355.328125,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Market opportunity",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "5\nTeam & governance\nPDF · 10 KB",
+					"w": 355.328125,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Team & governance",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "6\nDue diligence guide\nPDF · 10 KB",
+					"w": 355.34375,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Due diligence guide",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "My questions\nPrivate conversations with the team",
+					"w": 260,
+					"h": 90,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "home-one-reviewed-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 358,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 356,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to all documents",
+					"w": 150.171875,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Next to review",
+					"w": 138.140625,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "2\nProduct strategy\nPDF · 10 KB",
+					"w": 261,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Product strategy",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.951 0.005 140)",
+					"disabled": false
+				},
+				{
+					"text": "3\nFinancial outlook\nPDF · 10 KB",
+					"w": 261,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Financial outlook",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "4\nMarket opportunity\nPDF · 10 KB",
+					"w": 261,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Mark reviewed: Market opportunity",
+					"w": 86,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Show all 5 remaining documents",
+					"w": 358,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Show reviewed (1)",
+					"w": 356,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "folder-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 358,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 356,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "All documents",
+					"w": 80.703125,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Company overview",
+					"w": 110.46875,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Investor overview",
+					"w": 216,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Read Investor overview",
+					"w": 44,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Product strategy",
+					"w": 216,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Read Product strategy",
+					"w": 44,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Financial outlook",
+					"w": 216,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Read Financial outlook",
+					"w": 44,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "My questions\nPrivate conversations with the team",
+					"w": 358,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Download documents",
+					"w": 332,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "search-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 358,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 356,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Revenue assumptions",
+					"w": 216,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Read Revenue assumptions",
+					"w": 44,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "My questions\nPrivate conversations with the team",
+					"w": 358,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Download documents",
+					"w": 332,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "OpenRoom",
+					"w": 63.65625,
+					"h": 15,
+					"font": "12px",
+					"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "search-empty-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search file titles",
+					"w": 358,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "2 requests need action",
+					"w": 92.75,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "A note for you",
+					"w": 356,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Clear search",
+					"w": 106.75,
+					"h": 32,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "My questions\nPrivate conversations with the team",
+					"w": 358,
+					"h": 80,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Download documents",
+					"w": 332,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "questions-empty-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Ask the team",
+					"w": 129.5,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "OpenRoom",
+					"w": 63.65625,
+					"h": 15,
+					"font": "12px",
+					"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "question-compose-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions",
+					"w": 58,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Ask the team",
+					"w": 129.5,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "OpenRoom",
+					"w": 63.65625,
+					"h": 15,
+					"font": "12px",
+					"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "The room in general",
+					"w": 310,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Cancel",
+					"w": 310,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "Send question",
+					"w": 310,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.995 0 0)",
+					"bg": "oklch(0.435 0.085 158)",
+					"disabled": true
+				},
+				{
+					"text": "Close",
+					"w": 32,
+					"h": 32,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "conversation-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions\n2",
+					"w": 87.40625,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "My questions",
+					"w": 88.953125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to unread",
+					"w": 127.078125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Latest reply",
+					"w": 100.453125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Reply",
+					"w": 59.4375,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "conversation-320",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 193.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions\n2",
+					"w": 87.40625,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "My questions",
+					"w": 88.953125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to unread",
+					"w": 70.890625,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Latest reply",
+					"w": 63.03125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Reply",
+					"w": 59.4375,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "conversation-1440",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "PRIVATE DATA ROOM\nAurora · Investor room",
+					"w": 885.578125,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 87.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "My questions\n1",
+					"w": 130.3125,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 108.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "My questions",
+					"w": 88.953125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Jump to unread",
+					"w": 127.078125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Latest reply",
+					"w": 100.453125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Reply",
+					"w": 59.4375,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "questions-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions\n1",
+					"w": 84.984375,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Ask the team",
+					"w": 129.5,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "1 unread\nReplied\n13/11/2026\nCan you explain the assumptions behind the",
+					"w": 356,
+					"h": 132,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "OpenRoom",
+					"w": 63.65625,
+					"h": 15,
+					"font": "12px",
+					"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "requests-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions\n1",
+					"w": 84.984375,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Action needed\nDue tomorrow\nCommittee questions\nShare your material pri",
+					"w": 356,
+					"h": 108,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Action needed\nDue tomorrow\nSigned indication of interest\nShare your ma",
+					"w": 356,
+					"h": 108,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "OpenRoom",
+					"w": 63.65625,
+					"h": 15,
+					"font": "12px",
+					"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "request-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions\n1",
+					"w": 84.984375,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n2",
+					"w": 82.65625,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Back to requests",
+					"w": 358,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Choose a file or drop it here",
+					"w": 358,
+					"h": 160,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "OpenRoom",
+					"w": 63.65625,
+					"h": 15,
+					"font": "12px",
+					"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "receipt-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "Aurora · Investor room",
+					"w": 263.34375,
+					"h": 40,
+					"font": "16px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Sign out",
+					"w": 82.65625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Documents",
+					"w": 65.421875,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Questions\n1",
+					"w": 84.984375,
+					"h": 46,
+					"font": "12px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Requests\n1",
+					"w": 80.234375,
+					"h": 46,
+					"font": "12px",
+					"color": "rgb(40, 99, 68)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Back to requests",
+					"w": 358,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.525 0.015 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Add another file",
+					"w": 148.890625,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "OpenRoom",
+					"w": 63.65625,
+					"h": 15,
+					"font": "12px",
+					"color": "oklab(0.235 -0.0155885 0.009 / 0.7)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "reader-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "All documents",
+					"w": 71.0625,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Previous page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "",
+					"w": 40,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "Next page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Find in PDF",
+					"w": 70.859375,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Show page thumbnails",
+					"w": 83.3125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Zoom options",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Ask about page 8",
+					"w": 59.640625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "thumbnails-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "All documents",
+					"w": 71.0625,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Previous page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "",
+					"w": 40,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "Next page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Find in PDF",
+					"w": 70.859375,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Show page thumbnails",
+					"w": 83.3125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Zoom options",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Ask about page 8",
+					"w": 59.640625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "Close PDF tools",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Go to page 1",
+					"w": 157,
+					"h": 176,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Go to page 2",
+					"w": 157,
+					"h": 176,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Go to page 3",
+					"w": 157,
+					"h": 176,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Go to page 4",
+					"w": 157,
+					"h": 176,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Go to page 5",
+					"w": 157,
+					"h": 176,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Go to page 6",
+					"w": 157,
+					"h": 176,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Go to page 7",
+					"w": 157,
+					"h": 176,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(1 0 0)",
+					"disabled": false
+				},
+				{
+					"text": "Go to page 8",
+					"w": 157,
+					"h": 176,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklab(0.435 -0.0788106 0.0318416 / 0.05)",
+					"disabled": false
+				},
+				{
+					"text": "Previous",
+					"w": 100.09375,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": true
+				},
+				{
+					"text": "Next",
+					"w": 73.328125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "pdf-search-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "All documents",
+					"w": 71.0625,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Previous page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "",
+					"w": 40,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "Next page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Find in PDF",
+					"w": 70.859375,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Show page thumbnails",
+					"w": 83.3125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Zoom options",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Ask about page 8",
+					"w": 59.640625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "12 matching pages",
+					"w": 125.328125,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Previous search result",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": true
+				},
+				{
+					"text": "Next search result",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Clear document search",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Close PDF tools",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Find in document",
+					"w": 229,
+					"h": 44,
+					"font": "16px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search",
+					"w": 89,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.995 0 0)",
+					"bg": "oklch(0.435 0.085 158)",
+					"disabled": false
+				},
+				{
+					"text": "Search result on page 1",
+					"w": 324,
+					"h": 104,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search result on page 2",
+					"w": 324,
+					"h": 104,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklab(0.951 -0.00383022 0.00321394 / 0.4)",
+					"disabled": false
+				},
+				{
+					"text": "Search result on page 3",
+					"w": 324,
+					"h": 104,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search result on page 4",
+					"w": 324,
+					"h": 104,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search result on page 5",
+					"w": 324,
+					"h": 104,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Search result on page 6",
+					"w": 324,
+					"h": 104,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "completion-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "All documents",
+					"w": 71.0625,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Previous page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "",
+					"w": 40,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "Next page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": true
+				},
+				{
+					"text": "Find in PDF",
+					"w": 70.859375,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Show page thumbnails",
+					"w": 83.3125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Zoom options",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Ask about page 12",
+					"w": 59.640625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "12 matching pages",
+					"w": 125.328125,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Previous search result",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": true
+				},
+				{
+					"text": "Next search result",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Clear document search",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Undo reviewed: Investor overview",
+					"w": 73.90625,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Next in Start here",
+					"w": 324,
+					"h": 44,
+					"font": "14px",
+					"color": "rgb(255, 255, 255)",
+					"bg": "rgb(40, 99, 68)",
+					"disabled": false
+				},
+				{
+					"text": "All documents",
+					"w": 324,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		},
+		{
+			"screen": "ask-document-390",
+			"overflow": 0,
+			"targets": [
+				{
+					"text": "All documents",
+					"w": 71.0625,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Previous page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": true
+				},
+				{
+					"text": "",
+					"w": 40,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "Next page",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Find in PDF",
+					"w": 70.859375,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Show page thumbnails",
+					"w": 83.3125,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Zoom options",
+					"w": 44,
+					"h": 44,
+					"font": "14px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				},
+				{
+					"text": "Ask about page 1",
+					"w": 59.640625,
+					"h": 44,
+					"font": "12px",
+					"color": "oklch(0.235 0.018 150)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "Cancel",
+					"w": 310,
+					"h": 36,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "oklch(0.978 0.003 130)",
+					"disabled": false
+				},
+				{
+					"text": "Send question",
+					"w": 310,
+					"h": 36,
+					"font": "14px",
+					"color": "oklch(0.995 0 0)",
+					"bg": "oklch(0.435 0.085 158)",
+					"disabled": false
+				},
+				{
+					"text": "Close",
+					"w": 32,
+					"h": 32,
+					"font": "14px",
+					"color": "oklch(0.145 0 0)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"disabled": false
+				}
+			]
+		}
+	],
+	"errors": []
+}
