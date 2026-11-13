@@ -10,9 +10,9 @@ Built by Anectico. Fair-source under [FSL-1.1-MIT](LICENSE.md).
 
 [Get started](#run-locally) · [Deploy](#deploy-on-your-server) · [Product guide](docs/using-openroom.md) · [API, MCP & CLI](docs/cli.md) · [Contribute](#contributing)
 
-![Investor room with a personal welcome and Start here documents](docs/reviews/bug-review-2026-11-13/screens/final-room-desktop.png)
+![Investor room with a personal welcome and Start here documents](docs/images/investor-room.png)
 
-_An investor room with example documents and a personal welcome._
+_A fictional Series A room with 12 example documents, a personal investor welcome, a team reply and a file request._
 
 ## What you can do
 
