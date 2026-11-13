@@ -76,3 +76,5 @@ Task visibility refinement: full investor document titles, compact search/folder
 Verification: docs/reviews/ui-ten-improvements-2026-11-13/index.html
 
 Reliability: question drafts keep their original page and reset between documents; access failures retain unsent text. Authentication forms recover after network failures and reset errors do not report delivery. NDA-change notices compare versions. Pending sharing/destructive actions keep their in-flight state explicit; video controls and PDF focus support keyboard use. Evidence: docs/reviews/bug-review-2026-11-13/index.html.
+
+Investor home uses a compact Start here header with initial guidance and explicit review progress, questions beside search and a full-width document list. ZIP downloads remain below the list. See the product guide and first-room runbook for layout checks.

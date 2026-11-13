@@ -12,7 +12,7 @@ Built by Anectico. Fair-source under [FSL-1.1-MIT](LICENSE.md).
 
 ![Investor room with a personal welcome and Start here documents](docs/images/investor-room.png)
 
-_A fictional Series A room with 12 example documents, a personal investor welcome, a team reply and a file request._
+_A fictional Series A room with 12 example documents, a personal investor welcome, one document marked reviewed, a team reply and a file request._
 
 ## What you can do
 

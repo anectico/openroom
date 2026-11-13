@@ -23,3 +23,5 @@ All five updates were installed and tested together before merging. `npm run bui
 S3 comparisons exercised actual SDK signing with fixed fictional credentials, without external requests. They do not establish upload, restore or storage-migration compatibility. Docker builds ran in PR CI, not locally. This review is not a release certification or a complete access-control audit. Temporary fixtures and test scripts are not committed.
 
 The earlier bug-review report was corrected: a signed-out admin operation redirects to login with HTTP 303; the admin helper rejects the non-JSON response. REST API key failures return HTTP 401. The rejected false-success finding remains rejected, with its explanation corrected.
+
+The README image described above was superseded by the [investor-home layout correction](investor-layout-2026-11-13/README.md). Its original capture is preserved in that review as `screens/before.png`.

@@ -239,8 +239,8 @@ note collapses after you have seen it in this tab; an explicit open/closed choic
 the note changes. Continue reading stays near the top.
 
 Use **Mark reviewed** on a Start here document when you decide you have finished reviewing it.
-The separate **Undo** action beside **Reviewed** reverses the choice. The progress bar and **Next to review** help you pick up the
-remaining materials. Opening a file does not mark it reviewed. A new current version starts unreviewed.
+The separate **Undo** action beside **Reviewed** reverses the choice. Before you begin, a compact document count and **Start review** point to the first item. Once you
+mark a document reviewed, a short progress bar and **Continue review** help you pick up the remaining materials. Opening a file does not mark it reviewed. A new current version starts unreviewed.
 Verified investors keep their checklist across verified sessions; unverified visitors keep it only in
 their current session. It is a personal checklist, not team approval or a read receipt.
 
@@ -256,7 +256,7 @@ local timestamps and save draft text in this tab through reloads. Drafts clear a
 or sign-out. If delivery cannot be confirmed, check the conversation before retrying.
 
 Reviewed Start here documents now move into **Show reviewed**, keeping remaining items prominent in
-the team's original order. **Jump to all documents** goes directly to the folder list. The welcome's
+the team's original order. **All documents** in the Start here header goes directly to the folder list. The welcome's
 open/closed choice stays stable while review progress and counts refresh. When a previously reviewed
 file changes version, **New version — review again** explains the reset with the version/date.
 
@@ -274,7 +274,9 @@ request and opens its history; outstanding requests remain listed first.
 Start here uses compact rows on phones and tablets, with document titles emphasized and a separate
 **Review** action. Desktop cards keep the same reading order. Search fills the phone width; the
 document heading changes to the current folder or Search results. Questions and document downloads
-are compact utilities below the list on phones, side by side on tablets, and beside it on desktops.
+stay within the document flow: **My questions** (or the unread reply count) sits beside search,
+and ZIP downloads appear below the list when permitted. Documents use the full content width without
+a separate tools column. File format, size and section share a compact metadata line.
 
 Request badges use both icons and words: amber **Action needed**, green **Uploaded**, and neutral
 **Closed**. Uploaded confirms receipt only. The newest receipt appears once; **Previous submissions**

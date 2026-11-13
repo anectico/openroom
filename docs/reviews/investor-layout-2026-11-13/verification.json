@@ -1,0 +1,132 @@
+{
+	"date": "2026-11-13",
+	"checks": [
+		"Initial review guidance without empty bar",
+		"Mark reviewed persists and sets compact progress",
+		"Undo restores initial state",
+		"All-reviewed state and reload persistence",
+		"320,390,768 pixel layouts without overflow",
+		"Search filters files and hides checklist",
+		"Folder navigation",
+		"Questions toolbar navigation",
+		"Requests navigation",
+		"No browser page errors",
+		"Zero pins omits checklist",
+		"One pin has singular guidance",
+		"Six pins and long title wrap",
+		"Phone expansion reveals all six",
+		"ZIP preparation and actual archive download",
+		"Owner desktop and phone previews match compact layout",
+		"Owner preview questions shortcut works"
+	],
+	"result": "passed",
+	"browser": "Chromium",
+	"storage": "Disposable real SQLite and local disk",
+	"limitations": [
+		"Emulated viewport sizes, not physical mobile devices",
+		"Local Markdown README previews, not a live GitHub rendering",
+		"No full access-control, restore or installation audit"
+	],
+	"screenshots": [
+		{
+			"file": "screens/before.png",
+			"kind": "previous README capture",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/complete-desktop.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/folder-desktop.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/initial-desktop.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/no-pins-desktop.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/one-pin-desktop.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/owner-preview-desktop.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/owner-preview-phone.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/partial-320.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/partial-390.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/partial-768.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/partial-desktop.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/questions-phone.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/readme-desktop.png",
+			"kind": "local README rendering",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/readme-phone.png",
+			"kind": "local README rendering",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/requests-phone.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/search-desktop.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/six-pins-desktop.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/six-pins-phone.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		},
+		{
+			"file": "screens/zip-ready.png",
+			"kind": "real application screenshot",
+			"visuallyInspected": true
+		}
+	]
+}
