@@ -6,7 +6,6 @@ OpenRoom is a self-hosted data room for fundraising and due diligence. Organize 
 share a personal link with each investor, and follow their review through page-level activity,
 private questions and file requests.
 
-Built by Anectico. Fair-source under [FSL-1.1-MIT](LICENSE.md).
 
 [Get started](#run-locally) · [Deploy](#deploy-on-your-server) · [Product guide](docs/using-openroom.md) · [API, MCP & CLI](docs/cli.md) · [Contribute](#contributing)
 
