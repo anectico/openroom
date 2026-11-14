@@ -6,7 +6,6 @@ OpenRoom is a self-hosted data room for fundraising and due diligence. Organize 
 share a personal link with each investor, and follow their review through page-level activity,
 private questions and file requests.
 
-
 [Get started](#run-locally) · [Deploy](#deploy-on-your-server) · [Product guide](docs/using-openroom.md) · [API, MCP & CLI](docs/cli.md) · [Contribute](#contributing)
 
 ![Branded investor room with an Aster Robotics logo, personal welcome and Start here documents](docs/images/investor-room.png)

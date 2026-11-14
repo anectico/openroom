@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { ArrowDownToLine, ChevronRight, FileDown, FolderPlus, Home, Link, MoreHorizontal, Search, Upload, } from '@lucide/svelte';
+	import { ArrowDownToLine, Check, ChevronRight, FileDown, FolderPlus, Home, Link, MoreHorizontal, Search, Upload, } from '@lucide/svelte';
 	import { tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import DangerAction from '#lib/admin/DangerAction.svelte';
-import FileIcon from '#lib/admin/FileIcon.svelte';
+	import FileIcon from '#lib/admin/FileIcon.svelte';
 	import { act, attempt, formatBytes, formatDate, op } from '#lib/admin/op.ts';
 	import PinnedDocuments from '#lib/admin/PinnedDocuments.svelte';
 	import type { TreeNode } from '#lib/admin/types.ts';
@@ -12,7 +12,6 @@ import FileIcon from '#lib/admin/FileIcon.svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Dialog from '#lib/components/ui/dialog/index.js';
 	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
-	import * as Empty from '#lib/components/ui/empty/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
 	import { Label } from '#lib/components/ui/label/index.js';
 	import * as Table from '#lib/components/ui/table/index.js';
@@ -22,6 +21,11 @@ import FileIcon from '#lib/admin/FileIcon.svelte';
 	const room = $derived(data.room);
 	const canEdit = $derived(data.member?.role !== 'observer' && !room.frozenAt);
 	const folders = $derived(room.tree.filter((n) => n.type === 'folder'));
+	let pinsOpen = $state(false);
+	const hasFiles = $derived(room.fileCount > 0);
+	const hasPins = $derived(room.pinnedFileIds.length > 0);
+	const hasLink = $derived(room.activeLinkCount > 0);
+	const showSetup = $derived(canEdit && !(hasFiles && hasPins && hasLink));
 	const selectClass =
 		'h-9 w-full rounded-md border border-input bg-background px-3 text-sm focus-visible:ring-3 focus-visible:ring-ring/50 outline-none';
 
@@ -247,109 +251,149 @@ import FileIcon from '#lib/admin/FileIcon.svelte';
 
 {#snippet documentLabel(node: TreeNode)}
 	<span class="block max-w-full truncate font-medium">{node.name}</span>
-	<span class="mt-1 block text-[11px] text-muted-foreground sm:text-[10px]"><span class="mr-2 tabular-nums">{node.number}</span><span class="sm:hidden">{node.type === 'folder' ? 'Folder' : `${kindLabel[node.kind ?? 'download']} · ${formatBytes(node.size)}`}</span>{#if search && node.parentId}<span>{room.tree.find((n) => n.id === node.parentId)?.name}</span>{/if}</span>
+	<span class="mt-1 block text-[11px] text-muted-foreground sm:text-[10px]"><span class="mr-2 tabular-nums">{node.number}</span><span class="@min-[28rem]/library:hidden">{node.type === 'folder' ? 'Folder' : `${kindLabel[node.kind ?? 'download']} · ${formatBytes(node.size)}`}</span>{#if search && node.parentId}<span>{room.tree.find((n) => n.id === node.parentId)?.name}</span>{/if}</span>
 {/snippet}
 
-<div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-	<div class="relative w-full min-w-0 flex-none sm:flex-1 sm:max-w-xs"><Search class="pointer-events-none absolute top-2.5 left-3 size-4 text-muted-foreground" /><Input type="search" aria-label="Search documents" placeholder="Search documents…" class="pl-9" bind:value={search} /></div>
-	<div class="flex shrink-0 items-center gap-2">
-		{#if canEdit}
-			<Button variant="outline" size="sm" class="min-h-11 sm:min-h-8" onclick={() => { folderParent = uploadInto; folderDialog = true; }}><FolderPlus data-icon="inline-start" /><span class="hidden sm:inline">New folder</span><span class="sm:hidden">Folder</span></Button>
-			<Button size="sm" class="min-h-11 sm:min-h-8" onclick={() => filesInput?.click()}><Upload data-icon="inline-start" />Upload files</Button>
-		{/if}
-		<DropdownMenu.Root><DropdownMenu.Trigger>{#snippet child({ props })}<Button {...props} variant="outline" size="icon-sm" aria-label="Document options"><MoreHorizontal /></Button>{/snippet}</DropdownMenu.Trigger><DropdownMenu.Content align="end"><DropdownMenu.Group>{#if canEdit}<DropdownMenu.Item onSelect={() => folderInput?.click()}><Upload />Upload a folder</DropdownMenu.Item><DropdownMenu.Item onSelect={() => { importError = ''; importOpen = true; }}><Link />Import from a URL</DropdownMenu.Item>{/if}<DropdownMenu.Item disabled={!!roomZip && ['pending', 'running'].includes(roomZip.status)} onSelect={downloadRoom}><ArrowDownToLine />Download whole room</DropdownMenu.Item><DropdownMenu.Item onSelect={() => exportIndex('pdf')}><FileDown />Export index as PDF</DropdownMenu.Item><DropdownMenu.Item onSelect={() => exportIndex('csv')}><FileDown />Export index as CSV</DropdownMenu.Item></DropdownMenu.Group></DropdownMenu.Content></DropdownMenu.Root>
-	</div>
-	{#if canEdit}<input bind:this={filesInput} type="file" multiple class="hidden" onchange={pickFiles} /><input bind:this={folderInput} type="file" webkitdirectory class="hidden" onchange={pickFolder} /><input bind:this={versionInput} type="file" class="hidden" onchange={pickVersion} />{/if}
-</div>
-<PinnedDocuments {room} {canEdit} />
+{#snippet stepNumber(number: number, done: boolean, current: boolean)}
+	<span class="flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold {done || current ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'}">
+		{#if done}<Check class="size-4" aria-hidden="true" /><span class="sr-only">Completed</span>{:else}{number}{/if}
+	</span>
+{/snippet}
+
+{#if canEdit}<input bind:this={filesInput} type="file" multiple class="hidden" onchange={pickFiles} /><input bind:this={folderInput} type="file" webkitdirectory class="hidden" onchange={pickFolder} /><input bind:this={versionInput} type="file" class="hidden" onchange={pickVersion} />{/if}
+
+<PinnedDocuments {room} {canEdit} bind:open={pinsOpen} />
 {#if readingDrop}<p role="status" class="mb-3 text-xs text-muted-foreground">Reading folders and preparing uploads…</p>{/if}
 {#if roomZip && ['pending', 'running'].includes(roomZip.status)}<p role="status" class="mb-3 text-xs text-muted-foreground">Preparing your room download… {roomZip.progress}%</p>{/if}
-<div class="mb-4 flex min-w-0 items-center justify-between gap-3">
-	<nav class="flex min-w-0 flex-wrap items-center gap-2 text-xs" aria-label="Document folders"><button type="button" class="flex items-center gap-1.5 text-muted-foreground hover:text-foreground" onclick={() => { uploadInto = ''; search = ''; }}><Home class="size-3.5" />All documents</button>{#each breadcrumb as folder (folder.id)}<ChevronRight class="size-3 text-muted-foreground/50" /><button type="button" class="max-w-44 truncate font-medium" onclick={() => { uploadInto = folder.id; search = ''; }}>{folder.name}</button>{/each}</nav>
-	<span class="shrink-0 text-[11px] text-muted-foreground">{visibleNodes.length} item{visibleNodes.length === 1 ? '' : 's'}</span>
-</div>
+<div class="@container">
+	<div class="grid gap-4 {showSetup ? '@min-[54rem]:grid-cols-[minmax(0,2fr)_minmax(15rem,1fr)]' : ''}">
 
-<section
-	aria-label="Files"
-	class="overflow-hidden rounded-xl border bg-card {dragging ? 'ring-2 ring-ring' : ''}"
-	ondragover={(e) => {
-		if (canEdit) {
-			e.preventDefault();
-			dragging = true;
-		}
-	}}
-	ondragleave={() => (dragging = false)}
-	ondrop={drop}
->
-	{#if visibleNodes.length === 0}
-		<Empty.Root class="py-16"><Empty.Header><Empty.Media variant="icon"><FolderPlus /></Empty.Media><Empty.Title>{search ? 'No matching documents' : uploadInto ? 'This folder is ready for your files' : 'Build your data room'}</Empty.Title><Empty.Description>{search ? 'Try a different title or clear your search.' : 'Upload documents or drop a folder here. Your structure stays organized automatically.'}</Empty.Description></Empty.Header><Empty.Content>{#if search}<Button variant="outline" size="sm" onclick={() => (search = '')}>Clear search</Button>{:else if canEdit}<Button size="sm" onclick={() => filesInput?.click()}><Upload data-icon="inline-start" />Upload your first files</Button>{/if}</Empty.Content></Empty.Root>
-	{:else}
-		<Table.Root>
-			<Table.Header class="sr-only sm:not-sr-only">
-				<Table.Row>
-					<Table.Head>Name</Table.Head>
-					<Table.Head class="hidden sm:table-cell">Type</Table.Head>
-					<Table.Head class="hidden text-right md:table-cell">Version</Table.Head>
-					<Table.Head class="hidden text-right sm:table-cell">Size</Table.Head>
-					{#if canEdit}<Table.Head class="w-10"><span class="sr-only">Actions</span></Table.Head>{/if}
-				</Table.Row>
-			</Table.Header>
-			<Table.Body>
-				{#each visibleNodes as node (node.id)}
-					<Table.Row>
-						<Table.Cell class="w-full max-w-0 py-3 sm:w-auto sm:max-w-none">
-							<div class="flex min-w-0 items-center gap-3"><FileIcon kind={node.kind} folder={node.type === 'folder'} /><div class="min-w-0 flex-1">{#if node.type === 'folder'}<button type="button" class="flex min-h-11 w-full min-w-0 flex-col items-start justify-center text-left hover:text-primary" onclick={() => { uploadInto = node.id; search = ''; }}>{@render documentLabel(node)}</button>{:else}<a class="flex min-h-11 min-w-0 flex-col items-start justify-center hover:text-primary" href="/admin/rooms/{room.id}/files/{node.id}" target="_blank" rel="noreferrer">{@render documentLabel(node)}</a>{/if}</div>{#if node.type === 'folder'}<ChevronRight class="size-4 shrink-0 text-muted-foreground/50" />{/if}</div>
-						</Table.Cell>
-						<Table.Cell class="hidden text-xs text-muted-foreground sm:table-cell">{node.type === 'folder' ? 'Folder' : kindLabel[node.kind ?? 'download']}</Table.Cell>
-						<Table.Cell class="hidden text-right text-xs text-muted-foreground md:table-cell">{node.version ? `v${node.version}` : '—'}</Table.Cell>
-						<Table.Cell class="hidden text-right text-xs text-muted-foreground sm:table-cell">{node.type === 'folder' ? '—' : formatBytes(node.size)}</Table.Cell>
-						{#if canEdit}
-							<Table.Cell class="w-12">
-								<DropdownMenu.Root>
-									<DropdownMenu.Trigger>
-										{#snippet child({ props })}
-											<Button {...props} variant="ghost" size="icon" class="size-11" aria-label="Actions for {node.name}"><MoreHorizontal /></Button>
-										{/snippet}
-									</DropdownMenu.Trigger>
-									<DropdownMenu.Content align="end" class="min-w-56">
-										<DropdownMenu.Item onSelect={() => {
-		renaming = node;
-		newName = node.name;
-	}}>Rename</DropdownMenu.Item>
-										<DropdownMenu.Item onSelect={() => {
-		moving = node;
-		moveTo = node.parentId ?? '';
-	}}>Move to…</DropdownMenu.Item>
-										<DropdownMenu.Item onSelect={() => shift(node, -1)}>Move up</DropdownMenu.Item>
-										<DropdownMenu.Item onSelect={() => shift(node, 1)}>Move down</DropdownMenu.Item>
-										{#if node.type === 'file'}
-											<DropdownMenu.Item onSelect={() => window.open(`/admin/rooms/${room.id}/files/${node.id}`, '_blank', 'noopener')}
-												>Open</DropdownMenu.Item
-											>
-											<DropdownMenu.Item onSelect={() => (location.href = `/admin/rooms/${room.id}/files/${node.id}?download=1`)}
-												>Download</DropdownMenu.Item
-											>
-											<DropdownMenu.Separator />
-											<DropdownMenu.Item onSelect={() => {
-		versionFor = node.id;
-		versionInput?.click();
-	}}
-												>Replace with a new version</DropdownMenu.Item
-											>
-											<DropdownMenu.Item onSelect={() => openVersions(node)}>Version history</DropdownMenu.Item>
-										{/if}
-										<DropdownMenu.Separator />
-										<DropdownMenu.Item variant="destructive" onSelect={() => remove(node)}>Delete…</DropdownMenu.Item>
-									</DropdownMenu.Content>
-								</DropdownMenu.Root>
-							</Table.Cell>
-						{/if}
-					</Table.Row>
-				{/each}
-			</Table.Body>
-		</Table.Root>
-	{/if}
-</section>
+		<section
+			aria-label="Files"
+			class="@container/library min-w-0 rounded-xl border bg-card p-4 sm:p-5 {dragging ? 'ring-2 ring-ring' : ''}"
+			ondragover={(e) => {
+				if (canEdit) {
+					e.preventDefault();
+					dragging = true;
+				}
+			}}
+			ondragleave={() => (dragging = false)}
+			ondrop={drop}
+		>
+			<header class="flex flex-wrap items-center justify-between gap-2 border-b pb-3">
+				<h2 class="flex items-baseline gap-2 font-semibold">All documents <span class="text-sm font-normal text-muted-foreground">{room.fileCount}</span></h2>
+				<div class="flex flex-wrap items-center gap-1">
+					{#if canEdit}
+						<Button variant="outline" size="sm" class="min-h-9" onclick={() => { folderParent = uploadInto; folderDialog = true; }}><FolderPlus />New folder</Button>
+						{#if room.tree.length}<Button size="sm" class="min-h-9" onclick={() => filesInput?.click()}><Upload />Upload files</Button>{/if}
+					{/if}
+					<DropdownMenu.Root><DropdownMenu.Trigger>{#snippet child({ props })}<Button {...props} variant="ghost" size="icon-sm" aria-label="Document options"><MoreHorizontal /></Button>{/snippet}</DropdownMenu.Trigger><DropdownMenu.Content align="end"><DropdownMenu.Group>{#if canEdit}<DropdownMenu.Item onSelect={() => folderInput?.click()}><Upload />Upload a folder</DropdownMenu.Item><DropdownMenu.Item onSelect={() => { importError = ''; importOpen = true; }}><Link />Import from a URL</DropdownMenu.Item>{/if}<DropdownMenu.Item disabled={!!roomZip && ['pending', 'running'].includes(roomZip.status)} onSelect={downloadRoom}><ArrowDownToLine />Download whole room</DropdownMenu.Item><DropdownMenu.Item onSelect={() => exportIndex('pdf')}><FileDown />Export index as PDF</DropdownMenu.Item><DropdownMenu.Item onSelect={() => exportIndex('csv')}><FileDown />Export index as CSV</DropdownMenu.Item></DropdownMenu.Group></DropdownMenu.Content></DropdownMenu.Root>
+				</div>
+			</header>
+			{#if room.tree.length || search}
+				<div class="relative mt-4 mb-3 max-w-sm"><Search class="pointer-events-none absolute top-2.5 left-3 size-4 text-muted-foreground" /><Input type="search" aria-label="Search documents" placeholder="Search documents…" class="pl-9" bind:value={search} /></div>
+			{/if}
+			{#if uploadInto}
+				<div class="mb-3"><nav class="flex min-w-0 flex-wrap items-center gap-2 text-xs" aria-label="Document folders"><button type="button" class="flex items-center gap-1.5 text-muted-foreground hover:text-foreground" onclick={() => { uploadInto = ''; search = ''; }}><Home class="size-3.5" />All documents</button>{#each breadcrumb as folder (folder.id)}<ChevronRight class="size-3 text-muted-foreground/50" /><button type="button" class="max-w-44 truncate font-medium" onclick={() => { uploadInto = folder.id; search = ''; }}>{folder.name}</button>{/each}</nav></div>
+			{/if}
+			{#if visibleNodes.length === 0}
+				<div class="flex min-h-48 flex-col items-center justify-center gap-4 px-2 py-8 text-center">
+					{#if search}
+						<p>No matching documents</p>
+						<Button variant="outline" size="sm" onclick={() => (search = '')}>Clear search</Button>
+					{:else if canEdit}
+						<Upload class="size-8 text-muted-foreground" strokeWidth={1.5} />
+						<p class="text-sm font-medium">Drop files or a folder here.</p>
+						{#if !room.tree.length}<Button onclick={() => filesInput?.click()}>Upload files</Button>{/if}
+					{:else}
+						<p class="text-sm text-muted-foreground">No documents here yet.</p>
+					{/if}
+				</div>
+			{:else}
+				<Table.Root>
+					<Table.Header class="sr-only @min-[28rem]/library:not-sr-only">
+						<Table.Row>
+							<Table.Head>Name</Table.Head>
+							<Table.Head class="hidden @min-[28rem]/library:table-cell">Type</Table.Head>
+							<Table.Head class="hidden text-right @min-[36rem]/library:table-cell">Version</Table.Head>
+							<Table.Head class="hidden text-right @min-[28rem]/library:table-cell">Size</Table.Head>
+							{#if canEdit}<Table.Head class="w-10"><span class="sr-only">Actions</span></Table.Head>{/if}
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						{#each visibleNodes as node (node.id)}
+							<Table.Row>
+								<Table.Cell class="w-full max-w-0 py-3 @min-[28rem]/library:w-auto @min-[28rem]/library:max-w-none">
+									<div class="flex min-w-0 items-center gap-3"><FileIcon kind={node.kind} folder={node.type === 'folder'} /><div class="min-w-0 flex-1">{#if node.type === 'folder'}<button type="button" class="flex min-h-11 w-full min-w-0 flex-col items-start justify-center text-left hover:text-primary" onclick={() => { uploadInto = node.id; search = ''; }}>{@render documentLabel(node)}</button>{:else}<a class="flex min-h-11 min-w-0 flex-col items-start justify-center hover:text-primary" href="/admin/rooms/{room.id}/files/{node.id}" target="_blank" rel="noreferrer">{@render documentLabel(node)}</a>{/if}</div>{#if node.type === 'folder'}<ChevronRight class="size-4 shrink-0 text-muted-foreground/50" />{/if}</div>
+								</Table.Cell>
+								<Table.Cell class="hidden text-xs text-muted-foreground @min-[28rem]/library:table-cell">{node.type === 'folder' ? 'Folder' : kindLabel[node.kind ?? 'download']}</Table.Cell>
+								<Table.Cell class="hidden text-right text-xs text-muted-foreground @min-[36rem]/library:table-cell">{node.version ? `v${node.version}` : '—'}</Table.Cell>
+								<Table.Cell class="hidden text-right text-xs text-muted-foreground @min-[28rem]/library:table-cell">{node.type === 'folder' ? '—' : formatBytes(node.size)}</Table.Cell>
+								{#if canEdit}
+									<Table.Cell class="w-12">
+										<DropdownMenu.Root>
+											<DropdownMenu.Trigger>
+												{#snippet child({ props })}
+													<Button {...props} variant="ghost" size="icon" class="size-11" aria-label="Actions for {node.name}"><MoreHorizontal /></Button>
+												{/snippet}
+											</DropdownMenu.Trigger>
+											<DropdownMenu.Content align="end" class="min-w-56">
+												<DropdownMenu.Item onSelect={() => {
+				renaming = node;
+				newName = node.name;
+			}}>Rename</DropdownMenu.Item>
+												<DropdownMenu.Item onSelect={() => {
+				moving = node;
+				moveTo = node.parentId ?? '';
+			}}>Move to…</DropdownMenu.Item>
+												<DropdownMenu.Item onSelect={() => shift(node, -1)}>Move up</DropdownMenu.Item>
+												<DropdownMenu.Item onSelect={() => shift(node, 1)}>Move down</DropdownMenu.Item>
+												{#if node.type === 'file'}
+													<DropdownMenu.Item onSelect={() => window.open(`/admin/rooms/${room.id}/files/${node.id}`, '_blank', 'noopener')}
+														>Open</DropdownMenu.Item
+													>
+													<DropdownMenu.Item onSelect={() => (location.href = `/admin/rooms/${room.id}/files/${node.id}?download=1`)}
+														>Download</DropdownMenu.Item
+													>
+													<DropdownMenu.Separator />
+													<DropdownMenu.Item onSelect={() => {
+				versionFor = node.id;
+				versionInput?.click();
+			}}
+														>Replace with a new version</DropdownMenu.Item
+													>
+													<DropdownMenu.Item onSelect={() => openVersions(node)}>Version history</DropdownMenu.Item>
+												{/if}
+												<DropdownMenu.Separator />
+												<DropdownMenu.Item variant="destructive" onSelect={() => remove(node)}>Delete…</DropdownMenu.Item>
+											</DropdownMenu.Content>
+										</DropdownMenu.Root>
+									</Table.Cell>
+								{/if}
+							</Table.Row>
+						{/each}
+					</Table.Body>
+				</Table.Root>
+			{/if}
+		</section>
+		{#if showSetup}
+			<aside aria-labelledby="room-setup-heading" class="rounded-xl border bg-card p-4 sm:p-5">
+				<h2 id="room-setup-heading" class="flex min-h-9 items-center border-b pb-3 font-semibold box-content">Room setup</h2>
+				<ol class="mt-2 space-y-1 text-sm">
+					<li><button type="button" class="flex min-h-11 w-full items-center gap-3 rounded-md text-left hover:bg-muted/50" onclick={() => filesInput?.click()}>
+						{@render stepNumber(1, hasFiles, !hasFiles)} Upload documents
+					</button></li>
+					<li><button type="button" class="flex min-h-11 w-full items-center gap-3 rounded-md text-left hover:enabled:bg-muted/50 disabled:text-muted-foreground" disabled={!hasFiles} onclick={() => (pinsOpen = true)}>
+						{@render stepNumber(2, hasPins, hasFiles && !hasPins)} Pin a starting document
+					</button></li>
+					<li><a href="/admin/rooms/{room.id}/links{hasLink ? '' : '?new=1'}" class="flex min-h-11 items-center gap-3 rounded-md hover:bg-muted/50">
+						{@render stepNumber(3, hasLink, hasFiles && hasPins)} {hasLink ? 'Sharing link created' : 'Create a sharing link'}
+					</a></li>
+				</ol>
+			</aside>
+		{/if}
+	</div>
+</div>
 
 {#if deleting}
 	<DangerAction

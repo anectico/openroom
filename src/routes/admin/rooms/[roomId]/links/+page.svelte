@@ -24,7 +24,7 @@
 	let editorOpen = $state(false);
 	let editing = $state<Link | null>(null);
 	afterNavigate(({ to }) => {
-		if (!to?.url.searchParams.has('new')) return;
+		if (!canEdit || !to?.url.searchParams.has('new')) return;
 		editing = null;
 		editorOpen = true;
 		const next = new URL(to.url);
@@ -44,6 +44,7 @@
 	let readdressing = $state<Link | null>(null);
 	let newUrl = $state('');
 	let readdressError = $state('');
+	let changingAddress = $state(false);
 
 	const copy = (link: Link) => copyText(link.url, 'Link copied');
 	const copyInvite = (link: Link) =>
@@ -62,10 +63,16 @@
 	const emails = (link: Link) => link.allow.filter((e) => e.kind === 'email').length;
 
 	async function readdress() {
-		if (!readdressing) return;
-		const r = await attempt<Link>('new_link_address', { linkId: readdressing.id });
-		if (r.ok) newUrl = r.data.url;
-		else readdressError = r.error;
+		if (!readdressing || changingAddress) return;
+		changingAddress = true;
+		readdressError = '';
+		try {
+			const r = await attempt<Link>('new_link_address', { linkId: readdressing.id });
+			if (r.ok) newUrl = r.data.url;
+			else readdressError = r.error;
+		} finally {
+			changingAddress = false;
+		}
 	}
 
 	async function revoke(link: Link) {
@@ -117,7 +124,7 @@
 	/>
 {/if}
 
-<AlertDialog.Root open={!!readdressing} onOpenChange={(o) => !o && (readdressing = null)}>
+<AlertDialog.Root open={!!readdressing} onOpenChange={(o) => !o && !changingAddress && (readdressing = null)}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>{newUrl ? 'The new address' : `New address for “${readdressing?.label}”?`}</AlertDialog.Title>
@@ -138,8 +145,8 @@
 			{#if newUrl}
 				<Button onclick={() => (readdressing = null)}>Done</Button>
 			{:else}
-				<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-				<Button variant="destructive" onclick={readdress}>Make a new address</Button>
+				<AlertDialog.Cancel disabled={changingAddress}>Cancel</AlertDialog.Cancel>
+				<Button variant="destructive" disabled={changingAddress} onclick={readdress}>{changingAddress ? 'Generating…' : 'Generate new address'}</Button>
 			{/if}
 		</AlertDialog.Footer>
 	</AlertDialog.Content>

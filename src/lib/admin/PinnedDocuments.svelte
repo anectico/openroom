@@ -10,8 +10,7 @@
 	import { op } from './op.ts';
 	import type { Room, TreeNode } from './types.ts';
 
-	let { room, canEdit }: { room: Room; canEdit: boolean } = $props();
-	let open = $state(false);
+	let { room, canEdit, open = $bindable(false) }: { room: Room; canEdit: boolean; open?: boolean } = $props();
  let expanded = $state(false);
 	let draft = $state<string[]>([]);
 	let initial = $state<string[]>([]);
@@ -65,10 +64,10 @@
 	}
 </script>
 
-{#if saved.length || canEdit}
+{#if saved.length}
 	<section class="mb-5 rounded-xl border bg-card p-4 sm:p-5" aria-label="Start here documents">
-		<div class="flex flex-wrap items-start justify-between gap-3"><div class="flex min-w-0 items-start gap-3"><Pin class="mt-0.5 size-4 shrink-0 text-muted-foreground" /><div><h2 class="text-sm font-semibold">Start here <span class="font-normal text-muted-foreground">· {saved.length} pinned</span></h2><p class="mt-1 hidden text-xs leading-relaxed sm:block text-muted-foreground">{saved.length ? 'Suggested reading order. Each investor sees only documents they can access.' : 'Give investors a starting point with up to six pinned documents.'}</p></div></div>{#if canEdit}<Button variant="outline" class="min-h-11" size="sm" onclick={() => (open = true)}>{saved.length ? 'Manage pinned documents' : 'Choose documents'}</Button>{/if}</div>
-		{#if saved.length}<button type="button" class="mt-2 flex min-h-11 items-center text-sm underline underline-offset-4 sm:hidden" aria-expanded={expanded} onclick={() => (expanded = !expanded)}>{expanded ? 'Hide reading order' : 'Show reading order'}</button><ol class={expanded ? "mt-3 flex flex-wrap gap-2" : "mt-4 hidden flex-wrap gap-2 sm:flex"}>{#each saved as file, index (file.id)}<li class="flex min-w-0 max-w-full items-center gap-2 rounded-lg border bg-muted/20 px-3 py-2 text-xs"><span class="font-semibold text-muted-foreground">{index + 1}</span><span class="break-words [overflow-wrap:anywhere]">{file.name}</span></li>{/each}</ol>{/if}
+		<div class="flex flex-wrap items-start justify-between gap-3"><div class="flex min-w-0 items-start gap-3"><Pin class="mt-0.5 size-4 shrink-0 text-muted-foreground" /><div><h2 class="text-sm font-semibold">Start here <span class="font-normal text-muted-foreground">· {saved.length} pinned</span></h2><p class="mt-1 hidden text-xs leading-relaxed sm:block text-muted-foreground">Suggested reading order. Each investor sees only documents they can access.</p></div></div>{#if canEdit}<Button variant="outline" class="min-h-11" size="sm" onclick={() => (open = true)}>Manage pinned documents</Button>{/if}</div>
+		<button type="button" class="mt-2 flex min-h-11 items-center text-sm underline underline-offset-4 sm:hidden" aria-expanded={expanded} onclick={() => (expanded = !expanded)}>{expanded ? 'Hide reading order' : 'Show reading order'}</button><ol class={expanded ? "mt-3 flex flex-wrap gap-2" : "mt-4 hidden flex-wrap gap-2 sm:flex"}>{#each saved as file, index (file.id)}<li class="flex min-w-0 max-w-full items-center gap-2 rounded-lg border bg-muted/20 px-3 py-2 text-xs"><span class="font-semibold text-muted-foreground">{index + 1}</span><span class="break-words [overflow-wrap:anywhere]">{file.name}</span></li>{/each}</ol>
 	</section>
 {/if}
 

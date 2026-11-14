@@ -20,7 +20,9 @@ the section selector and Settings within reach, with document actions sized for 
 
 ## Rooms, folders and files
 
-Create a room from **Data rooms → New room**. Use **Upload files**, upload a folder from Document
+Create a room from **Data rooms → New room**. On the Documents page, **Room setup** tracks uploaded documents, an optional starting document and an active sharing link. Each step opens its corresponding action. The checklist disappears when all three are complete.
+
+Use **Upload files**, upload a folder from Document
 options, or drop files and folders into the document list. Open folders to browse them and use search to find a
 title anywhere in the room. Dropped folders retain their hierarchy and empty subfolders, including
 when a folder contains more than 100 entries. Hidden files and folders are skipped. **Import from a URL** copies a
@@ -56,6 +58,10 @@ emailed. Creating the link alone never sends an invitation.
 
 Links inherit **Room settings → Default link protection** unless they override a field. Choose email
 verification, NDA, watermarks, download mode, custom questions, read threshold and view notices.
+In the link editor, **Email verification** sits below the audience choice. **Room default** shows
+the inherited value. When a provider is missing, owners can select **Set up email provider**,
+configure delivery in the new tab, then return to the draft and choose **On**.
+Connecting a provider leaves the room’s saved default and the link’s selection in effect.
 Without verification, an email is a claimed identity. A link that requires verification refuses
 entry if email delivery is unavailable. Changing a password ends existing investor sessions;
 revocation, allow/block rules, verification and expiry are checked on subsequent requests.
@@ -66,8 +72,8 @@ Use **Room settings → Investor groups & permissions** to limit an audience to 
 files. A group has a default access choice; folders pass their choice to descendants unless a child
 overrides it. New items inherit those choices. Attach the group in the link editor. A link with no
 group sees the whole room, including future documents. **Document access** is always visible in
-the link editor. **Choose specific documents** opens group management in another tab, preserving
-your draft; return, use **Refresh groups**, and select the intended group. Download-only files remain
+the link editor. Expand **Choose specific documents** and use **Manage groups** to open group management in another tab.
+Return to the draft, use **Refresh groups**, and select the intended group. Download-only files remain
 downloadable even with **No downloads**; hide them with a group when necessary. Use **Preview group** beside an active link on the group page, or preview
 the link from Sharing, before sending it. A group needs an active sharing link to preview its
 permissions together with the link's protection settings.
@@ -148,7 +154,7 @@ members only. Close a request to stop new uploads. Late submissions remain marke
 
 ## Personalize the room
 
-Open **Room settings & branding** to edit the room name, welcome introduction, logo and brand colour.
+Open the gear beside **Share room**. Under **General**, choose **Room settings & branding** to edit the room name, welcome introduction, logo and brand colour.
 Preview Documents or Entry screen at desktop/phone widths, then **Save appearance** to publish the
 changes together. **Cancel changes** discards your draft. Reset either logo or colour to inherit the
 workspace setting. Investor browser icons follow the effective logo.
@@ -172,7 +178,7 @@ to restore the room introduction. Cancel discards edits; a failed save keeps the
 
 ### Choose where investors start
 
-On the room's Documents page, choose **Choose documents** in **Start here**. Select up to six files,
+On the room's Documents page, upload a file, then choose **Pin a starting document** in **Room setup**. Select up to six files,
 use the up/down buttons to set their reading order, then **Save Start here**. Later, use **Manage
 pinned documents** to change or clear the list. Search includes files in every folder. Refresh the
 document list if someone has uploaded or deleted a file while the editor is open.
