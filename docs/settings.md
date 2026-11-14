@@ -88,6 +88,8 @@ and secrets are visible only to owners. See [webhook behavior](contributing/bran
 
 ## Account, notices and audit
 
-The account menu opens your profile and password settings. Notifications let each member choose
-which events send email and mark notices read. The audit log records member, key and operation,
+Open **My account → Email preferences** to choose which events send you email. You can also reach
+these switches from **Email preferences** in the Notifications header. When email is off, owners can
+select **Set up email provider** above the switches to open the workspace’s **Email delivery** form.
+Other members see who can enable delivery. The audit log records member, key and operation,
 with filters and CSV export. These records cannot be rewritten through the application.

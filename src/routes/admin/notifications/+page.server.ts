@@ -15,10 +15,4 @@ export const load: PageServerLoad = async ({ locals }) => ({
 			}[];
 		}>(locals, 'list_notices', { limit: 200 })
 	).notices,
-	prefs: (
-		await runOp<{ prefs: { event: string; label: string; email: boolean }[] }>(
-			locals,
-			'get_notification_prefs',
-		)
-	).prefs,
 });

@@ -206,8 +206,11 @@ retained file cleanup follows the database recovery window described in [storage
 
 ## Team and automation
 
-[Workspace settings](settings.md) covers branding, email, members, API keys and webhooks. Notifications
-have per-member email preferences. Question notices open the specific conversation and upload
+[Workspace settings](settings.md) covers branding, email delivery, members, API keys and webhooks.
+The header bell opens your five latest notices. Choose a notice to open it and mark it as read,
+or select **View all notifications** for the inbox.
+Choose which notices send you email in **My account → Email preferences** or follow the
+**Email preferences** link from Notifications. Question notices open the specific conversation and upload
 notices open and highlight the relevant file request. These destinations are also used in email
 notifications. If an old notice no longer has a matching item, it opens the room’s questions or requests list. The audit log lists changes by member/key/surface and supports
 filters and CSV export; it cannot be edited through the app.

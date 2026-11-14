@@ -11,7 +11,7 @@
 - [Investor data](https://github.com/anectico/openroom/blob/main/docs/privacy.md): exports, erasure and retained evidence.
 
 - [Product guide](https://github.com/anectico/openroom/blob/main/docs/using-openroom.md): rooms, files, links, groups, gates, viewers, analytics, questions, requests and archives.
-- [Workspace settings](https://github.com/anectico/openroom/blob/main/docs/settings.md): branding, email, members, API keys and webhooks.
+- [Workspace and account settings](https://github.com/anectico/openroom/blob/main/docs/settings.md): branding, email delivery, personal email preferences, members, API keys and webhooks.
 
 ## For agents
 

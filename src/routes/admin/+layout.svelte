@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { ArrowUpRight, Bell, ChevronDown, ChevronRight, CircleHelp, FolderClosed, LayoutDashboard, LogOut, Menu, ScrollText, Settings, ShieldCheck, Users } from '@lucide/svelte';
 	import Brand from '#lib/admin/Brand.svelte';
+	import { act } from '#lib/admin/op.ts';
 	import UploadTray from '#lib/admin/UploadTray.svelte';
 	import { uploads } from '#lib/admin/uploads.svelte.ts';
+	import When from '#lib/admin/When.svelte';
 	import * as Alert from '#lib/components/ui/alert/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Dialog from '#lib/components/ui/dialog/index.js';
 	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
 	import { Toaster } from '#lib/components/ui/sonner/index.js';
 	import { cn } from '#lib/utils.js';
-	import { goto } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
 	import { page } from '$app/state';
 
 	let { data, children } = $props();
@@ -41,7 +43,7 @@
 			<a href={item.href} onclick={() => (menuOpen = false)} class={cn('flex min-h-10 items-center gap-3 rounded-lg px-3 text-[13px] font-medium transition-colors', active(item) ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')} aria-current={active(item) ? 'page' : undefined}>
 				<item.icon class="size-[17px] shrink-0" strokeWidth={1.7} />
 				<span>{item.label}</span>
-				{#if item.href === '/admin/notifications' && data.unread}<span class="ml-auto flex min-w-5 items-center justify-center rounded-md bg-primary/10 px-1 text-[10px] font-semibold text-primary">{data.unread}<span class="sr-only"> unread</span></span>{/if}
+				{#if item.href === '/admin/notifications' && data.notificationPreview.unread}<span class="ml-auto flex min-w-5 items-center justify-center rounded-md bg-primary/10 px-1 text-[10px] font-semibold text-primary">{data.notificationPreview.unread}<span class="sr-only"> unread</span></span>{/if}
 			</a>
 		{/each}
 	</nav>
@@ -79,11 +81,41 @@
 						<Dialog.Content class="max-h-[90dvh] max-w-sm overflow-y-auto"><Dialog.Header><Dialog.Title><Brand /></Dialog.Title><Dialog.Description>Workspace navigation</Dialog.Description></Dialog.Header>{@render navigation()}<div class="border-t pt-3"><a href="/admin/settings" onclick={() => (menuOpen = false)} class="flex min-h-10 items-center gap-3 rounded-lg px-3 text-[13px] font-medium text-muted-foreground hover:bg-muted hover:text-foreground"><Settings class="size-[17px]" />Settings</a><a href="https://github.com/anectico/openroom" target="_blank" rel="noreferrer" class="flex min-h-10 items-center gap-3 rounded-lg px-3 text-[13px] text-muted-foreground hover:bg-muted hover:text-foreground"><CircleHelp class="size-[17px]" />Help & docs<ArrowUpRight class="ml-auto size-3" /></a></div></Dialog.Content>
 					</Dialog.Root>
 					<span class="hidden text-xs text-muted-foreground sm:inline">Workspace</span><ChevronRight class="hidden size-3.5 text-muted-foreground/50 sm:block" />
-					<a href={nav.find(active)?.href ?? '/admin/settings'} class="truncate text-xs font-medium">{section}</a>
+					<a href={nav.find(active)?.href ?? (section === 'Account' ? '/admin/account' : '/admin/settings')} class="truncate text-xs font-medium">{section}</a>
 					{#if currentRoom}<ChevronRight class="hidden size-3.5 shrink-0 text-muted-foreground/50 sm:block" /><span class="hidden truncate text-xs text-muted-foreground sm:block">{currentRoom.name}</span>{/if}
 				</div>
 				<div class="flex shrink-0 items-center gap-3">
-					<a href="/admin/notifications" aria-label={data.unread ? `${data.unread} unread notifications` : 'Notifications'} class="relative flex size-11 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted"><Bell class="size-[17px]" strokeWidth={1.7} />{#if data.unread}<span class="absolute top-2 right-2 size-1.5 rounded-full bg-primary"></span>{/if}</a>
+					<DropdownMenu.Root onOpenChange={(open) => { if (open) void invalidate('openroom:notifications'); }}>
+						<DropdownMenu.Trigger>
+							{#snippet child({ props })}
+								<Button {...props} variant="ghost" size="icon" class="relative size-11" aria-label={data.notificationPreview.unread ? `Notifications, ${data.notificationPreview.unread} unread` : 'Notifications'}>
+									<Bell class="size-[17px]" strokeWidth={1.7} />
+									{#if data.notificationPreview.unread}<span class="absolute top-2 right-2 size-1.5 rounded-full bg-primary"></span>{/if}
+								</Button>
+							{/snippet}
+						</DropdownMenu.Trigger>
+						<DropdownMenu.Content align="end" class="w-80 max-w-[calc(100vw-1rem)]">
+							<DropdownMenu.Group>
+								<DropdownMenu.Label>Recent notifications</DropdownMenu.Label>
+								{#each data.notificationPreview.notices as notice (notice.id)}
+									<DropdownMenu.Item class="flex-col items-start gap-1 py-2" onSelect={async () => {
+										if (!notice.read) await act('mark_notices_read', { ids: [notice.id] });
+										await goto(notice.href);
+									}}>
+										<span class={notice.read ? 'text-muted-foreground' : 'font-medium'}>{notice.text}</span>
+										<span class="flex items-center gap-2 text-xs text-muted-foreground">
+											{#if !notice.read}<span class="text-primary">New</span>{/if}
+											<When at={notice.createdAt} timeZone={data.timeZone} />
+										</span>
+									</DropdownMenu.Item>
+								{:else}
+									<p class="px-2 py-3 text-sm text-muted-foreground">No notifications yet.</p>
+								{/each}
+							</DropdownMenu.Group>
+							<DropdownMenu.Separator />
+							<DropdownMenu.Item onSelect={() => goto('/admin/notifications')}>View all notifications</DropdownMenu.Item>
+						</DropdownMenu.Content>
+					</DropdownMenu.Root>
 					<DropdownMenu.Root><DropdownMenu.Trigger>{#snippet child({ props })}<Button {...props} variant="ghost" size="sm" class="gap-2 px-1.5"><span class="flex size-7 items-center justify-center rounded-full bg-secondary text-[10px] font-semibold">{initials}</span><span class="hidden max-w-28 truncate text-xs sm:inline">{data.member?.name || data.member?.email}</span><ChevronDown data-icon="inline-end" /></Button>{/snippet}</DropdownMenu.Trigger><DropdownMenu.Content align="end"><DropdownMenu.Group><DropdownMenu.Label>Signed in as {data.member.role}</DropdownMenu.Label><DropdownMenu.Item onSelect={() => goto('/admin/account')}>My account</DropdownMenu.Item><DropdownMenu.Item onSelect={() => goto('/admin/settings/api-keys')}>API keys</DropdownMenu.Item></DropdownMenu.Group><DropdownMenu.Separator /><DropdownMenu.Group><DropdownMenu.Item onSelect={signOut}><LogOut />Sign out</DropdownMenu.Item></DropdownMenu.Group></DropdownMenu.Content></DropdownMenu.Root>
 				</div>
 			</header>

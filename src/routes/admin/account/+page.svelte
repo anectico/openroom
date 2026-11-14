@@ -1,10 +1,13 @@
 <script lang="ts">
+	import { Mail } from '@lucide/svelte';
 	import { untrack } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import { attempt } from '#lib/admin/op.ts';
+	import { act, attempt } from '#lib/admin/op.ts';
+	import * as Alert from '#lib/components/ui/alert/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
 	import { Label } from '#lib/components/ui/label/index.js';
+	import { Switch } from '#lib/components/ui/switch/index.js';
 
 	let { data } = $props();
 	let current = $state('');
@@ -63,9 +66,9 @@
 	}
 </script>
 
-<svelte:head><title>Account · OpenRoom</title></svelte:head>
+<svelte:head><title>My account · OpenRoom</title></svelte:head>
 
-<h1 class="mb-6 text-2xl font-semibold">Account</h1>
+<h1 class="mb-6 text-2xl font-semibold">My account</h1>
 <div class="grid max-w-xl gap-6">
 	<form class="space-y-3 rounded-lg border bg-background p-6" onsubmit={saveName}>
 		<div class="space-y-2">
@@ -79,6 +82,42 @@
 		<p class="text-sm"><span class="text-muted-foreground">Email:</span> {data.member?.email}</p>
 		<p class="text-sm"><span class="text-muted-foreground">Role:</span> {data.member?.role}</p>
 	</form>
+	<section id="email-preferences" aria-labelledby="preferences-heading" class="min-w-0 rounded-xl border bg-card">
+		<div class="p-4">
+			<h2 id="preferences-heading" class="text-lg font-semibold">Email preferences</h2>
+			{#if data.emailReady}
+				<p class="mt-1 text-sm text-muted-foreground">Choose which events you receive by email.</p>
+			{:else}
+				<Alert.Root class="mt-3 border-amber-300 bg-amber-50 dark:border-amber-800 dark:bg-amber-950">
+					<Mail aria-hidden="true" />
+					<Alert.Title>Email notifications are off</Alert.Title>
+					<Alert.Description>
+						{#if data.member?.role === 'owner'}
+							Add an email provider to choose which notifications you receive by email.
+						{:else}
+							Ask a workspace owner to add an email provider so you can choose which notifications you receive by email.
+						{/if}
+					</Alert.Description>
+					{#if data.member?.role === 'owner'}
+						<Button href="/admin/settings#email" size="sm" class="col-start-2 mt-2 justify-self-start">Set up email provider</Button>
+					{/if}
+				</Alert.Root>
+			{/if}
+		</div>
+		<ul class="divide-y border-t">
+			{#each data.prefs as p (p.event)}
+				<li class="flex items-center justify-between gap-4 px-4 py-3 text-sm">
+					<label for="pref-{p.event}">{p.label}</label>
+					<Switch
+						id="pref-{p.event}"
+						checked={p.email}
+						disabled={!data.emailReady}
+						onCheckedChange={(v) => act('set_notification_pref', { event: p.event, email: v }, 'Saved')}
+					/>
+				</li>
+			{/each}
+		</ul>
+	</section>
 	<form class="space-y-4 rounded-lg border bg-background p-6" onsubmit={change}>
 		<h2 class="text-lg font-medium">Change password</h2>
 		<div class="space-y-2">

@@ -170,7 +170,7 @@ The CLI can also be [built and installed locally](docs/cli.md#cli). For agents, 
 | Topic                                             | Guide                                                        |
 | ------------------------------------------------- | ------------------------------------------------------------ |
 | Rooms, sharing, reading, questions and requests   | [Using OpenRoom](docs/using-openroom.md)                     |
-| Branding, members, keys and workspace options     | [Settings](docs/settings.md)                                 |
+| Workspace settings and personal email preferences | [Settings](docs/settings.md)                                 |
 | Environment variables                             | [Configuration](docs/configuration.md)                       |
 | Verification codes, invitations and notifications | [Email](docs/email.md)                                       |
 | Local disk, S3, backups and restoration           | [Storage and backups](docs/storage-and-backups.md)           |
