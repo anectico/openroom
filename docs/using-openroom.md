@@ -137,10 +137,11 @@ They can also ask from a document page. Conversations show **Awaiting answer** a
 latest message and **Replied** after the team's latest response; these are reply states, not read
 receipts. Connection failures keep the question draft available for retry. Document choices include
 only files the current link permits. Investors return to the conversation under My questions. Members reply
-from the room's **Questions** tab. Verified investors can return across their verified sessions;
+from **Questions → Investor conversations**. Use **Awaiting answer** to find conversations that need a reply.
+Verified investors can return across their verified sessions;
 unverified conversations stay with the original session. Email replies are optional.
 
-FAQ entries appear to every investor in the room. Use them for approved general answers, rather
+Entries under **Room FAQ** appear to every investor in the room. Use them for approved general answers, rather
 than copying a private answer into the FAQ without considering its audience. Investor text is
 always shown as plain text. Owner Markdown permits formatting and safe external links, with HTML
 disabled.
