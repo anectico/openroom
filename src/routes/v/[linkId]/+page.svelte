@@ -196,7 +196,7 @@
 				<Progress class="w-20" value={completedPins.length / data.pins.length * 100} aria-label="Start here review progress" />
 			{/if}
 		</div>
-		<div class="panel-body space-y-3">
+		<div class="space-y-3">
 			{#if !resume}{@render featured()}{/if}
 			{#if rows.length}
 				<ol class={documentGrid}>
@@ -253,7 +253,7 @@
 				{/if}
 			</div>
 		</div>
-		<div class="panel-body">
+		<div>
 			{#if breadcrumb.length > 1 && !term && !changedOnly}
 				<nav class="mb-2 flex flex-wrap items-center gap-2 text-xs" aria-label="Document folders">
 					<button type="button" class="flex min-h-11 items-center text-muted-foreground hover:text-foreground" onclick={() => openFolder('')}>All documents</button>
@@ -291,7 +291,7 @@
 		<div class="panel-heading"><h2 id="faq-heading" class="panel-title"><MessagesSquare />Room FAQ</h2></div>
 		<div class="divide-y">
 			{#each data.faq as entry (entry.id)}
-				<details class="group px-4 py-1.5 sm:px-5">
+				<details class="group py-1.5">
 					<summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium">{entry.question}<ChevronDown class="size-4 shrink-0 transition-transform group-open:rotate-180" /></summary>
 					<div class="md mt-3 text-sm leading-relaxed text-muted-foreground">{@html entry.answerHtml}</div>
 				</details>
@@ -302,7 +302,8 @@
 {#if data.downloads === 'zip'}<div class="mt-4">{#key data.readingScope}<DownloadRoom disabled={appearance} linkId={data.linkId} />{/key}</div>{/if}
 
 <style>
-	.room-panel, .reading-panel {
+	.room-panel { margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
+	.reading-panel {
 		margin-bottom: 1.5rem;
 		overflow: clip;
 		border: 1px solid var(--border);
@@ -322,6 +323,9 @@
 		align-items: center;
 		flex-wrap: wrap;
 		gap: .75rem;
+	}
+	.panel-heading { margin-bottom: .75rem; }
+	.reading-panel > .panel-title {
 		padding: .875rem clamp(.875rem, 2vw, 1.5rem);
 		border-bottom: 1px solid var(--border);
 		background: color-mix(in srgb, var(--primary) 7%, var(--card));
@@ -330,6 +334,5 @@
 		text-box: trim-both cap alphabetic;
 	}
 	.panel-title :global(svg) { width: 1.1rem; height: 1.1rem; flex-shrink: 0; color: var(--primary); }
-	.panel-body { padding: clamp(.75rem, 2vw, 1.25rem); background: color-mix(in srgb, var(--muted) 35%, var(--card)); }
 	.reading-panel > :global(article) { border: 0; border-radius: 0; }
 </style>
