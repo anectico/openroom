@@ -287,7 +287,25 @@
 						<Button variant="outline" size="sm" class="min-h-9" onclick={() => { folderParent = uploadInto; folderDialog = true; }}><FolderPlus />New folder</Button>
 						{#if room.tree.length}<Button size="sm" class="min-h-9" onclick={() => filesInput?.click()}><Upload />Upload files</Button>{/if}
 					{/if}
-					<DropdownMenu.Root><DropdownMenu.Trigger>{#snippet child({ props })}<Button {...props} variant="ghost" size="icon-sm" aria-label="Document options"><MoreHorizontal /></Button>{/snippet}</DropdownMenu.Trigger><DropdownMenu.Content align="end"><DropdownMenu.Group>{#if canEdit}<DropdownMenu.Item onSelect={() => folderInput?.click()}><Upload />Upload a folder</DropdownMenu.Item><DropdownMenu.Item onSelect={() => { importError = ''; importOpen = true; }}><Link />Import from a URL</DropdownMenu.Item>{/if}<DropdownMenu.Item disabled={!!roomZip && ['pending', 'running'].includes(roomZip.status)} onSelect={downloadRoom}><ArrowDownToLine />Download whole room</DropdownMenu.Item><DropdownMenu.Item onSelect={() => exportIndex('pdf')}><FileDown />Export index as PDF</DropdownMenu.Item><DropdownMenu.Item onSelect={() => exportIndex('csv')}><FileDown />Export index as CSV</DropdownMenu.Item></DropdownMenu.Group></DropdownMenu.Content></DropdownMenu.Root>
+					<DropdownMenu.Root>
+						<DropdownMenu.Trigger>
+							{#snippet child({ props })}
+								<Button {...props} variant="ghost" size="icon-sm" aria-label="Document options"><MoreHorizontal /></Button>
+							{/snippet}
+						</DropdownMenu.Trigger>
+						<DropdownMenu.Content align="end">
+							<DropdownMenu.Group>
+								{#if canEdit}
+									<DropdownMenu.Item onSelect={() => folderInput?.click()}><Upload />Upload a folder</DropdownMenu.Item>
+									<DropdownMenu.Item onSelect={() => { importError = ''; importOpen = true; }}><Link />Import from a URL</DropdownMenu.Item>
+									<DropdownMenu.Separator />
+								{/if}
+								<DropdownMenu.Item disabled={!!roomZip && ['pending', 'running'].includes(roomZip.status)} onSelect={downloadRoom}><ArrowDownToLine />Download whole room</DropdownMenu.Item>
+								<DropdownMenu.Item onSelect={() => exportIndex('pdf')}><FileDown />Export index as PDF</DropdownMenu.Item>
+								<DropdownMenu.Item onSelect={() => exportIndex('csv')}><FileDown />Export index as CSV</DropdownMenu.Item>
+							</DropdownMenu.Group>
+						</DropdownMenu.Content>
+					</DropdownMenu.Root>
 				</div>
 			</header>
 			{#if room.tree.length || search}

@@ -55,7 +55,7 @@
 						<Button {...props} variant="outline" size="icon" class="size-11 bg-card sm:size-9" aria-label="Room settings" title="Room settings"><Settings /></Button>
 					{/snippet}
 				</DropdownMenu.Trigger>
-				<DropdownMenu.Content align="end" sideOffset={6} class="w-72 max-w-[calc(100vw-1rem)] p-1.5">
+				<DropdownMenu.Content align="end" sideOffset={6} class="w-72 p-1.5">
 					{#each settings as group, index (group.label)}
 						{#if index > 0}<DropdownMenu.Separator />{/if}
 						<DropdownMenu.Group>

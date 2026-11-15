@@ -94,7 +94,7 @@
 								</Button>
 							{/snippet}
 						</DropdownMenu.Trigger>
-						<DropdownMenu.Content align="end" class="w-80 max-w-[calc(100vw-1rem)]">
+						<DropdownMenu.Content align="end" class="w-80">
 							<DropdownMenu.Group>
 								<DropdownMenu.Label>Recent notifications</DropdownMenu.Label>
 								{#each data.notificationPreview.notices as notice (notice.id)}
