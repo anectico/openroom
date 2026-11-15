@@ -4,7 +4,9 @@ A self-hosted data room for fundraising and due diligence. Give each investor a 
 
 **[Run locally](#run-locally) · [Deploy on a VPS](#deploy-on-your-server) · [Read the product guide](docs/using-openroom.md) · [Use the API, MCP or CLI](#api-mcp-and-cli)**
 
-![Aster Robotics investor room with a compact header and a seed pitch deck above the recommendations and searchable folder library](docs/images/investor-room-overview.png)
+## Owner dashboard
+
+![Owner dashboard showing room and document counts, active sharing links, recent activity, and the investor reading the seed pitch deck](docs/images/owner-dashboard.png)
 
 ## Share your first room
 
@@ -16,12 +18,9 @@ A self-hosted data room for fundraising and due diligence. Give each investor a 
 
 The reader supports PDFs, images and video. You can upload new versions, publish a shared FAQ, revoke a link, export activity to CSV and freeze a completed room into an archive. [Explore the investor and team workflows](docs/using-openroom.md).
 
-<details>
-<summary>View the owner workspace</summary>
+### Investor view
 
-![Owner dashboard showing rooms and recent investor activity](docs/reviews/ui-refinement/after-overview-desktop.jpg)
-
-</details>
+![Aster Robotics investor room with the seed pitch deck, recommended reading, searchable document folders, and room FAQ](docs/images/investor-room-overview.png)
 
 ## Run locally
 
