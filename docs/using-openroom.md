@@ -151,7 +151,8 @@ disabled.
 ## Request a file
 
 Use **File requests → New request** for an investor, link or group. Set the requested document,
-instructions, maximum size and an optional due date. The investor sees the request in their room
+instructions, maximum size and an optional due date. The deadline is the end of that day in the workspace time zone.
+Each request lists its recipient and submissions, including the uploader and file size. The investor sees the request in their room
 and uploads through it. Uploaded files stay outside the shared documents and are downloads for
 members only. Close a request to stop new uploads. Late submissions remain marked.
 
