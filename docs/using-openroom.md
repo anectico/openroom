@@ -58,7 +58,10 @@ addresses; clicking it queues invitations and reports any skipped addresses. Dom
 emailed. Creating the link alone never sends an invitation.
 
 Links inherit **Room settings → Default link protection** unless they override a field. Choose email
-verification, NDA, watermarks, download mode, custom questions, read threshold and view notices.
+verification and NDA requirements under **Investor access**. **Document protection** controls
+watermarks, screenshot protection and downloads. Add up to five entry questions and choose which
+are required. Under **Activity tracking**, set the reading threshold and visit notifications.
+**Save defaults** applies edited settings to links that inherit them. **Discard** restores the saved values.
 In the link editor, **Email verification** sits below the audience choice. **Room default** shows
 the inherited value. When a provider is missing, owners can select **Set up email provider**,
 configure delivery in the new tab, then return to the draft and choose **On**.
