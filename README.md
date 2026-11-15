@@ -4,7 +4,7 @@ A self-hosted data room for fundraising and due diligence. Give each investor a 
 
 **[Run locally](#run-locally) · [Deploy on a VPS](#deploy-on-your-server) · [Read the product guide](docs/using-openroom.md) · [Use the API, MCP or CLI](#api-mcp-and-cli)**
 
-![Investor view of Aster Robotics showing the first recommended document, the reading list and the searchable library](docs/images/investor-room-overview.png)
+![Aster Robotics investor room with the seed pitch deck and two recommended documents in Start here, above the searchable folder library](docs/images/investor-room-overview.png)
 
 ## Share your first room
 
