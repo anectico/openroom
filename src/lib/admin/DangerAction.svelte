@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import * as AlertDialog from '#lib/components/ui/alert-dialog/index.js';
 	import { Button, type ButtonSize } from '#lib/components/ui/button/index.js';
@@ -9,6 +10,7 @@
 		operation,
 		input,
 		label,
+		icon,
 		confirmLabel = label,
 		title,
 		description = null,
@@ -20,6 +22,7 @@
 		operation: string;
 		input: Record<string, unknown>;
 		label: string;
+		icon?: Snippet;
 		confirmLabel?: string;
 		title: string;
 		description?: string | null;
@@ -76,7 +79,7 @@
 	}
 </script>
 
-{#if showButton}<Button variant="destructive" {size} disabled={busy} onclick={start}>{label}</Button>{/if}
+{#if showButton}<Button variant="destructive" {size} disabled={busy} onclick={start}>{@render icon?.()}{label}</Button>{/if}
 
 <AlertDialog.Root bind:open={() => open, (value) => { if (!busy) open = value; }}>
 	<AlertDialog.Content>

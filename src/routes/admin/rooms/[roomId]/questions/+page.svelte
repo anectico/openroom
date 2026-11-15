@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ArrowDown, ArrowUp, Pencil, Plus, Trash2 } from '@lucide/svelte';
 	import DangerAction from '#lib/admin/DangerAction.svelte';
 	import FaqEditor from '#lib/admin/FaqEditor.svelte';
 	import { act } from '#lib/admin/op.ts';
@@ -44,7 +45,7 @@
 
 <div class="mb-3 flex items-center justify-between">
 	<h2 class="text-lg font-medium">FAQ</h2>
-	{#if canEdit}<Button size="sm" onclick={() => openEditor(null)}>New entry</Button>{/if}
+	{#if canEdit}<Button size="sm" onclick={() => openEditor(null)}><Plus aria-hidden="true" />New entry</Button>{/if}
 </div>
 {#if data.faq.length === 0}
 	<p class="rounded-lg border bg-background p-6 text-center text-sm text-muted-foreground">
@@ -53,20 +54,18 @@
 {:else}
 	<ul class="divide-y rounded-lg border bg-background">
 		{#each data.faq as f, i (f.id)}
-			<li class="flex flex-col items-start justify-between gap-3 px-4 py-4 sm:flex-row">
-				<div class="min-w-0 w-full">
+			<li class="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+				<div class="min-w-0 flex-1 [overflow-wrap:anywhere]">
 					<p class="font-medium">{f.question}</p>
 					<p class="line-clamp-2 text-sm text-muted-foreground">{f.answerMarkdown}</p>
 				</div>
 				{#if canEdit}
-					<div class="flex shrink-0 flex-wrap items-center gap-1">
-						<Button variant="ghost" size="icon-sm" aria-label="Move up" disabled={i === 0}
-							onclick={() => act('update_faq_entry', { faqId: f.id, position: i - 1 })}>↑</Button
-						>
-						<Button variant="ghost" size="icon-sm" aria-label="Move down" disabled={i === data.faq.length - 1}
-							onclick={() => act('update_faq_entry', { faqId: f.id, position: i + 1 })}>↓</Button
-						>
-						<Button variant="ghost" size="sm" onclick={() => openEditor(f)}>Edit</Button>
+					<div class="flex shrink-0 flex-wrap items-center gap-1 max-sm:[&_button]:min-h-11">
+						<Button variant="ghost" size="icon-sm" class="max-sm:min-w-11" aria-label="Move up" title="Move up" disabled={i === 0}
+							onclick={() => act('update_faq_entry', { faqId: f.id, position: i - 1 })}><ArrowUp aria-hidden="true" /></Button>
+						<Button variant="ghost" size="icon-sm" class="max-sm:min-w-11" aria-label="Move down" title="Move down" disabled={i === data.faq.length - 1}
+							onclick={() => act('update_faq_entry', { faqId: f.id, position: i + 1 })}><ArrowDown aria-hidden="true" /></Button>
+						<Button variant="ghost" size="sm" onclick={() => openEditor(f)}><Pencil aria-hidden="true" />Edit</Button>
 						<DangerAction
 							operation="delete_faq_entry"
 							input={{ faqId: f.id }}
@@ -74,7 +73,9 @@
 							confirmLabel="Delete entry"
 							title="Delete this FAQ entry?"
 							success="Deleted"
-						/>
+						>
+							{#snippet icon()}<Trash2 aria-hidden="true" />{/snippet}
+						</DangerAction>
 					</div>
 				{/if}
 			</li>
