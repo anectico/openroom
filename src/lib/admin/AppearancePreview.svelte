@@ -17,20 +17,23 @@
  const fitScale = $derived(device === 'fit' || !availableWidth ? 1 : Math.min(1, availableWidth / frameWidth));
  const scale = $derived(actualSize ? 1 : fitScale);
  const frameUrl = $derived(roomId ? `/admin/appearance-preview?room=${encodeURIComponent(roomId)}` : '/admin/appearance-preview');
+ $effect(() => { if (screen === 'welcome' && !welcome.trim()) screen = 'documents'; });
  const draft: AppearanceDraft = $derived({brand, name, welcome, screen, phone});
  function sendDraft() {
   frame?.contentWindow?.postMessage({type: 'appearance-draft', draft: $state.snapshot(draft)}, location.origin);
  }
  $effect(sendDraft);
  function receive(event: MessageEvent) {
-  if (event.source === frame?.contentWindow && event.origin === location.origin && event.data?.type === 'appearance-ready') sendDraft();
+  if (event.source !== frame?.contentWindow || event.origin !== location.origin) return;
+  if (event.data?.type === 'appearance-ready') sendDraft();
+  if (event.data?.type === 'welcome-dismissed' && screen === 'welcome') screen = 'documents';
  }
 </script>
 <svelte:window onmessage={receive} />
 <section class="min-w-0 rounded-xl sm:border sm:bg-muted/25 sm:p-5" aria-label="Appearance preview">
  <div class="mb-4 flex flex-wrap items-center justify-between gap-3"><div><h3 class="text-sm font-semibold">Live preview</h3><p class="mt-1 text-xs text-muted-foreground">{roomId ? 'Room content' : 'Sample room'} · changes appear as you edit</p></div><Tabs.Root value={device} onValueChange={(value) => { device = value; actualSize = false; }}><Tabs.List aria-label="Preview size" class="h-auto"><Tabs.Trigger class="min-h-11 sm:min-h-8" value="fit">Fit to panel</Tabs.Trigger><Tabs.Trigger class="min-h-11 sm:min-h-8" value="desktop">Desktop</Tabs.Trigger><Tabs.Trigger class="min-h-11 sm:min-h-8" value="phone">Phone</Tabs.Trigger></Tabs.List></Tabs.Root></div>
  <Tabs.Root bind:value={screen}>
-  <Tabs.List aria-label="Preview screen" class="mb-3 h-auto"><Tabs.Trigger class="min-h-11 sm:min-h-8" value="documents">Inside the room</Tabs.Trigger><Tabs.Trigger class="min-h-11 sm:min-h-8" value="entry">Entry screen</Tabs.Trigger></Tabs.List>
+  <Tabs.List aria-label="Preview screen" class="mb-3 h-auto"><Tabs.Trigger class="min-h-11 sm:min-h-8" value="documents">Inside the room</Tabs.Trigger>{#if welcome.trim()}<Tabs.Trigger class="min-h-11 sm:min-h-8" value="welcome">Welcome</Tabs.Trigger>{/if}<Tabs.Trigger class="min-h-11 sm:min-h-8" value="entry">Entry screen</Tabs.Trigger></Tabs.List>
   <div class="mb-3 flex flex-wrap items-center gap-2"><p class="text-xs text-muted-foreground" role="status">{Math.round(renderWidth)} px wide · {Math.round(scale * 100)}% scale</p>{#if fitScale < 1}<Button type="button" size="sm" variant="outline" class="min-h-11" onclick={() => (actualSize = !actualSize)}>{actualSize ? 'Scale to fit' : 'Actual size'}</Button>{/if}</div>
   <Tabs.Content value={screen} class="m-0">
   <div bind:clientWidth={availableWidth} class="min-w-0 overflow-x-auto" class:hide-scrollbar={phone}>

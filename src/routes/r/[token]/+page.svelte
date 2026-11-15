@@ -81,7 +81,6 @@
 						<p class="text-xs text-muted-foreground">This room records which pages you view.</p>
 					</div>
 				</form>
-				{#if data.welcomeHtml}<details class="rounded-lg border"><summary class="min-h-11 cursor-pointer px-3 py-3 text-sm font-medium">Read the welcome</summary><div class="md break-words border-t p-3 text-sm [overflow-wrap:anywhere]">{@html data.welcomeHtml}</div></details>{/if}
 			{:else if data.step === 'code'}
 				<p class="text-sm">If this email has access, we sent a code to <strong>{data.email}</strong>.</p>
 				<form method="POST" action="?/code" class="flex flex-col gap-5" use:enhance={submit}>

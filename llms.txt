@@ -33,7 +33,7 @@ The installed server exposes its current REST description at /api/v1/openapi.jso
 Room appearance: `get_branding` includes workspace defaults and room overrides. `update_branding`
 saves optional room name, welcome Markdown, logo, cover artwork (`coverBase64`) and colour together; null logo/colour restores
 inheritance. Workspace branding requires owner access. The footer always credits OpenRoom by Anectico. Investor favicons follow logos.
-Welcome text appears at entry and in the investor room header. The editor renders the investor screens with draft branding. Room previews use the full document tree, pins and FAQ. Workspace previews use sample files. Check a specific audience through preview_link. Short welcomes open by default; longer notes start with an excerpt. Disclosure choices are remembered per revision and kept separate from compact search/folder state. See the settings guide for previews and draft saves.
+Welcome text appears in a first-visit dialog after access checks. The editor renders the investor screens with draft branding. Room previews use the full document tree, pins and FAQ. Workspace previews use sample files. Check a specific audience through preview_link. Dismissal is remembered per investor and sharing link in the same browser. See the settings guide for previews and draft saves.
 
 Investor personalization: `create_link`/`update_link` accept optional `welcomeMarkdown`, visible only
 after access checks to everyone using the link. Null or blank restores the room introduction;
@@ -53,14 +53,14 @@ have no change baseline. Requests show Action needed/Uploaded/Closed, with priva
 PDF Find searches extracted text locally; Pages shows eight thumbnails at a time. Text layers support
 selection and assistive technology, without OCR. Investor export and erasure include visit/read markers.
 
-Investor follow-through: home action summary and remembered welcome disclosure; Requests navigation
+Investor follow-through: home action summary and first-visit welcome dialog; Requests navigation
 with due-date ordering and submitted/closed history; bounded PDF tools with persistent selected-result
 navigation and precise text highlights; exact-page conversation links and tab-local reply drafts.
 Start here reviews are explicit, personal, version-bound and permission-filtered. Verified identities
 share their own reviews; unverified sessions remain isolated. Server export/erasure covers reviews;
 local drafts clear after success/sign-out and have the separate browser lifecycle in the privacy guide.
 
-Investor completion polish adds stable welcome disclosure, compact reviewed pins, current-version
+Investor completion polish adds compact reviewed pins, current-version
 review explanations, PDF end actions and selection-aware tool scrolling. Conversation shortcuts
 preserve reading intent and drafts. Request return summaries require an authorized own submission.
 
@@ -70,11 +70,11 @@ hierarchy, current-page thumbnail labels and prominent PDF completion navigation
 docs/reviews/2026-11-13-investor-visual-refinement.md
 
 UI standards refinement: visible input boundaries, 44 px primary phone controls, explicit Mark reviewed,
-compact welcome excerpts, mobile Edit/Preview personalization, clickable attention counts, shared
+mobile Edit/Preview personalization, clickable attention counts, shared
 appearance sample components and format/size/Section metadata. Access operations are unchanged.
 Verification: docs/reviews/ui-standards-implementation-2026-11-13/index.html
 
-Task visibility refinement: full investor document titles, compact search/folder context, bounded PDF question dialogs, compact mobile reader search, safe sharing-link dismissal, explicit appearance sample dimensions, focus-aware validation and mobile protection summaries. Entry welcomes follow the form. Owner operations and access rules are unchanged.
+Task visibility refinement: full investor document titles, compact search/folder context, bounded PDF question dialogs, compact mobile reader search, safe sharing-link dismissal, explicit appearance sample dimensions, focus-aware validation and mobile protection summaries. Welcomes follow all access checks. Owner operations and access rules are unchanged.
 Verification: docs/reviews/ui-ten-improvements-2026-11-13/index.html
 
 Reliability: question drafts keep their original page and reset between documents; access failures retain unsent text. Authentication forms recover after network failures and reset errors do not report delivery. NDA-change notices compare versions. Pending sharing/destructive actions keep their in-flight state explicit; video controls and PDF focus support keyboard use. Evidence: docs/reviews/bug-review-2026-11-13/index.html.

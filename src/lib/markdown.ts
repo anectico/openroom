@@ -15,15 +15,6 @@ md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
 	return defaultLinkOpen(tokens, idx, options, env, self);
 };
 
-export function renderedExcerpt(html: string) {
-	return md.utils.unescapeAll(
-		html
-			.replace(/<[^>]*>/g, ' ')
-			.replace(/\s+/g, ' ')
-			.trim(),
-	);
-}
-
 export function renderMarkdown(text: string) {
 	return md.render(text);
 }

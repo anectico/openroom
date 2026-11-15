@@ -150,7 +150,7 @@
 			<Field.Group>
 				{#if roomId}
 					<Field.Field><Field.Label for="appearance-name">Room name</Field.Label><Input id="appearance-name" class="min-h-11 sm:min-h-9" required maxlength={120} bind:value={name} /><Field.Description>The title investors see on entry and inside the room.</Field.Description></Field.Field>
-					<Field.Field><Field.Label for="appearance-welcome">Welcome & introduction</Field.Label><Textarea id="appearance-welcome" rows={6} style="field-sizing: fixed" maxlength={20000} bind:value={welcome} placeholder="Welcome. Start with our company overview, then explore the financials." /><Field.Description>Shown at email entry and inside the room. Use Markdown for **bold**, lists and links. Short welcomes open on arrival. Longer messages show an excerpt. Investors can expand or collapse the welcome, and their choice is remembered.</Field.Description></Field.Field>
+					<Field.Field><Field.Label for="appearance-welcome">Welcome & introduction</Field.Label><Textarea id="appearance-welcome" rows={6} style="field-sizing: fixed" maxlength={20000} bind:value={welcome} placeholder="Welcome. Start with our company overview, then explore the financials." /><Field.Description>Shown in a first-visit dialog after the investor enters the room. Use Markdown for bold text, lists and links.</Field.Description></Field.Field>
 					<Field.Field>
 						<Field.Label for="appearance-cover">Room cover image</Field.Label>
 						{#if cover}<img src={cover} alt="Current room cover" class="h-20 w-full rounded-lg object-cover" />{/if}

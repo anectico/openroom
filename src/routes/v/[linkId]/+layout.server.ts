@@ -8,24 +8,21 @@ import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = (event) => {
 	const ctx = requireViewer(event, { allowNda: event.route.id === '/v/[linkId]/nda' });
-	let welcome = null;
-	if (!ctx.needsNda && event.route.id !== '/v/[linkId]/view/[fileId]') {
-		const markdown = ctx.link.welcome_markdown ?? ctx.room.welcome_markdown;
-		const revision = sha256(markdown);
-		const cookieName = ctx.preview
-			? null
-			: `openroom_welcome_${sha256(`${ctx.link.id}:${ctx.session.viewer_id}`)}`;
-		const saved = cookieName ? event.cookies.get(cookieName) : undefined;
-		welcome = {
-			html: renderMarkdown(markdown),
-			personal: ctx.link.welcome_markdown !== null,
-			revision,
-			cookieName,
-			savedOpen: saved === `${revision}.open` ? true : saved === `${revision}.closed` ? false : null,
-		};
-	}
+	const markdown = ctx.link.welcome_markdown ?? ctx.room.welcome_markdown;
+	const branding = brandingFor(ctx.room);
+	const welcome =
+		!ctx.needsNda && markdown.trim()
+			? {
+					html: renderMarkdown(markdown),
+					storageKey: `openroom:welcome-dismissed:${sha256(`${ctx.link.id}:${ctx.preview ? ctx.session.id : ctx.session.viewer_id}`)}`,
+				}
+			: null;
 	return {
 		welcome,
+		coverOnly:
+			!ctx.needsNda && !markdown.trim() && event.route.id !== '/v/[linkId]/view/[fileId]'
+				? branding.coverUrl
+				: null,
 		actionRequests: ctx.needsNda
 			? 0
 			: requestSummaries(ctx).filter((r) => r.status === 'Action needed').length,
@@ -37,6 +34,6 @@ export const load: LayoutServerLoad = (event) => {
 		email: ctx.email,
 		preview: ctx.preview,
 		downloads: ctx.settings.downloads,
-		branding: brandingFor(ctx.room),
+		branding,
 	};
 };

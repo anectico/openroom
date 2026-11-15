@@ -101,7 +101,6 @@ export const load: PageServerLoad = async (event) => {
 		step,
 		roomName: room.name,
 		branding: brandingFor(room),
-		welcomeHtml: renderMarkdown(room.welcome_markdown),
 		email: gate?.viewer_email ?? null,
 		resendIn: step === 'code' && gate ? resendIn(gate) : 0,
 		fields: settings.customFields,

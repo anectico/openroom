@@ -10,7 +10,7 @@
 
 	import type { LayoutProps } from './$types';
 
-	type Appearance = { section: string; onselect: (section: string) => void };
+	type Appearance = { section: string; onselect: (section: string) => void; onWelcomeDismiss: () => void };
 	let { data, children, appearance }: Pick<LayoutProps, 'data' | 'children'> & { appearance?: Appearance } = $props();
 	const questions = $derived(page.url.pathname.includes('/questions'));
 	const requests = $derived(page.url.pathname.includes('/requests'));
@@ -35,10 +35,12 @@ function clearDrafts() {
 	</header>
 	<main class="mx-auto max-w-6xl px-4 py-4 sm:px-8 sm:py-6">
 		{#if data.welcome}
-			{#key `${data.readingScope}:${data.welcome.revision}`}
-				<RoomWelcome {...data.welcome} homeHref={appearance ? undefined : `/v/${data.linkId}`}
-					coverUrl={data.branding.coverUrl} persistenceKey={`openroom:welcome:${data.readingScope}:${data.linkId}`} />
+			{#key data.welcome.storageKey}
+				<RoomWelcome html={data.welcome.html} storageKey={appearance ? null : data.welcome.storageKey} name={data.roomName} logoUrl={data.branding.logoUrl}
+					coverUrl={data.branding.coverUrl} preview={!!appearance || data.preview} onDismiss={appearance?.onWelcomeDismiss} />
 			{/key}
+		{:else if data.coverOnly}
+			<img src={data.coverOnly} alt="" class="mb-5 h-20 w-full rounded-xl object-cover sm:h-36" />
 		{/if}
 		<RoomNavigation baseHref={`/v/${data.linkId}`} onselect={appearance?.onselect} active={appearance?.section ?? (questions ? 'questions' : requests ? 'requests' : 'documents')} unreadReplies={data.unreadReplies} actionRequests={data.actionRequests} />
 		{#key `${data.linkId}:${data.readingScope}:${page.params.fileId ?? ''}`}{@render children()}{/key}</main>

@@ -59,7 +59,7 @@ does not protect against loss of the server. Do not publish or launch unless the
 `get_branding` returns effective room branding, `roomOverrides` and `workspace` defaults.
 `update_branding` can save room `name`, `welcomeMarkdown`, `accentColor` and `imageBase64` together. Set `coverBase64` with a room ID to upload public cover artwork (PNG, JPEG or WebP up to 700 KB). Set it to null to remove the cover.
 Omit unchanged fields; null logo/colour restores workspace inheritance. Welcome text is investor-facing
-at entry and inside the room. Logos also generate investor browser icons. Workspace settings require an owner. The footer always credits OpenRoom by Anectico. Use approved investor-facing copy and keep access secrets out of it.
+after access checks. Logos also generate investor browser icons. Workspace settings require an owner. The footer always credits OpenRoom by Anectico. Use approved investor-facing copy and keep access secrets out of it.
 
 For a message specific to one sharing link, use `create_link` or `update_link` with
 `welcomeMarkdown` (up to 4,000 trimmed characters). Everyone using that link sees it after access
@@ -87,7 +87,7 @@ PDF Find and paginated thumbnails use local document text; scanned PDFs need OCR
 These investor controls introduce no additional owner operations. See the product and privacy guides.
 
 Investor follow-through: home combines changed documents, unread replies and requests needing action.
-Short welcomes open on arrival; messages over 600 plain-text characters begin with an excerpt and Read welcome. Explicit choices are remembered within a tab, independently of compact search/folder disclosure. Requests
+The welcome dialog opens once per investor and link in the same browser. Enter room dismisses it. Requests
 sorts action items by due date and puts submitted/closed items in history. PDF Pages uses a bounded
 dialog; Find retains selected results and sticky matching-page navigation. Conversation page references
 open the current authorized PDF page; reply drafts are tab-local and clear after success or sign-out.
@@ -112,10 +112,10 @@ Appearance editors retain drafts across Edit/Preview tabs and use a persistent s
 welcome dialogs fill phones. Room previews render the investor screens with the room’s documents, pins, FAQ and draft branding. Workspace previews use sample files. Check effective access through preview_link. Confirm 44 px primary phone
 controls, distinct input boundaries, explicit Mark reviewed actions and labeled Section metadata.
 
-For UI regression checks, include the maximum 5,000-character document question, long similar file titles, keyboard focus near appearance save actions, invalid colour recovery, long entry welcomes and unsaved sharing-link dismissal. Appearance samples use Fit to panel or explicit 360/1280 px render widths with scaling. Check the real link separately for permissions. Mobile search/upload actions precede the collapsed pinned summary, and sharing rows retain protection context.
+For UI regression checks, include the maximum 5,000-character document question, long similar file titles, keyboard focus near appearance save actions, invalid colour recovery, long welcome dialogs and unsaved sharing-link dismissal. Appearance samples use Fit to panel or explicit 360/1280 px render widths with scaling. Check the real link separately for permissions. Mobile search/upload actions precede the collapsed pinned summary, and sharing rows retain protection context.
 
 When validating investor and owner recovery, check question drafts against the original file/page, failed-access submission feedback, offline authentication retries, and same-version versus replacement NDA messages. Sharing-link inputs lock while saving; destructive confirmations cannot be dismissed while their operation is pending. Verify completion through the operation result. Include native video keyboard controls, narrow-phone seek width and PDF tools returning focus to Reader options.
 
 For investor-home layout checks, open a link with one visible file, then a room with several pins. Verify the direct file action, ordered recommendations, reader completion, download-only review, Undo and return to the saved PDF page. Check folder and index search with a restricted link. Check zero, one, three and six pins at 320, 390, 768 and desktop widths, including the library, updates, permitted ZIP downloads and FAQ.
 
-Investor branding uses a single brand-accented header for the logo, room title, optional cover image and welcome. Use existing update_branding and link welcome operations to configure examples; do not simulate branding only in screenshots. Verify logo/colour inheritance, bright colours, first and return visits, new welcome revisions, safe Markdown and cross-link isolation. The appearance sample shares the header and welcome components.
+Investor branding uses a compact room header and a first-visit welcome dialog with optional cover artwork. Use existing update_branding and link welcome operations to configure examples; do not simulate branding only in screenshots. Verify logo/colour inheritance, bright colours, first and return visits, new welcome revisions, safe Markdown and cross-link isolation. The appearance sample shares the header and welcome components.

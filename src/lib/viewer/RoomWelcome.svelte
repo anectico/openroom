@@ -1,62 +1,59 @@
 <script lang="ts">
- import { ChevronDown } from '@lucide/svelte';
- import { onMount } from 'svelte';
- import { renderedExcerpt } from '#lib/markdown.ts';
+	import { ArrowRight } from '@lucide/svelte';
+	import { onMount } from 'svelte';
+	import { Button } from '#lib/components/ui/button/index.js';
 
- let { html = '', personal = false, homeHref, coverUrl, persistenceKey, revision, cookieName, savedOpen = null }: { html?: string; personal?: boolean; homeHref?: string; coverUrl?: string | null; persistenceKey?: string; revision?: string; cookieName?: string | null; savedOpen?: boolean | null } = $props();
- let chosenOpen = $state<boolean | null>(null);
- let disclosure = $state<HTMLDetailsElement>();
- const excerpt = $derived(renderedExcerpt(html));
- const preference = $derived(chosenOpen ?? savedOpen);
- const expanded = $derived(preference ?? excerpt.length <= 600);
- onMount(() => {
-  if (savedOpen !== null || !persistenceKey || !revision) return;
-  try {
-   const saved = JSON.parse(sessionStorage.getItem(persistenceKey) ?? 'null');
-   if (saved?.revision === revision && typeof saved.open === 'boolean') {
-    chosenOpen = saved.open;
-    if (cookieName) remember(saved.open);
-   }
-  } catch {}
- });
- $effect(() => {
-  const summary = disclosure?.querySelector('summary');
-  summary?.addEventListener('click', toggle);
-  return () => summary?.removeEventListener('click', toggle);
- });
- function remember(value: boolean) {
-  if (!revision) return;
-  if (cookieName && homeHref) try {
-   document.cookie = `${cookieName}=${revision}.${value ? 'open' : 'closed'}; Path=${homeHref}; Max-Age=34560000; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`;
-  } catch {}
-  if (persistenceKey) try { sessionStorage.setItem(persistenceKey, JSON.stringify({ revision, open: value })); } catch {}
- }
- function toggle(event: MouseEvent) {
-  event.preventDefault();
-  chosenOpen = !expanded;
-  remember(chosenOpen);
- }
+	let { html, name, logoUrl, coverUrl, storageKey, onDismiss, preview = false }: {
+		html: string;
+		name: string;
+		logoUrl: string | null;
+		coverUrl?: string | null;
+		storageKey: string | null;
+		preview?: boolean;
+		onDismiss?: () => void;
+	} = $props();
+
+	let dialog: HTMLDialogElement;
+	const titleId = $props.id();
+
+	onMount(() => {
+		const storage = () => preview ? sessionStorage : localStorage;
+		try {
+			if (storageKey && storage().getItem(storageKey)) return;
+		} catch {}
+		dialog.showModal();
+		function remember() {
+			onDismiss?.();
+			if (storageKey) try { storage().setItem(storageKey, '1'); } catch {}
+			document.querySelector<HTMLElement>('nav[aria-label="Investor room"] a[aria-current="page"]')?.focus({ preventScroll: true });
+		}
+		function sync(event: StorageEvent) {
+			if (event.key === storageKey && event.newValue && dialog.open) dialog.close();
+		}
+		dialog.addEventListener('close', remember);
+		window.addEventListener('storage', sync);
+		return () => {
+			dialog.removeEventListener('close', remember);
+			window.removeEventListener('storage', sync);
+		};
+	});
 </script>
 
-{#if html.trim() || coverUrl}
-<section class="room-cover mb-4 overflow-hidden rounded-xl border sm:mb-5" aria-label="Room introduction">
-  {#if coverUrl}<img src={coverUrl} alt="" class="h-20 w-full object-cover sm:h-36" />{/if}
-  {#if html.trim()}
-   <div class="max-w-3xl px-4 sm:px-5">
-    <details bind:this={disclosure} open={expanded} class="group flex flex-col text-sm">
-     <summary aria-label={`${expanded ? 'Hide' : 'Show'} ${personal ? 'personal welcome' : 'welcome'}`} class="order-last inline-flex min-h-11 min-w-11 cursor-pointer self-start list-none items-center gap-1.5 rounded-md text-xs font-medium text-primary hover:underline focus-visible:outline-2 focus-visible:outline-primary">
-      {expanded ? 'Hide' : 'Show welcome'}<ChevronDown aria-hidden="true" class="size-3.5 group-open:rotate-180" />
-     </summary>
-     <div class="md flow-root pt-4 text-sm leading-relaxed [overflow-wrap:anywhere] [&>:first-child]:mt-0 [&>:last-child]:mb-0">{@html html}</div>
-    </details>
-    {#if !expanded && preference === null}<p class="mb-3 line-clamp-2 text-sm text-muted-foreground [overflow-wrap:anywhere]">{excerpt}</p>{/if}
-   </div>
-  {/if}
-</section>
-{/if}
+<dialog bind:this={dialog} aria-labelledby={titleId} class="welcome-dialog fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[min(32rem,calc(100%-2rem))] max-w-none overflow-hidden rounded-2xl border bg-card p-0 text-card-foreground shadow-xl open:flex open:flex-col">
+	<div class="min-h-0 overflow-y-auto overscroll-contain">
+		{#if coverUrl}<img src={coverUrl} alt="" class="h-28 w-full object-cover sm:h-36" />{/if}
+		<div class="px-5 pt-6 sm:px-7 sm:pt-7">
+			{#if logoUrl}<img src={logoUrl} alt="" class="mb-4 max-h-12 max-w-36 object-contain object-left" />{/if}
+			<h2 id={titleId} class="text-xl font-semibold tracking-tight text-balance [overflow-wrap:anywhere] sm:text-2xl">Welcome to {name}</h2>
+			<div class="md flow-root py-4 text-sm leading-relaxed [overflow-wrap:anywhere] [&>:first-child]:mt-0 [&>:last-child]:mb-0">{@html html}</div>
+		</div>
+	</div>
+	<form method="dialog" class="flex shrink-0 justify-end border-t bg-muted/25 px-5 py-3 sm:px-7 sm:py-4">
+		<Button type="submit" class="min-h-11">Enter room<ArrowRight data-icon="inline-end" /></Button>
+	</form>
+</dialog>
 
 <style>
- .room-cover {
-  background: linear-gradient(110deg, color-mix(in srgb, var(--primary) 9%, var(--card)), var(--card) 85%);
- }
+	.welcome-dialog::backdrop { background: rgb(12 20 18 / 45%); backdrop-filter: blur(3px); }
+	:global(html:has(.welcome-dialog[open])) { overflow: hidden; }
 </style>

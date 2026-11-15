@@ -22,10 +22,7 @@ use a darker, readable variation. The investor and admin footers always show “
 In **Room settings & branding**, edit the room name and welcome Markdown alongside its logo and
 colour. The editor shows which values come from the workspace. **Use workspace logo/colour** stages
 a reset; save to apply it. Later workspace changes flow through to rooms without overrides.
-At email entry, the welcome is available below the form through **Read the welcome**, so long introductions never push access controls down the page. Inside the room it appears as a collapsible introduction, including
-returning visits. The logo stays in the compact room header. The optional cover and introduction appear in a separate, brand-coloured section below it.
-Messages up to 600 plain-text characters open by default; longer introductions start with a two-line
-excerpt and **Show welcome**, keeping documents within reach. An investor’s explicit open/closed choice is remembered for that note on future visits through the same investor link in this browser. When both the introduction and cover are empty, navigation follows the header directly.
+After access checks, the welcome opens in a dialog with the room logo and optional cover. **Enter room** dismisses it. The same investor and sharing link skip the dialog on later visits in this browser, even if the welcome is edited. A blank welcome skips the dialog. Select **Welcome** in the appearance preview to inspect the draft.
 
 On phones and tablets, switch between **Edit** and **Preview** while retaining your draft; the save
 bar stays available. Desktop shows both together. The preview scrolls within a bounded frame and

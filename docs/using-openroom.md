@@ -91,7 +91,7 @@ NDA requirement in defaults or a link. Publishing a replacement requires affecte
 accept the new version. Acceptance records retain the version, signed name, email, verification
 state, time and IP according to the documented privacy rules.
 
-Investors follow their link, pass the configured gates and enter the document list. A compact header shows the room title, logo and account controls throughout the investor room. The optional cover and welcome appear below it on the room tabs. A room with one visible document opens with its title and an **Open document** or **Download file** action. In larger rooms, **Start here** features the first outstanding recommendation and shows the remaining documents in reading order, with cards side by side on wider screens and a single list on phones. On phones, **Show all recommended documents** expands longer lists.
+Investors follow their link, pass the configured gates and enter the document list. A compact header shows the room title, logo and account controls throughout the investor room. A first-visit dialog presents the optional welcome and cover after access checks. A room with one visible document opens with its title and an **Open document** or **Download file** action. In larger rooms, **Start here** features the first outstanding recommendation and shows the remaining documents in reading order, with cards side by side on wider screens and a single list on phones. On phones, **Show all recommended documents** expands longer lists.
 **All documents** uses the same responsive layout for folders, files and search results. Folder cards show the item count. File cards show the file type and size. Search by document title, folder name or section number. Results include matching folders and files within matching folder paths. Section numbers reflect the contents visible through the current sharing link. Opening a document
 and using its return link restores the folder, search and scroll position. A document opened from
 Start here follows that reading order with Previous/Next controls, respecting current permissions.
@@ -165,10 +165,7 @@ changes together. **Cancel changes** discards your draft. Reset either logo or c
 workspace setting. Investor browser icons follow the effective logo.
 
 The investor header gives your logo a prominent place alongside the room identity. Your brand colour
-also accents the room header, navigation and primary actions. The introduction supports Markdown:
-short messages open on arrival, while messages over 600 plain-text characters start with a two-line
-excerpt and **Read welcome**. Investors can collapse the message with **Show less**; their explicit
-choice is remembered for that version of the note in the same tab. The room name remains the page heading.
+also accents the room header, navigation and primary actions. The introduction supports Markdown and appears in a first-visit dialog. Choose **Enter room** to dismiss it. Later visits through the same link in this browser go directly to the room.
 See [workspace settings](settings.md) for inheritance and preview details.
 
 ### A personal welcome for an investor or audience
@@ -177,8 +174,7 @@ In **Share room**, or when editing an existing link in Sharing, expand **Persona
 Write up to 4,000 characters of Markdown and switch between **Edit** and **Preview** before saving.
 On phones the editor fills the screen, with a scrolling body and persistent Save/Cancel controls. Everyone
 using that link sees the same note after completing all access checks. Use separate links for
-different messages. The note replaces the room introduction inside the room; the general room
-introduction remains on the entry screen. Leave the field blank or choose **Use room introduction**
+different messages. The note replaces the room introduction in the welcome dialog. Leave the field blank or choose **Use room introduction**
 to restore the room introduction. Cancel discards edits; a failed save keeps the draft available.
 
 ### Choose where investors start
@@ -251,9 +247,7 @@ PDF contains text. Scanned PDFs without text need OCR outside OpenRoom before th
 
 ## Keep your review moving
 
-Use **Back** beside a folder name to return to the list or search results where you opened it, at the same scroll position. When you open a folder from a direct link, **Back** takes you to its parent. The library shows changed documents, and the **Questions** and **Requests** links show counts for unread replies and requests needing action. The welcome
-note opens on arrival when it is short; longer introductions begin with an excerpt. An explicit
-**Hide** or **Show welcome** choice is remembered when you reopen the same investor link in this browser, including after signing out and back in. An updated note uses its initial display again. The room header and your welcome choice carry across Documents, Questions and Requests, including folder browsing and search. Continue reading stays near the top.
+Use **Back** beside a folder name to return to the list or search results where you opened it, at the same scroll position. When you open a folder from a direct link, **Back** takes you to its parent. The library shows changed documents, and the **Questions** and **Requests** links show counts for unread replies and requests needing action. Continue reading stays near the top.
 
 Choose **Full screen** in a PDF or image viewer to use the whole display. In a pitch deck, use the arrow keys or page buttons to advance one slide at a time. **Exit full screen** returns you to the same page.
 
@@ -274,8 +268,7 @@ local timestamps and save draft text in this tab through reloads. Drafts clear a
 or sign-out. If delivery cannot be confirmed, check the conversation before retrying.
 
 Reviewed Start here documents now move into **Show reviewed**, keeping remaining items prominent in
-the team's original order. **All documents** in the Start here header goes directly to the folder list. The welcome's
-open/closed choice stays stable while review progress and counts refresh. When a previously reviewed
+the team's original order. **All documents** in the Start here header goes directly to the folder list. When a previously reviewed
 file changes version, **New version — review again** explains the reset with the version/date.
 
 At the end of a PDF, use the completion panel to mark it reviewed, continue through Start here or

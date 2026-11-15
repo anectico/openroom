@@ -4,13 +4,13 @@ A self-hosted data room for fundraising and due diligence. Give each investor a 
 
 **[Run locally](#run-locally) · [Deploy on a VPS](#deploy-on-your-server) · [Read the product guide](docs/using-openroom.md) · [Use the API, MCP or CLI](#api-mcp-and-cli)**
 
-![Aster Robotics investor room with a compact header, a separate welcome and a seed pitch deck above the recommendations and searchable folder library](docs/images/investor-room-overview.png)
+![Aster Robotics investor room with a compact header and a seed pitch deck above the recommendations and searchable folder library](docs/images/investor-room-overview.png)
 
 ## Share your first room
 
 | Step                      | In the workspace                                                                                                                                                                                         |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1. Prepare the room**   | Upload files, organize them into folders, and choose up to six documents for investors to read first. Add your logo, cover and welcome.                                                                  |
+| **1. Prepare the room**   | Upload files, organize them into folders, and choose up to six documents for investors to read first. Add your logo, cover and first-visit welcome.                                                      |
 | **2. Invite an investor** | Create a personal link. Choose its audience, document group, downloads and expiry. Add a password, email verification or an NDA as needed. Use **Preview as investor** to check the link before sharing. |
 | **3. Follow the review**  | See visits and page-level reading time, answer private questions within the investor’s current sharing permissions, and request missing files. Investors can resume reading and mark documents reviewed. |
 
