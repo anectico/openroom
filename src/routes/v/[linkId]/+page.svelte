@@ -147,6 +147,7 @@
 <svelte:window bind:scrollY />
 
 <svelte:head><title>{data.roomName}</title></svelte:head>
+<h1 class="sr-only">{data.roomName} documents</h1>
 
 {#snippet reviewDownload(file: { id: string; name: string; version: number | null })}
 	{#key `${data.readingScope}:${file.id}:${file.version}`}
