@@ -15,14 +15,10 @@ const color = z
 const branding = z.object({
 	logoUrl: z.string().nullable(),
 	accentColor: z.string().nullable(),
-	whiteLabel: z
-		.boolean()
-		.describe('Hides “Powered by OpenRoom” on investor pages; admin pages keep “OpenRoom by Anectico”.'),
 	roomOverrides: z.object({ logo: z.boolean(), accentColor: z.boolean() }).nullable(),
 	workspace: z.object({
 		logoUrl: z.string().nullable(),
 		accentColor: z.string().nullable(),
-		whiteLabel: z.boolean(),
 	}),
 });
 
@@ -54,13 +50,12 @@ export const getBranding = defineOperation({
 export const updateBranding = defineOperation({
 	name: 'update_branding',
 	summary:
-		'Save appearance together: logo, colour, and room name/welcome Markdown; workspace white-labelling needs the owner role. Omitted fields stay unchanged; null logo/colour restores inheritance. The logo also supplies the investor favicon.',
+		'Save the logo, colour and room name/welcome Markdown together. Workspace branding requires the owner role. Omitted fields stay unchanged; null logo/colour restores inheritance. The logo also supplies the investor favicon.',
 	role: 'admin',
 	http: { method: 'PATCH', path: '/branding' },
 	input: z.object({
 		roomId: z.string().optional(),
 		accentColor: color.optional(),
-		whiteLabel: z.boolean().optional(),
 		imageBase64: z.string().max(1_000_000).nullable().optional(),
 		name: z.string().trim().min(1).max(120).optional(),
 		welcomeMarkdown: z.string().max(20_000).optional(),
@@ -75,8 +70,6 @@ export const updateBranding = defineOperation({
 		detail: (i) => ({ fields: Object.keys(i).filter((k) => k !== 'roomId') }),
 	},
 	run: async (input, ctx) => {
-		if (input.roomId && input.whiteLabel !== undefined)
-			throw new OpError(400, 'install_only', 'White-labelling is set for the whole install.');
 		if (!input.roomId && (input.name !== undefined || input.welcomeMarkdown !== undefined))
 			throw new OpError(400, 'room_only', 'Name and welcome text belong to a room.');
 		authorize(ctx, input.roomId ? 'admin' : 'owner');
@@ -110,8 +103,6 @@ export const updateBranding = defineOperation({
 						if (input.imageBase64 !== undefined && r.logo_object_key) releaseObject(r.logo_object_key);
 					} else {
 						if (input.accentColor !== undefined) setSetting('branding.accent_color', input.accentColor);
-						if (input.whiteLabel !== undefined)
-							setSetting('branding.white_label', input.whiteLabel ? '1' : null);
 						if (input.imageBase64 !== undefined) setInstallLogo(key);
 					}
 				})

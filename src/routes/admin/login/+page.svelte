@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ArrowRight, LockKeyhole } from '@lucide/svelte';
 	import Brand from '#lib/admin/Brand.svelte';
+	import OpenRoomCredit from '#lib/components/OpenRoomCredit.svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Card from '#lib/components/ui/card/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
@@ -113,5 +114,5 @@
 		</Card.Content>
 	</Card.Root>
 	<p class="flex items-center gap-1.5 text-[11px] text-muted-foreground"><LockKeyhole class="size-3" />A private workspace, hosted on your server.</p>
-	<p class="text-[10px] text-muted-foreground">OpenRoom by Anectico</p>
+	<p class="text-[10px] text-muted-foreground"><OpenRoomCredit /></p>
 </main>

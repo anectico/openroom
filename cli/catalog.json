@@ -14600,10 +14600,6 @@
                         "null"
                       ]
                     },
-                    "whiteLabel": {
-                      "type": "boolean",
-                      "description": "Hides “Powered by OpenRoom” on investor pages; admin pages keep “OpenRoom by Anectico”."
-                    },
                     "roomOverrides": {
                       "anyOf": [
                         {
@@ -14641,15 +14637,11 @@
                             "string",
                             "null"
                           ]
-                        },
-                        "whiteLabel": {
-                          "type": "boolean"
                         }
                       },
                       "required": [
                         "logoUrl",
-                        "accentColor",
-                        "whiteLabel"
+                        "accentColor"
                       ],
                       "additionalProperties": false
                     }
@@ -14657,7 +14649,6 @@
                   "required": [
                     "logoUrl",
                     "accentColor",
-                    "whiteLabel",
                     "roomOverrides",
                     "workspace"
                   ],
@@ -14697,7 +14688,7 @@
       },
       "patch": {
         "operationId": "update_branding",
-        "summary": "Save appearance together: logo, colour, and room name/welcome Markdown; workspace white-labelling needs the owner role. Omitted fields stay unchanged; null logo/colour restores inheritance. The logo also supplies the investor favicon.",
+        "summary": "Save the logo, colour and room name/welcome Markdown together. Workspace branding requires the owner role. Omitted fields stay unchanged; null logo/colour restores inheritance. The logo also supplies the investor favicon.",
         "description": "Needs the admin role.",
         "x-openroom-role": "admin",
         "x-openroom-destructive": false,
@@ -14722,10 +14713,6 @@
                         "string",
                         "null"
                       ]
-                    },
-                    "whiteLabel": {
-                      "type": "boolean",
-                      "description": "Hides “Powered by OpenRoom” on investor pages; admin pages keep “OpenRoom by Anectico”."
                     },
                     "roomOverrides": {
                       "anyOf": [
@@ -14764,15 +14751,11 @@
                             "string",
                             "null"
                           ]
-                        },
-                        "whiteLabel": {
-                          "type": "boolean"
                         }
                       },
                       "required": [
                         "logoUrl",
-                        "accentColor",
-                        "whiteLabel"
+                        "accentColor"
                       ],
                       "additionalProperties": false
                     }
@@ -14780,7 +14763,6 @@
                   "required": [
                     "logoUrl",
                     "accentColor",
-                    "whiteLabel",
                     "roomOverrides",
                     "workspace"
                   ],
@@ -14839,9 +14821,6 @@
                       }
                     ]
                   },
-                  "whiteLabel": {
-                    "type": "boolean"
-                  },
                   "imageBase64": {
                     "anyOf": [
                       {
@@ -14898,10 +14877,6 @@
                         "null"
                       ]
                     },
-                    "whiteLabel": {
-                      "type": "boolean",
-                      "description": "Hides “Powered by OpenRoom” on investor pages; admin pages keep “OpenRoom by Anectico”."
-                    },
                     "roomOverrides": {
                       "anyOf": [
                         {
@@ -14939,15 +14914,11 @@
                             "string",
                             "null"
                           ]
-                        },
-                        "whiteLabel": {
-                          "type": "boolean"
                         }
                       },
                       "required": [
                         "logoUrl",
-                        "accentColor",
-                        "whiteLabel"
+                        "accentColor"
                       ],
                       "additionalProperties": false
                     }
@@ -14955,7 +14926,6 @@
                   "required": [
                     "logoUrl",
                     "accentColor",
-                    "whiteLabel",
                     "roomOverrides",
                     "workspace"
                   ],

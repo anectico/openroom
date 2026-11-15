@@ -15,7 +15,6 @@ export function installBranding() {
 	return {
 		logoKey: getSetting('branding.logo_key'),
 		accentColor: getSetting('branding.accent_color'),
-		whiteLabel: getSetting('branding.white_label') === '1',
 	};
 }
 
@@ -28,7 +27,6 @@ export function brandingFor(room: { logo_object_key: string | null; accent_color
 				? `/b/logo/${encodeURIComponent(install.logoKey)}`
 				: null,
 		accentColor: room?.accent_color ?? install.accentColor,
-		whiteLabel: install.whiteLabel,
 	};
 }
 

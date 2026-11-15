@@ -2,6 +2,7 @@
 	import { ArrowRight, LockKeyhole, ShieldCheck } from '@lucide/svelte';
 	import { onDestroy, onMount, tick, untrack } from 'svelte';
 	import { brandStyle } from '#lib/brand.ts';
+	import OpenRoomCredit from '#lib/components/OpenRoomCredit.svelte';
 
 	function focusFirst() {
 		document.querySelector<HTMLElement>('main input:not([type=hidden]):not([type=checkbox])')?.focus();
@@ -142,5 +143,5 @@
 		</Card.Content>
 	</Card.Root>
 </main>
-{#if !data.branding.whiteLabel}<p class="pb-6 text-center text-xs text-muted-foreground">Powered by OpenRoom</p>{/if}
+<p class="pb-6 text-center text-xs text-muted-foreground"><OpenRoomCredit /></p>
 </div>

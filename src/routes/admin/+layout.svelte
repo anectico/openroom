@@ -5,6 +5,7 @@
 	import UploadTray from '#lib/admin/UploadTray.svelte';
 	import { uploads } from '#lib/admin/uploads.svelte.ts';
 	import When from '#lib/admin/When.svelte';
+	import OpenRoomCredit from '#lib/components/OpenRoomCredit.svelte';
 	import * as Alert from '#lib/components/ui/alert/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Dialog from '#lib/components/ui/dialog/index.js';
@@ -71,7 +72,7 @@
 				<a href="/admin/settings" class="flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] text-muted-foreground hover:bg-muted hover:text-foreground"><Settings class="size-[17px]" strokeWidth={1.7} />Settings</a>
 				<a href="https://github.com/anectico/openroom" target="_blank" rel="noreferrer" class="flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] text-muted-foreground hover:bg-muted hover:text-foreground"><CircleHelp class="size-[17px]" strokeWidth={1.7} />Help & docs<ArrowUpRight class="ml-auto size-3" /></a>
 			</div>
-			<p class="mt-5 px-3 text-[10px] text-muted-foreground">OpenRoom by <span class="font-medium text-foreground/70">Anectico</span></p>
+			<p class="mt-5 px-3 text-[10px] text-muted-foreground"><OpenRoomCredit /></p>
 		</aside>
 		<div class="min-w-0 lg:ml-[228px]">
 			<header class="flex h-14 items-center justify-between gap-3 border-b bg-card px-4 sm:h-[68px] sm:px-7 lg:px-9">

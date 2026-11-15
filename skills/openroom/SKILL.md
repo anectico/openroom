@@ -59,8 +59,7 @@ does not protect against loss of the server. Do not publish or launch unless the
 `get_branding` returns effective room branding, `roomOverrides` and `workspace` defaults.
 `update_branding` can save room `name`, `welcomeMarkdown`, `accentColor` and `imageBase64` together.
 Omit unchanged fields; null logo/colour restores workspace inheritance. Welcome text is investor-facing
-at entry and inside the room. Logos also generate investor browser icons. Workspace settings and
-white labeling require an owner. Use approved investor-facing copy and keep access secrets out of it.
+at entry and inside the room. Logos also generate investor browser icons. Workspace settings require an owner. The footer always credits OpenRoom by Anectico. Use approved investor-facing copy and keep access secrets out of it.
 
 For a message specific to one sharing link, use `create_link` or `update_link` with
 `welcomeMarkdown` (up to 4,000 trimmed characters). Everyone using that link sees it after access

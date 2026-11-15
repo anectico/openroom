@@ -1,6 +1,7 @@
 <script lang="ts">
  import { ArrowRight, Check, LockKeyhole, MessageSquare, Search } from '@lucide/svelte';
  import { type Brand, brandStyle } from '#lib/brand.ts';
+	import OpenRoomCredit from '#lib/components/OpenRoomCredit.svelte';
  import { Button } from '#lib/components/ui/button/index.js';
  import { Input } from '#lib/components/ui/input/index.js';
  import * as Tabs from '#lib/components/ui/tabs/index.js';
@@ -54,7 +55,7 @@
        </div>
       </Tabs.Content>
       <Tabs.Content value="entry" class="m-0"><div class="px-4 py-8"><div class="mx-auto flex max-w-sm flex-col gap-4 rounded-xl border bg-card p-5">{#if brand.logoUrl}<img src={brand.logoUrl} alt="Logo preview" class="h-12 max-w-full self-start object-contain" />{/if}<p class="break-words text-xs font-medium text-muted-foreground">{name || 'Your data room'}</p><h3 class="text-2xl font-semibold tracking-tight">Welcome to the room.</h3><p class="text-sm text-muted-foreground">Enter your email to access the documents shared with you.</p><label for={previewEmailId} class="flex flex-col gap-2 text-sm">Your email<Input id={previewEmailId} readonly tabindex={-1} class="min-h-11" placeholder="investor@example.com" /></label><Button disabled class="min-h-11">Continue</Button><p class="text-xs text-muted-foreground">This room records which pages you view.</p>{#if html}<details class="rounded-lg border"><summary class="min-h-11 cursor-pointer p-3 text-sm font-medium">Read the welcome</summary><div class="md break-words border-t p-3 text-sm [overflow-wrap:anywhere]">{@html html}</div></details>{/if}</div></div></Tabs.Content>
-      <div class="flex flex-wrap justify-between gap-2 px-4 pb-5 text-xs text-muted-foreground"><span class="flex items-center gap-1"><LockKeyhole class="size-3" />Shared privately with you</span>{#if !brand.whiteLabel}<span>Powered by OpenRoom</span>{/if}</div>
+      <div class="flex flex-wrap justify-between gap-2 px-4 pb-5 text-xs text-muted-foreground"><span class="flex items-center gap-1"><LockKeyhole class="size-3" />Shared privately with you</span><OpenRoomCredit /></div>
      </div>
     </section>
    </div>

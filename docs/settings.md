@@ -10,15 +10,14 @@ Choose the time zone used by admin dates and emails, the maximum upload size and
 cap. The domain is managed on the host with `openroom-server set-domain DOMAIN`; the change updates
 both Caddy and the app's public origin. Limits apply to new operations after saving.
 
-**Workspace appearance** provides a logo, brand colour and footer-credit setting, with live
+**Workspace appearance** provides a logo and brand colour, with live
 Documents/Entry previews with Fit to panel, 360 px Phone and 1280 px Desktop widths. The Phone preview centers a scrollable phone frame in the panel. When a device preview is scaled down, choose **Actual size** to inspect it at 100%. Choose a PNG, JPEG or WebP logo under 700 KB;
 OpenRoom re-encodes it to a PNG at most 512 pixels wide/high. SVG is refused. The logo also supplies
 a 64-pixel browser icon on investor pages; admin pages retain the OpenRoom icon.
 
 Changes stay in a draft until **Save appearance**. **Cancel changes** restores the saved values.
 Button text switches between black and white to suit your colour; navigation and focus indicators
-use a darker, readable variation. White labeling hides the investor footer credit; the admin keeps
-“OpenRoom by Anectico”.
+use a darker, readable variation. The investor and admin footers always show “OpenRoom by Anectico”, with a link to the company website.
 
 In **Room settings & branding**, edit the room name and welcome Markdown alongside its logo and
 colour. The editor shows which values come from the workspace. **Use workspace logo/colour** stages

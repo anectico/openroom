@@ -1,4 +1,5 @@
 <script lang="ts">
+	import OpenRoomCredit from '#lib/components/OpenRoomCredit.svelte';
 	import { page } from '$app/state';
 
 	const branding = $derived(page.data.installBranding);
@@ -13,4 +14,4 @@
 		Check that you opened the whole link, or ask the person who sent it to you for a new one.
 	</p>
 </main>
-{#if !branding?.whiteLabel}<p class="pb-6 text-center text-xs text-muted-foreground">Powered by OpenRoom</p>{/if}
+<p class="pb-6 text-center text-xs text-muted-foreground"><OpenRoomCredit /></p>

@@ -39,7 +39,7 @@
     <summary class={cn('min-h-11 cursor-pointer list-none px-4 py-3 text-sm @sm:px-6', compact && 'px-0 @sm:px-0')}><span class="flex items-center justify-between gap-2"><span class="flex items-center gap-2 font-semibold">{#if personal}<Mail class="size-4 shrink-0 text-primary" />{/if}{personal ? 'Personal welcome' : 'Welcome & introduction'}</span><span class="flex shrink-0 items-center gap-2 whitespace-nowrap text-xs font-medium text-primary">{(compact ? compactOpen : open) ? 'Show less' : 'Read welcome'}<ChevronDown class="size-4 shrink-0 transition-transform group-open:rotate-180" /></span></span>{#if !open && !compact}<span class="mt-2 line-clamp-2 break-words text-muted-foreground [overflow-wrap:anywhere]">{excerpt}</span>{/if}</summary>
     <div class={cn('md px-4 pb-4 text-sm leading-relaxed @sm:px-6 @sm:pb-5 [&>:first-child]:mt-0 [&>:last-child]:mb-0', compact && 'px-0 @sm:px-0')}>{@html html}</div>
    </details>
-  {:else if !compact}<p class="px-4 pb-4 text-sm text-muted-foreground @sm:px-6 @sm:pb-5">Explore the documents shared with you. Questions are always welcome.</p>{/if}
+  {:else if !compact}<p class="px-4 py-4 text-sm text-muted-foreground @sm:px-6 @sm:py-5">Explore the documents shared with you. Questions are always welcome.</p>{/if}
  </section>
  {#if !compact && tools}{@render tools()}{/if}
 </div>

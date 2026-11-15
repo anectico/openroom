@@ -1,4 +1,4 @@
-export type Brand = { logoUrl: string | null; accentColor: string | null; whiteLabel: boolean };
+export type Brand = { logoUrl: string | null; accentColor: string | null };
 export type Branding = Brand & {
 	roomOverrides: { logo: boolean; accentColor: boolean } | null;
 	workspace: Brand;

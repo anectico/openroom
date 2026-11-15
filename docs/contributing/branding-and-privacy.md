@@ -14,16 +14,15 @@ room (room Settings). Operations: `get_branding`, `update_branding`, `set_logo`.
 - **Browser icon.** The effective logo's existing public endpoint accepts `?icon=1`, returning a
   64×64 PNG with transparent padding. It checks that the key is a current logo before reading it.
   Admin pages retain the built-in icon; rooms without logos fall back to it.
-- **White-labelling.** Install-wide: hides "Powered by OpenRoom" on investor pages.
+- **Footer credit.** Investor pages always display “OpenRoom by Anectico”.
 
 The investor gate (`/r/<token>`), the room pages (`/v/...`) and the error page use the room's logo and
 colour, falling back to the install's. The error pages under `/r` and `/v` ("This link is not
-available", "Your session has ended") cannot know the room, so they show the install's logo and honour
-white-labelling.
+available", "Your session has ended") cannot know the room, so they show the install's logo.
 
 The Appearance editor stages edits and previews them locally with the same Markdown renderer and
 brand-colour helper used by investor pages. It saves through `update_branding`, which accepts
-optional `imageBase64`, `accentColor`, `name`, `welcomeMarkdown` and workspace-only `whiteLabel`.
+optional `imageBase64`, `accentColor`, `name` and `welcomeMarkdown`.
 Name/welcome are room-only. Omitted fields stay unchanged; null logo/colour restores inheritance.
 `get_branding` includes `workspace` defaults and `roomOverrides` to explain effective values.
 `set_logo` and `update_room` remain supported for existing callers.

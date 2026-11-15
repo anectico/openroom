@@ -219,7 +219,7 @@ corresponding checks in the [release guide](docs/contributing/release.md).
 
 ## License
 
-OpenRoom by Anectico is fair-source under the
+OpenRoom by [Anectico](https://anectico.com) is fair-source under the
 [Functional Source License 1.1, MIT Future License](LICENSE.md) (**FSL-1.1-MIT**).
 Each version becomes available under MIT on the second anniversary of its release. See the license
 for the terms that apply before and after that date.

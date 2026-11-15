@@ -164,7 +164,7 @@ also accents the welcome panel, navigation and primary actions. The introduction
 short messages open on arrival, while messages over 600 plain-text characters start with a two-line
 excerpt and **Read welcome**. Investors can collapse the message with **Show less**; their explicit
 choice is remembered for that version of the note in the same tab. The room name remains the page heading.
-See [workspace settings](settings.md) for inheritance, white labeling and preview details.
+See [workspace settings](settings.md) for inheritance and preview details.
 
 ### A personal welcome for an investor or audience
 

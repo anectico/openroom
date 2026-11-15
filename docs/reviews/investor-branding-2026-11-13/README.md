@@ -14,7 +14,7 @@ The investor home now gives the configured company logo and personal introductio
 
 Use a disposable workspace with fictional documents and people. These are ordinary application settings, saved through the existing audited operations; no screenshot-only CSS or fabricated progress is involved.
 
-1. In workspace appearance, upload [the fictional Aster logo](../../images/aster-demo-logo.png), set the colour to `#3c4bb4`, and keep product attribution enabled. For agents, use `update_branding` with `imageBase64`, `accentColor` and `whiteLabel: false`.
+1. In workspace appearance, upload [the fictional Aster logo](../../images/aster-demo-logo.png) and set the colour to `#3c4bb4`. For agents, use `update_branding` with `imageBase64` and `accentColor`.
 2. Name the room **Aster Robotics · Series A**. Leave its logo and colour inherited from the workspace. Set the general introduction below through room appearance or `update_branding` with `roomId` and `welcomeMarkdown`.
 3. Upload 12 example PDFs: eight root documents and two folders with two documents each. Pin **Investor deck · November 2026**, **Financial plan · 2026–2028** and **Customer metrics · Q3 2026**, in that order. Use the room UI or `set_pinned_documents` with their real file IDs.
 4. Create a dedicated link for Maya and the Northstar team and set its personal welcome below. Agents use `create_link` or `update_link` with `welcomeMarkdown`. Keep separate links for other recipients; a link without an override uses the general introduction. Choose access gates appropriate to the environment rather than copying demo authentication settings.
