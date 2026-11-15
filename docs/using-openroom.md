@@ -215,7 +215,7 @@ retained file cleanup follows the database recovery window described in [storage
 
 [Workspace settings](settings.md) covers branding, email delivery, members, API keys and webhooks.
 The header bell opens your five latest notices. Choose a notice to open it and mark it as read,
-or select **View all notifications** for the inbox.
+or select **View all notifications** for the inbox. Choose **Unread** to focus on new notices. Open a notice to visit its destination, or use its checkmark to mark it as read in place. **Mark all as read** clears your unread count.
 Choose which notices send you email in **My account → Email preferences** or follow the
 **Email preferences** link from Notifications. Question notices open the specific conversation and upload
 notices open and highlight the relevant file request. These destinations are also used in email
