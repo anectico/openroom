@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowRight, Check, ChevronDown, ChevronRight, FolderClosed, Search } from '@lucide/svelte';
+	import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronRight, FolderClosed, Search } from '@lucide/svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Empty from '#lib/components/ui/empty/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
@@ -20,6 +20,7 @@
 	let { data, appearance = false }: { data: PageData; appearance?: boolean } = $props();
 	const currentUrl = $derived(page.shallow?.url ?? page.url);
 	const query = $derived((currentUrl.searchParams.get('q') ?? '').slice(0, 200));
+	const term = $derived(query.trim().toLowerCase());
 	let scrollY = $state(0);
 	const changedOnly = $derived(currentUrl.searchParams.get('changed') === '1');
 	const changedCount = $derived(data.tree.filter((file) => file.change).length);
@@ -51,19 +52,40 @@
 	});
 	$effect(() => { places = data.preview || appearance ? [] : readingPlaces(data.readingScope); });
 	afterNavigate((navigation) => {
-		if (navigation.shallow || currentUrl.hash === '#all-documents') return;
+		if (navigation.type === 'popstate' || navigation.shallow || currentUrl.hash === '#all-documents') return;
 		const y = Number(currentUrl.searchParams.get('y'));
 		if (Number.isFinite(y) && y > 0) {
 			disableScrollHandling();
 			window.scrollTo(0, Math.min(y, 1_000_000));
 		}
 	});
-	function browse(folder: string, search = '') {
+	function browseUrl(folder: string, search = '') {
 		const url = new URL(currentUrl.href);
 		url.searchParams.delete('y');
 		if (folder) url.searchParams.set('folder', folder); else url.searchParams.delete('folder');
 		if (search) url.searchParams.set('q', search); else url.searchParams.delete('q');
-		void goto(url, { state: page.state, shallow: true, replace: true, reset: false });
+		return url;
+	}
+	function browse(folder: string, search = '') {
+		return goto(browseUrl(folder, search), { state: page.state, shallow: true, replace: true, reset: false });
+	}
+	const libraryTitle = $derived(term ? 'Search results' : changedOnly ? 'Changed documents' : selectedFolder?.type === 'folder' ? selectedFolder.name : 'All documents');
+	const folderOrigin = $derived(page.state.folderOrigin?.destination === folderId ? page.state.folderOrigin : undefined);
+	async function openFolder(folder: string, fromList = false) {
+		const url = browseUrl(folder);
+		url.hash = '';
+		url.searchParams.delete('changed');
+		await goto(url, {
+			state: fromList ? { folderOrigin: { destination: folder, label: libraryTitle } } : {},
+			persistState: true,
+		});
+		const library = document.getElementById('all-documents');
+		library?.focus({ preventScroll: true });
+		library?.scrollIntoView({ block: 'nearest' });
+	}
+	function backFromFolder() {
+		if (folderOrigin) history.back();
+		else void openFolder(selectedFolder?.parentId ?? '');
 	}
 	function expandPins() {
 		const url = new URL(currentUrl.href);
@@ -93,7 +115,6 @@
 		for (let node = nodes.get(folderId); node; node = nodes.get(node.parentId ?? '')) path.unshift(node);
 		return path;
 	});
-	const term = $derived(query.trim().toLowerCase());
 	const matches = $derived.by(() => {
 		if (!term && !changedOnly) return data.tree.filter((node) => node.parentId === (folderId || null));
 		return data.tree.filter((node) => {
@@ -211,7 +232,10 @@
 {#if !single}
 	<div id="all-documents" tabindex="-1" class="mt-5 mb-3 flex scroll-mt-4 flex-wrap items-center justify-between gap-2">
 		<div class="flex flex-wrap items-baseline gap-2">
-			<h2 class="text-base font-semibold">{term ? 'Search results' : changedOnly ? 'Changed documents' : folderId ? 'Documents in this folder' : 'All documents'}</h2>
+				{#if selectedFolder && folderId && !term && !changedOnly}
+					<Button variant="outline" size="sm" class="min-h-11" aria-label={`Back to ${folderOrigin?.label ?? breadcrumb.at(-2)?.name ?? 'All documents'}`} onclick={backFromFolder}><ArrowLeft data-icon="inline-start" />Back</Button>
+				{/if}
+			<h2 class="text-base font-semibold">{libraryTitle}</h2>
 			<span class="text-xs text-muted-foreground" role="status">{term || changedOnly ? `${matches.length} result${matches.length === 1 ? '' : 's'}` : folderId ? `${matches.length} items` : `${documents.length} documents`}</span>
 		</div>
 		{#if documents.length || term || folderId}
@@ -222,10 +246,10 @@
 	</div>
 	{#if breadcrumb.length && !term && !changedOnly}
 		<nav class="mb-2 flex flex-wrap items-center gap-2 text-xs" aria-label="Document folders">
-			<button type="button" class="flex min-h-11 items-center text-muted-foreground hover:text-foreground" onclick={() => browse('')}>All documents</button>
+			<button type="button" class="flex min-h-11 items-center text-muted-foreground hover:text-foreground" onclick={() => openFolder('')}>All documents</button>
 			{#each breadcrumb as folder (folder.id)}
 				<ChevronRight class="size-3 text-muted-foreground/50" />
-				<button type="button" class="flex min-h-11 items-center font-medium" onclick={() => browse(folder.id)}>{folder.name}</button>
+				<button type="button" class="flex min-h-11 items-center font-medium" onclick={() => openFolder(folder.id)}>{folder.name}</button>
 			{/each}
 		</nav>
 	{/if}
@@ -237,7 +261,7 @@
 						folderPath={term || changedOnly ? folderPaths.get(node.parentId ?? '') : undefined}
 						folder={node.type === 'folder'} childCount={childCounts.get(node.id) ?? 0}
 						href={fileHref(node.id)} downloadHref={canDownload(node.kind) ? downloadHref(node.id) : undefined}
-						previewDownload={appearance && canDownload(node.kind)} change={node.change} onfolder={() => browse(node.id)} />
+						previewDownload={appearance && canDownload(node.kind)} change={node.change} onfolder={() => openFolder(node.id, true)} />
 				{/each}
 			</ul>
 		{:else}
