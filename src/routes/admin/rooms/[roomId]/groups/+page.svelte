@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
 	import { attempt } from '#lib/admin/op.ts';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Dialog from '#lib/components/ui/dialog/index.js';
@@ -74,14 +75,9 @@
 			</div>
 			<div class="space-y-2">
 				<Label for="group-default">Top-level folders and files</Label>
-				<select
-					id="group-default"
-					class="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
-					bind:value={defaultAccess}
-				>
-					<option value="none">Hidden until I choose to show them</option>
-					<option value="view">Visible unless I hide them</option>
-				</select>
+				<ChoiceSelect id="group-default" class="w-full" bind:value={defaultAccess}
+					options={[{ value: 'none', label: 'Hidden until I choose to show them' }, { value: 'view', label: 'Visible unless I hide them' }]}
+				/>
 			</div>
 			{#if error}<p class="text-sm text-destructive" role="alert">{error}</p>{/if}
 			<Dialog.Footer><Button type="submit">Create group</Button></Dialog.Footer>

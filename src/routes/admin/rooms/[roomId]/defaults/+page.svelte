@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
 	import { act } from '#lib/admin/op.ts';
 	import type { LinkSettings } from '#lib/admin/types.ts';
 	import { Badge } from '#lib/components/ui/badge/index.js';
@@ -25,8 +26,6 @@
 		},
 		{ key: 'notifyEveryView', label: 'Notify me on every view', hint: 'Not only the first visit.' },
 	] as const;
-	const selectClass =
-		'h-9 w-40 min-w-0 rounded-md border border-input bg-background px-3 text-sm focus-visible:ring-3 focus-visible:ring-ring/50 outline-none sm:w-64';
 
 	async function save(event: SubmitEvent) {
 		event.preventDefault();
@@ -77,11 +76,9 @@
 	{/if}
 	<div class="flex items-center justify-between gap-4">
 		<Label for="d-downloads">Downloads</Label>
-		<select id="d-downloads" class={selectClass} bind:value={s.downloads} disabled={!canEdit}>
-			<option value="none">No downloads</option>
-			<option value="per_file">Each file</option>
-			<option value="zip">All allowed files as one zip</option>
-		</select>
+		<ChoiceSelect id="d-downloads" class="w-full" bind:value={s.downloads} disabled={!canEdit}
+			options={[{ value: 'none', label: 'No downloads' }, { value: 'per_file', label: 'Each file' }, { value: 'zip', label: 'All allowed files as one zip' }]}
+		/>
 	</div>
 	<div class="flex items-center justify-between gap-4">
 		<div>

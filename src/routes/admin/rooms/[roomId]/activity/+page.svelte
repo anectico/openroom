@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Clock3, Download, Eye, Users } from '@lucide/svelte';
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
 	import When from '#lib/admin/When.svelte';
 	import { Badge } from '#lib/components/ui/badge/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
@@ -8,10 +9,12 @@
 	import * as Tabs from '#lib/components/ui/tabs/index.js';
 
 	let { data } = $props();
+	let link = $derived(data.query.link ?? '');
+	let group = $derived(data.query.group ?? '');
+	let days = $derived(data.query.days ?? '');
 	const a = $derived(data.activity);
 	const hasAnswers = $derived(a.investors.some((i) => i.fields && Object.keys(i.fields).length));
 	let view = $state('investors');
-	const selectClass = 'h-9 rounded-md border border-input bg-background px-2 text-sm';
 	const minutes = (ms: number) => (ms < 60_000 ? `${Math.round(ms / 1000)} s` : `${Math.round(ms / 60_000)} min`);
 	const eventLabel: Record<string, string> = {
 		visit: 'Opened the room',
@@ -56,27 +59,22 @@
 	{/each}
 </div>
 
-<form class="mb-4 flex flex-wrap items-end gap-2" method="GET">
+<form class="mb-4 flex flex-wrap items-center gap-2" method="GET">
 	{#if data.links.length}
-		<select name="link" aria-label="Link" class={selectClass} value={data.query.link ?? ''}>
-			<option value="">All links</option>
-			{#each data.links as l (l.id)}<option value={l.id}>{l.label}</option>{/each}
-		</select>
+		<ChoiceSelect label="Link" name="link" bind:value={link}
+			options={[{ value: '', label: 'All links' }, ...data.links.map((l) => ({ value: l.id, label: l.label }))]}
+		/>
 	{/if}
 	{#if data.groups.length}
-		<select name="group" aria-label="Group" class={selectClass} value={data.query.group ?? ''}>
-			<option value="">All groups</option>
-			{#each data.groups as g (g.id)}<option value={g.id}>{g.name}</option>{/each}
-		</select>
+		<ChoiceSelect label="Group" name="group" bind:value={group}
+			options={[{ value: '', label: 'All groups' }, ...data.groups.map((g) => ({ value: g.id, label: g.name }))]}
+		/>
 	{/if}
-	<select name="days" aria-label="Time" class={selectClass} value={data.query.days ?? ''}>
-		<option value="">Any time</option>
-		<option value="1">Last 24 hours</option>
-		<option value="7">Last 7 days</option>
-		<option value="30">Last 30 days</option>
-	</select>
-	<Button type="submit" variant="outline" size="sm">Filter</Button>
-	<Button href={csvHref} variant="ghost" size="sm" class="ml-auto" download>Export CSV</Button>
+	<ChoiceSelect label="Time" name="days" bind:value={days}
+		options={[{ value: '', label: 'Any time' }, { value: '1', label: 'Last 24 hours' }, { value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }]}
+	/>
+	<Button type="submit" variant="outline">Filter</Button>
+	<Button href={csvHref} variant="ghost" class="ml-auto" download>Export CSV</Button>
 </form>
 
 <Tabs.Root bind:value={view} class="gap-4"><Tabs.List class="w-full sm:w-fit" aria-label="Activity views">{#each views as item (item.key)}<Tabs.Trigger value={item.key}>{item.label}</Tabs.Trigger>{/each}</Tabs.List><Tabs.Content value={view}>

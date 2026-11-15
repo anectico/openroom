@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Eye } from '@lucide/svelte';
 	import { untrack } from 'svelte';
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
 	import DangerAction from '#lib/admin/DangerAction.svelte';
 	import { act } from '#lib/admin/op.ts';
 	import { openPreview } from '#lib/admin/preview.ts';
@@ -15,20 +16,17 @@
 	const g = $derived(data.group);
 	const canEdit = $derived(data.member?.role !== 'observer' && !room.frozenAt);
 	let name = $state(untrack(() => data.group.name));
-	const selectClass = 'h-8 rounded-md border border-input bg-background px-2 text-sm';
 
 	function choice(node: (typeof g.tree)[number]) {
 		return node.inherited ? 'inherit' : node.access;
 	}
 
-	async function setAccess(node: (typeof g.tree)[number], select: HTMLSelectElement) {
-		const value = select.value;
-		const done = await act('set_group_access', {
+	async function setAccess(node: (typeof g.tree)[number], value: string) {
+		await act('set_group_access', {
 			groupId: g.id,
 			...(node.type === 'folder' ? { folderId: node.id } : { fileId: node.id }),
 			access: value,
 		});
-		if (!done) select.value = choice(node);
 	}
 </script>
 
@@ -52,19 +50,9 @@
 	</form>
 	<div class="space-y-2">
 		<Label for="g-default">Top-level folders and files without their own choice</Label>
-		<select
-			id="g-default"
-			class="{selectClass} h-9 w-full"
-			value={g.defaultAccess}
-			disabled={!canEdit}
-			onchange={async (e) => {
-				const select = e.currentTarget as HTMLSelectElement;
-				if (!(await act('update_group', { groupId: g.id, defaultAccess: select.value }, 'Saved'))) select.value = g.defaultAccess;
-			}}
-		>
-			<option value="none">Hidden, including ones added later</option>
-			<option value="view">Visible, including ones added later</option>
-		</select>
+		<ChoiceSelect id="g-default" class="w-full" disabled={!canEdit} bind:value={() => g.defaultAccess, (defaultAccess) => act('update_group', { groupId: g.id, defaultAccess }, 'Saved')}
+			options={[{ value: 'none', label: 'Hidden, including ones added later' }, { value: 'view', label: 'Visible, including ones added later' }]}
+		/>
 	</div>
 	<div class="md:col-span-2">
 		<p class="mb-2 text-sm text-muted-foreground">Links in this group</p>
@@ -87,17 +75,9 @@
 					<span class="min-w-0 truncate {node.type === 'folder' ? 'font-medium' : ''}">{node.name}</span>
 					{#if node.access === 'view'}<Badge variant="secondary">Visible</Badge>{:else}<Badge variant="outline">Hidden</Badge>{/if}
 				</span>
-				<select
-					aria-label="Access to {node.name}"
-					class="{selectClass} w-full sm:w-auto"
-					value={choice(node)}
-					disabled={!canEdit}
-					onchange={(e) => setAccess(node, e.currentTarget as HTMLSelectElement)}
-				>
-					<option value="inherit">Inherited ({node.inherited ? (node.access === 'view' ? 'visible' : 'hidden') : 'from above'})</option>
-					<option value="view">Visible</option>
-					<option value="none">Hidden</option>
-				</select>
+				<ChoiceSelect label="Access to {node.name}" class="w-full sm:w-auto" disabled={!canEdit} bind:value={() => choice(node), (value) => setAccess(node, value)}
+					options={[{ value: 'inherit', label: `Inherited (${node.inherited ? (node.access === 'view' ? 'visible' : 'hidden') : 'from above'})` }, { value: 'view', label: 'Visible' }, { value: 'none', label: 'Hidden' }]}
+				/>
 			</li>
 		{/each}
 	</ul>

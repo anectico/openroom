@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
 	import DangerAction from '#lib/admin/DangerAction.svelte';
 	import { attempt, formatBytes } from '#lib/admin/op.ts';
 	import When from '#lib/admin/When.svelte';
@@ -13,7 +14,6 @@
 	let { data } = $props();
 	const room = $derived(data.room);
 	const canEdit = $derived(data.member?.role !== 'observer' && !room.frozenAt);
-	const selectClass = 'h-9 w-full rounded-md border border-input bg-background px-3 text-sm';
 	let open = $state(false);
 	let title = $state('');
 	let description = $state('');
@@ -117,24 +117,14 @@
 			</div>
 			<div class="space-y-1">
 				<Label for="fr-target">From</Label>
-				<select id="fr-target" class={selectClass} required bind:value={target}>
-					<option value="" disabled>Choose an investor, a link or a group</option>
-					{#if data.investors.length}
-						<optgroup label="Investors who entered this room">
-							{#each data.investors as i (i.viewerId)}<option value="viewer:{i.viewerId}">{i.email}</option>{/each}
-						</optgroup>
-					{/if}
-					{#if data.links.length}
-						<optgroup label="Everyone on a link">
-							{#each data.links as l (l.id)}<option value="link:{l.id}">{l.label}</option>{/each}
-						</optgroup>
-					{/if}
-					{#if data.groups.length}
-						<optgroup label="Everyone in a group">
-							{#each data.groups as g (g.id)}<option value="group:{g.id}">{g.name}</option>{/each}
-						</optgroup>
-					{/if}
-				</select>
+				<ChoiceSelect id="fr-target" name="target" class="w-full" required bind:value={target}
+					placeholder="Choose an investor, a link or a group"
+					groups={[
+						{ label: 'Investors who entered this room', options: data.investors.map((i) => ({ value: `viewer:${i.viewerId}`, label: i.email ?? 'Unknown investor' })) },
+						{ label: 'Everyone on a link', options: data.links.map((l) => ({ value: `link:${l.id}`, label: l.label })) },
+						{ label: 'Everyone in a group', options: data.groups.map((g) => ({ value: `group:${g.id}`, label: g.name })) },
+					]}
+				/>
 			</div>
 			<div class="grid grid-cols-2 gap-3">
 				<div class="space-y-1">

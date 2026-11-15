@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowUpRight, Bell, ChevronDown, ChevronRight, CircleHelp, FolderClosed, LayoutDashboard, LogOut, Menu, ScrollText, Settings, ShieldCheck, Users } from '@lucide/svelte';
+	import { ArrowUpRight, Bell, ChevronDown, ChevronRight, CircleHelp, FolderClosed, Inbox, KeyRound, LayoutDashboard, LogOut, Menu, ScrollText, Settings, ShieldCheck, UserRound, Users } from '@lucide/svelte';
 	import Brand from '#lib/admin/Brand.svelte';
 	import { act } from '#lib/admin/op.ts';
 	import UploadTray from '#lib/admin/UploadTray.svelte';
@@ -99,14 +99,17 @@
 							<DropdownMenu.Group>
 								<DropdownMenu.Label>Recent notifications</DropdownMenu.Label>
 								{#each data.notificationPreview.notices as notice (notice.id)}
-									<DropdownMenu.Item class="flex-col items-start gap-1 py-2" onSelect={async () => {
+									<DropdownMenu.Item class="items-start py-2" onSelect={async () => {
 										if (!notice.read) await act('mark_notices_read', { ids: [notice.id] });
 										await goto(notice.href);
 									}}>
-										<span class={notice.read ? 'text-muted-foreground' : 'font-medium'}>{notice.text}</span>
-										<span class="flex items-center gap-2 text-xs text-muted-foreground">
-											{#if !notice.read}<span class="text-primary">New</span>{/if}
-											<When at={notice.createdAt} timeZone={data.timeZone} />
+										<Bell aria-hidden="true" class="mt-0.5 text-muted-foreground" />
+										<span class="grid min-w-0 gap-1 whitespace-normal">
+											<span class={notice.read ? 'text-muted-foreground' : 'font-medium'}>{notice.text}</span>
+											<span class="flex items-center gap-2 text-xs text-muted-foreground">
+												{#if !notice.read}<span class="text-primary">New</span>{/if}
+												<When at={notice.createdAt} timeZone={data.timeZone} />
+											</span>
 										</span>
 									</DropdownMenu.Item>
 								{:else}
@@ -114,10 +117,10 @@
 								{/each}
 							</DropdownMenu.Group>
 							<DropdownMenu.Separator />
-							<DropdownMenu.Item onSelect={() => goto('/admin/notifications')}>View all notifications</DropdownMenu.Item>
+							<DropdownMenu.Item onSelect={() => goto('/admin/notifications')}><Inbox aria-hidden="true" />View all notifications</DropdownMenu.Item>
 						</DropdownMenu.Content>
 					</DropdownMenu.Root>
-					<DropdownMenu.Root><DropdownMenu.Trigger>{#snippet child({ props })}<Button {...props} variant="ghost" size="sm" class="gap-2 px-1.5"><span class="flex size-7 items-center justify-center rounded-full bg-secondary text-[10px] font-semibold">{initials}</span><span class="hidden max-w-28 truncate text-xs sm:inline">{data.member?.name || data.member?.email}</span><ChevronDown data-icon="inline-end" /></Button>{/snippet}</DropdownMenu.Trigger><DropdownMenu.Content align="end"><DropdownMenu.Group><DropdownMenu.Label>Signed in as {data.member.role}</DropdownMenu.Label><DropdownMenu.Item onSelect={() => goto('/admin/account')}>My account</DropdownMenu.Item><DropdownMenu.Item onSelect={() => goto('/admin/settings/api-keys')}>API keys</DropdownMenu.Item></DropdownMenu.Group><DropdownMenu.Separator /><DropdownMenu.Group><DropdownMenu.Item onSelect={signOut}><LogOut />Sign out</DropdownMenu.Item></DropdownMenu.Group></DropdownMenu.Content></DropdownMenu.Root>
+					<DropdownMenu.Root><DropdownMenu.Trigger>{#snippet child({ props })}<Button {...props} variant="ghost" size="sm" class="gap-2 px-1.5"><span class="flex size-7 items-center justify-center rounded-full bg-secondary text-[10px] font-semibold">{initials}</span><span class="hidden max-w-28 truncate text-xs sm:inline">{data.member?.name || data.member?.email}</span><ChevronDown data-icon="inline-end" /></Button>{/snippet}</DropdownMenu.Trigger><DropdownMenu.Content align="end"><DropdownMenu.Group><DropdownMenu.Label>Signed in as {data.member.role}</DropdownMenu.Label><DropdownMenu.Item onSelect={() => goto('/admin/account')}><UserRound aria-hidden="true" />My account</DropdownMenu.Item><DropdownMenu.Item onSelect={() => goto('/admin/settings/api-keys')}><KeyRound aria-hidden="true" />API keys</DropdownMenu.Item></DropdownMenu.Group><DropdownMenu.Separator /><DropdownMenu.Group><DropdownMenu.Item onSelect={signOut}><LogOut />Sign out</DropdownMenu.Item></DropdownMenu.Group></DropdownMenu.Content></DropdownMenu.Root>
 				</div>
 			</header>
 			<main id="main-content" class={cn('mx-auto max-w-[1440px] px-4 py-4 sm:px-7 sm:py-8 lg:px-9', uploads.items.length && 'pb-28 sm:pb-32')}>

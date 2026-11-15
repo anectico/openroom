@@ -2,6 +2,7 @@
 	import { ArrowRight, Cloud, HardDrive, RefreshCw, ShieldCheck } from '@lucide/svelte';
 	import { tick, untrack } from 'svelte';
 	import { toast } from 'svelte-sonner';
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
 	import DangerAction from '#lib/admin/DangerAction.svelte';
 	import { act, attempt, formatBytes } from '#lib/admin/op.ts';
 	import When from '#lib/admin/When.svelte';
@@ -93,7 +94,9 @@
  <Dialog.Content class="max-h-[90dvh] overflow-y-auto">
   <Dialog.Header><Dialog.Title>Move your storage</Dialog.Title><Dialog.Description>Documents stay available. New uploads pause until every retained file has been verified.</Dialog.Description></Dialog.Header>
   <form class="space-y-5" onsubmit={reviewMove}>
-   <Field.Field><Field.Label for="move-destination">Destination</Field.Label><select id="move-destination" class="h-9 w-full rounded-md border border-input bg-background px-3 text-sm" bind:value={destination}>{#if saved.configured}<option value="disk">This server’s local disk</option>{/if}<option value="s3">A new S3-compatible bucket</option></select></Field.Field>
+   <Field.Field><Field.Label for="move-destination">Destination</Field.Label><ChoiceSelect id="move-destination" class="w-full" bind:value={destination}
+	options={[...(saved.configured ? [{ value: 'disk' as const, label: 'This server’s local disk' }] : []), { value: 's3', label: 'A new S3-compatible bucket' }]}
+/></Field.Field>
    {#if destination === 's3'}
     <Field.Group class="gap-4">
      <Field.Field><Field.Label for="move-bucket">New private bucket</Field.Label><Input id="move-bucket" required bind:value={moveBucket} placeholder="openroom-new-bucket" /></Field.Field>

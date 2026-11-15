@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { ArrowDownToLine, Check, ChevronRight, FileDown, FolderPlus, Home, Link, MoreHorizontal, Search, Upload, } from '@lucide/svelte';
+	import { ArrowDown, ArrowDownToLine, ArrowUp, Check, ChevronRight, ExternalLink, FileDown, FileUp, FolderInput, FolderPlus, History, Home, Link, MoreHorizontal, Pencil, Search, Trash2, Upload } from '@lucide/svelte';
 	import { tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
 	import DangerAction from '#lib/admin/DangerAction.svelte';
 	import FileIcon from '#lib/admin/FileIcon.svelte';
 	import { act, attempt, formatBytes, formatDate, op } from '#lib/admin/op.ts';
@@ -26,8 +27,6 @@
 	const hasPins = $derived(room.pinnedFileIds.length > 0);
 	const hasLink = $derived(room.activeLinkCount > 0);
 	const showSetup = $derived(canEdit && !(hasFiles && hasPins && hasLink));
-	const selectClass =
-		'h-9 w-full rounded-md border border-input bg-background px-3 text-sm focus-visible:ring-3 focus-visible:ring-ring/50 outline-none';
 
 	let uploadInto = $state<string>('');
 	let search = $state('');
@@ -359,31 +358,32 @@
 												<DropdownMenu.Item onSelect={() => {
 				renaming = node;
 				newName = node.name;
-			}}>Rename</DropdownMenu.Item>
+			}}><Pencil aria-hidden="true" />Rename</DropdownMenu.Item>
 												<DropdownMenu.Item onSelect={() => {
 				moving = node;
 				moveTo = node.parentId ?? '';
-			}}>Move to…</DropdownMenu.Item>
-												<DropdownMenu.Item onSelect={() => shift(node, -1)}>Move up</DropdownMenu.Item>
-												<DropdownMenu.Item onSelect={() => shift(node, 1)}>Move down</DropdownMenu.Item>
+			}}><FolderInput aria-hidden="true" />Move to…</DropdownMenu.Item>
+												<DropdownMenu.Item onSelect={() => shift(node, -1)}><ArrowUp aria-hidden="true" />Move up</DropdownMenu.Item>
+												<DropdownMenu.Item onSelect={() => shift(node, 1)}><ArrowDown aria-hidden="true" />Move down</DropdownMenu.Item>
 												{#if node.type === 'file'}
+													<DropdownMenu.Separator />
 													<DropdownMenu.Item onSelect={() => window.open(`/admin/rooms/${room.id}/files/${node.id}`, '_blank', 'noopener')}
-														>Open</DropdownMenu.Item
+														><ExternalLink aria-hidden="true" />Open</DropdownMenu.Item
 													>
 													<DropdownMenu.Item onSelect={() => (location.href = `/admin/rooms/${room.id}/files/${node.id}?download=1`)}
-														>Download</DropdownMenu.Item
+														><ArrowDownToLine aria-hidden="true" />Download</DropdownMenu.Item
 													>
 													<DropdownMenu.Separator />
 													<DropdownMenu.Item onSelect={() => {
 				versionFor = node.id;
 				versionInput?.click();
 			}}
-														>Replace with a new version</DropdownMenu.Item
+														><FileUp aria-hidden="true" />Replace with a new version</DropdownMenu.Item
 													>
-													<DropdownMenu.Item onSelect={() => openVersions(node)}>Version history</DropdownMenu.Item>
+													<DropdownMenu.Item onSelect={() => openVersions(node)}><History aria-hidden="true" />Version history</DropdownMenu.Item>
 												{/if}
 												<DropdownMenu.Separator />
-												<DropdownMenu.Item variant="destructive" onSelect={() => remove(node)}>Delete…</DropdownMenu.Item>
+												<DropdownMenu.Item variant="destructive" onSelect={() => remove(node)}><Trash2 aria-hidden="true" />Delete…</DropdownMenu.Item>
 											</DropdownMenu.Content>
 										</DropdownMenu.Root>
 									</Table.Cell>
@@ -436,10 +436,9 @@
 			</div>
 			<div class="space-y-2">
 				<Label for="folder-parent">Inside</Label>
-				<select id="folder-parent" class={selectClass} bind:value={folderParent}>
-					<option value="">The top of the room</option>
-					{#each folders as f (f.id)}<option value={f.id}>{f.number} {f.name}</option>{/each}
-				</select>
+				<ChoiceSelect id="folder-parent" class="w-full" bind:value={folderParent}
+					options={[{ value: '', label: 'The top of the room' }, ...folders.map((f) => ({ value: f.id, label: `${f.number} ${f.name}` }))]}
+				/>
 			</div>
 			{#if dialogError}<p class="text-sm text-destructive" role="alert">{dialogError}</p>{/if}
 			<Dialog.Footer><Button type="submit">Create folder</Button></Dialog.Footer>
@@ -470,12 +469,9 @@
 	<Dialog.Content>
 		<Dialog.Header><Dialog.Title>Move “{moving?.name}”</Dialog.Title></Dialog.Header>
 		<form class="space-y-4" onsubmit={move}>
-			<select aria-label="Move to" class={selectClass} bind:value={moveTo}>
-				<option value="">The top of the room</option>
-				{#each moveTargets as f (f.id)}
-					<option value={f.id}>{f.number} {f.name}</option>
-				{/each}
-			</select>
+			<ChoiceSelect label="Move to" class="w-full" bind:value={moveTo}
+				options={[{ value: '', label: 'The top of the room' }, ...moveTargets.map((f) => ({ value: f.id, label: `${f.number} ${f.name}` }))]}
+			/>
 			{#if dialogError}<p class="text-sm text-destructive" role="alert">{dialogError}</p>{/if}
 			<Dialog.Footer><Button type="submit">Move</Button></Dialog.Footer>
 		</form>
