@@ -11,7 +11,7 @@ cap. The domain is managed on the host with `openroom-server set-domain DOMAIN`;
 both Caddy and the app's public origin. Limits apply to new operations after saving.
 
 **Workspace appearance** provides a logo, brand colour and footer-credit setting, with live
-Documents/Entry previews with Fit to panel, 360 px Phone and 1280 px Desktop widths. Fixed-width samples show their scale and can be viewed at actual size inside the scrollable frame. Choose a PNG, JPEG or WebP logo under 700 KB;
+Documents/Entry previews with Fit to panel, 360 px Phone and 1280 px Desktop widths. The Phone preview centers a scrollable phone frame in the panel. When a device preview is scaled down, choose **Actual size** to inspect it at 100%. Choose a PNG, JPEG or WebP logo under 700 KB;
 OpenRoom re-encodes it to a PNG at most 512 pixels wide/high. SVG is refused. The logo also supplies
 a 64-pixel browser icon on investor pages; admin pages retain the OpenRoom icon.
 
