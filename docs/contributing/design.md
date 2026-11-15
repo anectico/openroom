@@ -5,6 +5,11 @@ workspace sections and recent rooms; a dialog exposes the same destinations, inc
 on a phone. The header gives location and account context. Warm neutral surfaces, a green primary
 color, consistent spacing and the existing Inter/Lucide/shadcn-svelte system carry through the app.
 
+Dashboard filters and form choices use the shared Select with a checked option, keyboard navigation and typeahead. Filter buttons and select triggers are 36 px tall on desktop and 44 px on phones. Action menus pair each command with a leading icon and separate destructive actions.
+The email provider selector bundles the [Resend brand icon](https://resend.com/brand) and the [Cloudflare Developers mark](https://developers.cloudflare.com/).
+
+Settings and room sections share responsive route navigation. Links wrap at wider sizes and collapse to a section menu when space is limited. In-page tab lists grow to fit their controls.
+
 ## Main flows
 
 - **Overview:** rooms and recent investor activity are primary. Four compact metrics, optional

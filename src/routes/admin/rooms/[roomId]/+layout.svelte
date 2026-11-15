@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { ChevronDown, FileText, Link2, Palette, Settings, ShieldCheck, Snowflake, Users } from '@lucide/svelte';
+	import { ChartColumn, FileText, FolderOpen, Inbox, Link2, MessagesSquare, Palette, Settings, ShieldCheck, Snowflake, Users } from '@lucide/svelte';
 	import { act, formatDate } from '#lib/admin/op.ts';
+	import SectionNav from '#lib/admin/SectionNav.svelte';
 	import * as Alert from '#lib/components/ui/alert/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
@@ -11,11 +12,11 @@
 	const base = $derived(`/admin/rooms/${data.room.id}`);
 	const canManage = $derived(data.member?.role !== 'observer');
 	const tabs = $derived([
-		{ href: base, label: 'Documents', show: true },
-		{ href: `${base}/links`, label: 'Sharing', show: canManage },
-		{ href: `${base}/activity`, label: 'Analytics', show: true },
-		{ href: `${base}/questions`, label: 'Questions', show: true },
-		{ href: `${base}/requests`, label: 'File requests', show: true },
+		{ href: base, label: 'Documents', icon: FolderOpen, show: true },
+		{ href: `${base}/links`, label: 'Sharing', icon: Link2, show: canManage },
+		{ href: `${base}/activity`, label: 'Analytics', icon: ChartColumn, show: true },
+		{ href: `${base}/questions`, label: 'Questions', icon: MessagesSquare, show: true },
+		{ href: `${base}/requests`, label: 'File requests', icon: Inbox, show: true },
 	].filter((tab) => tab.show));
 	const settings = $derived([
 		{
@@ -80,35 +81,5 @@
 {#if data.room.frozenAt}
 	<Alert.Root class="mb-5"><Snowflake /><Alert.Title>This room is frozen</Alert.Title><Alert.Description><span>Read only since {formatDate(data.room.frozenAt, data.timeZone)}.</span>{#if data.archive?.downloadUrl}<a class="ml-2 font-medium underline" href={data.archive.downloadUrl}>Download the archive</a>{:else if expired}<span>The archive’s retention period has ended.</span>{:else if !data.archive || ['failed', 'none'].includes(data.archive.status)}<span>The archive could not be built.</span>{#if canManage}<Button size="sm" variant="outline" disabled={retrying} onclick={retry}>Try again</Button>{/if}{:else}<span>Preparing the archive…</span>{/if}</Alert.Description></Alert.Root>
 {/if}
-<div class="@container mb-4 sm:mb-6">
-	<div class="border-b pb-1.5">
-		<nav class="hidden flex-wrap gap-1 @min-[32rem]:flex" aria-label="Room">
-			{#each tabs as tab (tab.href)}
-				<a
-					href={tab.href}
-					aria-current={selected(tab.href) ? 'page' : undefined}
-					class="inline-flex min-h-9 items-center rounded-md border border-transparent px-3 text-sm font-medium whitespace-nowrap text-muted-foreground transition-colors hover:bg-card/70 hover:text-foreground aria-[current=page]:border-primary/45 aria-[current=page]:bg-primary/10 aria-[current=page]:text-primary"
-				>{tab.label}</a>
-			{/each}
-		</nav>
-		<div class="min-w-0 @min-[32rem]:hidden">
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger>
-					{#snippet child({ props })}
-						<Button {...props} variant="outline" class="min-h-11 max-w-full" aria-label="Room section: {current}">
-							<span class="truncate">{current}</span><ChevronDown data-icon="inline-end" />
-						</Button>
-					{/snippet}
-				</DropdownMenu.Trigger>
-				<DropdownMenu.Content align="start" class="w-44">
-					<DropdownMenu.Group>
-						{#each tabs as tab (tab.href)}
-							<DropdownMenu.Item aria-current={selected(tab.href) ? 'page' : undefined} class="aria-[current=page]:font-semibold aria-[current=page]:text-primary" onSelect={() => goto(tab.href)}>{tab.label}</DropdownMenu.Item>
-						{/each}
-					</DropdownMenu.Group>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
-		</div>
-	</div>
-</div>
+<SectionNav label="Room" {tabs} activeHref={tabs.find((tab) => selected(tab.href))?.href} {current} />
 {#key data.room.id}{@render children()}{/key}
