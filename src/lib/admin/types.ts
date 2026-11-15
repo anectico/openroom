@@ -1,3 +1,9 @@
+export const downloadLabels = {
+	none: 'No downloads',
+	per_file: 'Each file',
+	zip: 'All allowed files as one zip',
+};
+
 export type LinkSettings = {
 	verifyEmail: boolean;
 	requireNda: boolean;

@@ -57,7 +57,7 @@ bucket for at least 30 days and keep the secret key off the server.
 ## Members
 
 Invite a member and choose owner, admin or observer. Without email, copy the one-time password-setup
-link and send it through your usual channel. The link expires after seven days. Pending invites can
+link and send it through your usual channel. The invitation confirmation shows the recipient, workspace role and expiry. The link expires after seven days. Pending invites can
 be replaced or canceled. Changing a member's role changes their API-key permissions on the next
 request. Removal ends their access. The last active owner cannot be removed or demoted.
 
@@ -66,7 +66,7 @@ request. Removal ends their access. The last active owner cannot be removed or d
 ## API keys
 
 Create a named key for an agent or script. Copy it immediately and store it securely; it is shown
-once. The result includes the REST and MCP addresses. A key acts as its member with the current
+once. The confirmation lists the key name, REST and MCP addresses, and authorization header format. A key acts as its member with the current
 role. Revoke unused keys; owners can revoke another member's keys too. Prefer a dedicated key for
 each automation. See [CLI and MCP](cli.md) for connection and upload details.
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ArrowRight, ArrowUpRight, ChevronDown, Copy, Eye, Mail } from '@lucide/svelte';
 	import { tick, untrack } from 'svelte';
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
  import * as Alert from '#lib/components/ui/alert/index.js';
 	import * as AlertDialog from '#lib/components/ui/alert-dialog/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
@@ -11,9 +12,10 @@
 	import { Textarea } from '#lib/components/ui/textarea/index.js';
 	import { renderMarkdown } from '#lib/markdown.ts';
 import { beforeNavigate, invalidateAll } from '$app/navigation';
-	import { copyText, formatDate, op } from './op.ts';
+	import LinkAccessSummary from './LinkAccessSummary.svelte';
+	import { copyText, op } from './op.ts';
 	import { openPreview } from './preview.ts';
-	import type { Link, LinkSettings } from './types.ts';
+	import { downloadLabels, type Link, type LinkSettings } from './types.ts';
 
 	let {
 		open = $bindable(false),
@@ -45,9 +47,6 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 		{ key: 'screenshotProtection', label: 'Screenshot protection' },
 		{ key: 'notifyEveryView', label: 'Notify me on every view' },
 	] as const;
-	const selectClass =
-		'h-11 sm:h-9 w-40 min-w-0 shrink rounded-md sm:w-52 border border-input bg-background px-3 text-sm focus-visible:ring-3 focus-visible:ring-ring/50 outline-none';
-	const downloadLabels = { none: 'No downloads', per_file: 'Each file', zip: 'All allowed files as one zip' };
 
 	let label = $state('');
 	let welcome = $state('');
@@ -237,15 +236,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 			<div class="flex min-h-0 flex-col">
 				<div class="flex min-h-0 flex-col gap-5 overflow-y-auto px-6 py-5">
 					<Field.Field><Field.Label for="created-link">{created.label}</Field.Label><Input id="created-link" readonly value={created.url} onclick={(event) => event.currentTarget.select()} /></Field.Field>
-					<dl class="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3 text-sm">
-						<dt class="text-muted-foreground">Audience</dt><dd class="break-words">{created.open ? 'Anyone with the link who enters an email' : created.allow.map((entry) => entry.value).join(', ') || 'No allowed emails'}</dd>
-						<dt class="text-muted-foreground">Welcome</dt><dd>{created.welcomeMarkdown ? 'Personal note after access checks' : 'Room introduction'}</dd>
-						<dt class="text-muted-foreground">Documents</dt><dd class="break-words">{created.groupName ?? 'All documents in this room'}</dd>
-						<dt class="text-muted-foreground">Protection</dt><dd>{[created.settings.verifyEmail ? 'Verified email' : 'Unverified email', created.settings.requireNda ? 'NDA required' : 'No NDA', created.settings.watermark ? 'Watermarked' : 'No watermark', ...(created.hasPassword ? ['Password required'] : [])].join(' · ')}</dd>
-						<dt class="text-muted-foreground">Downloads</dt><dd>{downloadLabels[created.settings.downloads]}</dd>
-						<dt class="text-muted-foreground">Expires</dt><dd>{created.expiresAt ? formatDate(created.expiresAt, timeZone) : 'No expiry'}</dd>
-					</dl>
-					{#if created.settings.downloads !== 'per_file'}<p class="text-xs text-muted-foreground">Download-only files remain downloadable. Use a document group to hide files that should not be shared.</p>{/if}
+					<LinkAccessSummary link={created} {timeZone} />
 					{@render verificationHelp(created.settings.verifyEmail, created.open)}
 					<div class="flex flex-wrap gap-2"><Button bind:ref={copyButton} class="min-h-11" onclick={() => created && copyText(created.url, 'Link copied')}><Copy data-icon="inline-start" />Copy link</Button><Button variant="outline" class="min-h-11" onclick={() => created && openPreview(created.id)}><Eye data-icon="inline-start" />Preview as investor</Button></div>
 					{#if individualEmails.length && emailReady}<div class="flex flex-col gap-2"><Button variant="outline" class="min-h-11 w-full" disabled={sendingInvite || invitationSent} onclick={sendInvitation}><Mail data-icon="inline-start" />{sendingInvite ? 'Sending…' : invitationSent ? 'Invitation queued' : 'Email invitation'}</Button><p class="break-words text-xs text-muted-foreground">To: {individualEmails.map((entry) => entry.value).join(', ')}. Domain entries are not emailed.</p></div>{:else}<p class="text-xs text-muted-foreground">{emailReady ? 'Copy the link to invite this audience. Email invitations need individual email addresses on the allow list.' : 'Copy the link to share it with your audience.'}</p>{/if}
@@ -261,10 +252,9 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 					<Field.Field><Field.Label for="link-label">Link name</Field.Label><Input id="link-label" required maxlength={120} placeholder="e.g. Northstar Capital" bind:value={label} /><Field.Description>Only your team sees this name.</Field.Description></Field.Field>
 					<Field.Field>
 						<Field.Label for="link-audience">Who can enter?</Field.Label>
-						<select id="link-audience" class="h-11 w-full rounded-md border border-input bg-background px-3 text-sm" bind:value={isOpen}>
-							<option value={false}>Only allowed emails or domains</option>
-							<option value={true}>Anyone with the link</option>
-						</select>
+						<ChoiceSelect id="link-audience" class="min-h-11 w-full" bind:value={() => isOpen ? 'any' : 'restricted', (v) => (isOpen = v === 'any')}
+							options={[{ value: 'restricted', label: 'Only allowed emails or domains' }, { value: 'any', label: 'Anyone with the link' }]}
+						/>
 					</Field.Field>
 					{#if !isOpen}
 						<Field.Field>
@@ -276,15 +266,15 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 					<Field.Field>
 						<div class="flex flex-wrap items-center justify-between gap-2">
 							<Field.Label for="choice-verifyEmail">Email verification</Field.Label>
-							<select id="choice-verifyEmail" class={selectClass} bind:value={choices.verifyEmail}>
-								<option value="room">Room default ({defaults.verifyEmail ? 'on' : 'off'})</option>
-								<option value="on" disabled={!emailReady && choices.verifyEmail !== 'on'}>On</option>
-								<option value="off">Off</option>
-							</select>
+							<ChoiceSelect id="choice-verifyEmail" class="min-h-11" bind:value={choices.verifyEmail}
+								options={[{ value: 'room', label: `Room default (${defaults.verifyEmail ? 'on' : 'off'})` }, { value: 'on', label: 'On', disabled: !emailReady && choices.verifyEmail !== 'on' }, { value: 'off', label: 'Off' }]}
+							/>
 						</div>
 						{@render verificationHelp(effective('verifyEmail'), isOpen)}
 					</Field.Field>
-					<Field.Field><Field.Label for="link-group">Document access</Field.Label><select id="link-group" class="min-h-11 w-full rounded-md border border-input bg-background px-3 text-sm" bind:value={groupId}><option value="">All documents in this room</option>{#if groupId && !availableGroups.some((group) => group.id === groupId)}<option value={groupId} disabled>Selected group is no longer available</option>{/if}{#each availableGroups as group (group.id)}<option value={group.id}>{group.name}</option>{/each}</select><Field.Description>{groupId ? 'Only documents available to this group are visible.' : 'Includes documents added to this room later.'}</Field.Description><details class="group">
+					<Field.Field><Field.Label for="link-group">Document access</Field.Label><ChoiceSelect id="link-group" class="min-h-11 w-full" bind:value={groupId}
+						options={[{ value: '', label: 'All documents in this room' }, ...(groupId && !availableGroups.some((group) => group.id === groupId) ? [{ value: groupId, label: 'Selected group is no longer available', disabled: true }] : []), ...availableGroups.map((group) => ({ value: group.id, label: group.name }))]}
+					/><Field.Description>{groupId ? 'Only documents available to this group are visible.' : 'Includes documents added to this room later.'}</Field.Description><details class="group">
 							<summary class="inline-flex min-h-9 cursor-pointer list-none items-center gap-1 text-sm font-medium">{groupId ? 'Manage group access' : 'Choose specific documents'}<ChevronDown class="size-4 group-open:rotate-180" /></summary>
 							<p class="mb-1 text-xs text-muted-foreground">Edit groups in a new tab, then refresh this list.</p>
 							<div class="flex flex-wrap items-center gap-2">
@@ -297,9 +287,13 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 					<details class="group rounded-xl border">
 						<summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3.5"><span><span class="block text-sm font-medium">Document protection</span><span class="mt-1 block text-[11px] text-muted-foreground">{effective('watermark') ? 'Watermarked' : 'No watermark'} · {effective('requireNda') ? 'NDA required' : 'No NDA'} · {downloadLabels[downloads === 'room' ? defaults.downloads : downloads]}</span></span><ChevronDown class="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" /></summary>
 						<div class="flex flex-col gap-4 border-t px-4 py-4">
-							{#each toggles.filter((item) => item.key !== 'verifyEmail') as toggle (toggle.key)}<Field.Field orientation="horizontal"><Field.Label for="choice-{toggle.key}" class="min-w-0 text-xs">{toggle.label}</Field.Label><select id="choice-{toggle.key}" class={selectClass} bind:value={choices[toggle.key]}><option value="room">Room default ({defaults[toggle.key] ? 'on' : 'off'})</option><option value="on" disabled={toggle.key === 'requireNda' && !hasNda && choices[toggle.key] !== 'on'}>On</option><option value="off">Off</option></select></Field.Field>{/each}
+							{#each toggles.filter((item) => item.key !== 'verifyEmail') as toggle (toggle.key)}<Field.Field orientation="horizontal"><Field.Label for="choice-{toggle.key}" class="min-w-0 text-xs">{toggle.label}</Field.Label><ChoiceSelect id="choice-{toggle.key}" class="min-h-11" bind:value={choices[toggle.key]}
+								options={[{ value: 'room', label: `Room default (${defaults[toggle.key] ? 'on' : 'off'})` }, { value: 'on', label: 'On', disabled: toggle.key === 'requireNda' && !hasNda && choices[toggle.key] !== 'on' }, { value: 'off', label: 'Off' }]}
+							/></Field.Field>{/each}
 							{#if !hasNda}<p class="text-[11px] text-muted-foreground">Add NDA text in Room settings before requiring an agreement.</p>{/if}
-							<Field.Field orientation="horizontal"><Field.Label for="choice-downloads" class="text-xs">Downloads</Field.Label><select id="choice-downloads" class={selectClass} bind:value={downloads}><option value="room">Room default ({downloadLabels[defaults.downloads]})</option><option value="none">No downloads</option><option value="per_file">Each file</option><option value="zip">All allowed files as one zip</option></select></Field.Field>
+							<Field.Field orientation="horizontal"><Field.Label for="choice-downloads" class="text-xs">Downloads</Field.Label><ChoiceSelect id="choice-downloads" class="min-h-11" bind:value={downloads}
+								options={[{ value: 'room', label: `Room default (${downloadLabels[defaults.downloads]})` }, { value: 'none', label: 'No downloads' }, { value: 'per_file', label: 'Each file' }, { value: 'zip', label: 'All allowed files as one zip' }]}
+							/></Field.Field>
 							<p class="text-xs leading-relaxed text-muted-foreground">Download-only files stay downloadable even with “No downloads”. Choose a document group above to hide them.</p>
 						</div>
 					</details>

@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { CalendarDays, Copy, Mail, ShieldCheck } from '@lucide/svelte';
 	import { tick } from 'svelte';
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
 	import DangerAction from '#lib/admin/DangerAction.svelte';
+	import DetailSummary from '#lib/admin/DetailSummary.svelte';
 	import { act, attempt, copyText, formatDate } from '#lib/admin/op.ts';
 	import When from '#lib/admin/When.svelte';
 	import { Badge } from '#lib/components/ui/badge/index.js';
@@ -11,8 +14,6 @@
 	import * as Table from '#lib/components/ui/table/index.js';
 
 	let { data } = $props();
-	const selectClass =
-		'h-9 rounded-md border border-input bg-background px-2 text-sm focus-visible:ring-3 focus-visible:ring-ring/50 outline-none';
 	const roleHelp = {
 		owner: 'Everything, including members and install settings.',
 		admin: 'Rooms, files, links and investors; not members, install settings or deleting rooms.',
@@ -23,12 +24,13 @@
 	let resultOpen = $state(false);
 	let email = $state('');
 	let role = $state<'owner' | 'admin' | 'observer'>('admin');
-	let created = $state<{ url: string; emailed: boolean; email: string } | null>(null);
+	type Invitation = (typeof data.invites)[number] & { url: string; emailed: boolean };
+	let created = $state<Invitation | null>(null);
 	let inviteError = $state('');
 
 	async function invite(event: SubmitEvent) {
 		event.preventDefault();
-		const r = await attempt<{ url: string; emailed: boolean; email: string }>('invite_member', { email, role });
+		const r = await attempt<Invitation>('invite_member', { email, role });
 		if (!r.ok) {
 			inviteError = r.error;
 			return;
@@ -43,7 +45,7 @@
 	}
 
 	async function resend(id: string) {
-		const r = await act<{ url: string; emailed: boolean; email: string }>('resend_invite', { inviteId: id });
+		const r = await act<Invitation>('resend_invite', { inviteId: id });
 		if (r) {
 			created = r;
 			resultOpen = true;
@@ -52,10 +54,7 @@
 
 	const copy = (text: string) => copyText(text);
 
-	async function changeRole(select: HTMLSelectElement, memberId: string, previous: string) {
-		const r = await act('change_member_role', { memberId, role: select.value }, 'Role changed');
-		if (!r) select.value = previous;
-	}
+	const roleOptions = [{ value: 'admin', label: 'Admin' }, { value: 'observer', label: 'Observer' }, { value: 'owner', label: 'Owner' }] as const;
 </script>
 
 <svelte:head><title>Members · Settings · OpenRoom</title></svelte:head>
@@ -82,16 +81,9 @@
 						<p class="text-xs break-all text-muted-foreground">{m.email}{m.id === data.member?.id ? ' (you)' : ''}</p><p class="mt-1 text-[11px] text-muted-foreground sm:hidden">Active <When at={m.lastActiveAt} timeZone={data.timeZone} /></p>
 					</Table.Cell>
 					<Table.Cell class="p-0 sm:p-2">
-						<select
-							aria-label="Role of {m.email}"
-							class={selectClass}
-							value={m.role}
-							onchange={(e) => changeRole(e.currentTarget as HTMLSelectElement, m.id, m.role)}
-						>
-							<option value="owner">Owner</option>
-							<option value="admin">Admin</option>
-							<option value="observer">Observer</option>
-						</select>
+						<ChoiceSelect label="Role of {m.email}" bind:value={() => m.role, (role) => act('change_member_role', { memberId: m.id, role }, 'Role changed')}
+							options={roleOptions}
+						/>
 					</Table.Cell>
 					<Table.Cell class="hidden text-sm text-muted-foreground sm:table-cell"><When at={m.lastActiveAt} timeZone={data.timeZone} /></Table.Cell>
 					<Table.Cell class="col-span-2 p-0 pt-2 empty:hidden sm:table-cell sm:p-2">
@@ -142,11 +134,9 @@
 				</div>
 				<div class="space-y-2">
 					<Label for="invite-role">Role</Label>
-					<select id="invite-role" class="{selectClass} w-full" bind:value={role}>
-						<option value="admin">Admin</option>
-						<option value="observer">Observer</option>
-						<option value="owner">Owner</option>
-					</select>
+					<ChoiceSelect id="invite-role" class="w-full" bind:value={role}
+						options={roleOptions}
+					/>
 					<p class="text-xs text-muted-foreground">{roleHelp[role]}</p>
 				</div>
 				{#if inviteError}<p class="text-sm text-destructive" role="alert">{inviteError}</p>{/if}
@@ -158,19 +148,26 @@
 </Dialog.Root>
 
 <Dialog.Root bind:open={resultOpen}>
-	<Dialog.Content>
+	<Dialog.Content class="max-h-[90dvh] overflow-y-auto">
 		{#if created}
 			<Dialog.Header>
 				<Dialog.Title>Invite ready</Dialog.Title>
 				<Dialog.Description>
 					{created.emailed
-						? `We emailed ${created.email} the link below.`
-						: `Send this link to ${created.email}. It works once and for 7 days.`}
+						? 'The one-time invitation is queued for email delivery.'
+						: 'Copy the one-time link and send it to the recipient.'}
 				</Dialog.Description>
 			</Dialog.Header>
-			<div class="flex gap-2">
+			<DetailSummary label="Invitation details"
+				primary={{ label: 'Recipient', value: created.email, icon: Mail }}
+				details={[
+					{ label: 'Workspace role', value: created.role[0].toUpperCase() + created.role.slice(1), icon: ShieldCheck },
+					{ label: 'Expires', value: formatDate(created.expiresAt, data.timeZone), icon: CalendarDays },
+				]}
+			/>
+			<div class="flex min-w-0 gap-2">
 				<Input readonly value={created.url} aria-label="Invite link" />
-				<Button variant="outline" onclick={() => created && copy(created.url)}>Copy</Button>
+				<Button variant="outline" onclick={() => created && copy(created.url)}><Copy aria-hidden="true" />Copy link</Button>
 			</div>
 		{/if}
 		<Dialog.Footer>

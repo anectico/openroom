@@ -51,7 +51,8 @@ when documents live in S3.
 Open a room and choose **Share room** (or **Share** on a phone). Give it a label and choose approved email addresses or domains, or make
 it open. Each link has its own URL, optional password and expiry. Copy its URL directly from the
 list. After creating a link, review its audience, document group, protection, downloads and expiry
-in the completion dialog. **Copy link** and **Preview as investor** are available immediately.
+in the completion dialog. Generating a replacement address shows the same access summary.
+In the Sharing list, the Protection column shows whether visitors must enter an email code. Password, NDA and watermark requirements appear underneath when enabled. **Copy link** and **Preview as investor** are available immediately.
 **Email invitation** appears when email is configured and the allow list contains individual email
 addresses; clicking it queues invitations and reports any skipped addresses. Domain entries are not
 emailed. Creating the link alone never sends an invitation.

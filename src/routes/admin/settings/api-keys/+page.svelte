@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { Cable, Copy, Globe, KeyRound } from '@lucide/svelte';
 	import { tick } from 'svelte';
 	import DangerAction from '#lib/admin/DangerAction.svelte';
+	import DetailSummary from '#lib/admin/DetailSummary.svelte';
 	import { attempt, copyText, formatDate } from '#lib/admin/op.ts';
 	import When from '#lib/admin/When.svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
@@ -13,14 +15,15 @@
 	let open = $state(false);
 	let resultOpen = $state(false);
 	let name = $state('');
-	let created = $state<{ key: string; mcpUrl: string; apiUrl: string } | null>(null);
+	type CreatedKey = { name: string; key: string; mcpUrl: string; apiUrl: string };
+	let created = $state<CreatedKey | null>(null);
 	let error = $state('');
 	const mine = $derived(data.keys.filter((k) => k.memberId === data.member?.id));
 	const others = $derived(data.keys.filter((k) => k.memberId !== data.member?.id));
 
 	async function create(event: SubmitEvent) {
 		event.preventDefault();
-		const r = await attempt<{ key: string; mcpUrl: string; apiUrl: string }>('create_api_key', { name });
+		const r = await attempt<CreatedKey>('create_api_key', { name });
 		if (!r.ok) {
 			error = r.error;
 			return;
@@ -113,23 +116,31 @@
 </Dialog.Root>
 
 <Dialog.Root bind:open={resultOpen} onOpenChange={(o) => { if (!o) created = null; }}>
-	<Dialog.Content class="sm:max-w-2xl">
+	<Dialog.Content class="max-h-[90dvh] overflow-y-auto sm:max-w-2xl">
 		{#if created}
 			<Dialog.Header>
 				<Dialog.Title>Your new API key</Dialog.Title>
-				<Dialog.Description>Copy it now; it is shown only once.</Dialog.Description>
+				<Dialog.Description>Copy your key now. It is shown only once.</Dialog.Description>
 			</Dialog.Header>
-			<div class="space-y-4">
-				<div class="flex gap-2">
-					<Input readonly value={created.key} aria-label="API key" class="font-mono" />
-					<Button variant="outline" onclick={() => created && copy(created.key)}>Copy</Button>
-				</div>
-				<div class="space-y-1">
-					<Label>MCP endpoint</Label><p class="font-mono text-xs break-all">{created.mcpUrl} · Authorization: Bearer &lt;key&gt;</p>
-					<Label>REST API</Label>
-					<p class="font-mono text-xs break-all">{created.apiUrl} · Authorization: Bearer &lt;key&gt;</p>
+			<div class="space-y-2">
+				<Label for="created-api-key">API key</Label>
+				<div class="flex min-w-0 gap-2">
+					<Input id="created-api-key" readonly value={created.key} class="font-mono" />
+					<Button variant="outline" onclick={() => created && copy(created.key)}><Copy aria-hidden="true" />Copy key</Button>
 				</div>
 			</div>
+			<DetailSummary label="API connection details"
+				primary={{ label: 'Key name', value: created.name, icon: KeyRound }}
+				details={[
+					{ label: 'MCP endpoint', value: created.mcpUrl, icon: Cable },
+					{ label: 'REST API', value: created.apiUrl, icon: Globe },
+				]}
+			>
+				<div class="col-span-full flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t px-4 py-3">
+					<dt class="text-xs text-muted-foreground">Request header</dt>
+					<dd class="font-mono text-xs">Authorization: Bearer &lt;key&gt;</dd>
+				</div>
+			</DetailSummary>
 		{/if}
 		<Dialog.Footer>
 			<Button onclick={() => { resultOpen = false; created = null; }}>Done</Button>
