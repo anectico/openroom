@@ -75,7 +75,7 @@ export async function indexPdf(roomId: string, roomName: string) {
 	);
 	y -= 8;
 	for (const r of rows(roomId)) {
-		const indent = margin + r.depth * 14;
+		const indent = margin + Math.min(r.depth, 20) * 14;
 		line(
 			`${r.number}  ${r.title}${r.type === 'Folder' ? '' : `  (${r.type})`}`,
 			11,

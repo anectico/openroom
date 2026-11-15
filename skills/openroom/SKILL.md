@@ -8,7 +8,7 @@ description: Install and operate an OpenRoom investor data room through its MCP 
 
 Use the installed server's Streamable HTTP `/mcp` with a bearer API key. Start with `get_me` and
 `tools/list`; the operation schemas are the source of truth. REST is at `/api/v1` with its OpenAPI
-document at `/api/v1/openapi.json`. The generated CLI uses the same operations with hyphenated names.
+document at `/api/v1/openapi.json`. The generated CLI uses the same operations with hyphenated names. Set the server with `OPENROOM_URL`; the `--url` field after `create-webhook` or `upload-from-url` is the external destination.
 Never expose API keys, member passwords or `OPENROOM_SECRET_KEY` in chat or committed files.
 
 ## Choose the workflow

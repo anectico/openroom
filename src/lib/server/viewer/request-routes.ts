@@ -10,12 +10,13 @@ type Event = Parameters<typeof requireViewer>[0] & {
 	url: URL;
 };
 
-export function requestContext(event: Event) {
+export function requestContext(event: Event, stage: 'start' | 'finish') {
 	if (!sameOrigin(event.request, event.url)) error(403, 'Forbidden');
 	const ctx = requireViewer(event);
 	const request = requestFor(ctx, event.params.requestId);
 	if (!request) error(404, 'This request is closed or no longer open to you.');
-	if (!hit(`req-upload:${ctx.session.id}`, 40, 60 * 60_000)) error(429, 'Too many uploads. Try again later.');
+	if (!hit(`req-upload:${stage}:${ctx.session.id}`, 40, 60 * 60_000))
+		error(429, 'Too many uploads. Try again later.');
 	return { ctx, request };
 }
 

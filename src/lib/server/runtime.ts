@@ -44,10 +44,8 @@ function defineCoreJobs() {
 	defineJob('objects.cleanup', () => cleanupReleasedObjects(), { everyMs: day });
 	defineJob('objects.sweep', () => sweepStrayObjects(), { everyMs: 7 * day });
 	defineJob('system.health', checkSystemHealth, { everyMs: 60_000 });
-	defineJob('email.send', runEmailJob);
-	defineJob('email.reset', runEmailJob);
-	defineJob('email.code', runEmailJob);
-	defineJob('email.notice', runEmailJob);
+	for (const kind of ['email.send', 'email.reset', 'email.code', 'email.notice'] as const)
+		defineJob(kind, (payload) => runEmailJob(payload, kind));
 	defineJob('privacy.cleanup', cleanupErasedFiles);
 	defineJob('files.pages', runPageCount);
 	defineJob('storage.transfer', runStorageTransfer);

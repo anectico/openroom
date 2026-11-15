@@ -78,7 +78,7 @@ export async function runWebhookJob(payload: unknown) {
 	>[0] & {
 		created_at: number;
 	};
-	if (!n) return;
+	if (!n || (hook.events && !(JSON.parse(hook.events) as string[]).includes(n.event))) return;
 	const room = n.room_id
 		? (sqlite().prepare('SELECT name FROM rooms WHERE id = ?').get(n.room_id) as { name: string } | undefined)
 		: undefined;

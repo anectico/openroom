@@ -56,6 +56,16 @@ export function findExport(id: string) {
 	return sqlite().prepare('SELECT * FROM exports WHERE id = ?').get(id) as ExportRow | undefined;
 }
 
+export function memberExport(id: string, userId: string, role: string) {
+	const row = findExport(id);
+	return row &&
+		row.requested_by_user === userId &&
+		row.expires_at > Date.now() &&
+		(row.kind !== 'viewer_data' || role === 'owner' || role === 'admin')
+		? row
+		: undefined;
+}
+
 type Entry = { path: string; key: string; size: number };
 
 function entries(tree: TreeNode[]): Entry[] {

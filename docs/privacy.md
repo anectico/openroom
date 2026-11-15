@@ -4,7 +4,7 @@ Admins can open an investor profile and choose **Export their data** for a JSON 
 sessions, answers, NDA acceptances, reads, events, private question threads and file-request upload
 metadata. Session-owned questions and uploads are included even when their row has no verified
 viewer ID. The export excludes tokens, verification codes, credentials and file contents. It expires
-after 24 hours and is audited.
+after 24 hours and is audited. Both download routes recheck that the requester is still an admin or owner.
 
 ## Erase an investor
 
@@ -24,7 +24,7 @@ Some evidence is deliberately retained:
 
 - Existing NDA acceptance records retain the agreement evidence and the accepted name and email.
 - Existing email blocks keep their keyed hash so a blocked investor cannot regain access by asking
-  for erasure. Their display address is removed. Unblock by typing the email on the Investors page.
+  for erasure. Their display address is removed. When replacing a link’s block list, keep the displayed “Erased investor” entry to retain its redacted blocks. Unblock by typing the email on the Investors page.
 - The audit record retains who performed erasure, when and the investor ID.
 - Database backups, rollback snapshots, downloaded copies and released document objects are separate
   from live application records. Released bytes remain retained for recovery. Automatic object

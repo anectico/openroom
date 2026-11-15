@@ -199,9 +199,9 @@ function documents(roomId: string, roomName: string) {
 export async function runArchive(payload: unknown) {
 	const { exportId } = payload as { exportId: string };
 	const row = sqlite().prepare('SELECT * FROM exports WHERE id = ?').get(exportId) as
-		| { room_id: string; status: string }
+		| { room_id: string; status: string; expires_at: number }
 		| undefined;
-	if (!row || row.status === 'ready') return;
+	if (!row || row.status === 'ready' || row.expires_at <= Date.now()) return;
 	const room = sqlite().prepare('SELECT name FROM rooms WHERE id = ?').get(row.room_id) as
 		| { name: string }
 		| undefined;
@@ -277,7 +277,9 @@ export async function runArchive(payload: unknown) {
 
 export function latestArchive(roomId: string) {
 	return sqlite()
-		.prepare("SELECT * FROM exports WHERE kind = 'archive' AND room_id = ? ORDER BY created_at DESC LIMIT 1")
+		.prepare(
+			"SELECT * FROM exports WHERE kind = 'archive' AND room_id = ? ORDER BY created_at DESC, rowid DESC LIMIT 1",
+		)
 		.get(roomId) as
 		| {
 				id: string;

@@ -15,8 +15,21 @@ RESTORE_TIME=""
 RESTORE_SECRET=""
 
 log() { [[ "$JSON" == "1" ]] && echo "$*" >&2 || echo "$*"; }
+json_string() {
+	local LC_ALL=C value="$1" char i
+	printf '"'
+	for ((i=0; i<${#value}; i++)); do
+		char="${value:i:1}"
+		case "$char" in
+			'"'|'\') printf '\\%s' "$char" ;;
+			[[:cntrl:]]) printf '\\u%04x' "'$char" ;;
+			*) printf '%s' "$char" ;;
+		esac
+	done
+	printf '"'
+}
 die() {
-	if [[ "$JSON" == "1" ]]; then printf '{"ok":false,"error":"%s"}\n' "$*"; else echo "install: $*" >&2; fi
+	if [[ "$JSON" == "1" ]]; then printf '{"ok":false,"error":%s}\n' "$(json_string "$*")"; else echo "install: $*" >&2; fi
 	exit 1
 }
 
@@ -40,7 +53,14 @@ Install OpenRoom on this server.
 USAGE
 }
 
+for arg in "$@"; do
+	[[ "$arg" != "--json" ]] || { JSON=1; YES=1; }
+done
 while [[ $# -gt 0 ]]; do
+	case "$1" in
+		--email|--domain|--version|--dir|--restore-from|--restore-at|--secret-key|--source)
+			[[ $# -ge 2 && -n "$2" && "$2" != --* ]] || die "missing value for $1" ;;
+	esac
 	case "$1" in
 		--email) EMAIL="$2"; shift 2 ;;
 		--domain) DOMAIN="$2"; shift 2 ;;
@@ -106,6 +126,7 @@ if [[ -z "$VERSION" ]]; then
 	[[ -n "$VERSION" ]] || die "could not find the latest release; pass --version"
 fi
 VERSION="v${VERSION#v}"
+[[ "$VERSION" =~ ^v[A-Za-z0-9][A-Za-z0-9._-]{0,126}$ ]] || die "invalid release version"
 SOURCE="${SOURCE:-https://raw.githubusercontent.com/$REPO/$VERSION/deploy}"
 
 if command -v ufw >/dev/null 2>&1 && ufw status 2>/dev/null | grep -q "Status: active"; then
@@ -119,7 +140,9 @@ port_busy() {
 	command -v ss >/dev/null 2>&1 && ss -ltnH "sport = :$1" 2>/dev/null | grep -q .
 }
 for port in 80 443; do
-	if port_busy "$port" && ! docker ps --format '{{.Ports}}' 2>/dev/null | grep -q ":$port->"; then
+	transport=tcp
+	[[ "$port" != 443 ]] || transport='(tcp|udp)'
+	if port_busy "$port" || docker ps --format '{{.Ports}}' | grep -E ":${port}->[0-9]+/${transport}" >/dev/null; then
 		die "port $port is already used by another program (often apache or nginx). Stop it, then run this again."
 	fi
 done
@@ -146,12 +169,13 @@ if [[ -n "$RESTORE_SOURCE" ]]; then
 	ADMIN_PASSWORD=""
 fi
 umask 077
+dotenv_email="${EMAIL//\'/\\\'}"
 cat > "$DIR/.env" <<ENV
-ADMIN_EMAIL=$EMAIL
+ADMIN_EMAIL='$dotenv_email'
 ADMIN_PASSWORD=$ADMIN_PASSWORD
 OPENROOM_SECRET_KEY='$SECRET_KEY'
 DOMAIN=$DOMAIN
-ACME_EMAIL=$EMAIL
+ACME_EMAIL='$dotenv_email'
 OPENROOM_IMAGE=$IMAGE_REPO:${VERSION#v}
 OPENROOM_PREVIOUS_IMAGE=
 ENV
@@ -200,13 +224,13 @@ fi
 URL="https://$DOMAIN"
 if [[ -n "$RESTORE_SOURCE" ]]; then
 	if [[ "$JSON" == "1" ]]; then
-		printf '{"ok":true,"restored":true,"url":"%s","dir":"%s","version":"%s"}\n' "$URL" "$DIR" "$VERSION"
+		printf '{"ok":true,"restored":true,"url":%s,"dir":%s,"version":%s}\n' "$(json_string "$URL")" "$(json_string "$DIR")" "$(json_string "$VERSION")"
 	else
 		log "OpenRoom restored at $URL. Sign in with the existing account. Keep the secret key and the old server stopped. Run openroom-server doctor to confirm backups."
 	fi
 elif [[ "$JSON" == "1" ]]; then
-	printf '{"ok":true,"url":"%s","admin_email":"%s","admin_password":"%s","secret_key":"%s","dir":"%s","version":"%s"}\n' \
-		"$URL" "$EMAIL" "$ADMIN_PASSWORD" "$SECRET_KEY" "$DIR" "$VERSION"
+	printf '{"ok":true,"url":%s,"admin_email":%s,"admin_password":%s,"secret_key":%s,"dir":%s,"version":%s}\n' \
+		"$(json_string "$URL")" "$(json_string "$EMAIL")" "$(json_string "$ADMIN_PASSWORD")" "$(json_string "$SECRET_KEY")" "$(json_string "$DIR")" "$(json_string "$VERSION")"
 else
 	cat <<DONE
 

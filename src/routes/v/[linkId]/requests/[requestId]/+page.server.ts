@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { requestFor, uploadsFor } from '#lib/server/requests.ts';
+import { requestFor, requestSizeLimit, uploadsFor } from '#lib/server/requests.ts';
 import { requireViewer } from '#lib/server/viewer/context.ts';
 import type { PageServerLoad } from './$types';
 
@@ -12,7 +12,7 @@ export const load: PageServerLoad = (event) => {
 			id: r.id,
 			title: r.title,
 			description: r.description,
-			maxSize: r.max_size,
+			maxSize: requestSizeLimit(r),
 			dueAt: r.due_at,
 			closedAt: r.closed_at,
 		},

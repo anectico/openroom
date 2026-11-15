@@ -152,7 +152,7 @@ export const setLogo = defineOperation({
 			throw new OpError(403, 'forbidden', 'Install branding needs the owner role.');
 		const room = input.roomId ? writableRoom(input.roomId) : null;
 		let key: string | null = null;
-		if (input.imageBase64) {
+		if (input.imageBase64 !== null) {
 			try {
 				key = await storeBrandImage(input.imageBase64, 'logo');
 			} catch (e) {

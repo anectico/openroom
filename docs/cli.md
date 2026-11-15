@@ -19,8 +19,10 @@ For an unpublished local release, install the tarball from `artifacts/release/` 
 Its command is then `/tmp/openroom-client/node_modules/.bin/openroom`.
 
 Set `OPENROOM_URL` to the server's HTTPS root and `OPENROOM_API_KEY` through your local secret
-manager or secure shell input. Avoid putting a key in shell history. `--url` and `--api-key` also
-exist. Plain HTTP is allowed only on loopback for local development. Redirects are refused.
+manager or secure shell input. Avoid putting a key in shell history. Global flags must precede
+the command: `openroom --url https://rooms.example.com get-me`. For `create-webhook` and
+`upload-from-url`, the `--url` **after** the command is the receiver or file source. The CLI sends
+the bearer key only to the configured OpenRoom server. Plain HTTP is allowed only on loopback for local development. Redirects are refused.
 
 ```sh
 openroom get-me

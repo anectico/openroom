@@ -59,10 +59,10 @@ export function systemStatus() {
 			text: 'Files and backups are on this server. Add S3 to protect them if the server is lost.',
 			href: '/admin/settings/storage',
 		});
-	else if (!replicaOk)
+	if (!replicaOk)
 		warnings.push({
 			code: 'replication_stopped',
-			text: 'The database backup has not been confirmed recently. Check replication before relying on off-server backups.',
+			text: 'The database backup has not been confirmed recently. Check replication before relying on backups.',
 			href: '/admin/settings/storage',
 		});
 	if (diskLow)
@@ -109,9 +109,7 @@ export function checkSystemHealth() {
 		['disk_low', status.diskLow],
 		[
 			'replication_stopped',
-			status.s3Ready &&
-				!status.replication.ok &&
-				Date.now() - Number(getSetting('replication.started_at') ?? 0) > 90_000,
+			!status.replication.ok && Date.now() - Number(getSetting('replication.started_at') ?? 0) > 90_000,
 		],
 	] as const) {
 		const key = `health.${event}`;

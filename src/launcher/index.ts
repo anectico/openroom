@@ -31,13 +31,13 @@ let activeRoot: string | null = null;
 let activePrefix: string | null = null;
 let signature: string | null = null;
 let configuration = Promise.resolve();
+let requested = 0;
 
 function waitForExit(child: ChildProcess | null, ms: number) {
 	return new Promise<void>((done) => {
 		if (!child || child.exitCode !== null || child.signalCode !== null) return done();
 		const timer = setTimeout(() => {
 			child.kill('SIGKILL');
-			done();
 		}, ms);
 		child.once('close', () => {
 			clearTimeout(timer);
@@ -77,14 +77,11 @@ function startLitestream() {
 		}, restartDelay);
 		restartDelay = Math.min(restartDelay * 2, 60_000);
 	});
-	child.on('spawn', () => {
-		litestreamDownSince = null;
-	});
 }
 
 async function configure(config: S3Config | null) {
 	const nextSignature = JSON.stringify(config);
-	if (signature === nextSignature) return;
+	if (signature === nextSignature && litestream) return;
 	configuring = true;
 	if (restartTimer) clearTimeout(restartTimer);
 	const previous = litestream;
@@ -122,11 +119,15 @@ async function configure(config: S3Config | null) {
 }
 
 function requestConfiguration(config: S3Config | null) {
+	const revision = ++requested;
 	configuration = configuration
-		.then(() => configure(config))
+		.then(() => (revision === requested && !shuttingDown ? configure(config) : undefined))
 		.catch(() => {
 			litestreamDownSince ??= Date.now();
-			if (!shuttingDown) restartTimer = setTimeout(() => requestConfiguration(config), 30_000);
+			if (!shuttingDown && revision === requested)
+				restartTimer = setTimeout(() => {
+					if (revision === requested) requestConfiguration(config);
+				}, 30_000);
 		});
 }
 
@@ -138,7 +139,10 @@ setInterval(async () => {
 		if (litestream) {
 			const child = litestream;
 			const result = await probeReplication();
-			if (child === litestream) report(result.ok, result.error, result.checkedAt);
+			if (child === litestream) {
+				if (result.ok) litestreamDownSince = null;
+				report(result.ok, result.error, result.checkedAt);
+			}
 		} else {
 			litestreamDownSince ??= Date.now();
 			const now = Date.now();

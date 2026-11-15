@@ -177,8 +177,8 @@ export const setGroupAccess = defineOperation({
 	input: z
 		.object({
 			groupId: z.string(),
-			folderId: z.string().optional(),
-			fileId: z.string().optional(),
+			folderId: z.string().min(1).optional(),
+			fileId: z.string().min(1).optional(),
 			access: z.enum(['view', 'none', 'inherit']),
 		})
 		.refine((v) => !!v.folderId !== !!v.fileId, 'Give either folderId or fileId.'),

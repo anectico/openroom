@@ -103,7 +103,7 @@ function tableExists(db: Database.Database, name: string) {
 
 function sharedColumns(db: Database.Database, table: string) {
 	const cols = (schema: string) =>
-		(db.prepare(`SELECT name FROM ${schema}.pragma_table_info(?)`).all(table) as { name: string }[]).map(
+		(db.prepare('SELECT name FROM pragma_table_info(?, ?)').all(table, schema) as { name: string }[]).map(
 			(c) => c.name,
 		);
 	const live = new Set(cols('live'));

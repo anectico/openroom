@@ -79,7 +79,7 @@ The admin UI, REST API, MCP server and CLI use the same member operations, role 
 | Streamable HTTP MCP | `/mcp`                               |
 | CLI                 | `openroom` from `@anectico/openroom` |
 
-REST and MCP accept `Authorization: Bearer KEY`. For the CLI, set `OPENROOM_URL` and `OPENROOM_API_KEY`. Build the CLI locally, or install with `npm install -g @anectico/openroom` once the package is published. [CLI setup](docs/cli.md#cli).
+REST and MCP accept `Authorization: Bearer KEY`. For the CLI, set `OPENROOM_URL` to your OpenRoom server and `OPENROOM_API_KEY` to its key. A webhook or import URL belongs after its command. Build the CLI locally, or install with `npm install -g @anectico/openroom` once the package is published. [CLI setup](docs/cli.md#cli).
 
 ```sh
 openroom get-me

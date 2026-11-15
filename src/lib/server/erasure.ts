@@ -85,9 +85,15 @@ export function eraseViewer(viewerId: string, userId: string) {
 				.forEach((row) => {
 					references.add((row as { id: string }).id);
 				});
+			const address = viewer.email
+				? new RegExp(
+						`(?<![a-z0-9.!#$%&'*+/=?^_\x60{|}~-])${RegExp.escape(viewer.email)}(?![a-z0-9-]|\\.[a-z0-9-])`,
+						'i',
+					)
+				: null;
 			const related = (value: unknown): boolean => {
 				if (typeof value === 'string') {
-					return references.has(value) || (!!viewer.email && value.toLowerCase().includes(viewer.email));
+					return references.has(value) || (address?.test(value) ?? false);
 				}
 				if (typeof value === 'number') return references.has(value);
 				if (!value || typeof value !== 'object') return false;
@@ -135,14 +141,17 @@ export function eraseViewer(viewerId: string, userId: string) {
 					.run(viewerId, viewerId);
 			}
 			sqlite().prepare('DELETE FROM notices WHERE viewer_id = ?').run(viewerId);
-			if (viewer.name)
-				sqlite()
-					.prepare("UPDATE links SET label = 'Investor link' WHERE instr(lower(label), ?) > 0")
-					.run(viewer.name.toLowerCase());
+			const name = viewer.name
+				? new RegExp(`(?<![\\p{L}\\p{N}])${RegExp.escape(viewer.name)}(?![\\p{L}\\p{N}])`, 'iu')
+				: null;
+			for (const { id, label } of sqlite().prepare('SELECT id, label FROM links').all() as {
+				id: string;
+				label: string;
+			}[]) {
+				if (address?.test(label) || name?.test(label))
+					sqlite().prepare("UPDATE links SET label = 'Investor link' WHERE id = ?").run(id);
+			}
 			if (viewer.email) {
-				sqlite()
-					.prepare("UPDATE links SET label = 'Investor link' WHERE instr(lower(label), ?) > 0")
-					.run(viewer.email);
 				sqlite().prepare("DELETE FROM link_allow WHERE kind = 'email' AND value = ?").run(viewer.email);
 				sqlite()
 					.prepare(

@@ -16,12 +16,12 @@ The container runs `tini`, which runs the launcher (`src/launcher/index.ts`). Th
 3. Writes the Litestream configuration for the current prefix and starts the app
    (`src/server/index.ts`) with an IPC channel.
 4. Starts `litestream replicate` once the app reports ready, so a fresh install's database exists
-   first, and restarts it with backoff if it stops. When Litestream has been down for 10 minutes it
+   first, and restarts it with backoff if it stops. A successful sync clears the outage timer; spawning a new child alone does not. When Litestream has been down for 10 minutes it
    asks the app for a `PASSIVE` checkpoint, every 10 minutes while it stays down, so the WAL stays
    bounded.
 
 On SIGTERM the launcher stops the app (up to 45 seconds), then Litestream, so the last changes are
-replicated. Compose gives the container 60 seconds.
+replicated. Compose gives the container 60 seconds. Local replica history is replaced atomically, and a clock behind the latest entry must be corrected before a new prefix can be appended.
 
 The TypeScript in these folders runs directly on Node 24, which strips types, so it uses only
 erasable syntax and imports with `.ts` extensions.

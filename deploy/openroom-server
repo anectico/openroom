@@ -9,21 +9,16 @@ IMAGE_REPO="ghcr.io/anectico/openroom"
 die() { echo "openroom-server: $*" >&2; exit 1; }
 compose() { docker compose --project-directory "$OPENROOM_DIR" -f "$OPENROOM_DIR/docker-compose.yml" "$@"; }
 env_get() { grep -E "^$1=" "$ENV_FILE" | tail -n1 | cut -d= -f2- || true; }
-env_set() {
-	local key="$1" value="$2" tmp
-	tmp="$(mktemp)"
-	grep -vE "^$key=" "$ENV_FILE" > "$tmp" || true
-	printf '%s=%s\n' "$key" "$value" >> "$tmp"
-	cat "$tmp" > "$ENV_FILE"
-	rm -f "$tmp"
-}
-env_unset() {
-	local tmp
-	tmp="$(mktemp)"
-	grep -vE "^$1=" "$ENV_FILE" > "$tmp" || true
-	cat "$tmp" > "$ENV_FILE"
-	rm -f "$tmp"
-}
+env_edit() (
+	local key="$1" tmp
+	tmp="$(mktemp "$ENV_FILE.XXXXXX")"
+	trap 'rm -f "$tmp"' EXIT
+	awk -v key="$key" 'index($0, key "=") != 1' "$ENV_FILE" > "$tmp"
+	if [[ $# == 2 ]]; then printf '%s=%s\n' "$key" "$2" >> "$tmp"; fi
+	mv -f "$tmp" "$ENV_FILE"
+)
+env_set() { env_edit "$1" "$2"; }
+env_unset() { env_edit "$1"; }
 in_app() {
 	if [[ -n "$(compose ps -q --status running app 2>/dev/null)" ]]; then
 		compose exec -T app node src/launcher/tools.ts "$@"
@@ -87,6 +82,7 @@ cmd_update() {
 	[[ -n "$version" ]] || version="$(latest_version)"
 	[[ -n "$version" ]] || die "could not find the latest version; pass one: openroom-server update v1.2.3"
 	version="v${version#v}"
+	[[ "$version" =~ ^v[A-Za-z0-9][A-Za-z0-9._-]{0,126}$ ]] || die "invalid release version"
 	current="$(env_get OPENROOM_IMAGE)"
 	next="$IMAGE_REPO:${version#v}"
 	[[ "$current" == "$next" ]] && { echo "Already on $next."; return 0; }
@@ -115,6 +111,7 @@ cmd_rollback() {
 		printf '%s' "$capabilities" | grep -q '"s3":true' || die "the previous image cannot confirm S3 support. Keep the current image and bucket; rolling back would make stored documents unavailable."
 	fi
 	action="$(printf '%s' "$plan" | sed -n 's/.*"action":"\([a-z]*\)".*/\1/p')"
+	[[ "$action" == "swap" || "$action" == "repin" ]] || die "the rollback plan was not recognized; the installed image has not changed"
 	echo "Rolling back $current -> $previous"
 	if [[ "$action" == "swap" ]]; then
 		echo "The database goes back to the snapshot taken before the update. Every change made since then is discarded:"

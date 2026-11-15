@@ -10,6 +10,7 @@ const catalog = JSON.parse(await readFile(join(directory, '..', 'catalog.json'),
 const metadata = JSON.parse(await readFile(join(directory, '..', 'package.json'), 'utf8'));
 const program = new Command()
 	.name('openroom')
+	.enablePositionalOptions()
 	.description('Manage your OpenRoom data room through its generated API commands.')
 	.version(metadata.version)
 	.addOption(new Option('--url <url>', 'OpenRoom server URL').env('OPENROOM_URL'))
@@ -74,6 +75,7 @@ async function call(name, input) {
 	for (const parameter of operation.parameters ?? []) {
 		if (parameter.in !== 'path') continue;
 		if (body[parameter.name] === undefined) throw new Error(`Missing ${parameter.name}.`);
+		if (['.', '..'].includes(String(body[parameter.name]))) throw new Error(`Invalid ${parameter.name}.`);
 		path = path.replace(`{${parameter.name}}`, encodeURIComponent(String(body[parameter.name])));
 		delete body[parameter.name];
 	}

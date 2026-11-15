@@ -149,6 +149,7 @@ export const updateFolder = defineOperation({
 				if (input.name) sqlite.prepare('UPDATE folders SET name = ? WHERE id = ?').run(input.name, f.id);
 				if (parentId !== f.parent_id || input.position !== undefined)
 					place(f.room_id, parentId, { type: 'folder', id: f.id }, input.position);
+				if (parentId !== f.parent_id) place(f.room_id, f.parent_id, { type: 'folder', id: '' });
 			})
 			.immediate();
 		return presentFolder(f.id);

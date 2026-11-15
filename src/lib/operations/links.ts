@@ -11,7 +11,7 @@ import { findMember } from '../server/members.ts';
 import { publicOrigin } from '../server/origin.ts';
 import type { RoomRow } from '../server/rooms.ts';
 import { decrypt, encrypt, randomToken, sha256 } from '../server/secrets.ts';
-import { createSession } from '../server/viewer/access.ts';
+import { createSession, mayEnter } from '../server/viewer/access.ts';
 import { confirmField, defineOperation, notFound, OpError } from './define.ts';
 import { authorize } from './execute.ts';
 import { loadRoom, writableRoom } from './rooms.ts';
@@ -125,7 +125,12 @@ function parsed(raw: string[], what: string) {
 	return list;
 }
 
-function writeEntries(linkId: string, allow: Entry[] | undefined, blocks: Entry[] | undefined) {
+function writeEntries(
+	linkId: string,
+	allow: Entry[] | undefined,
+	blocks: Entry[] | undefined,
+	keepErased = false,
+) {
 	const db = sqlite();
 	if (allow) {
 		db.prepare('DELETE FROM link_allow WHERE link_id = ?').run(linkId);
@@ -133,11 +138,24 @@ function writeEntries(linkId: string, allow: Entry[] | undefined, blocks: Entry[
 		for (const e of allow) insert.run(newId('alw'), linkId, e.kind, e.value);
 	}
 	if (blocks) {
-		db.prepare('DELETE FROM blocks WHERE link_id = ?').run(linkId);
+		db.prepare('DELETE FROM blocks WHERE link_id = ? AND (display IS NOT NULL OR ? = 0)').run(
+			linkId,
+			Number(keepErased),
+		);
 		const insert = db.prepare(
 			'INSERT INTO blocks (id, link_id, kind, value, display, created_at) VALUES (?, ?, ?, ?, ?, ?)',
 		);
-		for (const e of blocks) insert.run(newId('blk'), linkId, e.kind, blockValue(e), e.value, Date.now());
+		for (const e of blocks) {
+			const value = blockValue(e);
+			if (
+				keepErased &&
+				db
+					.prepare('SELECT 1 FROM blocks WHERE link_id = ? AND kind = ? AND value = ?')
+					.get(linkId, e.kind, value)
+			)
+				continue;
+			insert.run(newId('blk'), linkId, e.kind, value, e.value, Date.now());
+		}
 	}
 }
 
@@ -327,7 +345,11 @@ export const updateLink = defineOperation({
 		welcomeMarkdown: personalWelcome.optional(),
 		open: editable.open.optional(),
 		allow: editable.allow.optional(),
-		blocks: editable.blocks.optional(),
+		blocks: editable.blocks
+			.optional()
+			.describe(
+				'Replacement block list. Include the displayed “Erased investor” placeholder to keep all redacted email blocks.',
+			),
 		password: editable.password.optional(),
 		expiresAt: editable.expiresAt.optional(),
 		settings: editable.settings.optional(),
@@ -345,7 +367,13 @@ export const updateLink = defineOperation({
 		if (row.revoked_at !== null)
 			throw new OpError(409, 'revoked', 'This link is revoked and cannot change. Create a new link instead.');
 		const allow = input.allow && parsed(input.allow, 'allow');
-		const blocks = input.blocks && parsed(input.blocks, 'block');
+		const keepErased = input.blocks?.includes('Erased investor');
+		const blocks =
+			input.blocks &&
+			parsed(
+				input.blocks.filter((v) => v !== 'Erased investor'),
+				'block',
+			);
 		const open = input.open ?? !!row.open;
 		const allowCount =
 			allow?.length ??
@@ -395,7 +423,7 @@ export const updateLink = defineOperation({
 				).run(Date.now(), row.id);
 				db.prepare('UPDATE gate_progress SET password_ok = 0 WHERE link_id = ?').run(row.id);
 			}
-			writeEntries(row.id, allow, blocks);
+			writeEntries(row.id, allow, blocks, keepErased);
 			setGroup(row.id, room.id, input.groupId);
 		}).immediate();
 		return present(loadLink(row.id));
@@ -546,14 +574,19 @@ export const sendLinkInvites = defineOperation({
 		const targets = listed.filter((e) => !wanted || wanted.has(e));
 		const skipped = input.emails ? input.emails.filter((e) => !listed.includes(e.trim().toLowerCase())) : [];
 		const member = findMember(ctx.actor.userId);
-		const url = `${publicOrigin()}/r/${decrypt(row.token_enc)}`;
+		const token = decrypt(row.token_enc);
+		const url = `${publicOrigin()}/r/${token}`;
 		let sent = 0;
 		for (const email of targets) {
+			if (!mayEnter(row, email)) {
+				skipped.push(email);
+				continue;
+			}
 			try {
-				sendEmail(
-					email,
-					emailCopy.investorInvite({ room: room.name, url, from: member?.name || 'The team' }),
-				);
+				sendEmail(email, {
+					...emailCopy.investorInvite({ room: room.name, url, from: member?.name || 'The team' }),
+					inviteToken: token,
+				});
 				sent++;
 			} catch {
 				skipped.push(email);

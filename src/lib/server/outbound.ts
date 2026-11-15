@@ -49,7 +49,7 @@ export function checkUrl(raw: string) {
 	if (url.protocol !== 'https:') throw new OutboundError('Only https addresses are allowed.');
 	if (url.username || url.password)
 		throw new OutboundError('Addresses with a user name or password are not allowed.');
-	const host = url.hostname.replace(/^\[|\]$/g, '');
+	const host = url.hostname.replace(/^\[|\]$/g, '').replace(/\.$/, '');
 	if (
 		isIP(host)
 			? privateAddress(host)
@@ -127,7 +127,7 @@ export function downloadStream(raw: string) {
 				{ method: 'GET', lookup: guardedLookup, headers: { 'accept-encoding': 'identity' }, timeout: 15_000 },
 				(res) => {
 					if (res.statusCode !== 200) {
-						res.resume();
+						res.destroy();
 						reject(
 							new OutboundError(
 								'The address must return a file directly with HTTP 200; redirects are not followed.',

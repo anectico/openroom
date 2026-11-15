@@ -186,7 +186,7 @@ export async function runNoticeEmail(payload: unknown) {
 	for (const m of members) {
 		if (!emailWanted(m.id, m.role, n.event)) continue;
 		try {
-			sendEmail(m.email, emailCopy.notice({ text, url }), 'email.notice');
+			sendEmail(m.email, { ...emailCopy.notice({ text, url }), memberId: m.id, noticeId }, 'email.notice');
 		} catch (e) {
 			if (!(e instanceof EmailError)) throw e;
 			return;

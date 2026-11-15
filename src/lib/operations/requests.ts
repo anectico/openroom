@@ -175,13 +175,13 @@ export const createFileRequest = defineOperation({
 export const closeFileRequest = defineOperation({
 	name: 'close_file_request',
 	summary:
-		'Close a file request: investors stop seeing it and cannot upload any more. Uploads already received stay.',
+		'Close a file request: investors see it as closed and cannot upload any more. Uploads already received stay.',
 	role: 'admin',
 	http: { method: 'POST', path: '/file-requests/{requestId}/close' },
 	input: z.object({ requestId: z.string(), ...confirmField }),
 	output: request,
 	destructive: (input) =>
-		`This closes “${load(input.requestId).title}”; investors stop seeing it and cannot upload.`,
+		`This closes “${load(input.requestId).title}”; investors can still see it but cannot upload.`,
 	audit: { target: (i, o) => ({ type: 'file_request', id: i.requestId, roomId: o.roomId }) },
 	run: (input, ctx) => {
 		const r = load(input.requestId);

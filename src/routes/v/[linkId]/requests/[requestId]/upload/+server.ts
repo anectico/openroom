@@ -5,7 +5,7 @@ import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async (event) => {
 	const body = (await event.request.json().catch(() => null)) as { name?: unknown; size?: unknown } | null;
-	const { ctx, request } = requestContext(event);
+	const { ctx, request } = requestContext(event, 'start');
 	const name = typeof body?.name === 'string' && body.name.trim() ? body.name.trim() : 'upload';
 	try {
 		return json(startRequestUpload(ctx, request, name, Number(body?.size), event.getClientAddress()));

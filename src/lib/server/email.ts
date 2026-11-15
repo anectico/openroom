@@ -4,6 +4,8 @@ import { database } from './db/index.ts';
 import type { Message } from './email-copy.ts';
 import { enqueue } from './jobs.ts';
 import { getSecretSetting, getSetting, setSetting } from './settings.ts';
+import { linkByToken, mayEnter } from './viewer/access.ts';
+import { queueWebhooks } from './webhooks.ts';
 
 export const cloudflareAccountIdPattern = /^[a-f0-9]{32}$/i;
 
@@ -109,9 +111,10 @@ export function capReached() {
 			.get(Date.now() - 86_400_000)
 	)
 		return;
-	sqlite
+	const notice = sqlite
 		.prepare('INSERT INTO notices (event, detail_json, created_at) VALUES (?, ?, ?)')
 		.run('email_cap', JSON.stringify({ cap: dailyCap() }), Date.now());
+	queueWebhooks(Number(notice.lastInsertRowid), 'email_cap');
 	enqueue('notices.cap_email', {});
 }
 
@@ -195,11 +198,16 @@ export async function deliver(config: EmailConfig, to: string, message: Message)
 export type EmailKind = 'email.send' | 'email.reset' | 'email.code' | 'email.notice';
 const noticeShareOfCap = 0.3;
 
-export function sendEmail(
-	to: string,
-	message: Message & { conversationId?: string },
-	kind: EmailKind = 'email.send',
-) {
+type QueuedMessage = Message & {
+	conversationId?: string;
+	noticeId?: number;
+	memberId?: string;
+	requestId?: string;
+	linkId?: string;
+	inviteToken?: string;
+};
+
+export function sendEmail(to: string, message: QueuedMessage, kind: EmailKind = 'email.send') {
 	if (!emailReady()) throw new EmailError('Email is not set up.');
 	if (sentLastDay() >= dailyCap()) {
 		capReached();
@@ -214,9 +222,52 @@ export function sendEmail(
 	enqueue(kind, { to, ...message }, { maxAttempts: 5 });
 }
 
-export async function runEmailJob(payload: unknown) {
-	const p = payload as { to: string; conversationId?: string } & Message;
-	if (p.conversationId || p.subject.startsWith('New answer to your question in ')) {
+export async function runEmailJob(payload: unknown, kind: EmailKind = 'email.send') {
+	const p = payload as QueuedMessage & { to: string };
+	const db = database().sqlite;
+	if (kind === 'email.notice') {
+		const { emailWanted } = await import('./activity.ts');
+		const member = db
+			.prepare(`SELECT id, role FROM user WHERE email = ? AND removed_at IS NULL AND
+			EXISTS (SELECT 1 FROM account WHERE user_id = user.id AND provider_id = 'credential')`)
+			.get(p.to) as { id: string; role: string } | undefined;
+		if (!member || (p.memberId && p.memberId !== member.id)) return;
+		if (p.noticeId !== undefined) {
+			const notice = db.prepare('SELECT event FROM notices WHERE id = ?').get(p.noticeId) as
+				| { event: string }
+				| undefined;
+			if (!notice || !emailWanted(member.id, member.role, notice.event)) return;
+		}
+	}
+	if (kind === 'email.send') {
+		const inviteToken =
+			p.inviteToken ??
+			p.text.match(/\nhttps?:\/\/[^\s/]+\/r\/([\w-]+)\n\nThe room records which pages you view\.$/)?.[1];
+		if (inviteToken) {
+			const link = linkByToken(inviteToken);
+			if (
+				!link ||
+				!mayEnter(link, p.to) ||
+				!db
+					.prepare("SELECT 1 FROM link_allow WHERE link_id = ? AND kind = 'email' AND value = ?")
+					.get(link.id, p.to)
+			)
+				return;
+		}
+		const oldRequest =
+			!p.requestId && p.subject.startsWith('File requested in ')
+				? p.text.match(/\/v\/([\w-]+)\/requests\/([\w-]+)$/)
+				: null;
+		if (p.requestId || oldRequest) {
+			const { mayEmailRequest } = await import('./requests.ts');
+			if (!mayEmailRequest(p.requestId ?? oldRequest?.[2] ?? '', p.linkId ?? oldRequest?.[1] ?? '', p.to))
+				return;
+		}
+	}
+	if (
+		p.conversationId ||
+		(kind === 'email.send' && p.subject.startsWith('New answer to your question in '))
+	) {
 		const id = p.conversationId ?? p.text.match(/\/questions\/(conv_[a-z0-9]+)$/)?.[1];
 		const { replyRecipient } = await import('./questions.ts');
 		if (!id || replyRecipient(id) !== p.to) return;

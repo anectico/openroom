@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createZipExport, ExportBusyError, findExport } from '../server/exports.ts';
+import { createZipExport, ExportBusyError, findExport, memberExport } from '../server/exports.ts';
 import { publicOrigin } from '../server/origin.ts';
 import { defineOperation, notFound, OpError } from './define.ts';
 import { loadRoom } from './rooms.ts';
@@ -68,8 +68,8 @@ export const getExport = defineOperation({
 	output: exportOut,
 	audit: false,
 	run: (input, ctx) => {
-		const row = findExport(input.exportId);
-		if (!row || row.requested_by_user !== ctx.actor.userId) throw notFound('Export');
+		const row = memberExport(input.exportId, ctx.actor.userId, ctx.actor.role);
+		if (!row) throw notFound('Export');
 		return present(row.id, ctx.actor.surface);
 	},
 });

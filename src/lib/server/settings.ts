@@ -39,16 +39,24 @@ export function deleteSetting(key: string) {
 	database().sqlite.prepare('DELETE FROM settings WHERE key = ?').run(key);
 }
 
-let hmacKey: Buffer | null = null;
+let cachedKey: { encrypted: string; key: Buffer } | null = null;
 
 export function hmac(value: string) {
-	if (!hmacKey) {
-		let stored = getSecretSetting('crypto.hmac_key');
-		if (!stored) {
-			stored = randomBytes(32).toString('hex');
-			setSecretSetting('crypto.hmac_key', stored);
-		}
-		hmacKey = Buffer.from(stored, 'hex');
+	const name = 'crypto.hmac_key';
+	const stored = () => row(name)?.value_enc;
+	let encrypted = stored();
+	if (!encrypted) {
+		encrypted = database()
+			.sqlite.transaction(() => {
+				const existing = stored();
+				if (existing) return existing;
+				const next = encrypt(randomBytes(32).toString('hex'));
+				write(name, null, next);
+				return next;
+			})
+			.immediate();
 	}
-	return hmacWith(hmacKey, value);
+	if (cachedKey?.encrypted !== encrypted)
+		cachedKey = { encrypted, key: Buffer.from(decrypt(encrypted), 'hex') };
+	return hmacWith(cachedKey.key, value);
 }

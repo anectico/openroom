@@ -1,5 +1,5 @@
 import { randomBytes } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { dataDir, dbPath, localReplicaDir } from '../lib/server/paths.ts';
@@ -29,7 +29,7 @@ function parsePrefixes(text: string): PrefixEntry[] {
 				throw new Error('The replica CURRENT file is invalid. Nothing was changed.');
 			return { startedAt, prefix };
 		});
-	if (entries.some((entry, i) => i > 0 && entry.startedAt < entries[i - 1].startedAt))
+	if (entries.some((entry, i) => i > 0 && Date.parse(entry.startedAt) < Date.parse(entries[i - 1].startedAt)))
 		throw new Error('The replica CURRENT history is out of order. Nothing was changed.');
 	return entries;
 }
@@ -64,13 +64,24 @@ export async function appendPrefix(
 	config: S3Config | null = null,
 ): Promise<PrefixEntry> {
 	const current = await pointer(root, config);
-	parsePrefixes(current.text);
+	const last = parsePrefixes(current.text).at(-1);
 	const startedAt = new Date().toISOString();
+	if (last && Date.parse(last.startedAt) > Date.parse(startedAt))
+		throw new Error('The system clock is behind the latest replica. Nothing was changed.');
 	const prefix = `db-${startedAt.replace(/[-:.]/g, '').toLowerCase()}${randomBytes(4).toString('hex')}`;
 	const text = `${current.text}${current.text && !current.text.endsWith('\n') ? '\n' : ''}${startedAt} ${prefix} ${reason}\n`;
+	if (!root.startsWith('file://') && Buffer.byteLength(text) > 1024 ** 2)
+		throw new Error('The replica CURRENT history is too large. Nothing was changed.');
 	if (root.startsWith('file://')) {
 		mkdirSync(root.slice(7), { recursive: true });
-		writeFileSync(join(root.slice(7), 'CURRENT'), text, { mode: 0o600 });
+		const target = join(root.slice(7), 'CURRENT');
+		const temporary = `${target}.${prefix}.tmp`;
+		try {
+			writeFileSync(temporary, text, { mode: 0o600, flush: true, flag: 'wx' });
+			renameSync(temporary, target);
+		} finally {
+			rmSync(temporary, { force: true });
+		}
 	} else {
 		const key = pointerKey(root, config);
 		await s3Connection(config as S3Config).client.send(

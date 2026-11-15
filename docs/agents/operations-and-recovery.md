@@ -3,7 +3,7 @@
 Read [the operation model](../contributing/operations.md) and the live tool catalog before changing
 OpenRoom. The registry is the source for admin actions, REST, OpenAPI, MCP and the generated CLI.
 `GET /api/v1/openapi.json` describes the current REST API.
-Authenticate with a member API key; its role is loaded for every request.
+Authenticate with a member API key; its role is loaded for every request. Investor-data downloads require the requesting member to still be an admin or owner. For CLI webhook or import operations, use `OPENROOM_URL` for the server and pass the external address after the command.
 
 If access changes during a request, refresh the member or key state before retrying; do not reuse a
 cached role. Finish uploads before their returned expiry, and retain the original expected checksum.

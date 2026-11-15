@@ -3,7 +3,8 @@
 A member asks for a file from one investor who entered the room, everyone on a link, or everyone in a
 group (`create_file_request`), with an optional due date and a size limit (at most the install's
 upload limit). Verified investors in the target are emailed the request when email is set up; others
-see it at the top of the room.
+see it at the top of the room. Before sending, the worker checks the link, the recipient’s target
+membership and whether the request is still open.
 
 Investors upload on `/v/<link id>/requests/<id>` through the same streaming upload URLs as members:
 the upload row belongs to the investor's session, and the URL stops working when the session ends.
@@ -13,7 +14,7 @@ closed request moves to history and refuses uploads; an investor who still has i
 Uploads are never part of the room's folders: only members see them, always as downloads
 (`/admin/rooms/<room>/requests/uploads/<id>`, or `/api/v1/request-uploads/<id>/download` with a key).
 A verified session sees all of its investor's uploads for a request; an unverified one only its
-own. Each upload creates a `request_upload` notice. 40 upload calls an hour per session.
+own. Each upload creates a `request_upload` notice. Each session may start 40 uploads per hour. Finishing uploads has a separate 40-call allowance.
 
 A request for one investor is shown only to that investor's verified sessions, and only investors who
 entered the room with a verified email can be picked. Uploads from unverified sessions are not tied to

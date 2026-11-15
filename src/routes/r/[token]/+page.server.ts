@@ -30,9 +30,9 @@ import { cookieOptions } from '#lib/server/viewer/http.ts';
 import { hit, ipKey, limits } from '#lib/server/viewer/ratelimit.ts';
 import type { Actions, PageServerLoad, RequestEvent } from './$types';
 
-function resolve(event: RequestEvent | Parameters<PageServerLoad>[0]) {
+function resolve(event: RequestEvent | Parameters<PageServerLoad>[0], countLookup = true) {
 	const ip = event.getClientAddress();
-	if (!hit(`token:${ipKey(ip)}`, limits.tokenLookup.max, limits.tokenLookup.windowMs))
+	if (countLookup && !hit(`token:${ipKey(ip)}`, limits.tokenLookup.max, limits.tokenLookup.windowMs))
 		error(404, 'unavailable');
 	const link = linkByToken(event.params.token);
 	const room = link ? findRoom(link.room_id) : undefined;
@@ -40,14 +40,14 @@ function resolve(event: RequestEvent | Parameters<PageServerLoad>[0]) {
 	return { link, room, settings: effectiveSettings(link, room), ip };
 }
 
-function gateFor(event: RequestEvent, link: LinkRow) {
+function gateFor(event: RequestEvent | Parameters<PageServerLoad>[0], link: LinkRow) {
 	const gate = loadGate(link, event.cookies.get(gateCookie(link.id)));
 	if (!gate) redirect(303, event.url.pathname);
 	return gate;
 }
 
-function complete(event: RequestEvent) {
-	const { link, room, settings, ip } = resolve(event);
+function complete(event: RequestEvent | Parameters<PageServerLoad>[0]) {
+	const { link, room, settings, ip } = resolve(event, false);
 	const gate = gateFor(event, link);
 	if (nextStep(link, settings, gate) !== 'done') return;
 	const session = finishGate(
@@ -62,7 +62,12 @@ function complete(event: RequestEvent) {
 	enter(event, link.id, session.token, session.expiresAt);
 }
 
-function enter(event: RequestEvent, linkId: string, token: string, expiresAt: number) {
+function enter(
+	event: RequestEvent | Parameters<PageServerLoad>[0],
+	linkId: string,
+	token: string,
+	expiresAt: number,
+) {
 	event.cookies.set(
 		sessionCookie(linkId),
 		token,
@@ -83,6 +88,7 @@ export const load: PageServerLoad = async (event) => {
 		gate = loadGate(link, token);
 	}
 	const step = nextStep(link, settings, gate);
+	if (step === 'done') complete(event);
 	const nda =
 		step === 'nda' && room.current_nda_version_id
 			? (database()
@@ -108,19 +114,19 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	password: async (event) => {
+		const form = await event.request.formData();
 		const { link } = resolve(event);
 		const gate = gateFor(event, link);
-		const form = await event.request.formData();
 		const r = await checkPassword(gate, link, String(form.get('password') ?? ''), event.getClientAddress());
 		if (r === 'limited') return fail(429, { error: 'Too many tries. Wait 15 minutes and try again.' });
 		if (r === 'wrong') return fail(400, { error: 'That password is not right.' });
 		complete(event);
 	},
 	email: async (event) => {
+		const form = await event.request.formData();
 		const { link, room, settings, ip } = resolve(event);
 		const gate = gateFor(event, link);
 		if (nextStep(link, settings, gate) !== 'email') return;
-		const form = await event.request.formData();
 		const r = setEmail(gate, link, settings, String(form.get('email') ?? ''));
 		if (r.error === 'invalid') return fail(400, { error: 'Enter a valid email address.' });
 		if (r.error === 'not_allowed')
@@ -156,10 +162,10 @@ export const actions: Actions = {
 		return { notice: 'We sent a new code.' };
 	},
 	code: async (event) => {
+		const form = await event.request.formData();
 		const { link, settings } = resolve(event);
 		const gate = gateFor(event, link);
 		if (nextStep(link, settings, gate) !== 'code') return;
-		const form = await event.request.formData();
 		const r = checkCode(gate, link, String(form.get('code') ?? ''), event.getClientAddress());
 		if (r.result === 'daily') return fail(429, { error: 'Too many attempts. Try again tomorrow.' });
 		if (r.result === 'expired') return fail(400, { error: 'This code has expired. Ask for a new code.' });
@@ -178,10 +184,10 @@ export const actions: Actions = {
 		clearEmail(gateFor(event, link));
 	},
 	fields: async (event) => {
+		const form = await event.request.formData();
 		const { link, settings } = resolve(event);
 		const gate = gateFor(event, link);
 		if (nextStep(link, settings, gate) !== 'fields') return;
-		const form = await event.request.formData();
 		const values = Object.fromEntries(
 			settings.customFields.map((f, i) => [f.label, String(form.get(`field-${i}`) ?? '')]),
 		);

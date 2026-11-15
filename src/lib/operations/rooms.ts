@@ -253,7 +253,8 @@ const archiveOut = z.object({
 
 function archiveStatus(roomId: string, surface: string): z.input<typeof archiveOut> {
 	const a = latestArchive(roomId);
-	if (!a) return { status: 'none', progress: 0, size: null, downloadUrl: null, keptUntil: null };
+	if (!a || a.expires_at <= Date.now())
+		return { status: 'none', progress: 0, size: null, downloadUrl: null, keptUntil: null };
 	const path =
 		surface === 'admin' ? `/admin/rooms/${roomId}/archive` : `/api/v1/rooms/${roomId}/archive/download`;
 	return {
@@ -335,6 +336,8 @@ export const retryRoomArchive = defineOperation({
 	run: (input, ctx) => {
 		const r = loadRoom(input.roomId);
 		if (!r.frozen_at) throw new OpError(400, 'not_frozen', 'Only a frozen room has an archive.');
+		if (r.frozen_at + r.frozen_retention_days * 86_400_000 <= Date.now())
+			throw new OpError(410, 'retention_ended', 'The archive retention period has ended.');
 		const a = latestArchive(r.id);
 		if (a && a.status !== 'failed')
 			throw new OpError(409, 'archive_exists', 'The archive is ready or still being built.');

@@ -41,28 +41,28 @@ export async function storeBrandImage(base64: string, kind: 'logo' | 'cover') {
 	const raw = Buffer.from(base64, 'base64');
 	if (!raw.length) throw new BrandImageError(`The ${kind} is empty.`);
 	if (raw.length > maxImageBytes) throw new BrandImageError(`The ${kind} must be smaller than 700 KB.`);
-	let image: ReturnType<typeof sharp>;
+	let bytes: Buffer;
 	try {
-		image = sharp(raw, { limitInputPixels: 40_000_000, failOn: 'error' });
+		const image = sharp(raw, { limitInputPixels: 40_000_000, failOn: 'error' });
 		const meta = await image.metadata();
 		if (!meta.format || !['png', 'jpeg', 'webp'].includes(meta.format))
 			throw new BrandImageError('Use a PNG, JPEG or WebP image. SVG and other formats are not accepted.');
+		bytes =
+			kind === 'cover'
+				? await image
+						.rotate()
+						.resize(1440, 720, { fit: 'inside', withoutEnlargement: true })
+						.webp({ quality: 84 })
+						.toBuffer()
+				: await image
+						.rotate()
+						.resize(512, 512, { fit: 'inside', withoutEnlargement: true })
+						.png({ compressionLevel: 9 })
+						.toBuffer();
 	} catch (e) {
 		if (e instanceof BrandImageError) throw e;
 		throw new BrandImageError('That file is not an image OpenRoom can read.');
 	}
-	const bytes =
-		kind === 'cover'
-			? await image
-					.rotate()
-					.resize(1440, 720, { fit: 'inside', withoutEnlargement: true })
-					.webp({ quality: 84 })
-					.toBuffer()
-			: await image
-					.rotate()
-					.resize(512, 512, { fit: 'inside', withoutEnlargement: true })
-					.png({ compressionLevel: 9 })
-					.toBuffer();
 	const key = newObjectKey();
 	const location = writeLocation();
 	await writeObject(key, Readable.from(bytes), bytes.length, location);

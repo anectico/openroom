@@ -77,6 +77,10 @@ export class RequestUploadError extends Error {
 	}
 }
 
+export function requestSizeLimit(request: RequestRow) {
+	return Math.min(request.max_size, Number(getSetting('uploads.max_bytes') ?? defaultMaxUploadBytes));
+}
+
 export function startRequestUpload(
 	ctx: ViewerContext,
 	request: RequestRow,
@@ -88,10 +92,7 @@ export function startRequestUpload(
 	if (getSetting('storage.move.id'))
 		throw new RequestUploadError(409, 'Storage is being moved. Try again when the move finishes.');
 	if (!Number.isInteger(size) || size < 1) throw new RequestUploadError(400, 'The file is empty.');
-	const maxSize = Math.min(
-		request.max_size,
-		Number(getSetting('uploads.max_bytes') ?? defaultMaxUploadBytes),
-	);
+	const maxSize = requestSizeLimit(request);
 	if (size > maxSize)
 		throw new RequestUploadError(
 			413,
@@ -194,6 +195,17 @@ export async function finishRequestUpload(ctx: ViewerContext, request: RequestRo
 	return { id, name: u.original_name, size: u.received_size, late, uploadedAt: now };
 }
 
+export function mayEmailRequest(requestId: string, linkId: string, email: string) {
+	const link = linkById(linkId);
+	if (!link || !linkActive(link) || !mayEnter(link, email)) return false;
+	return !!sqlite()
+		.prepare(`SELECT 1 FROM file_requests r JOIN viewer_sessions s ON s.link_id = ?
+		JOIN viewers v ON v.id = s.viewer_id WHERE r.id = ? AND r.room_id = ? AND r.closed_at IS NULL AND s.verified = 1 AND v.email = ? AND (
+			(r.target_kind = 'viewer' AND r.target_id = v.id) OR (r.target_kind = 'link' AND r.target_id = s.link_id) OR
+			(r.target_kind = 'group' AND EXISTS (SELECT 1 FROM link_groups WHERE link_id = s.link_id AND group_id = r.target_id)))`)
+		.get(linkId, requestId, link.room_id, email);
+}
+
 export function emailRequest(request: RequestRow) {
 	if (!emailReady()) return 0;
 	const rows =
@@ -222,15 +234,16 @@ export function emailRequest(request: RequestRow) {
 		if (!link || !linkActive(link) || !mayEnter(link, r.email) || recipients.has(r.email)) continue;
 		recipients.add(r.email);
 		try {
-			sendEmail(
-				r.email,
-				emailCopy.fileRequest({
+			sendEmail(r.email, {
+				requestId: request.id,
+				linkId: r.linkId,
+				...emailCopy.fileRequest({
 					room: room.name,
 					title: request.title,
 					url: `${publicOrigin()}/v/${r.linkId}/requests/${request.id}`,
 					dueAt: request.due_at,
 				}),
-			);
+			});
 			sent++;
 		} catch (e) {
 			if (!(e instanceof EmailError)) throw e;

@@ -98,8 +98,12 @@ function siblings(roomId: string, parentId: string | null): Sibling[] {
 }
 
 export function nextPosition(roomId: string, parentId: string | null) {
-	const all = siblings(roomId, parentId);
-	return all.length ? Math.max(...all.map((s) => s.position)) + 1 : 0;
+	const row = sqlite()
+		.prepare(`SELECT max(last) AS position FROM (
+		SELECT max(position) AS last FROM folders WHERE room_id = ? AND parent_id IS ?
+		UNION ALL SELECT max(position) FROM files WHERE room_id = ? AND folder_id IS ?)`)
+		.get(roomId, parentId, roomId, parentId) as { position: number | null };
+	return (row.position ?? -1) + 1;
 }
 
 export function place(
@@ -110,7 +114,7 @@ export function place(
 ) {
 	const list = siblings(roomId, parentId).filter((s) => !(s.type === item.type && s.id === item.id));
 	const at = index === undefined ? list.length : Math.max(0, Math.min(index, list.length));
-	list.splice(at, 0, { ...item, position: 0 });
+	if (item.id) list.splice(at, 0, { ...item, position: 0 });
 	const folder = sqlite().prepare('UPDATE folders SET position = ?, parent_id = ? WHERE id = ?');
 	const file = sqlite().prepare('UPDATE files SET position = ?, folder_id = ? WHERE id = ?');
 	for (const [i, s] of list.entries()) {

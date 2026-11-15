@@ -5437,13 +5437,13 @@
                     "description": "Emails (ana@fund.com) or domains (fund.com, which also matches its subdomains)."
                   },
                   "blocks": {
+                    "description": "Replacement block list. Include the displayed “Erased investor” placeholder to keep all redacted email blocks.",
                     "maxItems": 1000,
                     "type": "array",
                     "items": {
                       "type": "string",
                       "maxLength": 320
-                    },
-                    "description": "Emails (ana@fund.com) or domains (fund.com, which also matches its subdomains)."
+                    }
                   },
                   "password": {
                     "anyOf": [
@@ -9273,10 +9273,12 @@
                 "type": "object",
                 "properties": {
                   "folderId": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1
                   },
                   "fileId": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1
                   },
                   "access": {
                     "type": "string",
@@ -12861,7 +12863,7 @@
     "/file-requests/{requestId}/close": {
       "post": {
         "operationId": "close_file_request",
-        "summary": "Close a file request: investors stop seeing it and cannot upload any more. Uploads already received stay.",
+        "summary": "Close a file request: investors see it as closed and cannot upload any more. Uploads already received stay.",
         "description": "Needs the admin role. Destructive: without confirm: true it answers 409 with what would change.",
         "x-openroom-role": "admin",
         "x-openroom-destructive": true,

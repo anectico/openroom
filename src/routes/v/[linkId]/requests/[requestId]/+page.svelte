@@ -52,7 +52,7 @@
 		});
 		const json = await r.json().catch(() => null);
 		signal.throwIfAborted();
-		if (r.status === 404) closed = true;
+		if (r.status === 404 && json?.message === 'This request is closed or no longer open to you.') closed = true;
 		if (!r.ok) throw new Error(json?.error ?? json?.message ?? 'Something went wrong.');
 		return json;
 	}

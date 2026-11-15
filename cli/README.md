@@ -4,6 +4,9 @@ Install with `npm install -g @anectico/openroom` after publication, or install t
 package tarball. Requires Node 24. Set `OPENROOM_URL` to your server's HTTPS origin and
 `OPENROOM_API_KEY` to a member API key. Keep the key out of chat, tracked files and shell history.
 
+Global connection flags go before the command. In `create-webhook --url URL` and
+`upload-from-url --url URL`, the flag after the command supplies the operation’s destination.
+
 Run `openroom --help` for the commands generated from OpenAPI. Use flags such as
 `openroom create-room --name Teaser`, or `openroom create-room --input @room.json`.
 Objects and arrays use JSON values. Results are JSON; failures exit nonzero. Destructive commands
