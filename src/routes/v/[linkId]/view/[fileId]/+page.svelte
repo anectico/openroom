@@ -90,7 +90,6 @@
 		{#if data.guide}<p class="mt-1 text-xs text-muted-foreground">Start here · {data.guidePosition} of {data.guideTotal}</p>{/if}
 	</div>
 	<div class="flex flex-wrap items-center gap-2">
-		{#if data.reviewable && !data.preview}{#key `${data.readingScope}:${data.file.id}:${data.file.version}`}<ReviewButton linkId={data.linkId} fileId={data.file.id} version={data.file.version ?? 1} reviewed={data.reviewed} name={data.file.name} />{/key}{/if}
 		{#if data.canDownload}
 			<Button variant="outline" size="sm" class="min-h-11" href="{src}?download=1"><Download data-icon="inline-start" />Download</Button>
 		{/if}
@@ -170,4 +169,4 @@
 	{/if}
 </div>
 
-{#if data.file.kind === 'pdf'}<section class="mt-6 flex flex-col gap-3 rounded-xl border bg-card p-4 sm:p-5" aria-label="Document completion"><h2 class="text-base font-semibold">Finished this document?</h2><p class="text-sm text-muted-foreground">{data.reviewable && !data.reviewed ? 'Mark it reviewed when you are ready.' : 'Continue at your own pace.'}</p><ReviewVersion state={data.reviewState} />{#if data.reviewable && !data.preview}<ReviewButton linkId={data.linkId} fileId={data.file.id} version={data.file.version ?? 1} reviewed={data.reviewed} name={data.file.name} />{/if}<div class="flex flex-col gap-2 border-t pt-3 sm:flex-row">{#if data.next}<Button class="min-h-11" href={documentHref(data.linkId, data.next.id, page.url.searchParams, data.guide)}>{data.guide ? 'Next in Start here' : 'Next document'}<ChevronRight data-icon="inline-end" /></Button>{/if}<Button variant="ghost" class="min-h-11" href={data.backHref}>{data.backLabel}</Button></div></section>{/if}
+{#if data.file.kind === 'pdf' || (data.reviewable && !data.preview)}<section class="mt-6 flex flex-col gap-3 rounded-xl border bg-card p-4 sm:p-5" aria-label="Document completion"><h2 class="text-base font-semibold">Finished this document?</h2><p class="text-sm text-muted-foreground">{data.reviewable && !data.preview && !data.reviewed ? 'Mark it reviewed when you are ready.' : 'Continue at your own pace.'}</p><ReviewVersion state={data.reviewState} />{#if data.reviewable && !data.preview}<ReviewButton linkId={data.linkId} fileId={data.file.id} version={data.file.version ?? 1} reviewed={data.reviewed} name={data.file.name} />{/if}<div class="flex flex-col gap-2 border-t pt-3 sm:flex-row">{#if data.next}<Button class="min-h-11" href={documentHref(data.linkId, data.next.id, page.url.searchParams, data.guide)}>{data.guide ? 'Next in Start here' : 'Next document'}<ChevronRight data-icon="inline-end" /></Button>{/if}<Button variant="ghost" class="min-h-11" href={data.backHref}>{data.backLabel}</Button></div></section>{/if}

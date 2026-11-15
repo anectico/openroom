@@ -15,7 +15,7 @@
 
 <article class="@container/feature overflow-hidden rounded-xl border bg-card">
 	<div class="flex items-center gap-4 p-4 @md/feature:gap-6 @md/feature:p-0">
-		<div class="art grid w-16 shrink-0 place-items-center self-stretch overflow-hidden rounded-lg @md/feature:order-last @md/feature:min-h-44 @md/feature:w-1/3 @md/feature:rounded-none @md/feature:border-l" aria-hidden="true">
+		<div class="art order-last grid w-16 shrink-0 place-items-center self-stretch overflow-hidden rounded-lg @md/feature:min-h-44 @md/feature:w-1/4 @md/feature:rounded-none @md/feature:border-l" aria-hidden="true">
 			<div class="paper grid h-16 w-12 place-content-center justify-items-center gap-1 rounded-sm border bg-card text-primary shadow-sm @md/feature:h-24 @md/feature:w-[4.5rem]">
 				<type.icon class="size-5 @md/feature:size-7" strokeWidth={1.4} /><span class="text-[8px] font-semibold tracking-wider uppercase">{type.label}</span>
 			</div>

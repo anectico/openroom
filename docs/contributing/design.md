@@ -53,7 +53,7 @@ only the client receipt. Upload failures do not invalidate page data into an off
 ## Investor experience
 
 A compact room header leads to Documents and My questions. The portal supports folder browsing,
-file-title search and direct viewing/download controls, with private conversations and requests
+search by title, visible folder and section number, and direct viewing/download controls, with private conversations and requests
 alongside them. Phone headings are compact, outstanding file requests are discoverable above the
 documents, and document/reader controls use 44 px touch targets on phones. The footer always credits OpenRoom by Anectico. The gate gives one step at a time,
 including readable NDA text and visible errors.

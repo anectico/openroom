@@ -91,8 +91,8 @@ NDA requirement in defaults or a link. Publishing a replacement requires affecte
 accept the new version. Acceptance records retain the version, signed name, email, verification
 state, time and IP according to the documented privacy rules.
 
-Investors follow their link, pass the configured gates and enter the document list. The branded header brings together the room title, logo, optional cover and welcome. A room with one visible document and no pins shows that document with its folder path and a direct open or download action. In a pinned room, the first remaining document leads **Start here**. On phones, **Show all** expands the list beyond the first three.
-Search results show the matching count, two-line titles and the containing folder. Opening a document
+Investors follow their link, pass the configured gates and enter the document list. The branded header brings together the room title, logo, optional cover and welcome. A room with one visible document opens with its title and an **Open document** or **Download file** action. In larger rooms, **Start here** features the first outstanding recommendation and lists the others in reading order. On phones, **Show all recommended documents** expands longer lists.
+Search the library by document title, folder name or section number. Results include matching folders and files within matching folder paths. Section numbers reflect the contents visible through the current sharing link. Opening a document
 and using its return link restores the folder, search and scroll position. A document opened from
 Start here follows that reading order with Previous/Next controls, respecting current permissions.
 
@@ -256,9 +256,8 @@ note opens on arrival when it is short; longer introductions begin with an excer
 open/closed choice is remembered until the note changes. Search and folder browsing use a separate
 compact disclosure without overwriting that choice. Continue reading stays near the top.
 
-Use **Mark reviewed** on a Start here document when you decide you have finished reviewing it.
-The separate **Undo** action beside **Reviewed** reverses the choice. Before you begin, a compact document count and **Start review** point to the first item. Once you
-mark a document reviewed, a short progress bar and **Continue review** help you pick up the remaining materials. Opening a file does not mark it reviewed. A new current version starts unreviewed.
+Use **Mark reviewed** at the end of a recommended document’s reader. For a download-only file, the action is on its recommended card. Open **Reviewed** to revisit completed items. **Undo** in the reader or on a download-only item reverses the choice. A new file version can be reviewed again.
+On return, an available PDF reading position takes precedence over the next recommended file. **Resume on page…** opens that page. The remaining recommendations appear below.
 Verified investors keep their checklist across verified sessions; unverified visitors keep it only in
 their current session. It is a personal checklist, not team approval or a read receipt.
 

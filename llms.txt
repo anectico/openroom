@@ -77,4 +77,4 @@ Verification: docs/reviews/ui-ten-improvements-2026-11-13/index.html
 
 Reliability: question drafts keep their original page and reset between documents; access failures retain unsent text. Authentication forms recover after network failures and reset errors do not report delivery. NDA-change notices compare versions. Pending sharing/destructive actions keep their in-flight state explicit; video controls and PDF focus support keyboard use. Evidence: docs/reviews/bug-review-2026-11-13/index.html.
 
-Investor home uses a compact Start here header with initial guidance and explicit review progress, unread replies beside document search and a full-width document list. ZIP downloads remain below the list. See the product guide and first-room runbook for layout checks.
+Investor home features a single shared file, the next recommended file or the current PDF reading position. Library search matches titles, visible folders and section numbers. Pinned files can be marked reviewed in the reader or on the card for download-only files.

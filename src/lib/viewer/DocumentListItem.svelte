@@ -10,7 +10,7 @@
 </script>
 {#snippet documentLabel()}
  <span class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1"><span class="break-words text-sm font-medium [overflow-wrap:anywhere]">{name}</span>{#if change && !folder}<Badge variant="secondary">{change === 'new' ? 'New' : 'Updated'}</Badge>{/if}</span>
- <span class="flex flex-wrap gap-x-2 text-xs text-muted-foreground [overflow-wrap:anywhere]"><span>{folder ? `${childCount} item${childCount === 1 ? '' : 's'}` : `${labels[kind ?? 'download']} · ${formatBytes(size)}`}</span>{#if !folder && (folderPath || number)}<span>· {folderPath || `Section ${number}`}</span>{/if}</span>
+ <span class="flex flex-wrap gap-x-2 text-xs text-muted-foreground [overflow-wrap:anywhere]"><span>{folder ? `${childCount} item${childCount === 1 ? '' : 's'}` : `${labels[kind ?? 'download']} · ${formatBytes(size)}`}</span>{#if number}<span>· Section {number}</span>{/if}{#if folderPath}<span>· {folderPath}</span>{/if}</span>
 {/snippet}
 <li class="flex items-center gap-3 px-4 py-2">
  <FileIcon {kind} {folder} />
