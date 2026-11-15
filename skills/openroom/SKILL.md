@@ -109,8 +109,7 @@ PDF current-page markers and amber matches distinguish selection from search. Ca
 journey and owner personalization previews; inspect every retained screenshot at phone/tablet/desktop widths.
 
 Appearance editors retain drafts across Edit/Preview tabs and use a persistent save bar. Personal
-welcome dialogs fill phones. Sample previews share investor navigation/cards/rows and inherited
-colour, but real access must still be checked through preview_link. Confirm 44 px primary phone
+welcome dialogs fill phones. Room previews render the investor screens with the room’s documents, pins, FAQ and draft branding. Workspace previews use sample files. Check effective access through preview_link. Confirm 44 px primary phone
 controls, distinct input boundaries, explicit Mark reviewed actions and labeled Section metadata.
 
 For UI regression checks, include the maximum 5,000-character document question, long similar file titles, keyboard focus near appearance save actions, invalid colour recovery, long entry welcomes and unsaved sharing-link dismissal. Appearance samples use Fit to panel or explicit 360/1280 px render widths with scaling. Check the real link separately for permissions. Mobile search/upload actions precede the collapsed pinned summary, and sharing rows retain protection context.

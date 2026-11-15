@@ -167,7 +167,7 @@
 			</Field.Group>
 		</fieldset>
  </div>{/snippet}</Tabs.Content><Tabs.Content value="preview">{#snippet child({ props })}<div {...props} hidden={!wide.current && pane !== 'preview'} class="min-w-0" role="tabpanel" aria-label={wide.current ? 'Live appearance preview' : undefined} aria-labelledby={wide.current ? undefined : String(props['aria-labelledby'] ?? '')}>
-		<AppearancePreview brand={{ logoUrl: logo, coverUrl: cover, accentColor: color }} {name} {welcome} />
+		<AppearancePreview {roomId} brand={{ logoUrl: logo, coverUrl: cover, accentColor: color }} {name} {welcome} />
  </div>{/snippet}</Tabs.Content></div></Tabs.Root>
 	<div bind:this={footer} bind:clientHeight={footerHeight} class="sticky bottom-0 flex flex-wrap items-center gap-2 border-t bg-card py-3">{#if error}<p id="appearance-error" class="w-full text-sm text-destructive" role="alert">{#if !inherited && !normalizeColor(hex)}<button type="button" class="text-left underline underline-offset-4" onclick={focusColour}>{error}</button>{:else}{error}{/if}</p>{/if}<Button class="min-h-11 sm:min-h-9" type="submit" disabled={disabled || busy || reading || !dirty}>{busy ? 'Saving…' : 'Save appearance'}</Button><Button class="min-h-11 sm:min-h-9" type="button" variant="outline" disabled={busy || (!dirty && !error)} onclick={cancel} aria-label="Cancel changes"><span class="sm:hidden">Cancel</span><span class="hidden sm:inline">Cancel changes</span></Button><p class="w-full text-xs text-muted-foreground sm:w-auto" role="status">{dirty ? 'Unsaved changes' : status || 'Changes go live only when you save.'}</p></div>
 </form>

@@ -10,7 +10,9 @@
 	import { Textarea } from '#lib/components/ui/textarea/index.js';
 	import { goto } from '$app/navigation';
 
-	let { data } = $props();
+	import type { PageData } from './$types';
+
+	let { data, appearance = false }: { data: PageData; appearance?: boolean } = $props();
 	let open = $state(false);
 	let fileId = $state('room');
 	let question = $state('');
@@ -23,7 +25,7 @@
 	});
 	async function send(event: SubmitEvent) {
 		event.preventDefault();
-		if (busy) return;
+		if (busy || appearance) return;
 		if (sentId) { await goto(`/v/${data.linkId}/questions/${sentId}`); return; }
 		const scope = data.readingScope;
 		const linkId = data.linkId;
@@ -43,7 +45,7 @@
 
 <svelte:head><title>My questions · {data.roomName}</title></svelte:head>
 
-<div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h1 class="text-xl font-semibold">My questions</h1><p class="mt-1 text-sm text-muted-foreground">Private conversations with the team.</p></div>{#if !data.preview}<Button class="min-h-11" onclick={() => { open = true; error = ''; }}><Plus data-icon="inline-start" />Ask the team</Button>{/if}</div>
+<div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h1 class="text-xl font-semibold">My questions</h1><p class="mt-1 text-sm text-muted-foreground">Private conversations with the team.</p></div>{#if !data.preview}<Button disabled={appearance} class="min-h-11" onclick={() => { open = true; error = ''; }}><Plus data-icon="inline-start" />Ask the team</Button>{/if}</div>
 {#if !data.verified}<p class="mb-5 rounded-lg bg-muted p-4 text-sm">Your email was not verified. Replies are available in this session only and won’t be emailed.</p>{/if}
 {#if data.threads.length === 0}
 	<Empty.Root class="rounded-xl border bg-card py-10"><Empty.Header><Empty.Media variant="icon"><MessageSquare /></Empty.Media><Empty.Title>No questions yet</Empty.Title><Empty.Description>Ask about the room or choose a document. Only you and the team can see your conversation.</Empty.Description></Empty.Header></Empty.Root>

@@ -91,8 +91,7 @@ destination routes continue to enforce member authentication.
 
 Workspace and room appearance use an explicit draft/save/cancel model. Room settings combine name,
 welcome Markdown, logo and colour in one operation. Inheritance is visible and reset controls are
-staged changes. The editor previews sample Documents and email Entry screens at two widths; live
-investor link preview remains the way to check actual access. The welcome component and contrast
+staged changes. The editor renders the investor screens inside a same-origin frame at the selected width. Room editors load the full room tree, pins and FAQ. Workspace editors use sample documents. Use a link preview to check effective access. The welcome component and contrast
 helper are shared with investor rendering. Keep controls usable at 320 px, bound the welcome editor's
 height, and keep Save/Cancel visible when scrolling the preview.
 
@@ -100,9 +99,7 @@ See the [appearance visual review](../reviews/2026-11-13-room-appearance.md) for
 
 Input boundaries use a dedicated contrast token, separate from decorative card borders. Default
 inputs/buttons and dialog close targets are 44 px on phones; desktop density remains unchanged.
-Mobile personalization uses Edit/Preview tabs with persistent drafts and save controls. Appearance
-samples reuse investor navigation/cards/rows and resolve inherited workspace colour. They remain
-samples; use permission-aware link previews for real content.
+Mobile personalization uses Edit/Preview tabs with persistent drafts and save controls. Appearance previews resolve inherited workspace colour and keep private investor activity out of the editor.
 
 See the [UI standards implementation and screenshot gallery](../reviews/ui-standards-implementation-2026-11-13/index.html) for the eight improvements and verification results.
 

@@ -47,6 +47,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 	for (const [name, value] of Object.entries(securityHeaders)) {
 		if (!response.headers.has(name)) response.headers.set(name, value);
 	}
+	if (routeId === '/admin/appearance-preview' && event.locals.member && response.ok) {
+		response.headers.set('x-frame-options', 'SAMEORIGIN');
+		const policy = response.headers.get('content-security-policy');
+		if (policy) {
+			response.headers.set(
+				'content-security-policy',
+				policy.replace("frame-ancestors 'none'", "frame-ancestors 'self'"),
+			);
+		}
+	}
 	if (hsts) response.headers.set('strict-transport-security', 'max-age=31536000');
 	if (
 		admin ||

@@ -33,9 +33,7 @@ uses the investor navigation, Start here cards and document rows, including inhe
 
 Appearance keyboard focus scrolls clear of the save bar. Invalid brand colours show an inline message and return focus to the colour input; the footer error also links back to that field. Sample preview dimensions describe the rendered sample canvas, not the device running the admin app. Use **Actual size** for readable detail when a desktop sample is scaled down on a phone.
 
-The previews show sample Documents, Questions, Requests and the email-entry screen; password, verification and NDA
-requirements still follow each sharing link's access settings. Use the link's investor preview
-to review its actual document permissions.
+The editor renders the investor Documents, Questions, Requests and email-entry screens at the selected width. Room settings show the full document tree, ordered pins and shared FAQ. Workspace settings use example documents. Account actions are disabled and private conversations, submissions and reading history are excluded. Use **Preview as investor** on a sharing link to check its specific welcome and document access. Password, verification and NDA steps follow the link settings at entry.
 
 Email is optional. Select Resend, Cloudflare or SMTP to see its setup steps, enter the sender and credentials, save, then send a test.
 Leave a saved secret empty to keep it; it is never shown again. Server environment overrides are

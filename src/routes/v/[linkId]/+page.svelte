@@ -15,7 +15,9 @@
 	import { afterNavigate, disableScrollHandling, goto } from '$app/navigation';
 	import { page } from '$app/state';
 
-	let { data } = $props();
+	import type { PageData } from './$types';
+
+	let { data, appearance = false }: { data: PageData; appearance?: boolean } = $props();
 	const currentUrl = $derived(page.shallow?.url ?? page.url);
 	const query = $derived((currentUrl.searchParams.get('q') ?? '').slice(0, 200));
 	const folderId = $derived(data.tree.some((n) => n.type === 'folder' && n.id === currentUrl.searchParams.get('folder')) ? currentUrl.searchParams.get('folder') ?? '' : '');
@@ -65,9 +67,13 @@
 		void goto(url, { state: page.state, shallow: true, replace: true, reset: false });
 	}
 	function fileHref(id: string, guide = false) {
+		if (appearance) return undefined;
 		const params = new URLSearchParams(currentUrl.search);
 		params.set('y', String(Math.round(scrollY)));
 		return documentHref(data.linkId, id, params, guide);
+	}
+	function downloadHref(id: string) {
+		return appearance ? undefined : `/v/${data.linkId}/files/${id}?download=1`;
 	}
 	function folderPath(parentId: string | null) {
 		const parts: string[] = [];
@@ -100,16 +106,16 @@
 		<ol class="grid gap-2">
 			{#each remainingPins as document, index (document.id)}
 				{#if index === 0}
-					<li><FeaturedDocument name={document.name} kind={document.kind} size={document.size} folder={document.parentId ? folderPath(document.parentId) : undefined} href={document.kind === 'download' && data.preview ? `/v/${data.linkId}/files/${document.id}?download=1` : fileHref(document.id, true)} downloadHref={document.kind === 'download' && !data.preview ? `/v/${data.linkId}/files/${document.id}?download=1` : undefined} action={data.preview ? undefined : completedPins.length ? 'Continue review' : 'Start review'} change={data.tree.find((file) => file.id === document.id)?.change} controls={data.preview ? undefined : reviewControl} version={data.reviewStates.find((state) => state.fileId === document.id)?.previousVersion ? reviewVersion : undefined} /></li>
+					<li><FeaturedDocument previewDownload={appearance && document.kind === 'download'} name={document.name} kind={document.kind} size={document.size} folder={document.parentId ? folderPath(document.parentId) : undefined} href={document.kind === 'download' && data.preview ? downloadHref(document.id) : fileHref(document.id, true)} downloadHref={document.kind === 'download' && !data.preview ? downloadHref(document.id) : undefined} action={data.preview ? undefined : completedPins.length ? 'Continue review' : 'Start review'} change={data.tree.find((file) => file.id === document.id)?.change} controls={data.preview ? undefined : reviewControl} version={data.reviewStates.find((state) => state.fileId === document.id)?.previousVersion ? reviewVersion : undefined} /></li>
 				{:else}
-					<PinnedDocument name={document.name} kind={document.kind} size={document.size} number={data.pins.findIndex((pin) => pin.id === document.id) + 1} href={document.kind === 'download' ? `/v/${data.linkId}/files/${document.id}?download=1` : fileHref(document.id, true)} change={data.tree.find((file) => file.id === document.id)?.change} hidden={!expanded && index >= 3} controls={data.preview ? undefined : reviewControl} version={data.reviewStates.find((state) => state.fileId === document.id)?.previousVersion ? reviewVersion : undefined} />
+					<PinnedDocument name={document.name} kind={document.kind} size={document.size} number={data.pins.findIndex((pin) => pin.id === document.id) + 1} href={document.kind === 'download' ? downloadHref(document.id) : fileHref(document.id, true)} change={data.tree.find((file) => file.id === document.id)?.change} hidden={!expanded && index >= 3} controls={data.preview ? undefined : reviewControl} version={data.reviewStates.find((state) => state.fileId === document.id)?.previousVersion ? reviewVersion : undefined} />
 				{/if}
-    {#snippet reviewControl()}{#key `${data.readingScope}:${document.id}:${document.version}`}<ReviewButton linkId={data.linkId} fileId={document.id} version={document.version ?? 1} reviewed={data.reviewedIds.includes(document.id)} name={document.name} onupdated={focusProgress} />{/key}{/snippet}
+    {#snippet reviewControl()}{#key `${data.readingScope}:${document.id}:${document.version}`}<ReviewButton disabled={appearance} linkId={data.linkId} fileId={document.id} version={document.version ?? 1} reviewed={data.reviewedIds.includes(document.id)} name={document.name} onupdated={focusProgress} />{/key}{/snippet}
     {#snippet reviewVersion()}<ReviewVersion state={data.reviewStates.find((state) => state.fileId === document.id)} />{/snippet}
 			{/each}
 		</ol>
 		{#if remainingPins.length > 3}<Button variant="ghost" class="mt-2 min-h-11 w-full sm:hidden" aria-expanded={expanded} onclick={expandPins}>{expanded ? 'Show fewer documents' : `Show all ${remainingPins.length} remaining documents`}</Button>{/if}
- {#if completedPins.length}<details bind:open={showReviewed} class="mt-3 rounded-xl border bg-card"><summary class="min-h-11 cursor-pointer px-4 py-3 text-sm font-medium">Show reviewed ({completedPins.length})</summary><ol class="divide-y border-t">{#each completedPins as document (document.id)}<li class="flex flex-wrap items-center justify-between gap-x-3 px-3 py-1"><a class="flex min-h-11 min-w-0 flex-1 items-center gap-2 text-sm [overflow-wrap:anywhere]" href={fileHref(document.id, true)}><span class="shrink-0 whitespace-nowrap text-muted-foreground">{data.pins.findIndex((pin) => pin.id === document.id) + 1}.</span>{document.name}</a><ReviewButton linkId={data.linkId} fileId={document.id} version={document.version ?? 1} reviewed={true} name={document.name} onupdated={focusProgress} /></li>{/each}</ol></details>{/if}
+ {#if completedPins.length}<details bind:open={showReviewed} class="mt-3 rounded-xl border bg-card"><summary class="min-h-11 cursor-pointer px-4 py-3 text-sm font-medium">Show reviewed ({completedPins.length})</summary><ol class="divide-y border-t">{#each completedPins as document (document.id)}<li class="flex flex-wrap items-center justify-between gap-x-3 px-3 py-1"><a class="flex min-h-11 min-w-0 flex-1 items-center gap-2 text-sm [overflow-wrap:anywhere]" href={fileHref(document.id, true)}><span class="shrink-0 whitespace-nowrap text-muted-foreground">{data.pins.findIndex((pin) => pin.id === document.id) + 1}.</span>{document.name}</a><ReviewButton disabled={appearance} linkId={data.linkId} fileId={document.id} version={document.version ?? 1} reviewed={true} name={document.name} onupdated={focusProgress} /></li>{/each}</ol></details>{/if}
 	</section>
 {/if}
 <div>
@@ -123,15 +129,15 @@
  </nav></div>{/if}
         {#if breadcrumb.length && !query.trim() && !changedOnly}<nav class="mb-2 flex flex-wrap items-center gap-2 text-xs" aria-label="Document folders"><button type="button" class="flex min-h-11 items-center text-muted-foreground hover:text-foreground" onclick={() => browse('')}>All documents</button>{#each breadcrumb as folder (folder.id)}<ChevronRight class="size-3 text-muted-foreground/50" /><button type="button" class="flex min-h-11 items-center font-medium" onclick={() => browse(folder.id)}>{folder.name}</button>{/each}</nav>{/if}
 		{#if single}
-			<FeaturedDocument name={single.name} kind={single.kind} size={single.size} folder={single.parentId ? folderPath(single.parentId) : undefined} href={single.kind === 'download' ? `/v/${data.linkId}/files/${single.id}?download=1` : fileHref(single.id)} downloadHref={canDownload(single.kind) ? `/v/${data.linkId}/files/${single.id}?download=1` : undefined} change={single.change} />
+			<FeaturedDocument previewDownload={appearance && single.kind !== 'download' && canDownload(single.kind)} name={single.name} kind={single.kind} size={single.size} folder={single.parentId ? folderPath(single.parentId) : undefined} href={single.kind === 'download' ? downloadHref(single.id) : fileHref(single.id)} downloadHref={canDownload(single.kind) ? downloadHref(single.id) : undefined} change={single.change} />
 		{:else}
 		<div class="overflow-hidden rounded-xl border bg-card">
 			{#if matches.length}
-				<ul class="divide-y">{#each matches as node (node.id)}<DocumentListItem name={node.name} kind={node.kind} size={node.size} number={node.number} folderPath={query.trim() || changedOnly ? folderPath(node.parentId) : undefined} folder={node.type === 'folder'} childCount={data.tree.filter((child) => child.parentId === node.id).length} href={fileHref(node.id)} downloadHref={canDownload(node.kind) ? `/v/${data.linkId}/files/${node.id}?download=1` : undefined} change={node.change} onfolder={() => browse(node.id)} />{/each}</ul>
+				<ul class="divide-y">{#each matches as node (node.id)}<DocumentListItem previewDownload={appearance && canDownload(node.kind)} name={node.name} kind={node.kind} size={node.size} number={node.number} folderPath={query.trim() || changedOnly ? folderPath(node.parentId) : undefined} folder={node.type === 'folder'} childCount={data.tree.filter((child) => child.parentId === node.id).length} href={fileHref(node.id)} downloadHref={canDownload(node.kind) ? downloadHref(node.id) : undefined} change={node.change} onfolder={() => browse(node.id)} />{/each}</ul>
 			{:else}<Empty.Root class="py-14"><Empty.Header><Empty.Media variant="icon"><FolderClosed /></Empty.Media><Empty.Title>{changedOnly ? 'No new or updated documents' : query ? 'No matching documents' : 'Nothing shared here yet'}</Empty.Title><Empty.Description>{query ? 'Try a different title or clear your search.' : changedOnly ? 'You’re up to date. New uploads and version changes will appear here.' : 'You’ll find the materials here when the team shares them.'}</Empty.Description></Empty.Header>{#if query}<Empty.Content><Button variant="outline" size="sm" class="min-h-11 sm:min-h-8" onclick={() => browse(folderId)}>Clear search</Button></Empty.Content>{/if}</Empty.Root>{/if}
 		</div>
 		{/if}
 		{#if data.faq.length}<section class="mt-8" aria-labelledby="faq-heading"><h2 id="faq-heading" class="mb-4 text-sm font-semibold">Room FAQ</h2><div class="divide-y rounded-xl border bg-card">{#each data.faq as entry (entry.id)}<details class="group px-4 py-1.5 sm:px-5"><summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium">{entry.question}<ChevronDown class="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" /></summary><div class="md mt-3 text-sm leading-relaxed text-muted-foreground">{@html entry.answerHtml}</div></details>{/each}</div></section>{/if}
 	</div>
-    {#if data.downloads === 'zip'}<div class="mt-4">{#key data.readingScope}<DownloadRoom linkId={data.linkId} />{/key}</div>{/if}
+    {#if data.downloads === 'zip'}<div class="mt-4">{#key data.readingScope}<DownloadRoom disabled={appearance} linkId={data.linkId} />{/key}</div>{/if}
 </div>

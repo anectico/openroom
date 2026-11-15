@@ -5,8 +5,8 @@
 	import { Badge } from '#lib/components/ui/badge/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
 
-	let { name, kind, size, folder, href, downloadHref, change, action, controls, version }: {
-		name: string; kind: string | null; size: number | null; folder?: string; href?: string; downloadHref?: string;
+	let { name, kind, size, folder, href, downloadHref, previewDownload = false, change, action, controls, version }: {
+		name: string; kind: string | null; size: number | null; folder?: string; href?: string; downloadHref?: string; previewDownload?: boolean;
 		change?: string | null; action?: string; controls?: Snippet; version?: Snippet;
 	} = $props();
 	const types = { pdf: { label: 'PDF', icon: FileText }, image: { label: 'Image', icon: FileImage }, video: { label: 'Video', icon: Film } };
@@ -26,7 +26,7 @@
 			<div class="mt-1.5 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">{type.label}{size !== null ? ` · ${formatBytes(size)}` : ''}{#if change}<Badge variant="secondary">{change === 'new' ? 'New' : 'Updated'}</Badge>{/if}</div>
 			<div class="mt-3 flex flex-wrap gap-2">
 				<Button {href} disabled={!href} class="min-h-11">{action ?? (kind === 'download' ? 'Download file' : 'Open document')}{#if kind === 'download' && !action}<Download />{:else}<ArrowUpRight />{/if}</Button>
-				{#if downloadHref && downloadHref !== href}<Button href={downloadHref} variant="outline" class="min-h-11"><Download />Download</Button>{/if}
+				{#if previewDownload || (downloadHref && downloadHref !== href)}<Button href={downloadHref} disabled={previewDownload} variant="outline" class="min-h-11"><Download />Download</Button>{/if}
 			</div>
 		</div>
 	</div>

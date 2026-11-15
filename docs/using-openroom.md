@@ -160,7 +160,7 @@ members only. Close a request to stop new uploads. Late submissions remain marke
 ## Personalize the room
 
 Open the gear beside **Share room**. Under **General**, choose **Room settings & branding** to edit the room name, welcome introduction, logo, optional cover image and brand colour. Use public artwork for the cover.
-Preview Documents or Entry screen at desktop/phone widths, then **Save appearance** to publish the
+Preview your room’s documents, pins, FAQ and email entry at desktop or phone widths. Choose **Save appearance** to publish the
 changes together. **Cancel changes** discards your draft. Reset either logo or colour to inherit the
 workspace setting. Investor browser icons follow the effective logo.
 

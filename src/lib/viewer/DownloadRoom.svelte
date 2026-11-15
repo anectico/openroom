@@ -3,7 +3,7 @@
 	import { onDestroy } from 'svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 
-	let { linkId }: { linkId: string } = $props();
+	let { linkId, disabled = false }: { linkId: string; disabled?: boolean } = $props();
 	let busy = $state(false);
 	let job = $state<{ id: string; status: string; progress: number; error?: string | null } | null>(null);
 	let message = $state('');
@@ -52,6 +52,6 @@
 
 <section class="flex flex-col justify-center rounded-xl border bg-card p-3" aria-label="Download documents">
  {#if job?.status === 'ready' && !message}<Button href="/v/{linkId}/zip/{job.id}?download=1" variant="ghost" class="min-h-11 justify-start"><Download data-icon="inline-start" />Download zip</Button><p class="px-3 text-xs text-muted-foreground" role="status">Your zip is ready.</p>
- {:else}<Button variant="ghost" class="min-h-11 justify-start" disabled={busy} onclick={prepare}>{#if message}<RefreshCw data-icon="inline-start" />{:else}<Download data-icon="inline-start" />{/if}{busy ? `Preparing… ${job?.progress ?? 0}%` : message ? 'Retry download' : 'Download documents'}</Button><p class="px-3 text-xs text-muted-foreground" role="status">{busy ? 'Keep this page open while your zip is prepared.' : 'A zip of the files shared with you'}</p>{/if}
+ {:else}<Button variant="ghost" class="min-h-11 justify-start" disabled={busy || disabled} onclick={prepare}>{#if message}<RefreshCw data-icon="inline-start" />{:else}<Download data-icon="inline-start" />{/if}{busy ? `Preparing… ${job?.progress ?? 0}%` : message ? 'Retry download' : 'Download documents'}</Button><p class="px-3 text-xs text-muted-foreground" role="status">{busy ? 'Keep this page open while your zip is prepared.' : 'A zip of the files shared with you'}</p>{/if}
  {#if message}<p role="alert" class="mt-2 px-3 text-xs text-destructive">{message}</p>{/if}
 </section>

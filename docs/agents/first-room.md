@@ -160,7 +160,7 @@ Investor welcomes up to 600 plain-text characters initially open; longer message
 through reload and review saves. Confirm visible Mark reviewed/Undo labels and file format/size/Section
 metadata. Use real investor sessions for reviews, unread replies and request counts.
 
-When checking the owner UI, verify full document titles, protection summaries on mobile sharing rows, and a discard decision for unsaved link edits. Appearance samples show their render width and scale; use Actual size for detail and `preview_link` for actual access. At entry, open Read the welcome after checking the email form. Search/folder context should remain intact when returning from a document.
+When checking the owner UI, verify full document titles, protection summaries on mobile sharing rows, and a discard decision for unsaved link edits. Room appearance shows the full room’s documents, pins and FAQ at the indicated width and scale. Workspace appearance uses sample files; use Actual size for detail and `preview_link` for actual access. At entry, open Read the welcome after checking the email form. Search/folder context should remain intact when returning from a document.
 
 For reliability checks, draft a page-specific question, move to another page, and confirm its original context before submitting. Navigate to another document and check for an empty draft. Exercise an access change while sending; confirm the draft survives and no false Sent message appears. Test offline authentication retries, unchanged and replacement NDA versions, native video keyboard controls, PDF tool return focus, and pending sharing/destructive actions. Do not treat a disabled pending confirmation as a cancelled operation; inspect its actual result.
 

@@ -8,7 +8,7 @@
 		document.querySelector<HTMLElement>('main input:not([type=hidden]):not([type=checkbox])')?.focus();
 	}
 
-	onMount(focusFirst);
+	onMount(() => { if (!appearance) focusFirst(); });
 
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Card from '#lib/components/ui/card/index.js';
@@ -16,19 +16,23 @@
 	import { Label } from '#lib/components/ui/label/index.js';
 	import { enhance } from '$app/forms';
 
-	let { data, form } = $props();
+	import type { PageProps } from './$types';
+
+	let { data, form, appearance = false }: Pick<PageProps, 'data' | 'form'> & { appearance?: boolean } = $props();
 	let busy = $state(false);
 	let wait = $state(untrack(() => data.resendIn));
 	let timer: ReturnType<typeof setInterval> | null = null;
 
 	$effect(() => {
+		if (appearance) return;
 		wait = data.resendIn;
 		if (timer) clearInterval(timer);
 		timer = setInterval(() => (wait = Math.max(0, wait - 1)), 1000);
 	});
 	onDestroy(() => timer && clearInterval(timer));
 
-	const submit = () => {
+	const submit = ({ cancel }: { cancel: () => void }) => {
+		if (appearance) { cancel(); return; }
 		busy = true;
 		return async ({ update }: { update: () => Promise<void> }) => {
 			try {
@@ -63,17 +67,17 @@
 						<Input id="password" name="password" type="password" autocomplete="current-password" required />
 					</div>
 					{#if form?.error}<p id={errorId} class="text-sm text-destructive" role="alert">{form.error}</p>{/if}
-					<Button type="submit" class="min-h-11 w-full" disabled={busy}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
+					<Button type="submit" class="min-h-11 w-full" disabled={busy || appearance}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
 				</form>
 			{:else if data.step === 'email'}
 				<form method="POST" action="?/email" class="flex flex-col gap-5" use:enhance={submit}>
 					<div class="flex flex-col gap-2">
 						<Label for="email">Your email</Label>
-						<Input id="email" name="email" type="email" autocomplete="email" required />
+						<Input id="email" readonly={appearance} name="email" type="email" autocomplete="email" required />
 					</div>
 					{#if form?.error}<p id={errorId} class="text-sm text-destructive" role="alert">{form.error}</p>{/if}
 					<div class="flex flex-col gap-3">
-						<Button type="submit" class="min-h-11 w-full" disabled={busy}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
+						<Button type="submit" class="min-h-11 w-full" disabled={busy || appearance}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
 						<p class="text-xs text-muted-foreground">This room records which pages you view.</p>
 					</div>
 				</form>
@@ -97,7 +101,7 @@
 					</div>
 					{#if form?.error}<p id={errorId} class="text-sm text-destructive" role="alert">{form.error}</p>{/if}
 					{#if form?.notice}<p class="text-sm" role="status">{form.notice}</p>{/if}
-					<Button type="submit" class="min-h-11 w-full" disabled={busy}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
+					<Button type="submit" class="min-h-11 w-full" disabled={busy || appearance}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
 				</form>
 				<div class="flex flex-wrap items-center justify-between gap-2 text-sm">
 					<form method="POST" action="?/resend" use:enhance={submit}>
@@ -118,7 +122,7 @@
 						</div>
 					{/each}
 					{#if form?.error}<p id={errorId} class="text-sm text-destructive" role="alert">{form.error}</p>{/if}
-					<Button type="submit" class="min-h-11 w-full" disabled={busy}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
+					<Button type="submit" class="min-h-11 w-full" disabled={busy || appearance}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
 				</form>
 			{:else if data.step === 'nda'}
 				<h2 class="font-medium">Non-disclosure agreement</h2>
@@ -137,7 +141,7 @@
 					</div>
 					<label class="flex items-center gap-2 text-sm"><input type="checkbox" name="accept" required /> I accept</label>
 					{#if form?.error}<p id={errorId} class="text-sm text-destructive" role="alert">{form.error}</p>{/if}
-					<Button type="submit" class="min-h-11 w-full" disabled={busy}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
+					<Button type="submit" class="min-h-11 w-full" disabled={busy || appearance}>{busy ? 'Please wait…' : 'Continue'}<ArrowRight data-icon="inline-end" /></Button>
 				</form>
 			{/if}
 		</Card.Content>
