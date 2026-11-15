@@ -91,10 +91,7 @@ NDA requirement in defaults or a link. Publishing a replacement requires affecte
 accept the new version. Acceptance records retain the version, signed name, email, verification
 state, time and IP according to the documented privacy rules.
 
-Investors follow their link, pass the configured gates and enter the document list. On a phone,
-a compact header brings the documents higher on the page. **Requested from you** appears above
-the list as an expandable section when there are file requests. Search sits directly below the room
-heading. On phones, Start here initially shows three compact cards; **Show all** reveals the rest.
+Investors follow their link, pass the configured gates and enter the document list. The branded header brings together the room title, logo, optional cover and welcome. A room with one visible document and no pins shows that document with its folder path and a direct open or download action. In a pinned room, the first remaining document leads **Start here**. On phones, **Show all** expands the list beyond the first three.
 Search results show the matching count, two-line titles and the containing folder. Opening a document
 and using its return link restores the folder, search and scroll position. A document opened from
 Start here follows that reading order with Previous/Next controls, respecting current permissions.
@@ -162,13 +159,13 @@ members only. Close a request to stop new uploads. Late submissions remain marke
 
 ## Personalize the room
 
-Open the gear beside **Share room**. Under **General**, choose **Room settings & branding** to edit the room name, welcome introduction, logo and brand colour.
+Open the gear beside **Share room**. Under **General**, choose **Room settings & branding** to edit the room name, welcome introduction, logo, optional cover image and brand colour. Use public artwork for the cover.
 Preview Documents or Entry screen at desktop/phone widths, then **Save appearance** to publish the
 changes together. **Cancel changes** discards your draft. Reset either logo or colour to inherit the
 workspace setting. Investor browser icons follow the effective logo.
 
 The investor header gives your logo a prominent place alongside the room identity. Your brand colour
-also accents the welcome panel, navigation and primary actions. The introduction supports Markdown:
+also accents the room header, navigation and primary actions. The introduction supports Markdown:
 short messages open on arrival, while messages over 600 plain-text characters start with a two-line
 excerpt and **Read welcome**. Investors can collapse the message with **Show less**; their explicit
 choice is remembered for that version of the note in the same tab. The room name remains the page heading.
@@ -292,12 +289,7 @@ request and opens its history; outstanding requests remain listed first.
 
 ## Clearer reading and submission controls
 
-Start here uses compact rows on phones and tablets, with document titles emphasized and a separate
-**Review** action. Desktop cards keep the same reading order. Search fills the phone width; the
-document heading changes to the current folder or Search results. Questions and document downloads
-stay within the document flow: **My questions** (or the unread reply count) sits beside search,
-and ZIP downloads appear below the list when permitted. Documents use the full content width without
-a separate tools column. File format, size and section share a compact metadata line.
+Search is next to **All documents** and fills the phone width. The heading changes when browsing a folder or searching. **Questions** and **Requests** are available in the main navigation. Unread replies and outstanding requests have shortcuts beside the library. Permitted ZIP downloads appear below the list. File format, size and section share a compact metadata line.
 
 Request badges use both icons and words: amber **Action needed**, green **Uploaded**, and neutral
 **Closed**. Uploaded confirms receipt only. The newest receipt appears once; **Previous submissions**

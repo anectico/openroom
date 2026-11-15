@@ -1,5 +1,5 @@
 <script lang="ts">
- import { ArrowRight, Check, LockKeyhole, MessageSquare, Search } from '@lucide/svelte';
+ import { Check, LockKeyhole, Search } from '@lucide/svelte';
  import { type Brand, brandStyle } from '#lib/brand.ts';
 	import OpenRoomCredit from '#lib/components/OpenRoomCredit.svelte';
  import { Button } from '#lib/components/ui/button/index.js';
@@ -8,6 +8,7 @@
  import { renderMarkdown } from '#lib/markdown.ts';
  import BrandIdentity from '#lib/viewer/BrandIdentity.svelte';
  import DocumentListItem from '#lib/viewer/DocumentListItem.svelte';
+ import FeaturedDocument from '#lib/viewer/FeaturedDocument.svelte';
  import PinnedDocument from '#lib/viewer/PinnedDocument.svelte';
  import RoomNavigation from '#lib/viewer/RoomNavigation.svelte';
  import RoomWelcome from '#lib/viewer/RoomWelcome.svelte';
@@ -44,12 +45,18 @@
     >
      <div class="investor-brand @container/preview" data-preview-width={renderWidth} style={brandStyle(brand.accentColor)} style:width={device === 'desktop' ? `${renderWidth}px` : undefined} style:zoom={device === 'desktop' ? scale : undefined}>
       <Tabs.Content value="documents" class="m-0">
-       <header class="border-b bg-card"><div class="flex items-center gap-3 p-4"><BrandIdentity name={name || 'Your data room'} logoUrl={brand.logoUrl} /></div><RoomNavigation active={section} onselect={(value) => section = value} /></header>
+       <header class="border-b bg-card">{#if section === 'documents'}<RoomWelcome name={name || 'Your data room'} logoUrl={brand.logoUrl} coverUrl={brand.coverUrl} {html} />{:else}<div class="flex items-center gap-3 p-4"><BrandIdentity name={name || 'Your data room'} logoUrl={brand.logoUrl} /></div>{/if}<RoomNavigation active={section} onselect={(value) => section = value} /></header>
        <div class="p-4 @xl/preview:p-8">
         {#if section === 'documents'}
-         <RoomWelcome name={name || 'Your data room'} {html}>{#snippet tools()}<div class="mt-4 mb-3 flex flex-wrap items-center gap-2"><div class="relative min-w-0 basis-full @sm/preview:flex-1 @sm/preview:basis-auto"><Search class="pointer-events-none absolute top-3.5 left-3 size-4 text-muted-foreground" /><Input readonly tabindex={-1} aria-label="Preview document search" placeholder="Find a document…" class="min-h-11 pl-9" /></div><Button variant="outline" size="sm" class="min-h-11" onclick={() => section = 'questions'}><MessageSquare data-icon="inline-start" />My questions</Button></div>{/snippet}</RoomWelcome>
-         <section class="mb-6" aria-label="Start here preview"><div class="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2"><div class="flex flex-wrap items-center gap-x-3 gap-y-1"><h3 class="text-base font-semibold">Start here</h3><p class="text-xs text-muted-foreground">3 documents to get started</p></div><div class="flex flex-wrap items-center gap-2"><Button variant="ghost" size="sm" class="min-h-11" disabled>All documents</Button><Button size="sm" class="min-h-11" disabled>Start review<ArrowRight data-icon="inline-end" /></Button></div></div><ol class="grid gap-2 @5xl/preview:grid-cols-3">{#each samples as file, index}<PinnedDocument name={file} kind="pdf" size={2457600} number={index + 1}>{#snippet controls()}<Button variant="ghost" size="sm" class="min-h-11" disabled><Check data-icon="inline-start" />Mark reviewed</Button>{/snippet}</PinnedDocument>{/each}</ol></section>
-         <h3 class="mb-3 text-base font-semibold">All documents</h3><ul class="divide-y overflow-hidden rounded-xl border bg-card">{#each samples as file, index}<DocumentListItem name={file} kind="pdf" size={2457600} number={`1.${index + 1}`} />{/each}</ul>
+         <section class="mb-6" aria-label="Start here preview">
+          <div class="mb-3 flex flex-wrap items-baseline gap-3"><h3 class="font-semibold">Start here</h3><p class="text-xs text-muted-foreground">3 documents to get started</p></div>
+          <ol class="grid gap-2">{#each samples as file, index}
+           {#snippet controls()}<Button variant="ghost" size="sm" class="min-h-11" disabled><Check />Mark reviewed</Button>{/snippet}
+           {#if index === 0}<li><FeaturedDocument name={file} kind="pdf" size={2457600} action="Start review" {controls} /></li>
+           {:else}<PinnedDocument name={file} kind="pdf" size={2457600} number={index + 1} {controls} />{/if}
+          {/each}</ol>
+         </section>
+         <div class="mb-3 flex flex-wrap items-center justify-between gap-2"><h3 class="text-base font-semibold">All documents</h3><div class="relative w-full @xl/preview:w-64"><Search class="pointer-events-none absolute top-3.5 left-3 size-4 text-muted-foreground" /><Input readonly tabindex={-1} aria-label="Preview document search" placeholder="Find a document…" class="min-h-11 pl-9" /></div></div><ul class="divide-y overflow-hidden rounded-xl border bg-card">{#each samples as file, index}<DocumentListItem name={file} kind="pdf" size={2457600} number={`1.${index + 1}`} />{/each}</ul>
         {:else if section === 'questions'}<h3 class="text-xl font-semibold">My questions</h3><p class="mt-2 text-sm text-muted-foreground">Private conversations with the team.</p><div class="mt-5 rounded-xl border bg-card p-5"><h4 class="text-sm font-medium">Ask the team</h4><p class="mt-2 text-sm text-muted-foreground">Your questions and replies will appear here.</p><Button class="mt-4 min-h-11" disabled>Ask a question</Button></div>
         {:else}<h3 class="text-xl font-semibold">File requests</h3><p class="mt-2 text-sm text-muted-foreground">Documents the team has asked you to share.</p><div class="mt-5 rounded-xl border bg-card p-5"><h4 class="text-sm font-medium">No requests right now</h4><p class="mt-2 text-sm text-muted-foreground">New requests will appear here.</p></div>{/if}
        </div>

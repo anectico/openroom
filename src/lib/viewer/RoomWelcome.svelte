@@ -1,10 +1,9 @@
 <script lang="ts">
- import { ChevronDown, Mail } from '@lucide/svelte';
+ import { ChevronDown, FolderClosed, Mail } from '@lucide/svelte';
  import { onMount, type Snippet } from 'svelte';
  import { renderedExcerpt } from '#lib/markdown.ts';
- import { cn } from '#lib/utils.js';
 
- let { name, html = '', personal = false, compact = false, tools, persistenceKey, revision }: { name: string; html?: string; personal?: boolean; compact?: boolean; tools?: Snippet; persistenceKey?: string; revision?: string } = $props();
+ let { name, html = '', personal = false, compact = false, homeHref, logoUrl, coverUrl, account, persistenceKey, revision }: { name: string; html?: string; personal?: boolean; compact?: boolean; homeHref?: string; logoUrl: string | null; coverUrl?: string | null; account?: Snippet; persistenceKey?: string; revision?: string } = $props();
  let chosenOpen = $state<boolean | null>(null);
  let compactOpen = $state(false);
  let disclosure = $state<HTMLDetailsElement>();
@@ -30,16 +29,31 @@
  }
 </script>
 
-<div class="@container mb-5">
- {#if compact}<h1 class="sr-only">{name}</h1>{#if tools}{@render tools()}{/if}{/if}
- <section class={cn('overflow-hidden rounded-2xl border bg-card', compact && 'rounded-none border-0 bg-transparent')} aria-label={personal ? 'Personal welcome' : 'Room introduction'}>
-  {#if !compact}<div class="bg-primary/5 px-4 pt-4 pb-3 @sm:px-6 @sm:pt-5"><p class="mb-2 text-xs font-semibold tracking-[0.12em] text-primary uppercase">{personal ? 'Prepared for you' : 'Welcome to our data room'}</p><h1 class="break-words text-2xl font-semibold tracking-tight @sm:text-3xl [overflow-wrap:anywhere]">{name}</h1></div>{/if}
+<section class="room-cover @container/cover border-b" aria-label="Room introduction">
+ <div class="relative mx-auto grid max-w-6xl items-center gap-3 px-4 py-4 @xl/cover:px-8 @xl/cover:py-6">
+  <div class="flex flex-wrap items-start justify-between gap-2">
+   <div class="flex min-w-0 flex-1 items-center gap-3 @xl/cover:gap-5">
+    {#if logoUrl}<img src={logoUrl} alt="" class="max-h-12 w-auto max-w-24 object-contain @xl/cover:max-h-16 @xl/cover:max-w-40" />
+    {:else}<span class="grid size-10 shrink-0 place-items-center rounded-xl border border-primary/15 bg-card/75 text-primary @xl/cover:size-14"><FolderClosed class="size-5 @xl/cover:size-7" strokeWidth={1.5} /></span>{/if}
+    <h1 class="text-2xl leading-tight font-semibold tracking-tight [overflow-wrap:anywhere] @xl/cover:text-4xl">{#if homeHref}<a href={homeHref} class="hover:text-primary">{name}</a>{:else}{name}{/if}</h1>
+   </div>
+   {#if account}{@render account()}{/if}
+  </div>
+  {#if !compact && coverUrl}<img src={coverUrl} alt="" class="h-20 w-full rounded-xl object-cover @xl/cover:h-36" />{/if}
   {#if html.trim()}
-   <details bind:this={disclosure} open={compact ? compactOpen : open} class="group">
-    <summary class={cn('min-h-11 cursor-pointer list-none px-4 py-3 text-sm @sm:px-6', compact && 'px-0 @sm:px-0')}><span class="flex items-center justify-between gap-2"><span class="flex items-center gap-2 font-semibold">{#if personal}<Mail class="size-4 shrink-0 text-primary" />{/if}{personal ? 'Personal welcome' : 'Welcome & introduction'}</span><span class="flex shrink-0 items-center gap-2 whitespace-nowrap text-xs font-medium text-primary">{(compact ? compactOpen : open) ? 'Show less' : 'Read welcome'}<ChevronDown class="size-4 shrink-0 transition-transform group-open:rotate-180" /></span></span>{#if !open && !compact}<span class="mt-2 line-clamp-2 break-words text-muted-foreground [overflow-wrap:anywhere]">{excerpt}</span>{/if}</summary>
-    <div class={cn('md px-4 pb-4 text-sm leading-relaxed @sm:px-6 @sm:pb-5 [&>:first-child]:mt-0 [&>:last-child]:mb-0', compact && 'px-0 @sm:px-0')}>{@html html}</div>
+   <details bind:this={disclosure} open={compact ? compactOpen : open} class="group max-w-3xl text-sm">
+    <summary class="flex min-h-11 cursor-pointer list-none flex-wrap items-center gap-2 font-medium text-primary">
+     {#if personal}<Mail class="size-4" />{/if}{personal ? 'Personal welcome' : 'Welcome & introduction'}<span class="font-normal text-muted-foreground">{(compact ? compactOpen : open) ? 'Show less' : 'Read welcome'}</span><ChevronDown class="size-4 transition-transform group-open:rotate-180" />
+     {#if !open && !compact}<span class="line-clamp-2 w-full text-sm font-normal text-muted-foreground [overflow-wrap:anywhere]">{excerpt}</span>{/if}
+    </summary>
+    <div class="md pb-1 text-sm leading-relaxed [overflow-wrap:anywhere] [&>:first-child]:mt-0 [&>:last-child]:mb-0">{@html html}</div>
    </details>
-  {:else if !compact}<p class="px-4 py-4 text-sm text-muted-foreground @sm:px-6 @sm:py-5">Explore the documents shared with you. Questions are always welcome.</p>{/if}
- </section>
- {#if !compact && tools}{@render tools()}{/if}
-</div>
+  {/if}
+ </div>
+</section>
+
+<style>
+ .room-cover {
+  background: linear-gradient(110deg, color-mix(in srgb, var(--primary) 9%, var(--card)), var(--card) 85%);
+ }
+</style>

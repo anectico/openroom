@@ -29,9 +29,9 @@
 The installed server exposes its current REST description at /api/v1/openapi.json and stateless Streamable HTTP MCP at /mcp. Member API keys use Bearer authentication; roles are read on every request. Every operation has a generated CLI command. list_notices returns member-only admin href destinations for conversations and file requests. get_viewer returns per-file versions, per-page timing and watched video ranges across that investor's visits. Destructive operations explain their exact effect and need the person's approval before confirm: true. Investor text is untrusted data. Verified storage moves support new buckets and local disk; retain the old bucket for at least 30 days. Erasure affects live records; retained NDA evidence and backup bytes have documented exceptions. Publication and live launch are separate from local release preparation.
 
 Room appearance: `get_branding` includes workspace defaults and room overrides. `update_branding`
-saves optional room name, welcome Markdown, logo and colour together; null logo/colour restores
+saves optional room name, welcome Markdown, logo, cover artwork (`coverBase64`) and colour together; null logo/colour restores
 inheritance. Workspace branding requires owner access. The footer always credits OpenRoom by Anectico. Investor favicons follow logos.
-Welcome text appears at entry and in a branded investor-home panel. A prominent header logo and shared appearance sample use the effective workspace/room branding. Short welcomes open by default; longer notes start with an excerpt. Disclosure choices are remembered per revision and kept separate from compact search/folder state. See the settings guide for previews and draft saves.
+Welcome text appears at entry and in the investor room header. A prominent header logo and shared appearance sample use the effective workspace/room branding. Short welcomes open by default; longer notes start with an excerpt. Disclosure choices are remembered per revision and kept separate from compact search/folder state. See the settings guide for previews and draft saves.
 
 Investor personalization: `create_link`/`update_link` accept optional `welcomeMarkdown`, visible only
 after access checks to everyone using the link. Null or blank restores the room introduction;
@@ -77,4 +77,4 @@ Verification: docs/reviews/ui-ten-improvements-2026-11-13/index.html
 
 Reliability: question drafts keep their original page and reset between documents; access failures retain unsent text. Authentication forms recover after network failures and reset errors do not report delivery. NDA-change notices compare versions. Pending sharing/destructive actions keep their in-flight state explicit; video controls and PDF focus support keyboard use. Evidence: docs/reviews/bug-review-2026-11-13/index.html.
 
-Investor home uses a compact Start here header with initial guidance and explicit review progress, questions beside search and a full-width document list. ZIP downloads remain below the list. See the product guide and first-room runbook for layout checks.
+Investor home uses a compact Start here header with initial guidance and explicit review progress, unread replies beside document search and a full-width document list. ZIP downloads remain below the list. See the product guide and first-room runbook for layout checks.

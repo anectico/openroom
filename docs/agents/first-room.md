@@ -89,7 +89,7 @@ default. Export a viewer's data with `export_viewer_data`; use the documented er
 
 Use `get_branding` with `roomId` to inspect effective values, `roomOverrides` and `workspace`
 defaults. `update_branding` saves a room's optional `name`, `welcomeMarkdown`, `accentColor` and
-`imageBase64` together. Leave fields out to preserve them; use null logo/colour to restore workspace
+`imageBase64` together. Set `coverBase64` with a room ID to upload public cover artwork (PNG, JPEG or WebP up to 700 KB). Set it to null to remove the cover. Leave fields out to preserve them; use null logo/colour to restore workspace
 inheritance. PNG/JPEG/WebP logos under 700 KB are re-encoded and also generate investor favicons.
 Workspace branding requires the owner role. Welcome Markdown appears before entry
 and inside the room, so use text intended for investors; do not put confidential access credentials
@@ -164,6 +164,6 @@ When checking the owner UI, verify full document titles, protection summaries on
 
 For reliability checks, draft a page-specific question, move to another page, and confirm its original context before submitting. Navigate to another document and check for an empty draft. Exercise an access change while sending; confirm the draft survives and no false Sent message appears. Test offline authentication retries, unchanged and replacement NDA versions, native video keyboard controls, PDF tool return focus, and pending sharing/destructive actions. Do not treat a disabled pending confirmation as a cancelled operation; inspect its actual result.
 
-For investor-home layout checks, verify the initial document count and Start review action without an empty progress bar, then Mark reviewed, Continue review, completion and Undo. Progress stays compact beside Start here; remaining cards fill their row. Questions and unread replies belong beside search, documents span the content width, and permitted ZIP downloads remain below the list. Check zero, one, three and six pins at 320, 390, 768 and desktop widths.
+For investor-home layout checks, verify the initial document count and Start review action without an empty progress bar, then Mark reviewed, Continue review, completion and Undo. Progress stays compact beside Start here; remaining cards fill their row. Questions stay in navigation, and unread replies appear beside the document search, documents span the content width, and permitted ZIP downloads remain below the list. Check zero, one, three and six pins at 320, 390, 768 and desktop widths.
 
 For branded investor-home checks, configure a real logo, a non-default workspace colour, a room introduction and a separate link-specific welcome through existing operations. Check room override/reset, bright-colour contrast, tall/wide logos, blank introductions and the linked Anectico credit. Verify that a new note revision resets disclosure, that search/folders preserve the home preference, and that another investor link never receives the first link’s welcome. Inspect desktop and phone screenshots of both the real room and owner sample.

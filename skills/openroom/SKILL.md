@@ -57,7 +57,7 @@ does not protect against loss of the server. Do not publish or launch unless the
 ## Personalize appearance
 
 `get_branding` returns effective room branding, `roomOverrides` and `workspace` defaults.
-`update_branding` can save room `name`, `welcomeMarkdown`, `accentColor` and `imageBase64` together.
+`update_branding` can save room `name`, `welcomeMarkdown`, `accentColor` and `imageBase64` together. Set `coverBase64` with a room ID to upload public cover artwork (PNG, JPEG or WebP up to 700 KB). Set it to null to remove the cover.
 Omit unchanged fields; null logo/colour restores workspace inheritance. Welcome text is investor-facing
 at entry and inside the room. Logos also generate investor browser icons. Workspace settings require an owner. The footer always credits OpenRoom by Anectico. Use approved investor-facing copy and keep access secrets out of it.
 
@@ -117,6 +117,6 @@ For UI regression checks, include the maximum 5,000-character document question,
 
 When validating investor and owner recovery, check question drafts against the original file/page, failed-access submission feedback, offline authentication retries, and same-version versus replacement NDA messages. Sharing-link inputs lock while saving; destructive confirmations cannot be dismissed while their operation is pending. Verify completion through the operation result. Include native video keyboard controls, narrow-phone seek width and PDF tools returning focus to Reader options.
 
-For investor-home layout checks, verify the initial document count and Start review action without an empty progress bar, then Mark reviewed, Continue review, completion and Undo. Progress stays compact beside Start here; remaining cards fill their row. Questions and unread replies belong beside search, documents span the content width, and permitted ZIP downloads remain below the list. Check zero, one, three and six pins at 320, 390, 768 and desktop widths.
+For investor-home layout checks, verify the initial document count and Start review action without an empty progress bar, then Mark reviewed, Continue review, completion and Undo. Progress stays compact beside Start here; remaining cards fill their row. Questions stay in navigation, and unread replies appear beside the document search, documents span the content width, and permitted ZIP downloads remain below the list. Check zero, one, three and six pins at 320, 390, 768 and desktop widths.
 
-Investor branding uses a prominent header logo and a brand-accented welcome panel. Use existing update_branding and link welcome operations to configure examples; do not simulate branding only in screenshots. Verify logo/colour inheritance, bright colours, first and return visits, new welcome revisions, safe Markdown and cross-link isolation. The appearance sample shares the header and welcome components.
+Investor branding uses a single brand-accented header for the logo, room title, optional cover image and welcome. Use existing update_branding and link welcome operations to configure examples; do not simulate branding only in screenshots. Verify logo/colour inheritance, bright colours, first and return visits, new welcome revisions, safe Markdown and cross-link isolation. The appearance sample shares the header and welcome components.
