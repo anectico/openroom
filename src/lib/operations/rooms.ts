@@ -188,6 +188,7 @@ export const deleteRoom = defineOperation({
 					sqlite.prepare('SELECT id FROM files WHERE room_id = ?').all(r.id) as { id: string }[]
 				).map((f) => f.id);
 				releaseFiles(fileIds);
+				if (r.cover_object_key) releaseObject(r.cover_object_key);
 				if (r.logo_object_key) releaseObject(r.logo_object_key);
 				sqlite.prepare('DELETE FROM files WHERE room_id = ?').run(r.id);
 				sqlite.prepare('DELETE FROM folders WHERE room_id = ?').run(r.id);

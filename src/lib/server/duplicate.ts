@@ -8,6 +8,7 @@ export function duplicateRoom(sourceId: string, name: string) {
 		.transaction(() => {
 			const src = sqlite.prepare('SELECT * FROM rooms WHERE id = ?').get(sourceId) as {
 				defaults_json: string;
+				cover_object_key: string | null;
 				logo_object_key: string | null;
 				accent_color: string | null;
 				welcome_markdown: string;
@@ -17,18 +18,20 @@ export function duplicateRoom(sourceId: string, name: string) {
 			const now = Date.now();
 			sqlite
 				.prepare(
-					'INSERT INTO rooms (id, name, slug, defaults_json, logo_object_key, accent_color, welcome_markdown, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+					'INSERT INTO rooms (id, name, slug, defaults_json, cover_object_key, logo_object_key, accent_color, welcome_markdown, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
 				)
 				.run(
 					roomId,
 					name,
 					slugFor(name),
 					src.defaults_json,
+					src.cover_object_key,
 					src.logo_object_key,
 					src.accent_color,
 					src.welcome_markdown,
 					now,
 				);
+			if (src.cover_object_key) retainObject(src.cover_object_key);
 			if (src.logo_object_key) retainObject(src.logo_object_key);
 			const folderIds = new Map<string, string>();
 			const folders = sqlite

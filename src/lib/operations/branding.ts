@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { brandingFor, LogoError, setInstallLogo, storeLogo } from '../server/branding.ts';
+import { BrandImageError, brandingFor, setInstallLogo, storeBrandImage } from '../server/branding.ts';
 import { database } from '../server/db/index.ts';
 import { releaseObject } from '../server/rooms.ts';
 import { setSetting } from '../server/settings.ts';
@@ -13,6 +13,7 @@ const color = z
 	.nullable();
 
 const branding = z.object({
+	coverUrl: z.string().nullable(),
 	logoUrl: z.string().nullable(),
 	accentColor: z.string().nullable(),
 	roomOverrides: z.object({ logo: z.boolean(), accentColor: z.boolean() }).nullable(),
@@ -50,13 +51,19 @@ export const getBranding = defineOperation({
 export const updateBranding = defineOperation({
 	name: 'update_branding',
 	summary:
-		'Save the logo, colour and room name/welcome Markdown together. Workspace branding requires the owner role. Omitted fields stay unchanged; null logo/colour restores inheritance. The logo also supplies the investor favicon.',
+		'Save branding and room appearance together, including the optional room cover. Workspace branding requires the owner role. Omitted fields stay unchanged; null logo/colour restores inheritance. The logo also supplies the investor favicon.',
 	role: 'admin',
 	http: { method: 'PATCH', path: '/branding' },
 	input: z.object({
 		roomId: z.string().optional(),
 		accentColor: color.optional(),
 		imageBase64: z.string().max(1_000_000).nullable().optional(),
+		coverBase64: z
+			.string()
+			.max(1_000_000)
+			.nullable()
+			.optional()
+			.describe('Room cover artwork as PNG, JPEG or WebP up to 700 KB. null removes it.'),
 		name: z.string().trim().min(1).max(120).optional(),
 		welcomeMarkdown: z.string().max(20_000).optional(),
 	}),
@@ -70,20 +77,25 @@ export const updateBranding = defineOperation({
 		detail: (i) => ({ fields: Object.keys(i).filter((k) => k !== 'roomId') }),
 	},
 	run: async (input, ctx) => {
-		if (!input.roomId && (input.name !== undefined || input.welcomeMarkdown !== undefined))
-			throw new OpError(400, 'room_only', 'Name and welcome text belong to a room.');
+		if (
+			!input.roomId &&
+			(input.name !== undefined || input.welcomeMarkdown !== undefined || input.coverBase64 !== undefined)
+		)
+			throw new OpError(400, 'room_only', 'Cover, name and welcome text belong to a room.');
 		authorize(ctx, input.roomId ? 'admin' : 'owner');
 		if (input.roomId) writableRoom(input.roomId);
 		let key: string | null = null;
 		if (input.imageBase64 !== undefined && input.imageBase64 !== null) {
 			try {
-				key = await storeLogo(input.imageBase64);
+				key = await storeBrandImage(input.imageBase64, 'logo');
 			} catch (e) {
-				if (e instanceof LogoError) throw new OpError(400, 'bad_logo', e.message);
+				if (e instanceof BrandImageError) throw new OpError(400, 'bad_logo', e.message);
 				throw e;
 			}
 		}
+		let cover: string | null = null;
 		try {
+			if (input.coverBase64 != null) cover = await storeBrandImage(input.coverBase64, 'cover');
 			database()
 				.sqlite.transaction(() => {
 					authorize(ctx, input.roomId ? 'admin' : 'owner');
@@ -91,15 +103,17 @@ export const updateBranding = defineOperation({
 						const r = writableRoom(input.roomId);
 						database()
 							.sqlite.prepare(
-								'UPDATE rooms SET name = ?, welcome_markdown = ?, accent_color = ?, logo_object_key = ? WHERE id = ?',
+								'UPDATE rooms SET name = ?, welcome_markdown = ?, accent_color = ?, logo_object_key = ?, cover_object_key = ? WHERE id = ?',
 							)
 							.run(
 								input.name ?? r.name,
 								input.welcomeMarkdown ?? r.welcome_markdown,
 								input.accentColor === undefined ? r.accent_color : input.accentColor,
 								input.imageBase64 === undefined ? r.logo_object_key : key,
+								input.coverBase64 === undefined ? r.cover_object_key : cover,
 								r.id,
 							);
+						if (input.coverBase64 !== undefined && r.cover_object_key) releaseObject(r.cover_object_key);
 						if (input.imageBase64 !== undefined && r.logo_object_key) releaseObject(r.logo_object_key);
 					} else {
 						if (input.accentColor !== undefined) setSetting('branding.accent_color', input.accentColor);
@@ -109,6 +123,8 @@ export const updateBranding = defineOperation({
 				.immediate();
 		} catch (error) {
 			if (key) releaseObject(key);
+			if (cover) releaseObject(cover);
+			if (error instanceof BrandImageError) throw new OpError(400, 'bad_cover', error.message);
 			throw error;
 		}
 		return present(input.roomId);
@@ -138,9 +154,9 @@ export const setLogo = defineOperation({
 		let key: string | null = null;
 		if (input.imageBase64) {
 			try {
-				key = await storeLogo(input.imageBase64);
+				key = await storeBrandImage(input.imageBase64, 'logo');
 			} catch (e) {
-				if (e instanceof LogoError) throw new OpError(400, 'bad_logo', e.message);
+				if (e instanceof BrandImageError) throw new OpError(400, 'bad_logo', e.message);
 				throw e;
 			}
 		}

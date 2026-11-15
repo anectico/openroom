@@ -56,6 +56,7 @@ export const rooms = sqliteTable('rooms', {
 	name: text('name').notNull(),
 	slug: text('slug').notNull().unique(),
 	defaults: text('defaults_json', { mode: 'json' }).$type<Record<string, unknown>>().notNull(),
+	coverObjectKey: text('cover_object_key').references(() => objects.key),
 	logoObjectKey: text('logo_object_key').references(() => objects.key),
 	accentColor: text('accent_color'),
 	welcomeMarkdown: text('welcome_markdown').notNull().default(''),

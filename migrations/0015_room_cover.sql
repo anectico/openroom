@@ -1,0 +1,1 @@
+ALTER TABLE `rooms` ADD `cover_object_key` text REFERENCES objects(key);

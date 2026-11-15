@@ -9,6 +9,7 @@ export type RoomRow = {
 	frozen_at: number | null;
 	frozen_retention_days: number;
 	current_nda_version_id: string | null;
+	cover_object_key: string | null;
 	logo_object_key: string | null;
 	accent_color: string | null;
 	created_at: number;

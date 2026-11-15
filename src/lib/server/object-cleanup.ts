@@ -22,8 +22,8 @@ function referenced(key: string) {
 		!!db
 			.prepare(`SELECT 1 FROM file_versions WHERE object_key = ?
 		UNION ALL SELECT 1 FROM file_request_uploads WHERE object_key = ?
-		UNION ALL SELECT 1 FROM rooms WHERE logo_object_key = ? LIMIT 1`)
-			.get(key, key, key)
+		UNION ALL SELECT 1 FROM rooms WHERE logo_object_key = ? OR cover_object_key = ? LIMIT 1`)
+			.get(key, key, key, key)
 	);
 }
 

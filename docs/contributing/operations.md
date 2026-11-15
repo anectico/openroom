@@ -77,7 +77,7 @@ retention window, so a restored database still finds its files. A frozen room re
    `uploads.max_bytes`) and free disk space, and returns a one-time URL, valid 24 hours.
 2. The client sends the whole file to that URL as one `PUT` with
    `Content-Type: application/octet-stream`. Our server handles `/upload/` before SvelteKit, so the
-   1 MB body limit never applies; it counts the bytes, hashes them and writes straight to the final
+   2 MB body limit never applies; it counts the bytes, hashes them and writes straight to the final
    key under `storage/files/`. One `PUT` at a time per upload; a failed one is sent again from the
    start. In `npm run dev` the same handler runs as a SvelteKit route.
 3. `finish_upload` compares the SHA-256 with the one given (if any), detects the type and creates the

@@ -18,7 +18,7 @@ _A fictional Aster Robotics room with its own logo and brand colour, a welcome f
   and manage access through groups. Duplicate a room for the next process.
 - **Control who gets in.** Create separate investor links with email/domain allow and block lists,
   passwords, expiry, email verification and versioned NDA acceptance. Revoke access when needed.
-- **Make the room feel personal.** Use your logo, colour and welcome introduction. Add a
+- **Make the room feel personal.** Use your logo, colour, optional room cover image and welcome introduction. Add a
   link-specific welcome and pin up to six **Start here** documents in reading order.
 - **Give investors a useful reader.** View PDFs, images and supported videos in the browser with
   identity watermarks. PDFs include text search, thumbnails, zoom and tab-local reading resume.

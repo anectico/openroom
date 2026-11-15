@@ -23,7 +23,7 @@ const uploadDrainMs = 30_000;
 
 const origin = process.env.ORIGIN ? new URL(process.env.ORIGIN) : null;
 if (origin) process.env.PROTOCOL_HEADER = 'x-openroom-proto';
-process.env.BODY_SIZE_LIMIT ??= '1M';
+process.env.BODY_SIZE_LIMIT ??= '2M';
 
 const handlerPath = resolve(process.env.BUILD_DIR ?? 'build', 'handler.js');
 const { handler } = (await import(pathToFileURL(handlerPath).href)) as {

@@ -14634,6 +14634,12 @@
                   "$schema": "https://json-schema.org/draft/2020-12/schema",
                   "type": "object",
                   "properties": {
+                    "coverUrl": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
                     "logoUrl": {
                       "type": [
                         "string",
@@ -14693,6 +14699,7 @@
                     }
                   },
                   "required": [
+                    "coverUrl",
                     "logoUrl",
                     "accentColor",
                     "roomOverrides",
@@ -14734,7 +14741,7 @@
       },
       "patch": {
         "operationId": "update_branding",
-        "summary": "Save the logo, colour and room name/welcome Markdown together. Workspace branding requires the owner role. Omitted fields stay unchanged; null logo/colour restores inheritance. The logo also supplies the investor favicon.",
+        "summary": "Save branding and room appearance together, including the optional room cover. Workspace branding requires the owner role. Omitted fields stay unchanged; null logo/colour restores inheritance. The logo also supplies the investor favicon.",
         "description": "Needs the admin role.",
         "x-openroom-role": "admin",
         "x-openroom-destructive": false,
@@ -14748,6 +14755,12 @@
                   "$schema": "https://json-schema.org/draft/2020-12/schema",
                   "type": "object",
                   "properties": {
+                    "coverUrl": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
                     "logoUrl": {
                       "type": [
                         "string",
@@ -14807,6 +14820,7 @@
                     }
                   },
                   "required": [
+                    "coverUrl",
                     "logoUrl",
                     "accentColor",
                     "roomOverrides",
@@ -14878,6 +14892,18 @@
                       }
                     ]
                   },
+                  "coverBase64": {
+                    "description": "Room cover artwork as PNG, JPEG or WebP up to 700 KB. null removes it.",
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "maxLength": 1000000
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
                   "name": {
                     "type": "string",
                     "minLength": 1,
@@ -14911,6 +14937,12 @@
                   "$schema": "https://json-schema.org/draft/2020-12/schema",
                   "type": "object",
                   "properties": {
+                    "coverUrl": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
                     "logoUrl": {
                       "type": [
                         "string",
@@ -14970,6 +15002,7 @@
                     }
                   },
                   "required": [
+                    "coverUrl",
                     "logoUrl",
                     "accentColor",
                     "roomOverrides",

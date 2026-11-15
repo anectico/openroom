@@ -6,10 +6,10 @@ import { sha256 } from './secrets.ts';
 import { getSetting, setSetting } from './settings.ts';
 import { newObjectKey, writeLocation, writeObject } from './storage.ts';
 
-export class LogoError extends Error {}
+export class BrandImageError extends Error {}
 
 const sqlite = () => database().sqlite;
-export const maxLogoBytes = 700 * 1024;
+const maxImageBytes = 700 * 1024;
 
 export function installBranding() {
 	return {
@@ -18,9 +18,16 @@ export function installBranding() {
 	};
 }
 
-export function brandingFor(room: { logo_object_key: string | null; accent_color: string | null } | null) {
+export function brandingFor(
+	room: {
+		logo_object_key: string | null;
+		accent_color: string | null;
+		cover_object_key?: string | null;
+	} | null,
+) {
 	const install = installBranding();
 	return {
+		coverUrl: room?.cover_object_key ? `/b/cover/${encodeURIComponent(room.cover_object_key)}` : null,
 		logoUrl: room?.logo_object_key
 			? `/b/logo/${encodeURIComponent(room.logo_object_key)}`
 			: install.logoKey
@@ -30,33 +37,40 @@ export function brandingFor(room: { logo_object_key: string | null; accent_color
 	};
 }
 
-export async function storeLogo(base64: string) {
+export async function storeBrandImage(base64: string, kind: 'logo' | 'cover') {
 	const raw = Buffer.from(base64, 'base64');
-	if (!raw.length) throw new LogoError('The logo is empty.');
-	if (raw.length > maxLogoBytes) throw new LogoError('The logo must be smaller than 700 KB.');
+	if (!raw.length) throw new BrandImageError(`The ${kind} is empty.`);
+	if (raw.length > maxImageBytes) throw new BrandImageError(`The ${kind} must be smaller than 700 KB.`);
 	let image: ReturnType<typeof sharp>;
 	try {
 		image = sharp(raw, { limitInputPixels: 40_000_000, failOn: 'error' });
 		const meta = await image.metadata();
 		if (!meta.format || !['png', 'jpeg', 'webp'].includes(meta.format))
-			throw new LogoError('Use a PNG, JPEG or WebP image. SVG and other formats are not accepted.');
+			throw new BrandImageError('Use a PNG, JPEG or WebP image. SVG and other formats are not accepted.');
 	} catch (e) {
-		if (e instanceof LogoError) throw e;
-		throw new LogoError('That file is not an image OpenRoom can read.');
+		if (e instanceof BrandImageError) throw e;
+		throw new BrandImageError('That file is not an image OpenRoom can read.');
 	}
-	const png = await image
-		.rotate()
-		.resize(512, 512, { fit: 'inside', withoutEnlargement: true })
-		.png({ compressionLevel: 9 })
-		.toBuffer();
+	const bytes =
+		kind === 'cover'
+			? await image
+					.rotate()
+					.resize(1440, 720, { fit: 'inside', withoutEnlargement: true })
+					.webp({ quality: 84 })
+					.toBuffer()
+			: await image
+					.rotate()
+					.resize(512, 512, { fit: 'inside', withoutEnlargement: true })
+					.png({ compressionLevel: 9 })
+					.toBuffer();
 	const key = newObjectKey();
 	const location = writeLocation();
-	await writeObject(key, Readable.from(png), png.length, location);
+	await writeObject(key, Readable.from(bytes), bytes.length, location);
 	sqlite()
 		.prepare(
 			'INSERT INTO objects (key, location, size, sha256, refcount, created_at) VALUES (?, ?, ?, ?, 1, ?)',
 		)
-		.run(key, location, png.length, sha256(png), Date.now());
+		.run(key, location, bytes.length, sha256(bytes), Date.now());
 	return key;
 }
 
