@@ -9,7 +9,7 @@ export const POST: RequestHandler = async ({ params, request, locals, getClientA
 	if (!member) return json({ error: { code: 'unauthorized', message: 'Sign in again.' } }, { status: 401 });
 	const op = operationsByName.get(params.operation);
 	if (!op) return json({ error: { code: 'not_found', message: 'Unknown operation.' } }, { status: 404 });
-	if (!request.headers.get('content-type')?.startsWith('application/json'))
+	if (request.headers.get('content-type')?.split(';')[0].trim().toLowerCase() !== 'application/json')
 		return json({ error: { code: 'unsupported_media_type', message: 'Send JSON.' } }, { status: 415 });
 	const input = await request.json().catch(() => null);
 	if (!input || typeof input !== 'object' || Array.isArray(input))

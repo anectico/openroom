@@ -12,7 +12,7 @@ A self-hosted data room for fundraising and due diligence. Give each investor a 
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **1. Prepare the room**   | Upload files, organize them into folders, and choose up to six documents for investors to read first. Add your logo, cover and welcome.                                                                  |
 | **2. Invite an investor** | Create a personal link. Choose its audience, document group, downloads and expiry. Add a password, email verification or an NDA as needed. Use **Preview as investor** to check the link before sharing. |
-| **3. Follow the review**  | See visits and page-level reading time, answer private questions, and request missing files. Investors can resume reading and mark documents reviewed.                                                   |
+| **3. Follow the review**  | See visits and page-level reading time, answer private questions within the investor’s current sharing permissions, and request missing files. Investors can resume reading and mark documents reviewed. |
 
 The reader supports PDFs, images and video. You can upload new versions, publish a shared FAQ, revoke a link, export activity to CSV and freeze a completed room into an archive. [Explore the investor and team workflows](docs/using-openroom.md).
 

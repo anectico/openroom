@@ -48,13 +48,15 @@
 		askState = null;
 	}
 
-	const src = $derived(`/v/${data.linkId}/files/${data.file.id}`);
+	const src = $derived(`/v/${data.linkId}/files/${data.file.id}?version=${data.file.version}`);
 	let tracker: ReadTracker | null = null;
+	let imageElement = $state<HTMLImageElement>();
 
 	$effect(() => {
-		const t = new ReadTracker(data.linkId, data.file.id);
+		if (data.preview || !data.file.version) return;
+		const t = new ReadTracker(data.linkId, data.file.id, data.file.version);
 		tracker = t;
-		if (data.file.kind === 'image') t.setPage(1);
+		if (imageElement?.complete && imageElement.naturalWidth) t.setPage(1);
 		const video = document.querySelector<HTMLVideoElement>('main video');
 		if (video) t.watch(video);
 		return () => t.stop();
@@ -91,7 +93,7 @@
 	</div>
 	<div class="flex flex-wrap items-center gap-2">
 		{#if data.canDownload}
-			<Button variant="outline" size="sm" class="min-h-11" href="{src}?download=1"><Download data-icon="inline-start" />Download</Button>
+			<Button variant="outline" size="sm" class="min-h-11" href="{src}&download=1"><Download data-icon="inline-start" />Download</Button>
 		{/if}
 		{#if !data.preview && data.file.kind !== 'pdf'}
 			<Button variant="outline" size="sm" class="min-h-11" onclick={toggleAsk}>Ask about this file</Button>
@@ -145,7 +147,11 @@
 							alt={data.file.name}
 							class="block w-full"
 							draggable="false"
-							onload={(e) => (natural = (e.currentTarget as HTMLImageElement).naturalWidth)}
+							bind:this={imageElement}
+							onload={(e) => {
+								natural = (e.currentTarget as HTMLImageElement).naturalWidth;
+								tracker?.setPage(1);
+							}}
 							{@attach (img: HTMLImageElement) => {
 								if (img.complete) natural = img.naturalWidth;
 							}}
@@ -159,7 +165,7 @@
 				<div class="mx-auto max-w-md rounded-lg border bg-background p-8 text-center">
 					<p class="font-medium">{data.file.name}</p>
 					<p class="mb-4 text-sm text-muted-foreground">{formatBytes(data.file.size)} · This file can only be downloaded.</p>
-					<Button href="{src}?download=1">Download</Button>
+					<Button href="{src}&download=1">Download</Button>
 				</div>
 			{/if}
 		{/key}

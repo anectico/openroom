@@ -51,12 +51,14 @@ export const listAuditLog = defineOperation({
 				input.operation ?? null,
 				input.since ?? null,
 				input.since ?? null,
-				input.limit,
+				input.limit + 1,
 			) as (Omit<z.input<typeof entry>, 'detail'> & { detail: string | null })[];
-		const entries = rows.map((r) => ({ ...r, detail: r.detail ? JSON.parse(r.detail) : null }));
+		const entries = rows
+			.slice(0, input.limit)
+			.map((r) => ({ ...r, detail: r.detail ? JSON.parse(r.detail) : null }));
 		return {
 			entries,
-			nextBefore: entries.length === input.limit ? (entries.at(-1)?.id ?? null) : null,
+			nextBefore: rows.length > input.limit ? (entries.at(-1)?.id ?? null) : null,
 		};
 	},
 });

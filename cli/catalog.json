@@ -3396,9 +3396,14 @@
                             "type": "string"
                           },
                           "folderId": {
-                            "type": [
-                              "string",
-                              "null"
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              {
+                                "type": "null"
+                              }
                             ]
                           },
                           "title": {
@@ -3603,9 +3608,14 @@
                             "type": "string"
                           },
                           "folderId": {
-                            "type": [
-                              "string",
-                              "null"
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              {
+                                "type": "null"
+                              }
                             ]
                           },
                           "title": {
@@ -3804,9 +3814,14 @@
                             "type": "string"
                           },
                           "folderId": {
-                            "type": [
-                              "string",
-                              "null"
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              {
+                                "type": "null"
+                              }
                             ]
                           },
                           "title": {
@@ -4701,7 +4716,7 @@
                       {
                         "type": "integer",
                         "minimum": -9007199254740991,
-                        "maximum": 9007199254740991
+                        "maximum": 8640000000000000
                       },
                       {
                         "type": "null"
@@ -5448,7 +5463,7 @@
                       {
                         "type": "integer",
                         "minimum": -9007199254740991,
-                        "maximum": 9007199254740991
+                        "maximum": 8640000000000000
                       },
                       {
                         "type": "null"
@@ -5530,7 +5545,17 @@
                     "description": "Setting names to stop overriding.",
                     "type": "array",
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "enum": [
+                        "verifyEmail",
+                        "requireNda",
+                        "watermark",
+                        "screenshotProtection",
+                        "downloads",
+                        "customFields",
+                        "notifyEveryView",
+                        "readPastShare"
+                      ]
                     }
                   }
                 },
@@ -12815,7 +12840,7 @@
                       {
                         "type": "integer",
                         "minimum": -9007199254740991,
-                        "maximum": 9007199254740991
+                        "maximum": 8640000000000000
                       },
                       {
                         "type": "null"

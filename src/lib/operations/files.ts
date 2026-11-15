@@ -68,7 +68,7 @@ export function loadFile(id: string) {
 	return f;
 }
 
-function folderIn(roomId: string, folderId: string | null | undefined) {
+export function folderIn(roomId: string, folderId: string | null | undefined) {
 	if (!folderId) return null;
 	const f = loadFolder(folderId);
 	if (f.room_id !== roomId) throw new OpError(400, 'wrong_room', 'That folder is in another room.');

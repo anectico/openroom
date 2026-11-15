@@ -259,9 +259,9 @@ function validateSession(session: SessionRow, now: number, touch = true): Sessio
 	if (!link || !room || !linkActive(link, now)) return { ok: false, reason: 'unavailable' };
 	const preview = session.preview_by !== null;
 	if (preview) {
-		const member = sqlite().prepare('SELECT removed_at FROM user WHERE id = ?').get(session.preview_by) as
-			| { removed_at: number | null }
-			| undefined;
+		const member = sqlite()
+			.prepare("SELECT removed_at FROM user WHERE id = ? AND role IN ('admin', 'owner')")
+			.get(session.preview_by) as { removed_at: number | null } | undefined;
 		if (!member || member.removed_at !== null) return { ok: false, reason: 'unavailable' };
 	}
 	let email: string | null = null;

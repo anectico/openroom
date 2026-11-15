@@ -177,16 +177,12 @@ export const listViewers = defineOperation({
 		const rows = sqlite()
 			.prepare(
 				`SELECT v.id, v.email, v.first_seen_at AS firstSeenAt, max(s.last_seen_at) AS lastSeenAt,
-					group_concat(DISTINCT r.name || char(31)) AS rooms
+					json_group_array(DISTINCT r.name) FILTER (WHERE r.name IS NOT NULL) AS rooms
 				FROM viewers v LEFT JOIN viewer_sessions s ON s.viewer_id = v.id LEFT JOIN links l ON l.id = s.link_id LEFT JOIN rooms r ON r.id = l.room_id
-				WHERE v.email IS NOT NULL AND (? IS NULL OR v.email LIKE ?)
+				WHERE v.email IS NOT NULL AND instr(lower(v.email), ?) > 0
 				GROUP BY v.id ORDER BY lastSeenAt DESC LIMIT ?`,
 			)
-			.all(
-				input.search ?? null,
-				`%${(input.search ?? '').toLowerCase().replace(/[%_]/g, '')}%`,
-				input.limit,
-			) as {
+			.all((input.search ?? '').toLowerCase(), input.limit) as {
 			id: string;
 			email: string | null;
 			firstSeenAt: number;
@@ -197,12 +193,7 @@ export const listViewers = defineOperation({
 			viewers: rows.map((r) => ({
 				...r,
 				firm: firmOf(r.email),
-				rooms: r.rooms
-					? r.rooms
-							.split(String.fromCharCode(31))
-							.map((x) => x.replace(/^,/, ''))
-							.filter(Boolean)
-					: [],
+				rooms: JSON.parse(r.rooms ?? '[]') as string[],
 			})),
 		};
 	},

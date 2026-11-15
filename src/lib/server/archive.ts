@@ -3,6 +3,7 @@ import { createReadStream, mkdirSync, rmSync, statSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { notify } from './activity.ts';
 import { filtersFor, roomFiles, roomInvestors, roomTimeline } from './activity-views.ts';
+import { csvCell } from './csv.ts';
 import { database } from './db/index.ts';
 import { newId } from './ids.ts';
 import { enqueue } from './jobs.ts';
@@ -21,12 +22,7 @@ import { writeZip } from './zip.ts';
 
 const sqlite = () => database().sqlite;
 
-const cell = (value: unknown) => {
-	let text = value === null || value === undefined ? '' : String(value);
-	if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
-	return /[",\n\r]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
-};
-const csv = (rows: unknown[][]) => `${rows.map((r) => r.map(cell).join(',')).join('\n')}\n`;
+const csv = (rows: unknown[][]) => `${rows.map((r) => r.map(csvCell).join(',')).join('\n')}\n`;
 const iso = (ms: number | null | undefined) => (ms ? new Date(ms).toISOString() : '');
 const safe = (name: string) =>
 	[...name]

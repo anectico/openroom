@@ -10,6 +10,7 @@ const repeatWindowMs = 10 * 60_000;
 
 export type Beacon = {
 	fileId: string;
+	version?: number;
 	pages?: Record<string, number>;
 	video?: { ranges?: [number, number][]; durationMs?: number };
 };
@@ -21,11 +22,17 @@ function isBeacon(value: unknown): value is Beacon {
 	if (b.pages !== undefined && (typeof b.pages !== 'object' || b.pages === null || Array.isArray(b.pages)))
 		return false;
 	if (b.video !== undefined) {
-		if (typeof b.video !== 'object' || b.video === null) return false;
+		if (typeof b.video !== 'object' || b.video === null || Array.isArray(b.video)) return false;
 		const v = b.video as Record<string, unknown>;
+		if (v.durationMs !== undefined && (typeof v.durationMs !== 'number' || !Number.isFinite(v.durationMs)))
+			return false;
 		if (
 			v.ranges !== undefined &&
-			(!Array.isArray(v.ranges) || !v.ranges.every((r) => Array.isArray(r) && r.length === 2))
+			(!Array.isArray(v.ranges) ||
+				!v.ranges.every(
+					(r) =>
+						Array.isArray(r) && r.length === 2 && r.every((n) => typeof n === 'number' && Number.isFinite(n)),
+				))
 		)
 			return false;
 	}
@@ -96,13 +103,14 @@ export function recordBeacon(ctx: ViewerContext, raw: unknown, visible: (fileId:
 	const beacon = raw;
 	if (!visible(beacon.fileId)) return;
 	const version = currentVersionId(beacon.fileId);
-	if (!version) return;
+	if (!version || (beacon.version ?? 1) !== version.version) return;
 	const now = Date.now();
 	const viewerId = ctx.session.viewer_id;
 	const roomId = ctx.room.id;
 	const pageLimit = version.kind === 'pdf' ? (version.pages ?? 10_000) : version.kind === 'image' ? 1 : 0;
 	const pages = Object.entries(beacon.pages ?? {})
-		.map(([p, ms]) => [Math.trunc(Number(p)), Math.max(0, Math.trunc(Number(ms)))] as const)
+		.filter(([p, ms]) => /^[1-9]\d*$/.test(p) && typeof ms === 'number')
+		.map(([p, ms]) => [Number(p), Math.trunc(ms)] as const)
 		.filter(([p, ms]) => p >= 1 && p <= pageLimit && ms > 0 && Number.isFinite(ms))
 		.map(([p, ms]) => [p, Math.min(ms, maxBeaconMs)] as const)
 		.slice(0, 50);
@@ -119,16 +127,25 @@ export function recordBeacon(ctx: ViewerContext, raw: unknown, visible: (fileId:
 				| { watched_ranges_json: string; watched_ms: number; duration_ms: number | null }
 				| undefined)
 		: undefined;
+	const reported = beacon.video?.durationMs;
+	const duration =
+		existing?.duration_ms ??
+		(reported && Number.isSafeInteger(reported) && reported > 0 && reported < 86_400_000 ? reported : null);
+	const withinDuration = (items: [number, number][]) =>
+		duration
+			? items.map(([a, b]): [number, number] => [a, Math.min(b, duration)]).filter(([a, b]) => b > a)
+			: items;
 	const previous = existing
-		? trimRanges(mergeRanges(JSON.parse(existing.watched_ranges_json)), existing.watched_ms)
+		? withinDuration(trimRanges(mergeRanges(JSON.parse(existing.watched_ranges_json)), existing.watched_ms))
 		: [];
-	const added = newRanges(ranges, previous);
+	const bounded = withinDuration(ranges);
+	const added = newRanges(bounded, previous);
 	const videoWanted = added.reduce((s, [a, b]) => s + (b - a), 0);
 	const granted = takeBudget(ctx.session.id, pageTotal + videoWanted, now);
 	if (pages.length && pageTotal > 0) {
 		const pageShare = Math.min(pageTotal, granted);
-		const factor = pageShare / pageTotal;
 		let remaining = pageShare;
+		let weight = pageTotal;
 		const upsert = sqlite().prepare(
 			`INSERT INTO page_reads (session_id, viewer_id, room_id, file_id, file_version_id, page, duration_ms, first_at, last_at)
 			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -137,7 +154,9 @@ export function recordBeacon(ctx: ViewerContext, raw: unknown, visible: (fileId:
 		sqlite()
 			.transaction(() => {
 				for (const [page, ms] of pages) {
-					const credited = Math.min(remaining, Math.round(ms * factor));
+					const credited = Math.round((remaining * ms) / weight);
+					weight -= ms;
+					if (!credited) continue;
 					remaining -= credited;
 					upsert.run(ctx.session.id, viewerId, roomId, beacon.fileId, version.id, page, credited, now, now);
 				}
@@ -145,15 +164,10 @@ export function recordBeacon(ctx: ViewerContext, raw: unknown, visible: (fileId:
 			.immediate();
 		if (version.pages) checkReadPast(ctx, beacon.fileId, version.id, version.pages);
 	}
-	if (ranges.length) {
+	if (ranges.length && (granted > 0 || existing)) {
 		const videoShare = Math.max(0, granted - Math.min(pageTotal, granted));
 		const merged = mergeRanges([...previous, ...trimRanges(added, videoShare)]);
 		const watched = merged.reduce((sum, [a, b]) => sum + b - a, 0);
-		const reported = Math.trunc(Number(beacon.video?.durationMs));
-		const lastEnd = merged.at(-1)?.[1] ?? 0;
-		const duration =
-			existing?.duration_ms ??
-			(reported >= lastEnd && reported > 0 && reported < 86_400_000 ? reported : null);
 		sqlite()
 			.prepare(
 				`INSERT INTO video_reads (session_id, viewer_id, room_id, file_id, file_version_id, watched_ranges_json, watched_ms, duration_ms, last_at)

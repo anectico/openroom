@@ -13,18 +13,18 @@ type Version = {
 export function currentVersion(fileId: string) {
 	return database()
 		.sqlite.prepare(
-			`SELECT v.object_key, v.content_type, v.original_name, v.size, f.kind
+			`SELECT v.object_key, v.content_type, v.original_name, v.size, f.kind, v.version
 			FROM files f JOIN file_versions v ON v.file_id = f.id AND v.version = f.current_version WHERE f.id = ?`,
 		)
-		.get(fileId) as Version | undefined;
+		.get(fileId) as (Version & { version: number }) | undefined;
 }
 
 export function currentVersionId(fileId: string) {
 	return database()
 		.sqlite.prepare(
-			'SELECT v.id, v.pages, f.kind FROM files f JOIN file_versions v ON v.file_id = f.id AND v.version = f.current_version WHERE f.id = ?',
+			'SELECT v.id, v.version, v.pages, f.kind FROM files f JOIN file_versions v ON v.file_id = f.id AND v.version = f.current_version WHERE f.id = ?',
 		)
-		.get(fileId) as { id: string; pages: number | null; kind: string } | undefined;
+		.get(fileId) as { id: string; version: number; pages: number | null; kind: string } | undefined;
 }
 
 function dispositionName(name: string) {
@@ -35,7 +35,7 @@ function dispositionName(name: string) {
 			.slice(0, 200)
 			.toWellFormed() || 'file';
 	const ascii = clean.replace(/[^\x20-\x7e]/g, '_');
-	return `filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(clean)}`;
+	return `filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(clean).replace(/['()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)}`;
 }
 
 export async function serveVersion(version: Version, request: Request, attachment: boolean) {

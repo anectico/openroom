@@ -23,7 +23,7 @@ Never expose API keys, member passwords or `OPENROOM_SECRET_KEY` in chat or comm
   Finish before the URL expires; both the original and any final expected checksum remain binding.
   See [CLI and MCP](https://github.com/anectico/openroom/blob/main/docs/cli.md).
 - Protect sharing: inspect effective link defaults, allow/block rules, expiry, verification, NDA and
-  group inheritance. Preview each restricted link before sharing. A link without a group sees the
+  group inheritance. Use distinct custom field labels. A preview requires its creator to retain admin or owner access. Preview each restricted link before sharing. A link without a group sees the
   whole room. Email verification needs configured email delivery. Use `update_email_settings` for Resend, Cloudflare or SMTP and `test_email` to check delivery.
 - Follow activity: `list_notices` includes `href` for the relevant member-only conversation or
   file request; the URL does not authorize access or replying. Distinguish verified and unverified identities and approximate viewing time.

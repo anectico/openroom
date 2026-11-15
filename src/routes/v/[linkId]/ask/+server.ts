@@ -4,6 +4,7 @@ import { fileVisible } from '#lib/server/viewer/access.ts';
 import { requireViewer } from '#lib/server/viewer/context.ts';
 import { sameOrigin } from '#lib/server/viewer/http.ts';
 import { hit } from '#lib/server/viewer/ratelimit.ts';
+import { currentVersionId } from '#lib/server/viewer/serve.ts';
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async (event) => {
@@ -29,8 +30,18 @@ export const POST: RequestHandler = async (event) => {
 			{ status: 400 },
 		);
 	const fileId = typeof raw?.fileId === 'string' ? raw.fileId : null;
-	const page =
-		fileId && Number.isInteger(raw?.page) && (raw?.page as number) > 0 ? (raw?.page as number) : null;
+	const page = raw?.page ?? null;
+	if (page !== null) {
+		const version = fileId ? currentVersionId(fileId) : null;
+		if (
+			typeof page !== 'number' ||
+			!Number.isSafeInteger(page) ||
+			page < 1 ||
+			version?.kind !== 'pdf' ||
+			(version.pages !== null && page > version.pages)
+		)
+			return json({ error: 'Choose a page in this PDF.' }, { status: 400 });
+	}
 	const id = askQuestion(ctx, { fileId, page, body });
 	return json({ id });
 };

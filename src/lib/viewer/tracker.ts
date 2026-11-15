@@ -1,6 +1,7 @@
 export class ReadTracker {
 	#url: string;
 	#fileId: string;
+	#version: number;
 	#page = 0;
 	#since = 0;
 	#visible = document.visibilityState === 'visible';
@@ -21,9 +22,10 @@ export class ReadTracker {
 		this.#since = Date.now();
 	};
 
-	constructor(linkId: string, fileId: string) {
+	constructor(linkId: string, fileId: string, version: number) {
 		this.#url = `/v/${linkId}/beacon`;
 		this.#fileId = fileId;
+		this.#version = version;
 		document.addEventListener('visibilitychange', this.#onVisibility);
 		window.addEventListener('pagehide', this.#onHide);
 		window.addEventListener('pageshow', this.#onShow);
@@ -50,7 +52,7 @@ export class ReadTracker {
 
 	flush() {
 		this.#account();
-		const body: Record<string, unknown> = { fileId: this.#fileId };
+		const body: Record<string, unknown> = { fileId: this.#fileId, version: this.#version };
 		if (this.#pending.size) body.pages = Object.fromEntries(this.#pending);
 		if (this.#video) {
 			const ranges: [number, number][] = [];

@@ -89,7 +89,8 @@ export const load: PageServerLoad = async (event) => {
 					.sqlite.prepare('SELECT body_markdown, created_at FROM nda_versions WHERE id = ?')
 					.get(room.current_nda_version_id) as { body_markdown: string; created_at: number })
 			: null;
-	const accepted = nda && gate?.viewer_email ? previousAcceptance(gate.viewer_email, room.id) : null;
+	const accepted =
+		nda && gate?.verified && gate.viewer_email ? previousAcceptance(gate.viewer_email, room.id) : null;
 	return {
 		step,
 		roomName: room.name,

@@ -16,7 +16,7 @@
   try {
    const response = await fetch(`/v/${linkId}/review`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ fileId, version, reviewed: !reviewed }), signal: controller.signal });
    const body = await response.json().catch(() => null);
-   if (!response.ok) throw new Error(body?.error ?? 'Could not save your review. Try again.');
+   if (!response.ok || body?.ok !== true) throw new Error(body?.error ?? 'Could not save your review. Try again.');
    await invalidateAll().catch(() => { message = 'Saved. Reload to refresh your checklist.'; });
    onupdated?.();
   } catch (e) { if (!controller.signal.aborted) message = e instanceof TypeError ? 'Connection interrupted. Try again.' : e instanceof Error ? e.message : 'Could not save.'; }

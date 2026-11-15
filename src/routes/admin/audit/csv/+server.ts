@@ -1,12 +1,7 @@
 import { type AuditEntry as Entry, auditFilters as filters } from '#lib/admin/audit.ts';
+import { csvCell } from '#lib/server/csv.ts';
 import { runOp } from '#lib/server/http/admin.ts';
 import type { RequestHandler } from './$types';
-
-const cell = (value: unknown) => {
-	let text = value === null || value === undefined ? '' : String(value);
-	if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
-	return /[",\n\r]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
-};
 
 export const GET: RequestHandler = async ({ locals, url }) => {
 	const rows = ['time,member,api_key,operation,room,target_type,target_id,detail'];
@@ -29,7 +24,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 					e.targetId,
 					e.detail ? JSON.stringify(e.detail) : '',
 				]
-					.map(cell)
+					.map(csvCell)
 					.join(','),
 			);
 		if (!result.nextBefore) break;

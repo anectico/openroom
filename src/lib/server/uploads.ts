@@ -74,7 +74,7 @@ export async function receiveUpload(token: string, req: UploadRequest): Promise<
 	if (getSetting('storage.move.id'))
 		return fail(409, 'storage_moving', 'Storage is being moved. Retry this upload when the move finishes.');
 	if (req.method !== 'PUT') return fail(405, 'method_not_allowed', 'Send the file with PUT.');
-	if (req.contentType?.split(';')[0].trim() !== 'application/octet-stream')
+	if (req.contentType?.split(';')[0].trim().toLowerCase() !== 'application/octet-stream')
 		return fail(
 			415,
 			'unsupported_media_type',

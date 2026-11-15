@@ -18,7 +18,7 @@ import {
 import { defaultMaxUploadBytes, findUpload, uploadTtlMs } from '../server/uploads.ts';
 import { defineOperation, notFound, OpError } from './define.ts';
 import { authorize } from './execute.ts';
-import { fileOut, loadFile, presentFile } from './files.ts';
+import { fileOut, folderIn, loadFile, presentFile } from './files.ts';
 import { writableRoom } from './rooms.ts';
 
 const hex64 = z
@@ -30,7 +30,7 @@ export const uploadTarget = z.discriminatedUnion('kind', [
 	z.object({
 		kind: z.literal('file').describe('A new file in a room.'),
 		roomId: z.string(),
-		folderId: z.string().nullable().optional(),
+		folderId: z.string().min(1).nullable().optional(),
 		title: z
 			.string()
 			.trim()
@@ -55,7 +55,11 @@ export function maxUploadBytes() {
 }
 
 function targetRoom(t: Target) {
-	if (t.kind === 'file') return writableRoom(t.roomId).id;
+	if (t.kind === 'file') {
+		const room = writableRoom(t.roomId);
+		folderIn(room.id, t.folderId);
+		return room.id;
+	}
 	return writableRoom(loadFile(t.fileId).room_id).id;
 }
 
@@ -166,10 +170,21 @@ export const finishUpload = defineOperation({
 				(expected) => expected && !safeEqual(expected, u.sha256 as string),
 			)
 		) {
-			await deleteStoredKey(u.object_key);
-			database()
-				.sqlite.prepare('UPDATE uploads SET received_size = NULL, sha256 = NULL WHERE id = ?')
-				.run(u.id);
+			const db = database().sqlite;
+			if (getSetting('storage.move.id'))
+				throw new OpError(409, 'storage_moving', 'Storage is being moved. Retry after the move.');
+			const now = Date.now();
+			const claimed = db
+				.prepare(`UPDATE uploads SET in_progress_since = ?, received_size = NULL, sha256 = NULL
+    WHERE id = ? AND finished_at IS NULL AND in_progress_since IS NULL AND sha256 = ? AND location = ? AND expires_at > ?`)
+				.run(now, u.id, u.sha256, u.location, now);
+			if (!claimed.changes)
+				throw new OpError(409, 'upload_changed', 'The upload changed. Retry with its current checksum.');
+			try {
+				await deleteStoredKey(u.object_key);
+			} finally {
+				db.prepare('UPDATE uploads SET in_progress_since = NULL WHERE id = ?').run(u.id);
+			}
 			throw new OpError(
 				422,
 				'sha256_mismatch',
@@ -217,12 +232,6 @@ export const finishUpload = defineOperation({
 				if (t.kind === 'file') {
 					fileId = newId('file');
 					const folderId = t.folderId ?? null;
-					if (folderId) {
-						const f = sqlite.prepare('SELECT room_id FROM folders WHERE id = ?').get(folderId) as
-							| { room_id: string }
-							| undefined;
-						if (f?.room_id !== roomId) throw notFound('Folder');
-					}
 					sqlite
 						.prepare(
 							'INSERT INTO files (id, room_id, folder_id, kind, title, position, current_version, created_at) VALUES (?, ?, ?, ?, ?, ?, 1, ?)',

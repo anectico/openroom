@@ -33,7 +33,10 @@ export async function handleRest(request: Request, path: string, ip: string | nu
 		input = Object.fromEntries(new URL(request.url).searchParams);
 	} else {
 		const text = await request.text();
-		if (text && !request.headers.get('content-type')?.startsWith('application/json'))
+		if (
+			text &&
+			request.headers.get('content-type')?.split(';')[0].trim().toLowerCase() !== 'application/json'
+		)
 			return error(415, 'unsupported_media_type', 'Send JSON with Content-Type: application/json.');
 		try {
 			input = text ? JSON.parse(text) : {};

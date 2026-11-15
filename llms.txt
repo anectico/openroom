@@ -23,6 +23,7 @@
 - [Operation model](https://github.com/anectico/openroom/blob/main/docs/contributing/operations.md): permissions, audit and generated REST/OpenAPI.
 - [Runtime](https://github.com/anectico/openroom/blob/main/docs/contributing/runtime.md): launcher, SQLite, migrations, jobs and replica supervision.
 - [30-fix review](https://github.com/anectico/openroom/blob/main/docs/reviews/2026-11-11-bugfixes.md): reproduced access, upload, export, validation and analytics failures and their verification.
+- [November 15 review](https://github.com/anectico/openroom/blob/main/docs/reviews/2026-11-15-openroom-review.md) covers viewer permissions, versioned reading, uploads, reporting and CLI checks.
 - [Investor access](https://github.com/anectico/openroom/blob/main/docs/contributing/investor-access.md): current gate and permission rules.
 - [UI design](https://github.com/anectico/openroom/blob/main/docs/contributing/design.md): navigation, responsive hierarchy, persistent upload feedback and visual review.
 

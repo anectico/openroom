@@ -1,14 +1,10 @@
 import { error } from '@sveltejs/kit';
+import { csvCell } from '#lib/server/csv.ts';
 import { runOp } from '#lib/server/http/admin.ts';
 import type { Activity } from '../+page.server.ts';
 import type { RequestHandler } from './$types';
 
-const cell = (value: unknown) => {
-	let text = value === null || value === undefined ? '' : String(value);
-	if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
-	return /[",\n\r]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
-};
-const csv = (rows: unknown[][]) => `${rows.map((r) => r.map(cell).join(',')).join('\n')}\n`;
+const csv = (rows: unknown[][]) => `${rows.map((r) => r.map(csvCell).join(',')).join('\n')}\n`;
 const iso = (ms: number | null) => (ms ? new Date(ms).toISOString() : '');
 const minutes = (ms: number) => Math.round(ms / 6000) / 10;
 

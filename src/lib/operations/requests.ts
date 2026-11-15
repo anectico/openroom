@@ -121,7 +121,7 @@ export const createFileRequest = defineOperation({
 		description: z.string().trim().max(2000).default(''),
 		target: z.object({ kind: z.enum(['viewer', 'link', 'group']), id: z.string() }),
 		maxSizeMb: z.number().int().min(1).max(10_240).default(100),
-		dueAt: z.number().int().nullable().optional(),
+		dueAt: z.number().int().max(8_640_000_000_000_000).nullable().optional(),
 	}),
 	output: request.extend({ emailed: z.number() }),
 	audit: {
@@ -147,7 +147,7 @@ export const createFileRequest = defineOperation({
 				'wrong_target',
 				'Pick an investor who entered this room with a verified email, or one of its links or groups.',
 			);
-		if (input.dueAt && input.dueAt < Date.now())
+		if (input.dueAt != null && input.dueAt <= Date.now())
 			throw new OpError(400, 'due_past', 'The due date must be in the future.');
 		const id = newId('req');
 		sqlite()

@@ -195,7 +195,11 @@ export async function deliver(config: EmailConfig, to: string, message: Message)
 export type EmailKind = 'email.send' | 'email.reset' | 'email.code' | 'email.notice';
 const noticeShareOfCap = 0.3;
 
-export function sendEmail(to: string, message: Message, kind: EmailKind = 'email.send') {
+export function sendEmail(
+	to: string,
+	message: Message & { conversationId?: string },
+	kind: EmailKind = 'email.send',
+) {
 	if (!emailReady()) throw new EmailError('Email is not set up.');
 	if (sentLastDay() >= dailyCap()) {
 		capReached();
@@ -211,7 +215,12 @@ export function sendEmail(to: string, message: Message, kind: EmailKind = 'email
 }
 
 export async function runEmailJob(payload: unknown) {
-	const p = payload as { to: string } & Message;
+	const p = payload as { to: string; conversationId?: string } & Message;
+	if (p.conversationId || p.subject.startsWith('New answer to your question in ')) {
+		const id = p.conversationId ?? p.text.match(/\/questions\/(conv_[a-z0-9]+)$/)?.[1];
+		const { replyRecipient } = await import('./questions.ts');
+		if (!id || replyRecipient(id) !== p.to) return;
+	}
 	const config = emailConfig();
 	if (!config) throw new EmailError('Email is no longer set up.');
 	await deliver(config, p.to, { subject: p.subject, text: p.text });

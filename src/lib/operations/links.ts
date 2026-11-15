@@ -31,7 +31,16 @@ type LinkRow = {
 	created_at: number;
 };
 
-const overrides = linkSettings.partial();
+const overrides = linkSettings.partial().extend({
+	customFields: linkSettings.shape.customFields
+		.refine(
+			(fields) =>
+				new Set(fields.map((field) => field.label)).size === fields.length &&
+				fields.every((field) => field.label !== '__proto__'),
+			'Choose distinct field labels and avoid the reserved label __proto__.',
+		)
+		.optional(),
+});
 
 const entryOut = z.object({ id: z.string(), kind: z.enum(['email', 'domain']), value: z.string() });
 
@@ -72,10 +81,15 @@ const editable = {
 	allow: entries,
 	blocks: entries,
 	password: z.string().min(8).max(200).nullable().describe('null removes the password.'),
-	expiresAt: z.number().int().nullable().describe('Unix time in ms; null for no expiry.'),
+	expiresAt: z
+		.number()
+		.int()
+		.max(8_640_000_000_000_000)
+		.nullable()
+		.describe('Unix time in ms; null for no expiry.'),
 	settings: overrides.describe('Settings to override; others follow the room defaults.'),
 	groupId: z.string().nullable().describe('A viewer group of the room, or null for the whole room.'),
-	resetSettings: z.array(z.string()).optional().describe('Setting names to stop overriding.'),
+	resetSettings: z.array(linkSettings.keyof()).optional().describe('Setting names to stop overriding.'),
 };
 
 function sqlite() {
@@ -196,7 +210,7 @@ function newToken() {
 }
 
 function futureOrNull(expiresAt: number | null | undefined) {
-	if (expiresAt && expiresAt <= Date.now())
+	if (expiresAt != null && expiresAt <= Date.now())
 		throw new OpError(400, 'expiry_past', 'The expiry must be in the future.');
 	return expiresAt ?? null;
 }
@@ -348,7 +362,7 @@ export const updateLink = defineOperation({
 			);
 		const own: Record<string, unknown> = { ...JSON.parse(row.settings_json), ...input.settings };
 		for (const k of input.resetSettings ?? []) delete own[k];
-		const own2 = overrides.parse(own);
+		const own2 = linkSettings.partial().parse(own);
 		checkNda(room, { ...roomDefaults(room), ...own2 });
 		const expiresAt = input.expiresAt === undefined ? row.expires_at : futureOrNull(input.expiresAt);
 		const passwordHash =

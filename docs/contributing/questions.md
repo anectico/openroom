@@ -3,7 +3,7 @@
 An investor asks about a file (and, for PDFs, the page they are on) from the viewer, or replies in a
 thread under "My questions" (`/v/<link id>/questions`). A member answers from the room's Questions
 tab or with `reply_to_conversation`; the answer is emailed when the investor has a verified session
-in the room and email is set up.
+in the room and email is set up. Reply emails require the original sharing link to still admit that address when the reply is queued and when it is delivered. Previous conversations show a document title and page link only while the current link can see the file.
 
 - Threads are private to their investor. A verified session sees all of that investor's threads in
   the room; an unverified session sees only the threads it started, and is told answers won't be

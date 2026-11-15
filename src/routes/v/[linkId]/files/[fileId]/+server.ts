@@ -11,6 +11,9 @@ export const GET: RequestHandler = async (event) => {
 	if (!fileVisible(ctx.room.id, ctx.link.id, event.params.fileId)) error(404, 'unavailable');
 	const version = currentVersion(event.params.fileId);
 	if (!version) error(404, 'unavailable');
+	const expected = event.url.searchParams.get('version');
+	if (expected !== null && expected !== String(version.version))
+		error(409, 'The document changed. Reload to open the current version.');
 	const wantsDownload = event.url.searchParams.get('download') === '1';
 	const isDownloadOnly = version.kind === 'download';
 	if (wantsDownload && !isDownloadOnly && ctx.settings.downloads !== 'per_file')

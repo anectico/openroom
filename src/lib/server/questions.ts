@@ -4,7 +4,7 @@ import { EmailError, emailReady, sendEmail } from './email.ts';
 import { emailCopy } from './email-copy.ts';
 import { newId } from './ids.ts';
 import { publicOrigin } from './origin.ts';
-import type { ViewerContext } from './viewer/access.ts';
+import { linkActive, linkById, mayEnter, type ViewerContext } from './viewer/access.ts';
 
 const sqlite = () => database().sqlite;
 export const maxBody = 5000;
@@ -23,9 +23,8 @@ export type ConversationRow = {
 };
 
 export function cleanBody(raw: unknown) {
-	const text = String(raw ?? '')
-		.replace(/\r\n/g, '\n')
-		.trim();
+	if (typeof raw !== 'string') return null;
+	const text = raw.replace(/\r\n/g, '\n').trim();
 	return text.length ? text.slice(0, maxBody) : null;
 }
 
@@ -148,19 +147,20 @@ export function memberReply(conversation: ConversationRow, userId: string, body:
 	return { id, emailed: emailReply(conversation, body) };
 }
 
+export function replyRecipient(conversationId: string) {
+	const row = sqlite()
+		.prepare(`SELECT v.email, c.link_id FROM conversations c
+			JOIN viewer_sessions s ON s.id = c.session_id AND s.viewer_id = c.viewer_id
+			JOIN viewers v ON v.id = c.viewer_id WHERE c.id = ? AND s.verified = 1`)
+		.get(conversationId) as { email: string | null; link_id: string | null } | undefined;
+	const link = row?.link_id ? linkById(row.link_id) : undefined;
+	return row?.email && link && linkActive(link) && mayEnter(link, row.email) ? row.email : null;
+}
+
 function emailReply(conversation: ConversationRow, body: string) {
 	if (!conversation.viewer_id || !conversation.session_id || !emailReady()) return false;
-	const asked = sqlite()
-		.prepare('SELECT verified FROM viewer_sessions WHERE id = ?')
-		.get(conversation.session_id) as { verified: number } | undefined;
-	if (!asked?.verified) return false;
-	const viewer = sqlite()
-		.prepare(
-			`SELECT v.email FROM viewers v WHERE v.id = ? AND v.email IS NOT NULL
-			AND EXISTS (SELECT 1 FROM viewer_sessions s JOIN links l ON l.id = s.link_id WHERE s.viewer_id = v.id AND l.room_id = ? AND s.verified = 1)`,
-		)
-		.get(conversation.viewer_id, conversation.room_id) as { email: string } | undefined;
-	if (!viewer) return false;
+	const email = replyRecipient(conversation.id);
+	if (!email) return false;
 	const room = sqlite().prepare('SELECT name FROM rooms WHERE id = ?').get(conversation.room_id) as {
 		name: string;
 	};
@@ -168,7 +168,10 @@ function emailReply(conversation: ConversationRow, body: string) {
 		? `${publicOrigin()}/v/${conversation.link_id}/questions/${conversation.id}`
 		: null;
 	try {
-		sendEmail(viewer.email, emailCopy.questionReply({ room: room.name, body, url }));
+		sendEmail(email, {
+			...emailCopy.questionReply({ room: room.name, body, url }),
+			conversationId: conversation.id,
+		});
 		return true;
 	} catch (e) {
 		if (e instanceof EmailError) return false;

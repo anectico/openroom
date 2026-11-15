@@ -16,7 +16,11 @@ The server (`src/lib/server/viewer/tracking.ts`):
 - upserts one `page_reads` row per session, file version and page. Each session has one time budget:
   everything it reports, pages and video together, can never exceed the time since the session
   started plus 5 seconds, and one beacon carries 10 minutes at most;
-- ignores files the link may not see, page numbers outside the file, and preview sessions;
+- checks the reader’s document version on beacons and file range requests. After a replacement, the
+  reader must reload to fetch new bytes or record time against the replacement. Older unversioned
+  beacons are accepted only for a first version;
+- ignores files the link may not see, page numbers outside the file, and preview sessions. Image
+  timing starts when the image loads. Only positive time credits create page reads;
 - merges video ranges in `video_reads` and keeps the duration each session's browser reported, so a
   forged duration only affects that session's own numbers;
 - writes `events`: `visit`, `file_open`, `download`, `zip_download`, `nda_accepted` and `read_past`

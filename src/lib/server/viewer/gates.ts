@@ -77,7 +77,15 @@ export function nextStep(link: LinkRow, settings: LinkSettings, gate: GateRow | 
 	if (link.password_hash && !gate?.password_ok) return 'password';
 	if (!gate?.viewer_email) return 'email';
 	if (settings.verifyEmail && !gate.verified) return 'code';
-	if (settings.customFields.length && !gate.fields_json) return 'fields';
+	const fields = fieldsOf(gate);
+	if (
+		settings.customFields.length &&
+		(!fields ||
+			settings.customFields.some(
+				(f) => f.required && (!Object.hasOwn(fields, f.label) || !fields[f.label]?.trim()),
+			))
+	)
+		return 'fields';
 	if (settings.requireNda) return 'nda';
 	return 'done';
 }
@@ -255,7 +263,7 @@ export function checkCode(gate: GateRow, link: LinkRow, raw: string, ip: string 
 }
 
 export function setFields(gate: GateRow, settings: LinkSettings, values: Record<string, string>) {
-	const fields: Record<string, string> = {};
+	const fields: Record<string, string> = Object.create(null);
 	const missing: string[] = [];
 	for (const f of settings.customFields) {
 		const value = (values[f.label] ?? '').trim().slice(0, 300);
@@ -272,7 +280,7 @@ export function setFields(gate: GateRow, settings: LinkSettings, values: Record<
 export function previousAcceptance(email: string, roomId: string) {
 	return sqlite()
 		.prepare(
-			'SELECT accepted_at, nda_version_id FROM nda_acceptances WHERE email = ? AND room_id = ? ORDER BY accepted_at DESC LIMIT 1',
+			'SELECT accepted_at, nda_version_id FROM nda_acceptances WHERE email = ? AND room_id = ? AND verified = 1 ORDER BY accepted_at DESC LIMIT 1',
 		)
 		.get(email, roomId) as { accepted_at: number; nda_version_id: string } | undefined;
 }

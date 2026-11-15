@@ -38,10 +38,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	}
 	const response =
-		admin && !event.locals.member && !publicAdminRoutes.has(routeId)
+		admin && !event.locals.member && routeId !== '/admin/api/[operation]' && !publicAdminRoutes.has(routeId)
 			? new Response(null, {
 					status: 303,
-					headers: { location: `/admin/login?next=${encodeURIComponent(event.url.pathname)}` },
+					headers: {
+						location: `/admin/login?next=${encodeURIComponent(event.url.pathname + event.url.search)}`,
+					},
 				})
 			: await svelteKitHandler({ auth: auth(), event, resolve, building });
 	for (const [name, value] of Object.entries(securityHeaders)) {

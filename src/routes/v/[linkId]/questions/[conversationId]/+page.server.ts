@@ -1,7 +1,7 @@
 import { error, fail } from '@sveltejs/kit';
-import { database } from '#lib/server/db/index.ts';
 import { unreadMessageIds, unreadReplies } from '#lib/server/investor-attention.ts';
 import { cleanBody, messagesOf, viewerConversation, viewerReply } from '#lib/server/questions.ts';
+import { visibleTree } from '#lib/server/viewer/access.ts';
 import { requireViewer } from '#lib/server/viewer/context.ts';
 import { hit } from '#lib/server/viewer/ratelimit.ts';
 import type { Actions, PageServerLoad } from './$types';
@@ -11,18 +11,16 @@ export const load: PageServerLoad = (event) => {
 	const c = viewerConversation(ctx, event.params.conversationId);
 	if (!c) error(404, 'unavailable');
 	const file = c.file_id
-		? (database().sqlite.prepare('SELECT title FROM files WHERE id = ?').get(c.file_id) as
-				| { title: string }
-				| undefined)
-		: undefined;
+		? visibleTree(ctx.room.id, ctx.link.id).find((n) => n.type === 'file' && n.id === c.file_id)
+		: null;
 	const unread = new Set(unreadMessageIds(ctx, c.id));
 	return {
 		thread: {
 			unread: unreadReplies(ctx).get(c.id) ?? 0,
 			id: c.id,
-			fileId: c.file_id,
-			fileTitle: file?.title ?? null,
-			page: c.page,
+			fileId: file?.id ?? null,
+			fileTitle: file?.name ?? null,
+			page: file ? c.page : null,
 		},
 		messages: messagesOf(c.id).map((m) => ({
 			id: m.id,

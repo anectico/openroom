@@ -39,7 +39,8 @@ company overview room and a diligence room, but use the owner's names and scope.
 4. Create a personal link using `create_link`, its audience allow list and `groupId`. Use explicit
    emails or approved domains. Open links still ask for an email, but an unverified email is a
    claimed identity. Inspect the returned effective settings and their overrides.
-5. Test with `preview_link`, including the actual files visible to that link. Preview bypasses
+5. Use distinct custom field labels. To restore an inherited setting, pass its exact schema name in `resetSettings`.
+   Test with `preview_link`, including the actual files visible to that link. Preview bypasses
    investor gates and is only for members; it cannot post questions or upload requested files.
 6. Copy the link and invite text, or use `send_link_invites` only when the owner asked to email those
    investors. Creating a room or drafting a link does not authorize contacting anyone.

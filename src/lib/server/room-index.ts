@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { PDFDocument, rgb, StandardFonts } from '@cantoo/pdf-lib';
+import { csvCell } from './csv.ts';
 import { database } from './db/index.ts';
 import { exportTtlMs } from './exports.ts';
 import { newId } from './ids.ts';
@@ -37,25 +38,18 @@ function rows(roomId: string) {
 	});
 }
 
-const cell = (value: unknown) => {
-	let text = value === null || value === undefined ? '' : String(value);
-	if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
-	return /[",\n\r]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
-};
-
 export function indexCsv(roomId: string) {
 	const lines = [['number', 'type', 'title', 'folder', 'version', 'size_bytes']];
 	for (const r of rows(roomId))
 		lines.push([r.number, r.type, r.title, r.folder, r.version ?? '', r.size ?? ''].map(String));
-	return `${lines.map((l) => l.map(cell).join(',')).join('\n')}\n`;
+	return `${lines.map((l) => l.map(csvCell).join(',')).join('\n')}\n`;
 }
-
-const latin = (text: string) => [...text].map((c) => (c.charCodeAt(0) < 256 ? c : '?')).join('');
 
 export async function indexPdf(roomId: string, roomName: string) {
 	const doc = await PDFDocument.create();
 	const font = await doc.embedFont(StandardFonts.Helvetica);
 	const bold = await doc.embedFont(StandardFonts.HelveticaBold);
+	const supported = new Set(font.getCharacterSet());
 	const width = 595;
 	const height = 842;
 	const margin = 50;
@@ -66,9 +60,8 @@ export async function indexPdf(roomId: string, roomName: string) {
 			page = doc.addPage([width, height]);
 			y = height - margin;
 		}
-		let t = latin(text);
-		while (t.length > 3 && f.widthOfTextAtSize(t, size) > width - x - margin)
-			t = `${t.slice(0, -4)}…`.replace('…', '...');
+		let t = [...text].map((c) => (supported.has(c.codePointAt(0) as number) ? c : '?')).join('');
+		while (t.length > 3 && f.widthOfTextAtSize(t, size) > width - x - margin) t = `${t.slice(0, -4)}...`;
 		page.drawText(t, { x, y, size, font: f, color });
 		y -= size + 6;
 	};

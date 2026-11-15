@@ -61,6 +61,8 @@ async function request(path, method, body) {
 		error.detail = result?.error ?? { code: 'http_error', status: response.status };
 		throw error;
 	}
+	if (result === null || typeof result !== 'object' || Array.isArray(result))
+		throw new Error('The server returned an invalid JSON result. Check the server URL.');
 	return result;
 }
 
@@ -253,7 +255,10 @@ program
 				ok: system.backupsReady,
 				detail:
 					system.replication.error ??
-					(system.s3Ready ? 'Replication confirmed' : 'Replica is on this server only'),
+					system.warnings.find((warning) =>
+						['backups_local', 'replication_stopped', 'files_moving'].includes(warning.code),
+					)?.text ??
+					'Replication confirmed',
 			},
 		];
 		process.stdout.write(`${JSON.stringify(checks, null, 2)}\n`);
