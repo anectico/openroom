@@ -1,66 +1,31 @@
 # OpenRoom
 
-**Your documents. Your investors. Your server.**
+A self-hosted data room for fundraising and due diligence. Give each investor a personal link to the documents they can review, answer questions beside the material, and see which pages they spend time on.
 
-OpenRoom is a self-hosted data room for fundraising and due diligence. Organize your documents,
-share a personal link with each investor, and follow their review through page-level activity,
-private questions and file requests.
+**[Run locally](#run-locally) · [Deploy on a VPS](#deploy-on-your-server) · [Read the product guide](docs/using-openroom.md) · [Use the API, MCP or CLI](#api-mcp-and-cli)**
 
-[Get started](#run-locally) · [Deploy](#deploy-on-your-server) · [Product guide](docs/using-openroom.md) · [API, MCP & CLI](docs/cli.md) · [Contribute](#contributing)
+![An example investor room for Aster Robotics, with a company introduction and pinned documents in review order](docs/images/investor-room-overview.png)
 
-![Branded investor room with an Aster Robotics logo, personal welcome and Start here documents](docs/images/investor-room.png)
+## Share your first room
 
-_A fictional Aster Robotics room with its own logo and brand colour, a welcome for Maya’s team, 12 example documents and a personal review checklist._
+| Step                      | In the workspace                                                                                                                                                                                         |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Prepare the room**   | Upload files, organize them into folders, and choose up to six documents for investors to read first. Add your logo, cover and welcome.                                                                  |
+| **2. Invite an investor** | Create a personal link. Choose its audience, document group, downloads and expiry. Add a password, email verification or an NDA as needed. Use **Preview as investor** to check the link before sharing. |
+| **3. Follow the review**  | See visits and page-level reading time, answer private questions, and request missing files. Investors can resume reading and mark documents reviewed.                                                   |
 
-## What you can do
-
-- **Prepare a data room.** Organize files into folders, upload new versions, reorder documents,
-  and manage access through groups. Duplicate a room for the next process.
-- **Control who gets in.** Create separate investor links with email/domain allow and block lists,
-  passwords, expiry, email verification and versioned NDA acceptance. Revoke access when needed.
-- **Make the room feel personal.** Use your logo, colour, optional room cover image and welcome introduction. Add a
-  link-specific welcome and pin up to six **Start here** documents in reading order.
-- **Give investors a useful reader.** View PDFs, images and supported videos in the browser with
-  identity watermarks. PDFs include text search, thumbnails, zoom and tab-local reading resume.
-  Download permissions control individual files and ZIP exports.
-- **Help investors pick up where they left off.** Show new or updated documents, unread replies,
-  outstanding requests and an explicit review checklist for pinned documents.
-- **Keep the conversation with the documents.** Answer private questions about a room, file or
-  PDF page; publish shared FAQs; request files with due dates and upload receipts.
-- **Understand engagement.** See visits, page-level reading time, document versions and watched
-  video ranges. Review investor history and export activity to CSV.
-- **Run the workspace with your team or an agent.** Use owner, admin and observer roles, API keys,
-  audit logs, notifications and webhooks. The admin UI, REST API, MCP and CLI share one operation registry.
-- **Keep control of the data.** Store documents on local disk or optional S3-compatible storage.
-  Freeze completed rooms into archives, configure retention, and export or erase investor data.
+The reader supports PDFs, images and video. You can upload new versions, publish a shared FAQ, revoke a link, export activity to CSV and freeze a completed room into an archive. [Explore the investor and team workflows](docs/using-openroom.md).
 
 <details>
-<summary>See the owner workspace</summary>
+<summary>View the owner workspace</summary>
 
-![OpenRoom owner workspace with data rooms and investor activity](docs/reviews/ui-refinement/after-overview-desktop.jpg)
-
-_Example workspace and activity data._
+![Owner dashboard showing rooms and recent investor activity](docs/reviews/ui-refinement/after-overview-desktop.jpg)
 
 </details>
 
-## Simple to host
-
-OpenRoom runs as one application container with SQLite. The deployment stack adds Caddy for HTTPS;
-Litestream runs alongside the app inside its container to replicate the database. There is no
-separate database server or queue service to operate.
-
-Email, S3 and webhooks are optional. Without them, you can upload documents, share links manually,
-and use the investor room. Email verification codes and email notifications need an email provider. Configure Resend, Cloudflare or SMTP in [Email delivery](docs/email.md).
-Local database replicas stay on the same server; use remote storage and the recovery runbook for
-protection against losing that server.
-
-**Project status:** initial release candidate. You can run the source locally using the steps below.
-The VPS installer and global npm installation require published release artifacts. See the
-[release guide](docs/contributing/release.md) for packaging and deployment validation.
-
 ## Run locally
 
-You need **Node.js 24 or newer** and npm.
+**Requires Node.js 24 or newer and npm.** Clone the repository and prepare a private environment file.
 
 ```sh
 git clone https://github.com/anectico/openroom.git
@@ -70,89 +35,51 @@ cp .env.example .env
 chmod 600 .env
 ```
 
-Before the first start, edit `.env` and set:
+Set the initial owner email and a unique password of at least 10 characters in `.env`.
 
 ```dotenv
 ADMIN_EMAIL=you@example.com
 ADMIN_PASSWORD=replace-with-a-unique-password
 ```
 
-Use a password of at least 10 characters. Then start the development server:
-
 ```sh
 npm run dev
 ```
 
-Open **http://localhost:5173/admin** and sign in. If you use a different host or port, set
-`ORIGIN` in `.env` to that exact origin and restart the development server. The initial owner is created once. You can remove `ADMIN_PASSWORD` from `.env` after that first
-successful sign-in; changing it later does not reset an existing member's password.
+**[Open the local workspace](http://localhost:5173/admin)** and sign in with those credentials. The owner is created on first start. After signing in, you can remove `ADMIN_PASSWORD` from `.env`. To use a different host or port, set `ORIGIN` to the exact origin and restart.
 
-Development keeps SQLite and uploaded files in `./data`. If `OPENROOM_SECRET_KEY` is blank, it creates
-and reuses `data/dev-secret.key`. Keep `.env` and `data/` private; both are excluded from Git.
-Use the deployment setup below for a publicly accessible instance.
-
-### Share your first room
-
-1. Create a room and upload your documents.
-2. Set its branding and welcome, then choose the documents investors should start with.
-3. Create an investor link and review its access and download settings. Enable email verification
-   only after configuring email delivery.
-4. Preview the link, share it, and follow activity and questions from the room's workspace.
-
-Follow the [product guide](docs/using-openroom.md) for the full workflow, or use the
-[first-room agent runbook](docs/agents/first-room.md).
+SQLite and uploaded files live in `./data`. If `OPENROOM_SECRET_KEY` is empty, development generates and reuses `data/dev-secret.key`. Keep both `.env` and `data/` private.
 
 ## Deploy on your server
 
-The installer targets a Linux VPS with a 64-bit x86 or ARM CPU, at least **2 GB RAM**, and enough disk
-for documents, exports and backups. Ports 80 and 443 must be reachable. It installs Docker if needed
-and uses Docker Compose v2.
+**Initial release candidate.** The local setup above runs from source. The VPS installer requires a published image and deploy files. The release guide includes a drill for testing an unpublished image. [Release guide](docs/contributing/release.md#isolated-clean-local-server).
 
-**Once a release image and its deploy files are published**, run:
+Use a 64-bit x86 or ARM Linux VPS with at least **2 GB RAM**, space for documents and backups, and ports **80** and **443** open. Once release artifacts are published, run the installer.
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/anectico/openroom/main/deploy/install.sh | sudo bash -s -- --email you@example.com --yes
 ```
 
-Add `--domain rooms.example.com` to use your domain. Without one, the installer uses an address
-based on the server's IP under `sslip.io`. Only the owner email is required; the installer generates
-the initial password and encryption key and configures HTTPS.
+Add `--domain rooms.example.com` for your domain, or use the generated `sslip.io` address. The installer sets up Docker if needed, configures HTTPS, and generates the owner password and encryption key. Save the credentials and `OPENROOM_SECRET_KEY` securely. Verify the install with `openroom-server doctor`. [Installation runbook](docs/agents/install.md).
 
-Save the generated credentials and `OPENROOM_SECRET_KEY` securely: recovery needs that key.
-After installation, check the server with:
-
-```sh
-openroom-server doctor
-```
-
-Use `openroom-server update` and `openroom-server rollback` to manage installed versions.
-See [installation](docs/agents/install.md), [configuration](docs/configuration.md), and
-[storage and recovery](docs/storage-and-backups.md) before deploying. To validate an unpublished
-image, follow the [isolated local-server drill](docs/contributing/release.md#isolated-clean-local-server).
+| Service                      | What it does                                                                                                                                                                                        |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Application and HTTPS**    | One application container runs OpenRoom, SQLite and Litestream. Caddy serves HTTPS. Use `openroom-server update` and `openroom-server rollback` to manage versions.                                 |
+| **File storage and backups** | Local disk works out of the box. Connect S3-compatible storage to keep data off the host. A replica on the same server shares its failure risk. [Storage and recovery](docs/storage-and-backups.md) |
+| **Email delivery**           | Share links manually from the start. Connect Resend, Cloudflare or SMTP for verification codes, invitations and notifications. [Email setup](docs/email.md)                                         |
 
 ## API, MCP and CLI
 
-Every member operation is defined once, with shared validation, authorization and audit behavior.
-You can use the same workspace through:
+The admin UI, REST API, MCP server and CLI use the same member operations, role checks and audit log. Create a key in **Settings → API keys**. Supply it through your client’s secret configuration.
 
-| Interface           | Where to find it                     |
+| Interface           | Entry point                          |
 | ------------------- | ------------------------------------ |
-| Admin UI            | `/admin`                             |
-| REST API            | `/api/v1`                            |
-| OpenAPI description | `/api/v1/openapi.json`               |
+| Admin workspace     | `/admin`                             |
+| REST and OpenAPI    | `/api/v1` and `/api/v1/openapi.json` |
 | Streamable HTTP MCP | `/mcp`                               |
 | CLI                 | `openroom` from `@anectico/openroom` |
 
-Create an API key in **Settings → API keys**. REST and MCP clients authenticate with
-`Authorization: Bearer KEY`. Supply credentials through your client’s secret configuration.
-
-After the CLI package is published:
-
-```sh
-npm install -g @anectico/openroom
-```
-
-Configure `OPENROOM_URL` and `OPENROOM_API_KEY`, then:
+REST and MCP accept `Authorization: Bearer KEY`. For the CLI, set `OPENROOM_URL` and `OPENROOM_API_KEY`. Build the CLI locally, or install with `npm install -g @anectico/openroom` once the package is published. [CLI setup](docs/cli.md#cli).
 
 ```sh
 openroom get-me
@@ -161,49 +88,23 @@ openroom create-room --name 'Investor room'
 openroom upload ./documents --room-id ROOM_ID --dry-run
 ```
 
-The CLI can also be [built and installed locally](docs/cli.md#cli). For agents, start with the
-[OpenRoom skill](skills/openroom/SKILL.md) and [documentation index](llms.txt).
-
 ## Documentation
 
-| Topic                                             | Guide                                                        |
-| ------------------------------------------------- | ------------------------------------------------------------ |
-| Rooms, sharing, reading, questions and requests   | [Using OpenRoom](docs/using-openroom.md)                     |
-| Workspace settings and personal email preferences | [Settings](docs/settings.md)                                 |
-| Environment variables                             | [Configuration](docs/configuration.md)                       |
-| Verification codes, invitations and notifications | [Email](docs/email.md)                                       |
-| Local disk, S3, backups and restoration           | [Storage and backups](docs/storage-and-backups.md)           |
-| Investor exports, erasure and retained records    | [Privacy](docs/privacy.md)                                   |
-| Automation and client examples                    | [CLI and MCP](docs/cli.md)                                   |
-| Updates, diagnostics and recovery                 | [Operations runbook](docs/agents/operations-and-recovery.md) |
-| Packaging and release checks                      | [Release guide](docs/contributing/release.md)                |
+| I want to…                                        | Start here                                                                                                                                 |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Set up a workspace or customize a room            | [Settings and branding](docs/settings.md) · [Environment variables](docs/configuration.md)                                                 |
+| Understand investor identity, exports and erasure | [Privacy and retention](docs/privacy.md)                                                                                                   |
+| Diagnose a server or restore a backup             | [Operations and recovery](docs/agents/operations-and-recovery.md)                                                                          |
+| Prepare a room with an agent                      | [First-room runbook](docs/agents/first-room.md) · [Agent skill](skills/openroom/SKILL.md) · [Agent index](llms.txt)                        |
+| Work on the codebase                              | [Stack](docs/contributing/stack.md) · [Operation architecture](docs/contributing/operations.md) · [UI design](docs/contributing/design.md) |
 
-Reading time estimates foreground viewing; it does not prove a document was understood. Watermarks
-and browser protections discourage casual copying but cannot prevent screenshots or photographs.
-See the product and privacy guides for session identity, download and retention behavior.
+Reading time measures foreground viewing. Watermarks and browser protections discourage casual copying. An investor can still capture a screen or photograph it.
 
 ## Contributing
 
-Bug reports, documentation improvements and focused pull requests are welcome. For a bug, include
-reproduction steps, expected behavior and your environment; remove credentials and private investor
-data from logs and screenshots. Discuss substantial changes in an issue before implementing them.
+Bug reports, documentation improvements and focused pull requests are welcome. Include reproduction steps, expected behavior and your environment. Remove credentials and investor data from screenshots and logs. Discuss substantial changes in an issue first.
 
-The stack is SvelteKit 3, Svelte 5, TypeScript, Tailwind CSS 4 and shadcn-svelte, with SQLite/Drizzle,
-Better Auth and FlyDrive on the server. See the [stack](docs/contributing/stack.md),
-[operation architecture](docs/contributing/operations.md) and [UI design](docs/contributing/design.md).
-
-| Directory                      | Purpose                                                |
-| ------------------------------ | ------------------------------------------------------ |
-| `src/routes/`                  | Pages, REST routes and MCP endpoint                    |
-| `src/lib/operations/`          | Shared member operations                               |
-| `src/lib/server/`              | Application logic, storage and database access         |
-| `src/launcher/`                | Startup, replication, restore and rollback             |
-| `migrations/`                  | Database migrations                                    |
-| `cli/`                         | Independent CLI package and generated catalog          |
-| `deploy/`                      | Installer, Compose stack and server management command |
-| `docs/` and `skills/openroom/` | User, contributor and agent documentation              |
-
-Before submitting a change:
+Keep member actions in the shared operation registry and update affected guides and agent runbooks. Keep code explanations in Markdown. Use temporary checks against a real app, SQLite database and files, then remove them before committing. Access, rendering and recovery changes have additional checks in the [release guide](docs/contributing/release.md).
 
 ```sh
 npm run lint
@@ -211,15 +112,6 @@ npm run build
 node scripts/generate-cli.ts --check
 ```
 
-Keep member actions in the operation registry so all interfaces stay consistent. Update the relevant
-docs and agent runbooks with user-facing changes. This repository keeps explanations in Markdown
-rather than code comments and does not commit tests: use temporary checks against a real app,
-SQLite database and files, then remove them. Access, rendering and recovery changes require the
-corresponding checks in the [release guide](docs/contributing/release.md).
-
 ## License
 
-OpenRoom by [Anectico](https://anectico.com) is fair-source under the
-[Functional Source License 1.1, MIT Future License](LICENSE.md) (**FSL-1.1-MIT**).
-Each version becomes available under MIT on the second anniversary of its release. See the license
-for the terms that apply before and after that date.
+OpenRoom by [Anectico](https://anectico.com) uses the [Functional Source License 1.1, MIT Future License](LICENSE.md) (**FSL-1.1-MIT**). Each version becomes available under MIT on the second anniversary of its release.
