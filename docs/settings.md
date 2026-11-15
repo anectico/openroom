@@ -79,11 +79,14 @@ For JSON, copy the signing secret once and verify `X-OpenRoom-Timestamp` and
 `X-OpenRoom-Signature` against the original body. Keep a bounded timestamp tolerance and reject
 replays in your receiver. The signature is HMAC-SHA256 of `timestamp.body`.
 
-Send a test, inspect its delivery status, turn the endpoint off or delete it. Private addresses are
+In **Settings → Webhooks**, choose **All events** or **Selected events** for each destination.
+Use **Edit events** to change which new notices it receives. **Pause** stops automatic delivery;
+**Send test** sends a test even while paused. Each destination shows its latest attempt, including
+the HTTP status when the receiver responded. Private addresses are
 refused during both setup and connection; redirects are not followed. Generic webhook configuration
 and secrets are visible only to owners. See [webhook behavior](contributing/branding-and-privacy.md).
 
-![Webhook settings](reviews/ui-release/webhooks-desktop.jpg)
+![Webhook setup and destinations](images/webhook-settings.png)
 
 ## Account, notices and audit
 
