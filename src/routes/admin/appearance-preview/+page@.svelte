@@ -31,6 +31,7 @@
 	const welcomeHtml = $derived(renderMarkdown(draft?.welcome ?? ''));
 	const room = $derived({
 		roomName: draft?.name || 'Your data room', branding, installBranding: branding, roomId: '', linkId: '',
+		welcome: { html: welcomeHtml, revision: '', personal: false, cookieName: null, savedOpen: null },
 		readingScope: 'appearance-preview', email: 'investor@example.com', preview: false, downloads: data.downloads, actionRequests: 0, unreadReplies: 0,
 	});
 	const tree = $derived(data.tree.map((file) => ({ ...file, change: null })));
@@ -41,9 +42,9 @@
 	{#if draft.screen === 'entry'}
 		<Entry appearance form={null} data={{ ...room, step: 'email', welcomeHtml, resendIn: 0, fields: [], ndaHtml: null, ndaVersionId: null, ndaDate: null, ndaChanged: false }} />
 	{:else}
-		<RoomLayout data={room} appearance={{section, welcomeHtml, onselect: select}}>
+		<RoomLayout data={room} appearance={{section, onselect: select}}>
 			{#if section === 'documents'}
-				<Documents appearance data={{ ...room, welcomeHtml, welcomeRevision: '', personalWelcome: false, tree, pins, faq: data.faq, changesSince: null, reviewStates: [], reviewedIds: [], requests: [] }} />
+				<Documents appearance data={{ ...room, tree, pins, faq: data.faq, changesSince: null, reviewStates: [], reviewedIds: [] }} />
 			{:else if section === 'questions'}
 				<Questions appearance data={{...room, verified: data.verified, files: [], threads: []}} />
 			{:else}

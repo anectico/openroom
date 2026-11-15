@@ -1,19 +1,22 @@
 <script lang="ts">
- import { ChevronDown, FolderClosed, Mail } from '@lucide/svelte';
+ import { ChevronDown, FolderClosed } from '@lucide/svelte';
  import { onMount, type Snippet } from 'svelte';
  import { renderedExcerpt } from '#lib/markdown.ts';
 
- let { name, html = '', personal = false, compact = false, homeHref, logoUrl, coverUrl, account, persistenceKey, revision }: { name: string; html?: string; personal?: boolean; compact?: boolean; homeHref?: string; logoUrl: string | null; coverUrl?: string | null; account?: Snippet; persistenceKey?: string; revision?: string } = $props();
+ let { name, html = '', personal = false, homeHref, logoUrl, coverUrl, account, persistenceKey, revision, cookieName, savedOpen = null }: { name: string; html?: string; personal?: boolean; homeHref?: string; logoUrl: string | null; coverUrl?: string | null; account?: Snippet; persistenceKey?: string; revision?: string; cookieName?: string | null; savedOpen?: boolean | null } = $props();
  let chosenOpen = $state<boolean | null>(null);
- let compactOpen = $state(false);
  let disclosure = $state<HTMLDetailsElement>();
  const excerpt = $derived(renderedExcerpt(html));
- const open = $derived(chosenOpen ?? excerpt.length <= 600);
+ const preference = $derived(chosenOpen ?? savedOpen);
+ const expanded = $derived(preference ?? excerpt.length <= 600);
  onMount(() => {
-  if (!persistenceKey || !revision) return;
+  if (savedOpen !== null || !persistenceKey || !revision) return;
   try {
    const saved = JSON.parse(sessionStorage.getItem(persistenceKey) ?? 'null');
-   if (saved?.revision === revision && typeof saved.open === 'boolean') chosenOpen = saved.open;
+   if (saved?.revision === revision && typeof saved.open === 'boolean') {
+    chosenOpen = saved.open;
+    if (cookieName) remember(saved.open);
+   }
   } catch {}
  });
  $effect(() => {
@@ -21,11 +24,17 @@
   summary?.addEventListener('click', toggle);
   return () => summary?.removeEventListener('click', toggle);
  });
+ function remember(value: boolean) {
+  if (!revision) return;
+  if (cookieName && homeHref) try {
+   document.cookie = `${cookieName}=${revision}.${value ? 'open' : 'closed'}; Path=${homeHref}; Max-Age=34560000; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`;
+  } catch {}
+  if (persistenceKey) try { sessionStorage.setItem(persistenceKey, JSON.stringify({ revision, open: value })); } catch {}
+ }
  function toggle(event: MouseEvent) {
   event.preventDefault();
-  if (compact) { compactOpen = !compactOpen; return; }
-  chosenOpen = !open;
-  if (persistenceKey && revision) try { sessionStorage.setItem(persistenceKey, JSON.stringify({ revision, open: chosenOpen })); } catch {}
+  chosenOpen = !expanded;
+  remember(chosenOpen);
  }
 </script>
 
@@ -39,15 +48,17 @@
    </div>
    {#if account}{@render account()}{/if}
   </div>
-  {#if !compact && coverUrl}<img src={coverUrl} alt="" class="h-20 w-full rounded-xl object-cover @xl/cover:h-36" />{/if}
+  {#if coverUrl}<img src={coverUrl} alt="" class="h-20 w-full rounded-xl object-cover @xl/cover:h-36" />{/if}
   {#if html.trim()}
-   <details bind:this={disclosure} open={compact ? compactOpen : open} class="group max-w-3xl text-sm">
-    <summary class="flex min-h-11 cursor-pointer list-none flex-wrap items-center gap-2 font-medium text-primary">
-     {#if personal}<Mail class="size-4" />{/if}{personal ? 'Personal welcome' : 'Welcome & introduction'}<span class="font-normal text-muted-foreground">{(compact ? compactOpen : open) ? 'Show less' : 'Read welcome'}</span><ChevronDown class="size-4 transition-transform group-open:rotate-180" />
-     {#if !open && !compact}<span class="line-clamp-2 w-full text-sm font-normal text-muted-foreground [overflow-wrap:anywhere]">{excerpt}</span>{/if}
-    </summary>
-    <div class="md pb-1 text-sm leading-relaxed [overflow-wrap:anywhere] [&>:first-child]:mt-0 [&>:last-child]:mb-0">{@html html}</div>
-   </details>
+   <div class="max-w-3xl">
+    <details bind:this={disclosure} open={expanded} class="group flex flex-col text-sm">
+     <summary aria-label={`${expanded ? 'Hide' : 'Show'} ${personal ? 'personal welcome' : 'welcome'}`} class="order-last inline-flex min-h-11 min-w-11 cursor-pointer self-start list-none items-center gap-1.5 rounded-md text-xs font-medium text-primary hover:underline focus-visible:outline-2 focus-visible:outline-primary">
+      {expanded ? 'Hide' : 'Show welcome'}<ChevronDown aria-hidden="true" class="size-3.5 group-open:rotate-180" />
+     </summary>
+     <div class="md flow-root text-sm leading-relaxed [overflow-wrap:anywhere] [&>:first-child]:mt-0 [&>:last-child]:mb-0">{@html html}</div>
+    </details>
+    {#if !expanded && preference === null}<p class="line-clamp-2 text-sm text-muted-foreground [overflow-wrap:anywhere]">{excerpt}</p>{/if}
+   </div>
   {/if}
  </div>
 </section>

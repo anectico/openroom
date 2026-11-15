@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowRight, Check, ChevronDown, ChevronRight, FolderClosed, MessageSquare, Search } from '@lucide/svelte';
+	import { ArrowRight, Check, ChevronDown, ChevronRight, FolderClosed, Search } from '@lucide/svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Empty from '#lib/components/ui/empty/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
@@ -34,7 +34,6 @@
 	const remainingPins = $derived(data.pins.filter((pin) => !reviewed.has(pin.id)));
 	const completedPins = $derived(data.pins.filter((pin) => reviewed.has(pin.id)));
 	function focusProgress() { document.getElementById('review-progress')?.focus({ preventScroll: true }); }
-	const actionCount = $derived(data.requests.filter((request) => request.status === 'Action needed').length);
 	function toggleChanges() {
 		const url = new URL(currentUrl.href);
 		url.searchParams.delete('y');
@@ -204,11 +203,9 @@
 	</section>
 {/if}
 
-{#if data.unreadReplies || actionCount || showChanges}
+{#if showChanges}
 	<nav class="mb-4 flex flex-wrap gap-2" aria-label="Room updates">
 		{#if showChanges && data.changesSince !== null}<Button variant={changedOnly ? 'secondary' : 'outline'} size="sm" class="min-h-11" aria-pressed={changedOnly} onclick={toggleChanges} title={`Changed since ${new Date(data.changesSince).toLocaleString()}`}>{changedCount} changed<ArrowRight data-icon="inline-end" /></Button>{/if}
-		{#if data.unreadReplies}<Button href="/v/{data.linkId}/questions" variant="outline" size="sm" class="min-h-11"><MessageSquare data-icon="inline-start" />{data.unreadReplies} unread {data.unreadReplies === 1 ? 'reply' : 'replies'}</Button>{/if}
-		{#if actionCount}<Button href="/v/{data.linkId}/requests" variant="outline" size="sm" class="min-h-11">{actionCount} {actionCount === 1 ? 'request needs' : 'requests need'} action<ArrowRight data-icon="inline-end" /></Button>{/if}
 	</nav>
 {/if}
 {#if !single}
