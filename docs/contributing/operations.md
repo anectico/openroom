@@ -108,9 +108,9 @@ Revoking is final. `revoke_all_links` revokes every link of a room and needs `co
 
 ## Email
 
-`src/lib/server/email.ts` sends through Resend or SMTP (Nodemailer). The configuration comes from the
-environment (`EMAIL_FROM` with `RESEND_API_KEY` or `SMTP_*`) or, when those are not set, from the
-settings table, where the API key and SMTP password are encrypted and never returned. Every email
+`src/lib/server/email.ts` sends through Resend, the Cloudflare Email Sending REST API or SMTP (Nodemailer). The configuration comes from the
+environment (`EMAIL_FROM` with the selected provider’s credentials) or, when those are not set, from the
+settings table, where API keys, tokens and SMTP passwords are encrypted and never returned. Every email
 goes through the `email.send` job, which retries five times; the job's payload is cleared when it
 finishes. A daily cap (90 by default, a general setting) counts `email.send` jobs of the last
 24 hours. All email text lives in `src/lib/server/email-copy.ts`.

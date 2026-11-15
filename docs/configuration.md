@@ -20,11 +20,12 @@ Optional, for people who manage configuration as code. Email is normally set up 
 (Settings → General and email); when these are set they win, and the admin page shows email as set by
 the server.
 
-| Variable                                               | What it does                                                                     |
-| ------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| `EMAIL_FROM`                                           | The sender, such as `Acme <rooms@acme.com>`. Needed for either provider below.   |
-| `RESEND_API_KEY`                                       | Send through Resend.                                                             |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` | Send through any SMTP server (port 587 by default; 465 uses TLS from the start). |
+| Variable                                                    | What it does                                                                     |
+| ----------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `EMAIL_FROM`                                                | The sender, such as `Acme <rooms@acme.com>`. Needed for any provider below.      |
+| `RESEND_API_KEY`                                            | Send through Resend.                                                             |
+| `CLOUDFLARE_EMAIL_ACCOUNT_ID`, `CLOUDFLARE_EMAIL_API_TOKEN` | Send through Cloudflare Email Sending using an account-scoped sending token.     |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`      | Send through any SMTP server (port 587 by default; 465 uses TLS from the start). |
 
 Set inside the container by the Compose file or the image, not in `.env`:
 

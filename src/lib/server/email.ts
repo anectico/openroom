@@ -5,9 +5,10 @@ import type { Message } from './email-copy.ts';
 import { enqueue } from './jobs.ts';
 import { getSecretSetting, getSetting, setSetting } from './settings.ts';
 
-export type EmailProvider = 'resend' | 'smtp';
+export const cloudflareAccountIdPattern = /^[a-f0-9]{32}$/i;
 
 export type EmailConfig =
+	| { provider: 'cloudflare'; from: string; accountId: string; apiToken: string; source: 'env' | 'settings' }
 	| { provider: 'resend'; from: string; apiKey: string; source: 'env' | 'settings' }
 	| {
 			provider: 'smtp';
@@ -38,6 +39,10 @@ function fromEnv(): EmailConfig | null {
 			password: process.env.SMTP_PASSWORD ?? null,
 			source: 'env',
 		};
+	const accountId = process.env.CLOUDFLARE_EMAIL_ACCOUNT_ID;
+	const apiToken = process.env.CLOUDFLARE_EMAIL_API_TOKEN;
+	if (accountId && cloudflareAccountIdPattern.test(accountId) && apiToken)
+		return { provider: 'cloudflare', from, accountId, apiToken, source: 'env' };
 	return null;
 }
 
@@ -50,6 +55,11 @@ export function emailConfig(): EmailConfig | null {
 	if (provider === 'resend') {
 		const apiKey = getSecretSetting('email.resend_key');
 		return apiKey ? { provider, from, apiKey, source: 'settings' } : null;
+	}
+	if (provider === 'cloudflare') {
+		const accountId = getSetting('email.cloudflare_account_id');
+		const apiToken = getSecretSetting('email.cloudflare_token');
+		return accountId && apiToken ? { provider, from, accountId, apiToken, source: 'settings' } : null;
 	}
 	if (provider === 'smtp') {
 		const host = getSetting('email.smtp_host');
@@ -113,6 +123,43 @@ export function sentLastDay() {
 	return countLastDay(['email.send', 'email.reset', 'email.code', 'email.notice']);
 }
 
+async function sendCloudflare(
+	config: Extract<EmailConfig, { provider: 'cloudflare' }>,
+	to: string,
+	message: Message,
+) {
+	const mailbox = config.from.match(/^(.*?)\s*<([^>]+)>\s*$/);
+	const from = mailbox?.[1] ? { address: mailbox[2], name: mailbox[1] } : (mailbox?.[2] ?? config.from);
+	const response = await fetch(
+		`https://api.cloudflare.com/client/v4/accounts/${config.accountId}/email/sending/send`,
+		{
+			method: 'POST',
+			headers: { Authorization: `Bearer ${config.apiToken}`, 'Content-Type': 'application/json' },
+			body: JSON.stringify({ from, to, subject: message.subject, text: message.text }),
+			redirect: 'error',
+			signal: AbortSignal.timeout(15_000),
+		},
+	).catch(() => {
+		throw new EmailError('Could not submit the email to Cloudflare. Check the connection and API token.');
+	});
+	const body = await response.json().catch(() => null);
+	if (!response.ok || body?.success !== true) {
+		const code = body?.errors?.[0]?.code;
+		throw new EmailError(
+			`Cloudflare refused the email (HTTP ${response.status}${typeof code === 'number' ? `, code ${code}` : ''}). See Email Sending in your Cloudflare dashboard.`,
+		);
+	}
+	const result = body.result;
+	if (result?.permanent_bounces?.length || result?.suppressed_recipients?.length)
+		throw new EmailError('Cloudflare reported that the recipient bounced or is suppressed.');
+	if (
+		![...(result?.delivered ?? []), ...(result?.queued ?? [])].some(
+			(address: string) => address.toLowerCase() === to.toLowerCase(),
+		)
+	)
+		throw new EmailError('Cloudflare did not confirm acceptance of the email.');
+}
+
 export async function deliver(config: EmailConfig, to: string, message: Message) {
 	try {
 		if (config.provider === 'resend') {
@@ -123,6 +170,8 @@ export async function deliver(config: EmailConfig, to: string, message: Message)
 				text: message.text,
 			});
 			if (error) throw new EmailError(`Resend refused the email: ${error.message}`);
+		} else if (config.provider === 'cloudflare') {
+			await sendCloudflare(config, to, message);
 		} else {
 			const transport = nodemailer.createTransport({
 				host: config.host,

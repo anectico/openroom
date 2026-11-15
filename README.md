@@ -50,7 +50,7 @@ Litestream runs alongside the app inside its container to replicate the database
 separate database server or queue service to operate.
 
 Email, S3 and webhooks are optional. Without them, you can upload documents, share links manually,
-and use the investor room. Email verification codes and email notifications need an email provider.
+and use the investor room. Email verification codes and email notifications need an email provider. Configure Resend, Cloudflare or SMTP in [Email delivery](docs/email.md).
 Local database replicas stay on the same server; use remote storage and the recovery runbook for
 protection against losing that server.
 

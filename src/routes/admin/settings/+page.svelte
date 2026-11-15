@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { Mail, MailMinus } from '@lucide/svelte';
 	import { untrack } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import BrandingForm from '#lib/admin/BrandingForm.svelte';
+	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
 	import { act, formatDate, op } from '#lib/admin/op.ts';
 	import { Badge } from '#lib/components/ui/badge/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
@@ -10,17 +12,23 @@
 
 	let { data } = $props();
 	const initial = untrack(() => ({ general: data.general, email: data.email }));
-	const selectClass =
-		'h-9 w-full rounded-md border border-input bg-background px-3 text-sm focus-visible:ring-3 focus-visible:ring-ring/50 outline-none';
 
 	let timeZone = $state(initial.general.timeZone);
 	let uploadGb = $state(Math.round((initial.general.uploadMaxBytes / 1024 ** 3) * 10) / 10);
 	let cap = $state(initial.general.emailDailyCap);
 
-	let provider = $state<'resend' | 'smtp' | 'none'>(initial.email.provider ?? 'none');
+	const providers = [
+		{ value: 'resend', label: 'Resend', logo: '/providers/resend.svg' },
+		{ value: 'cloudflare', label: 'Cloudflare', logo: '/providers/cloudflare.svg' },
+		{ value: 'smtp', label: 'SMTP', icon: Mail },
+		{ value: 'none', label: 'Off', icon: MailMinus },
+	] as const;
+	let provider = $state<(typeof providers)[number]['value']>(initial.email.provider ?? 'none');
+	let accountId = $state(initial.email.cloudflareAccountId ?? '');
+	let apiToken = $state('');
 	let from = $state(initial.email.from ?? '');
 	let apiKey = $state('');
-	let host = $state(initial.email.smtpHost ?? 'smtp.gmail.com');
+	let host = $state(initial.email.smtpHost ?? '');
 	let port = $state(initial.email.smtpPort ?? 587);
 	let user = $state(initial.email.smtpUser ?? '');
 	let password = $state('');
@@ -41,14 +49,17 @@
 
 	async function saveEmail(event: SubmitEvent) {
 		event.preventDefault();
-		const input =
-			provider === 'resend'
-				? { provider, from, ...(apiKey ? { apiKey } : {}) }
-				: provider === 'smtp'
-					? { provider, from, host, port, user: user || null, ...(password ? { password } : {}) }
-					: { provider };
+		const input: Record<string, unknown> = { provider };
+		if (provider !== 'none') input.from = from;
+		if (provider === 'resend' && apiKey) input.apiKey = apiKey;
+		if (provider === 'cloudflare') {
+			input.accountId = accountId;
+			if (apiToken) input.apiToken = apiToken;
+		}
+		if (provider === 'smtp') Object.assign(input, { host, port, user: user || null, ...(password ? { password } : {}) });
 		if (await act('update_email_settings', input, provider === 'none' ? 'Email turned off' : 'Email saved')) {
 			apiKey = '';
+			apiToken = '';
 			password = '';
 		}
 	}
@@ -68,9 +79,8 @@
 
 <svelte:head><title>Settings · OpenRoom</title></svelte:head>
 
-<div class="grid items-start gap-5 xl:grid-cols-2">
-	<div class="flex min-w-0 flex-col gap-5">
-	<form class="space-y-5 rounded-xl border bg-card p-5 sm:p-6" onsubmit={saveGeneral}>
+<div class="grid gap-5 xl:grid-cols-2" class:items-start={locked || provider !== 'none'}>
+	<form class="flex min-w-0 flex-col gap-5 rounded-xl border bg-card p-5 sm:p-6" onsubmit={saveGeneral}>
 		<div><h2 class="font-semibold">Workspace preferences</h2><p class="mt-1 text-xs leading-relaxed text-muted-foreground">Choose how dates, uploads and outgoing email work.</p></div>
 		<div class="space-y-1">
 			<Label>Domain</Label>
@@ -79,10 +89,9 @@
 		</div>
 		<div class="space-y-2">
 			<Label for="tz">Time zone</Label>
-			<select id="tz" class={selectClass} bind:value={timeZone}>
-				<option value="UTC">UTC</option>
-				{#each data.timeZones as tz (tz)}<option value={tz}>{tz}</option>{/each}
-			</select>
+			<ChoiceSelect id="tz" class="w-full" bind:value={timeZone}
+				options={[...new Set(['UTC', ...data.timeZones])].map((tz) => ({ value: tz, label: tz }))}
+			/>
 			<p class="text-xs text-muted-foreground">Dates in the admin pages and emails use it.</p>
 		</div>
 		<div class="grid gap-4 sm:grid-cols-2">
@@ -96,14 +105,10 @@
 				<p class="text-xs text-muted-foreground">Keep it below your provider’s daily limit.</p>
 			</div>
 		</div>
-		<Button type="submit" size="sm">Save preferences</Button>
+		<Button type="submit" class="mt-auto self-start">Save preferences</Button>
 	</form>
 
-
-
-	</div>
-	<div class="flex min-w-0 flex-col gap-5">
-	<form id="email" class="space-y-5 rounded-xl border bg-card p-5 sm:p-6" onsubmit={saveEmail}>
+	<form id="email" class="flex min-w-0 flex-col gap-5 rounded-xl border bg-card p-5 sm:p-6" onsubmit={saveEmail}>
 		<div class="flex items-center justify-between">
 			<h2 class="font-semibold">Email delivery</h2>
 			{#if data.email.configured}<Badge variant="secondary">Set up</Badge>{:else}<Badge variant="outline">Off</Badge>{/if}
@@ -115,33 +120,46 @@
 		{#if locked}
 			<p class="rounded-md bg-muted p-3 text-sm">Set by the server’s environment ({data.email.provider}, {data.email.from}).</p>
 		{:else}
-			<div class="space-y-2">
-				<Label for="provider">Provider</Label>
-				<select id="provider" class={selectClass} bind:value={provider}>
-					<option value="resend">Resend (needs a domain you control)</option>
-					<option value="smtp">SMTP, such as Gmail with an app password</option>
-					<option value="none">Off</option>
-				</select>
-			</div>
-			{#if provider === 'resend'}
-				<ol class="list-decimal space-y-2 rounded-lg bg-muted/50 py-4 pr-4 pl-9 text-xs leading-relaxed text-muted-foreground">
-					<li>
-						Sign up at <a class="underline" href="https://resend.com/signup" target="_blank" rel="noreferrer">resend.com</a>
-						(free: 3,000 emails a month, 100 a day).
-					</li>
-					<li>Add your domain under Domains and create the DNS records Resend lists.</li>
-					<li>Create an API key under API Keys and paste it here.</li>
-				</ol>
-			{:else if provider === 'smtp'}
-				<ol class="list-decimal space-y-2 rounded-lg bg-muted/50 py-4 pr-4 pl-9 text-xs leading-relaxed text-muted-foreground">
-					<li>For Gmail, turn on two-step verification on the Google account.</li>
-					<li>
-						Create an app password at
-						<a class="underline" href="https://myaccount.google.com/apppasswords" target="_blank" rel="noreferrer"
-							>myaccount.google.com/apppasswords</a
-						> and paste it as the password; the user is your Gmail address.
-					</li>
-				</ol>
+			<fieldset>
+				<legend class="mb-2 text-sm font-medium">Delivery provider</legend>
+				<div class="grid grid-cols-2 gap-2">
+					{#each providers as option (option.value)}
+						<label class="flex min-h-11 cursor-pointer items-center gap-2.5 rounded-lg border bg-background px-3 py-2.5 text-sm font-medium hover:bg-muted/50 has-checked:border-primary has-checked:bg-primary/5 has-checked:text-primary has-focus-visible:ring-2 has-focus-visible:ring-ring">
+							<span aria-hidden="true" class="flex size-5 shrink-0 items-center justify-center">
+								{#if 'logo' in option}
+									<img src={option.logo} alt="" class={option.value === 'resend' ? 'size-8 max-w-none shrink-0 dark:invert' : 'w-5'} />
+								{:else}
+									<option.icon class="size-4" />
+								{/if}
+							</span>
+							{option.label}
+							<input type="radio" name="email-provider" class="ml-auto shrink-0 accent-primary" value={option.value} bind:group={provider} />
+						</label>
+					{/each}
+				</div>
+			</fieldset>
+			{#if provider !== 'none'}
+				<div class="space-y-2 rounded-lg bg-muted/50 p-4 text-sm">
+					<h3 class="font-medium">{provider === 'cloudflare' ? 'Set up Cloudflare Email Sending' : provider === 'resend' ? 'Set up Resend' : 'Connect your SMTP server'}</h3>
+					<ol class="list-decimal space-y-1.5 pl-5 text-xs leading-relaxed text-muted-foreground marker:font-medium">
+						{#if provider === 'cloudflare'}
+							<li>In Cloudflare, open Email Service → Email Sending and onboard your sending domain using Cloudflare DNS.</li>
+							<li>Copy your account ID and create an API token for that account with <strong>Email Sending: Edit</strong> permission.</li>
+							<li>Enter a sender on that domain and paste the account ID and token below.</li>
+						{:else if provider === 'resend'}
+							<li>In Resend, add your sending domain and verify the DNS records.</li>
+							<li>Create an API key with sending access to that domain.</li>
+							<li>Enter a sender on the verified domain and paste the key below.</li>
+						{:else}
+							<li>Copy the outgoing server, port and permitted sender from your mail provider.</li>
+							<li>Enter its SMTP credentials. For Gmail, use your email address and an <a class="underline" href="https://myaccount.google.com/apppasswords" target="_blank" rel="noreferrer">app password</a> with two-step verification enabled.</li>
+						{/if}
+					</ol>
+					{#if provider === 'cloudflare'}<p class="text-xs leading-relaxed text-muted-foreground">Sending to investors requires Workers Paid unless their addresses are verified in your Cloudflare account. <a class="underline" href="https://developers.cloudflare.com/email-service/get-started/send-emails/" target="_blank" rel="noreferrer">Cloudflare setup guide</a></p>
+					{:else if provider === 'resend'}<a class="text-xs underline" href="https://resend.com/domains" target="_blank" rel="noreferrer">Open Resend domains</a>{/if}
+				</div>
+			{:else}
+				<p class="text-sm text-muted-foreground">With email off, share links manually. {data.email.configured ? 'Saving removes the saved email credentials.' : 'Set up a provider to send verification codes, invitations and password resets.'}</p>
 			{/if}
 			{#if provider !== 'none'}
 				<div class="space-y-2">
@@ -160,15 +178,24 @@
 						bind:value={apiKey}
 					/>
 				</div>
+			{:else if provider === 'cloudflare'}
+				<div class="space-y-2">
+					<Label for="cf-account">Cloudflare account ID</Label>
+					<Input id="cf-account" required pattern={'[a-fA-F0-9]{32}'} title="32 hexadecimal characters" bind:value={accountId} />
+				</div>
+				<div class="space-y-2">
+					<Label for="cf-token">Email Sending API token</Label>
+					<Input id="cf-token" type="password" autocomplete="new-password" required={!(data.email.provider === 'cloudflare' && data.email.hasSecret && accountId === data.email.cloudflareAccountId)} placeholder={data.email.provider === 'cloudflare' && accountId === data.email.cloudflareAccountId ? 'Token saved' : ''} bind:value={apiToken} />
+				</div>
 			{:else if provider === 'smtp'}
 				<div class="grid gap-4 sm:grid-cols-3">
 					<div class="space-y-2 sm:col-span-2">
 						<Label for="host">Server</Label>
-						<Input id="host" required bind:value={host} />
+						<Input id="host" required placeholder="smtp.example.com" bind:value={host} />
 					</div>
 					<div class="space-y-2">
 						<Label for="port">Port</Label>
-						<Input id="port" type="number" required bind:value={port} />
+						<Input id="port" type="number" min={1} max={65535} required bind:value={port} />
 					</div>
 					<div class="space-y-2">
 						<Label for="user">User</Label>
@@ -186,12 +213,12 @@
 					</div>
 				</div>
 			{/if}
-			<Button type="submit">{provider === 'none' ? 'Save email preferences' : 'Save email'}</Button>
+			<Button type="submit" class="mt-auto self-start">{provider === 'none' ? 'Save email preferences' : 'Save email'}</Button>
 		{/if}
 	</form>
-	{#if data.email.configured}
+	{#if data.email.configured && provider === data.email.provider}
 		<form
-			class="space-y-3 rounded-xl border bg-card p-5 sm:p-6"
+			class="space-y-3 rounded-xl border bg-card p-5 sm:p-6 xl:col-start-2"
 			onsubmit={(e) => {
 				e.preventDefault();
 				test();
@@ -209,7 +236,6 @@
 		{/if}
 		</form>
 	{/if}
-	</div>
 </div>
 
 	<div class="mt-6 space-y-4 rounded-xl border bg-card p-5 sm:p-6">

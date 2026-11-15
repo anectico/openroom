@@ -37,7 +37,7 @@ The previews show sample Documents, Questions, Requests and the email-entry scre
 requirements still follow each sharing link's access settings. Use the link's investor preview
 to review its actual document permissions.
 
-Email is optional. Choose Resend or SMTP, enter the sender and credentials, save, then send a test.
+Email is optional. Select Resend, Cloudflare or SMTP to see its setup steps, enter the sender and credentials, save, then send a test.
 Leave a saved secret empty to keep it; it is never shown again. Server environment overrides are
 read-only in the UI. The [email guide](email.md) explains sender verification, Gmail app passwords,
 daily limits and delivery errors. Turn investor verification on only after a successful test.

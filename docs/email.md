@@ -21,6 +21,12 @@ Create a [sending API key](https://resend.com/docs/dashboard/api-keys/introducti
 In OpenRoom, choose Resend, enter a sender on that verified domain such as
 `Team <rooms@example.com>`, and paste the key. Credentials are encrypted and not returned by the API.
 
+## Cloudflare Email Sending
+
+Choose **Cloudflare** to send over HTTPS from the OpenRoom server. Onboard the sender domain in Cloudflare DNS under **Email Service → Email Sending**. Create an API token scoped to that account with **Email Sending: Edit** permission. Enter the account ID, token and a sender on the onboarded domain, then save and send a test. The token is encrypted. Leave it blank when editing the saved configuration to keep it for the same account.
+
+Sending to addresses verified in your Cloudflare account is free. Other recipients require Workers Paid. [Cloudflare setup](https://developers.cloudflare.com/email-service/get-started/send-emails/) · [Plan details](https://developers.cloudflare.com/email-service/platform/pricing/)
+
 ## Existing SMTP
 
 Choose SMTP to use a mail server you already have. Copy its host, port, username, password and
@@ -35,5 +41,5 @@ personal sign-in password. This does not require another OpenRoom-specific servi
 - A provider outage never bypasses the verification gate. Investors can retry or contact the owner.
 - Notices use only part of the daily quota so they cannot consume all capacity reserved for gates.
 - Environment variables take precedence over saved settings and make the form read only. See
-  [configuration](configuration.md) for `EMAIL_FROM`, `RESEND_API_KEY` and `SMTP_*`.
+  [configuration](configuration.md) for provider-specific variables. When multiple environment providers are configured, OpenRoom uses Resend, then SMTP, then Cloudflare.
 - The setup card reports that email is configured. Use a test to confirm actual delivery.

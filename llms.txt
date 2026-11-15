@@ -7,7 +7,7 @@
 - [Repository and status](https://github.com/anectico/openroom): source and development instructions.
 - [Configuration](https://github.com/anectico/openroom/blob/main/docs/configuration.md): environment, secret keys and optional integrations.
 - [Storage and recovery](https://github.com/anectico/openroom/blob/main/docs/storage-and-backups.md): S3 connection, verified moves, retention and fresh-server restore.
-- [Email](https://github.com/anectico/openroom/blob/main/docs/email.md): optional delivery and verification setup.
+- [Email](https://github.com/anectico/openroom/blob/main/docs/email.md): Resend, Cloudflare and SMTP delivery and verification setup.
 - [Investor data](https://github.com/anectico/openroom/blob/main/docs/privacy.md): exports, erasure and retained evidence.
 
 - [Product guide](https://github.com/anectico/openroom/blob/main/docs/using-openroom.md): rooms, files, links, groups, gates, viewers, analytics, questions, requests and archives.

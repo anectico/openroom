@@ -1,5 +1,12 @@
 import { z } from 'zod';
-import { dailyCap, deliver, EmailError, emailConfig, sentLastDay } from '../server/email.ts';
+import {
+	cloudflareAccountIdPattern,
+	dailyCap,
+	deliver,
+	EmailError,
+	emailConfig,
+	sentLastDay,
+} from '../server/email.ts';
 import { emailCopy } from '../server/email-copy.ts';
 import { normaliseEmail } from '../server/emails.ts';
 import { findMember } from '../server/members.ts';
@@ -17,8 +24,9 @@ import { maxUploadBytes } from './uploads.ts';
 const emailStatus = z.object({
 	configured: z.boolean(),
 	source: z.enum(['env', 'settings']).nullable().describe('env means set by the server and read only here.'),
-	provider: z.enum(['resend', 'smtp']).nullable(),
+	provider: z.enum(['resend', 'cloudflare', 'smtp']).nullable(),
 	from: z.string().nullable(),
+	cloudflareAccountId: z.string().nullable(),
 	smtpHost: z.string().nullable(),
 	smtpPort: z.number().nullable(),
 	smtpUser: z.string().nullable(),
@@ -29,7 +37,9 @@ const emailStatus = z.object({
 	sentLastDay: z.number(),
 });
 
-function status(): z.input<typeof emailStatus> {
+export type EmailStatus = z.output<typeof emailStatus>;
+
+function status(): EmailStatus {
 	const c = emailConfig();
 	const lastOk = getSetting('email.last_ok_at');
 	return {
@@ -37,10 +47,11 @@ function status(): z.input<typeof emailStatus> {
 		source: c?.source ?? null,
 		provider: c?.provider ?? null,
 		from: c?.from ?? null,
+		cloudflareAccountId: c?.provider === 'cloudflare' ? c.accountId : null,
 		smtpHost: c?.provider === 'smtp' ? c.host : null,
 		smtpPort: c?.provider === 'smtp' ? c.port : null,
 		smtpUser: c?.provider === 'smtp' ? c.user : null,
-		hasSecret: c?.provider === 'resend' ? !!c.apiKey : !!(c?.provider === 'smtp' && c.password),
+		hasSecret: !!c && (c.provider !== 'smtp' || !!c.password),
 		lastOkAt: lastOk ? Number(lastOk) : null,
 		lastError: getSetting('email.last_error'),
 		dailyCap: dailyCap(),
@@ -72,10 +83,25 @@ const from = z
 export const updateEmailSettings = defineOperation({
 	name: 'update_email_settings',
 	summary:
-		'Set up email with Resend (an API key) or any SMTP server, or provider: none to turn it off. Send a test with test_email afterwards.',
+		'Set up Cloudflare Email Sending, Resend or SMTP, or choose none to turn off email. Send a test with test_email afterwards.',
 	role: 'owner',
 	http: { method: 'PUT', path: '/settings/email' },
 	input: z.discriminatedUnion('provider', [
+		z.object({
+			provider: z.literal('cloudflare'),
+			from,
+			accountId: z
+				.string()
+				.trim()
+				.regex(cloudflareAccountIdPattern, 'Enter the 32-character Cloudflare account ID.'),
+			apiToken: z
+				.string()
+				.trim()
+				.min(1)
+				.max(1024)
+				.optional()
+				.describe('Omit to keep the saved token for this account.'),
+		}),
 		z.object({ provider: z.literal('resend'), from, apiKey: z.string().min(8).max(200).optional() }),
 		z.object({
 			provider: z.literal('smtp'),
@@ -101,6 +127,8 @@ export const updateEmailSettings = defineOperation({
 				'provider',
 				'from',
 				'resend_key',
+				'cloudflare_account_id',
+				'cloudflare_token',
 				'smtp_host',
 				'smtp_port',
 				'smtp_user',
@@ -113,6 +141,15 @@ export const updateEmailSettings = defineOperation({
 			if (!input.apiKey && !getSecretSetting('email.resend_key'))
 				throw new OpError(400, 'missing_key', 'Paste the Resend API key.');
 			if (input.apiKey) setSecretSetting('email.resend_key', input.apiKey);
+		} else if (input.provider === 'cloudflare') {
+			if (
+				!input.apiToken &&
+				(input.accountId !== getSetting('email.cloudflare_account_id') ||
+					!getSecretSetting('email.cloudflare_token'))
+			)
+				throw new OpError(400, 'missing_token', 'Paste an Email Sending API token for this account.');
+			if (input.apiToken) setSecretSetting('email.cloudflare_token', input.apiToken);
+			setSetting('email.cloudflare_account_id', input.accountId);
 		} else {
 			setSetting('email.smtp_host', input.host);
 			setSetting('email.smtp_port', String(input.port));

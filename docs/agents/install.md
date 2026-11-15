@@ -78,7 +78,7 @@ The same key can use REST at `/api/v1` and the [CLI](../cli.md).
 
 The owner can keep using OpenRoom without either service. Offer [email](../email.md) for verification
 codes, invitations and notices, and [S3](../storage-and-backups.md) for off-server files and database
-backups. Follow those guides, save credentials through the operations, and run `test_email`,
+backups. Follow those guides, save email credentials through `update_email_settings` and storage credentials through the storage operations, and run `test_email`,
 `test_storage` and `test_replication` as applicable. Request secrets through a secure local input,
 not chat. Turn verification on only after email works.
 

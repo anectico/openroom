@@ -6792,6 +6792,7 @@
                           "type": "string",
                           "enum": [
                             "resend",
+                            "cloudflare",
                             "smtp"
                           ]
                         },
@@ -6801,6 +6802,12 @@
                       ]
                     },
                     "from": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "cloudflareAccountId": {
                       "type": [
                         "string",
                         "null"
@@ -6852,6 +6859,7 @@
                     "source",
                     "provider",
                     "from",
+                    "cloudflareAccountId",
                     "smtpHost",
                     "smtpPort",
                     "smtpUser",
@@ -6897,7 +6905,7 @@
       },
       "put": {
         "operationId": "update_email_settings",
-        "summary": "Set up email with Resend (an API key) or any SMTP server, or provider: none to turn it off. Send a test with test_email afterwards.",
+        "summary": "Set up Cloudflare Email Sending, Resend or SMTP, or choose none to turn off email. Send a test with test_email afterwards.",
         "description": "Needs the owner role.",
         "x-openroom-role": "owner",
         "x-openroom-destructive": false,
@@ -6935,6 +6943,7 @@
                           "type": "string",
                           "enum": [
                             "resend",
+                            "cloudflare",
                             "smtp"
                           ]
                         },
@@ -6944,6 +6953,12 @@
                       ]
                     },
                     "from": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "cloudflareAccountId": {
                       "type": [
                         "string",
                         "null"
@@ -6995,6 +7010,7 @@
                     "source",
                     "provider",
                     "from",
+                    "cloudflareAccountId",
                     "smtpHost",
                     "smtpPort",
                     "smtpUser",
@@ -7044,6 +7060,36 @@
               "schema": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "provider": {
+                        "type": "string",
+                        "const": "cloudflare"
+                      },
+                      "from": {
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 200,
+                        "description": "The sender, such as “Acme <rooms@acme.com>” or rooms@acme.com."
+                      },
+                      "accountId": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{32}$"
+                      },
+                      "apiToken": {
+                        "description": "Omit to keep the saved token for this account.",
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      }
+                    },
+                    "required": [
+                      "provider",
+                      "from",
+                      "accountId"
+                    ]
+                  },
                   {
                     "type": "object",
                     "properties": {
