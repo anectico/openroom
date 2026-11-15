@@ -257,7 +257,7 @@ note opens on arrival when it is short; longer introductions begin with an excer
 
 Choose **Full screen** in a PDF or image viewer to use the whole display. In a pitch deck, use the arrow keys or page buttons to advance one slide at a time. **Exit full screen** returns you to the same page.
 
-Use **Mark reviewed** at the end of a recommended document’s reader. For a download-only file, the action is on its recommended card. Open **Reviewed** to revisit completed items. **Undo** in the reader or on a download-only item reverses the choice. A new file version can be reviewed again.
+Use **Mark reviewed** at the end of a recommended document’s reader. The footer names the next document in reading order and includes a link back to the library, folder or search. For a download-only file, the action is on its recommended card. Open **Reviewed** to revisit completed items. **Undo** in the reader or on a download-only item reverses the choice. A new file version can be reviewed again.
 On return, an available PDF reading position takes precedence over the next recommended file. **Resume on page…** opens that page. The remaining recommendations appear below.
 Verified investors keep their checklist across verified sessions; unverified visitors keep it only in
 their current session. It is a personal checklist, not team approval or a read receipt.

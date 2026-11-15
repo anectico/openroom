@@ -179,4 +179,28 @@
 	{/if}
 </div>
 
-{#if data.file.kind === 'pdf' || (data.reviewable && !data.preview)}<section class="mt-6 flex flex-col gap-3 rounded-xl border bg-card p-4 sm:p-5" aria-label="Document completion"><h2 class="text-base font-semibold">Finished this document?</h2><p class="text-sm text-muted-foreground">{data.reviewable && !data.preview && !data.reviewed ? 'Mark it reviewed when you are ready.' : 'Continue at your own pace.'}</p><ReviewVersion state={data.reviewState} />{#if data.reviewable && !data.preview}<ReviewButton linkId={data.linkId} fileId={data.file.id} version={data.file.version ?? 1} reviewed={data.reviewed} name={data.file.name} />{/if}<div class="flex flex-col gap-2 border-t pt-3 sm:flex-row">{#if data.next}<Button class="min-h-11" href={documentHref(data.linkId, data.next.id, page.url.searchParams, data.guide)}>{data.guide ? 'Next in Start here' : 'Next document'}<ChevronRight data-icon="inline-end" /></Button>{/if}<Button variant="ghost" class="min-h-11" href={data.backHref}>{data.backLabel}</Button></div></section>{/if}
+{#if data.file.kind === 'pdf' || (data.reviewable && !data.preview)}
+	<section aria-label="Document completion" class="mt-5 flex flex-col gap-3 border-t pt-4 sm:flex-row sm:items-center sm:justify-between">
+		<div class="flex min-w-0 flex-1 flex-wrap items-center gap-1 sm:gap-3">
+			{#if data.reviewable && !data.preview}
+				<div class="min-w-0">
+					<ReviewVersion state={data.reviewState} />
+					<ReviewButton outlined linkId={data.linkId} fileId={data.file.id} version={data.file.version ?? 1} reviewed={data.reviewed} name={data.file.name} />
+				</div>
+			{/if}
+			<Button variant="ghost" size="sm" class="h-auto min-h-11 max-w-full px-2 whitespace-normal text-left [overflow-wrap:anywhere]" href={data.backHref}>
+				<ArrowLeft data-icon="inline-start" /><span>{data.backLabel}</span>
+			</Button>
+		</div>
+		{#if data.next}
+			<a href={documentHref(data.linkId, data.next.id, page.url.searchParams, data.guide)}
+				class="flex w-full min-w-0 items-center justify-between gap-4 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 hover:border-primary/40 hover:bg-primary/10 sm:w-auto sm:min-w-56 sm:max-w-md">
+				<span class="min-w-0">
+					<span class="block text-xs text-muted-foreground">{data.guide ? 'Next in Start here' : 'Next document'}</span>
+					<span class="mt-0.5 block text-sm font-semibold [overflow-wrap:anywhere]">{data.next.name}</span>
+				</span>
+				<ChevronRight aria-hidden="true" class="size-4 shrink-0 text-primary" />
+			</a>
+		{/if}
+	</section>
+{/if}

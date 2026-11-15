@@ -5,7 +5,7 @@
  import { Button } from '#lib/components/ui/button/index.js';
  import { invalidateAll } from '$app/navigation';
 
- let { linkId, fileId, version, reviewed, name, onupdated, disabled = false }: { linkId: string; fileId: string; version: number; reviewed: boolean; name: string; onupdated?: () => void; disabled?: boolean } = $props();
+ let { linkId, fileId, version, reviewed, name, onupdated, outlined = false, disabled = false }: { linkId: string; fileId: string; version: number; reviewed: boolean; name: string; onupdated?: () => void; outlined?: boolean; disabled?: boolean } = $props();
  let busy = $state(false);
  let message = $state('');
  const controller = new AbortController();
@@ -24,6 +24,6 @@
  }
 </script>
 <div class="flex min-w-0 flex-col gap-1">
- <div class="flex flex-wrap items-center gap-1">{#if reviewed}<Badge variant="success"><Check data-icon="inline-start" />Reviewed</Badge>{/if}<Button variant="ghost" size="sm" class="min-h-11" disabled={busy || disabled} onclick={save} aria-label={reviewed ? `Undo reviewed: ${name}` : `Mark reviewed: ${name}`}>{#if reviewed}<Undo2 data-icon="inline-start" />{:else}<Check data-icon="inline-start" />{/if}{busy ? 'Saving…' : reviewed ? 'Undo' : 'Mark reviewed'}</Button></div>
+ <div class="flex flex-wrap items-center gap-1">{#if reviewed}<Badge variant="success"><Check data-icon="inline-start" />Reviewed</Badge>{/if}<Button variant={outlined && !reviewed ? 'outline' : 'ghost'} size="sm" class="min-h-11" disabled={busy || disabled} onclick={save} aria-label={reviewed ? `Undo reviewed: ${name}` : `Mark reviewed: ${name}`}>{#if reviewed}<Undo2 data-icon="inline-start" />{:else}<Check data-icon="inline-start" />{/if}{busy ? 'Saving…' : reviewed ? 'Undo' : 'Mark reviewed'}</Button></div>
  {#if message}<p class="max-w-64 px-2 text-xs text-destructive" role="status">{message}</p>{/if}
 </div>
