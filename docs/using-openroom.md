@@ -255,6 +255,8 @@ Use **Back** beside a folder name to return to the list or search results where 
 note opens on arrival when it is short; longer introductions begin with an excerpt. An explicit
 **Hide** or **Show welcome** choice is remembered when you reopen the same investor link in this browser, including after signing out and back in. An updated note uses its initial display again. The room header and your welcome choice carry across Documents, Questions and Requests, including folder browsing and search. Continue reading stays near the top.
 
+Choose **Full screen** in a PDF or image viewer to use the whole display. In a pitch deck, use the arrow keys or page buttons to advance one slide at a time. **Exit full screen** returns you to the same page.
+
 Use **Mark reviewed** at the end of a recommended document’s reader. For a download-only file, the action is on its recommended card. Open **Reviewed** to revisit completed items. **Undo** in the reader or on a download-only item reverses the choice. A new file version can be reviewed again.
 On return, an available PDF reading position takes precedence over the next recommended file. **Resume on page…** opens that page. The remaining recommendations appear below.
 Verified investors keep their checklist across verified sessions; unverified visitors keep it only in

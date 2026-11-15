@@ -4,6 +4,7 @@
 	import { onDestroy, onMount, type Snippet, tick, untrack } from 'svelte';
 	import { Button, buttonVariants } from '#lib/components/ui/button/index.js';
 	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
+	import DocumentPresentation from './DocumentPresentation.svelte';
 	import PdfTools from './PdfTools.svelte';
 	import { highlightPdfText } from './pdf-text.ts';
 	import { readingPlaces, rememberPage } from './reading.ts';
@@ -11,6 +12,8 @@
 
 	let {
 		url,
+		title,
+		obscured = false,
 		readingScope,
 		fileId,
 		version = 1,
@@ -19,7 +22,7 @@
 		onpage,
 		actions,
 		navigation,
-	}: { url: string; readingScope?: string; fileId?: string; version?: number; initialPage?: number | null; watermark?: string | null; onpage?: (page: number) => void; actions?: Snippet; navigation?: Snippet } = $props();
+	}: { url: string; title: string; obscured?: boolean; readingScope?: string; fileId?: string; version?: number; initialPage?: number | null; watermark?: string | null; onpage?: (page: number) => void; actions?: Snippet; navigation?: Snippet } = $props();
 
 	let host = $state<HTMLDivElement>();
 	let doc = $state.raw<PDFDocumentProxy | null>(null);
@@ -27,6 +30,7 @@
 	const textLayers = new Map<number, TextLayer>();
 	let toolsMode = $state<'search' | 'pages'>('search');
 	let toolsOpen = $state(false);
+	let presenting = $state(false);
 	let toolbar = $state<HTMLElement>();
 	let pdfTools = $state<{ previousResult(): void; nextResult(): void; clearSearch(): void }>();
 	let searchState = $state({ count: 0, active: -1, busy: false });
@@ -140,7 +144,7 @@
 
 	function pick() {
 		frame = 0;
-		if (destroyed || !host || performance.now() < quietUntil) return;
+		if (presenting || destroyed || !host || performance.now() < quietUntil) return;
 		const bottom = window.innerHeight;
 		const atEnd = window.scrollY + bottom >= document.documentElement.scrollHeight - 2;
 		let best = 0;
@@ -231,7 +235,7 @@
 		rendered.clear();
 		await tick();
 		observe();
-		if (!toolsOpen) goTo(page);
+		if (!toolsOpen && !presenting) goTo(page);
 	}
 
 	async function setZoom(next: number) {
@@ -254,6 +258,7 @@
 	}
 
 	function keys(event: KeyboardEvent) {
+		if (presenting) return;
 		if ((event.target as HTMLElement)?.closest('input, textarea, select, [contenteditable="true"], [role="dialog"], [role="menu"]')) return;
 		if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'f') { event.preventDefault(); void showTools('search'); return; }
 		if (event.altKey || event.metaKey || event.ctrlKey || event.shiftKey) return;
@@ -277,6 +282,7 @@
   <Button variant="ghost" size="icon" class="hidden size-8 sm:inline-flex" onclick={() => goTo(current - 1)} disabled={current <= 1} aria-label="Previous page"><ChevronLeft /></Button>
   <form class="flex items-center gap-1" onsubmit={(e) => { e.preventDefault(); goTo(Number(jump)); }}><label class="sr-only" for="pdf-page">Page</label><input id="pdf-page" class="h-11 w-10 rounded-md border border-input bg-background px-1 text-center tabular-nums sm:h-7 sm:w-9" inputmode="numeric" bind:value={jump} /><span class="whitespace-nowrap text-muted-foreground">of {total || '…'}</span></form>
   <Button variant="ghost" size="icon" class="hidden size-8 sm:inline-flex" onclick={() => goTo(current + 1)} disabled={current >= total} aria-label="Next page"><ChevronRight /></Button>
+  <DocumentPresentation {title} pdf={doc} page={current} {watermark} {obscured} bind:open={presenting} onpage={(n) => { current = n; jump = String(n); }} onexit={() => goTo(current)} />
   <div class="flex items-center sm:hidden">{@render zoomMenu()}{#if actions}{@render actions()}{/if}</div>
  </div>
  <div class={searchState.count > 0 ? 'hidden items-center gap-1 sm:flex' : 'flex w-full items-center justify-between gap-1 sm:w-auto sm:justify-start'}>

@@ -5,6 +5,7 @@
 	import * as Dialog from '#lib/components/ui/dialog/index.js';
 	import * as Field from '#lib/components/ui/field/index.js';
 	import { Textarea } from '#lib/components/ui/textarea/index.js';
+	import DocumentPresentation from '#lib/viewer/DocumentPresentation.svelte';
 	import { documentHref } from '#lib/viewer/navigation.ts';
 	import PdfViewer from '#lib/viewer/PdfViewer.svelte';
 	import ReviewButton from '#lib/viewer/ReviewButton.svelte';
@@ -114,6 +115,8 @@
 			{#if data.file.kind === 'pdf'}
 				<PdfViewer
 					url={src}
+					title={data.file.name}
+					obscured={hidden}
 					initialPage={data.initialPage}
 					readingScope={data.preview ? undefined : data.readingScope}
 					fileId={data.file.id}
@@ -132,7 +135,8 @@
 					{/snippet}
 				</PdfViewer>
 			{:else if data.file.kind === 'image'}
-				<div class="mb-2 flex justify-end gap-1 text-sm">
+				<div class="mb-2 flex items-center justify-end gap-1 text-sm">
+					<DocumentPresentation title={data.file.name} image={src} watermark={data.watermark} obscured={hidden} />
 					<button type="button" class="flex size-11 items-center justify-center rounded hover:bg-muted" onclick={() => (zoom = Math.max(0.25, zoom - 0.25))} aria-label="Zoom out">−</button>
 					<span class="w-12 text-center tabular-nums">{Math.round(zoom * 100)}%</span>
 					<button type="button" class="flex size-11 items-center justify-center rounded hover:bg-muted" onclick={() => (zoom = Math.min(4, zoom + 0.25))} aria-label="Zoom in">+</button>
