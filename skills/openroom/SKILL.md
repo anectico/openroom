@@ -87,6 +87,8 @@ PDF Find and paginated thumbnails use local document text; scanned PDFs need OCR
 These investor controls introduce no additional owner operations. See the product and privacy guides.
 
 Investor follow-through: home combines changed documents, unread replies and requests needing action.
+For either welcome, send Markdown for headings, emphasis, links and lists. Use `<span style="color:#155e75">text</span>` for color.
+
 The welcome dialog opens once per investor and link in the same browser. Enter room dismisses it. Requests
 sorts action items by due date and puts submitted/closed items in history. PDF Pages uses a bounded
 dialog; Find retains selected results and sticky matching-page navigation. Conversation page references

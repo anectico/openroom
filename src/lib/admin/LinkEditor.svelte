@@ -10,12 +10,13 @@
 	import { Input } from '#lib/components/ui/input/index.js';
 	import * as Tabs from '#lib/components/ui/tabs/index.js';
 	import { Textarea } from '#lib/components/ui/textarea/index.js';
-	import { renderMarkdown } from '#lib/markdown.ts';
+	import { renderWelcome } from '#lib/welcome-markdown.ts';
 import { beforeNavigate, invalidateAll } from '$app/navigation';
 	import LinkAccessSummary from './LinkAccessSummary.svelte';
 	import { copyText, op } from './op.ts';
 	import { openPreview } from './preview.ts';
 	import { downloadLabels, type Link, type LinkSettings } from './types.ts';
+	import WelcomeEditor from "./WelcomeEditor.svelte";
 
 	let {
 		open = $bindable(false),
@@ -50,8 +51,9 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 
 	let label = $state('');
 	let welcome = $state('');
- let welcomePane = $state('edit');
-	const welcomeHtml = $derived(renderMarkdown(welcome));
+	let welcomePane = $state('edit');
+	let welcomeExpanded = $state(false);
+	const welcomeHtml = $derived(renderWelcome(welcome));
 	let isOpen = $state(false);
 	let allow = $state('');
 	let blocks = $state('');
@@ -130,7 +132,8 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 			groupError = '';
 			label = link?.label ?? '';
 			welcome = link?.welcomeMarkdown ?? '';
- welcomePane = 'edit';
+			welcomePane = 'edit';
+			welcomeExpanded = !!link?.welcomeMarkdown;
 			isOpen = link?.open ?? false;
 			allow = link?.allow.map((e) => e.value).join('\n') ?? '';
 			blocks = link?.blocks.map((e) => e.value).join('\n') ?? '';
@@ -167,7 +170,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 
 	async function save(event: SubmitEvent) {
 		event.preventDefault();
-		if (busy) return;
+		if (busy || welcome.length > 4000) return;
 		if (groupId && !availableGroups.some((group) => group.id === groupId)) { error = 'This group is no longer available. Select a document group before saving.'; return; }
 		busy = true;
 		error = '';
@@ -298,13 +301,13 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 						</div>
 					</details>
 					<details class="group rounded-xl border"><summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3.5 text-sm font-medium">Password, expiry & blocked emails<ChevronDown class="size-4 text-muted-foreground transition-transform group-open:rotate-180" /></summary><div class="flex flex-col gap-5 border-t px-4 py-4"><Field.Group class="gap-5"><Field.Field><Field.Label for="link-password">{link?.hasPassword ? 'New password' : 'Password (optional)'}</Field.Label><Input id="link-password" type="password" autocomplete="new-password" minlength={8} bind:value={password} />{#if link?.hasPassword}<label class="flex items-center gap-2 text-xs"><input type="checkbox" bind:checked={removePassword} disabled={!!password} />Remove the existing password</label>{/if}</Field.Field><Field.Field><Field.Label for="link-expires">Expiry date (optional)</Field.Label><Input id="link-expires" class="min-w-0" type="date" min={localDate(Date.now())} bind:value={expires} /></Field.Field><Field.Field><Field.Label for="link-blocks">Blocked emails or domains</Field.Label><Textarea id="link-blocks" rows={2} placeholder="restricted@fund.com" bind:value={blocks} /><Field.Description>Blocks always take priority over allowed emails.</Field.Description></Field.Field></Field.Group></div></details>
-					<details class="group rounded-xl border" open={!!link?.welcomeMarkdown}>
+					<details class="group rounded-xl border" bind:open={welcomeExpanded}>
 						<summary class="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3"><span><span class="block text-sm font-medium">Personal welcome</span><span class="mt-1 block text-xs text-muted-foreground">{welcome.trim() ? 'Custom note for this link' : 'Using the room introduction'}</span></span><ChevronDown class="size-4 shrink-0 transition-transform group-open:rotate-180" /></summary>
-						<Tabs.Root bind:value={welcomePane} class="border-t p-4"><Tabs.List aria-label="Personal welcome editor" class="h-auto"><Tabs.Trigger value="edit" class="min-h-11">Edit</Tabs.Trigger><Tabs.Trigger value="preview" class="min-h-11">Preview</Tabs.Trigger></Tabs.List><Tabs.Content value="edit" class="pt-3"><Field.Field><Field.Label for="link-welcome">Message for this audience</Field.Label><Textarea id="link-welcome" rows={7} style="field-sizing: fixed" maxlength={4000} bind:value={welcome} placeholder="Welcome, Northstar team. Start with our company overview and financial highlights." /><Field.Description>Everyone using this link sees this note after passing access checks. It replaces the room introduction inside the room. Markdown is supported; leave blank to use the room introduction.</Field.Description></Field.Field>{#if welcome.trim()}<Button type="button" variant="ghost" class="mt-2 min-h-11" onclick={() => (welcome = '')}>Use room introduction</Button>{/if}</Tabs.Content><Tabs.Content value="preview" class="pt-3">{#if welcome.trim()}<div class="md text-sm leading-relaxed [overflow-wrap:anywhere] [&_img]:max-w-full">{@html welcomeHtml}</div>{:else}<p class="text-sm text-muted-foreground">This link will use the room introduction. Add a message in Edit to personalize it.</p>{/if}</Tabs.Content></Tabs.Root>
+						<Tabs.Root bind:value={welcomePane} class="border-t p-4"><Tabs.List aria-label="Personal welcome editor" class="h-auto"><Tabs.Trigger value="edit" class="min-h-11">Edit</Tabs.Trigger><Tabs.Trigger value="preview" class="min-h-11">Preview</Tabs.Trigger></Tabs.List><Tabs.Content value="edit" class="pt-3"><Field.Field><Field.Label for="link-welcome">Message for this audience</Field.Label><WelcomeEditor id="link-welcome" label="Message for this audience" limit={4000} disabled={busy} bind:value={welcome} /><Field.Description>Everyone using this link sees this note after passing access checks. It replaces the room introduction inside the room. Leave blank to use the room introduction.</Field.Description></Field.Field>{#if welcome.trim()}<Button type="button" variant="ghost" class="mt-2 min-h-11" onclick={() => (welcome = '')}>Use room introduction</Button>{/if}</Tabs.Content><Tabs.Content value="preview" class="pt-3">{#if welcome.trim()}<div class="md welcome-copy text-sm leading-relaxed [overflow-wrap:anywhere] [&_img]:max-w-full">{@html welcomeHtml}</div>{:else}<p class="text-sm text-muted-foreground">This link will use the room introduction. Add a message in Edit to personalize it.</p>{/if}</Tabs.Content></Tabs.Root>
 					</details>
 				</Field.Group>
 			</fieldset>
-			<div class="shrink-0 border-t bg-muted/30 px-4 py-3 sm:px-6 sm:py-4">{#if error}<p class="mb-3 text-sm text-destructive" role="alert">{error}</p>{/if}<Dialog.Footer class="grid grid-cols-2 sm:flex sm:items-center sm:justify-end"><Button type="button" class="min-h-11 sm:min-w-32" variant="outline" disabled={busy} onclick={() => requestOpen(false)}>Cancel</Button><Button type="submit" class="min-h-11 sm:min-w-32" disabled={busy}>{busy ? 'Saving…' : link ? 'Save changes' : 'Create link'}<ArrowRight data-icon="inline-end" /></Button></Dialog.Footer></div>
+			<div class="shrink-0 border-t bg-muted/30 px-4 py-3 sm:px-6 sm:py-4">{#if error}<p class="mb-3 text-sm text-destructive" role="alert">{error}</p>{/if}<Dialog.Footer class="grid grid-cols-2 sm:flex sm:items-center sm:justify-end"><Button type="button" class="min-h-11 sm:min-w-32" variant="outline" disabled={busy} onclick={() => requestOpen(false)}>Cancel</Button><Button type="submit" class="min-h-11 sm:min-w-32" disabled={busy || welcome.length > 4000}>{busy ? 'Saving…' : link ? 'Save changes' : 'Create link'}<ArrowRight data-icon="inline-end" /></Button></Dialog.Footer></div>
 		</form>
 		{/if}
  <AlertDialog.Root bind:open={discardOpen} onOpenChangeComplete={(value) => { if (!value && discardConfirmed) { discardConfirmed = false; open = false; } }}><AlertDialog.Content><AlertDialog.Header><AlertDialog.Title>Discard unsaved changes?</AlertDialog.Title><AlertDialog.Description>Your sharing link has changes that have not been saved. Keep editing to preserve your draft.</AlertDialog.Description></AlertDialog.Header><AlertDialog.Footer class="sm:items-center"><AlertDialog.Cancel variant="default" class="min-h-11">Keep editing</AlertDialog.Cancel><AlertDialog.Action variant="outline" class="min-h-11" onclick={() => { initialDraft = draft; discardConfirmed = true; discardOpen = false; }}>Discard changes</AlertDialog.Action></AlertDialog.Footer></AlertDialog.Content></AlertDialog.Root>

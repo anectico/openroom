@@ -45,7 +45,7 @@
 		<div class="px-5 pt-6 sm:px-7 sm:pt-7">
 			{#if logoUrl}<img src={logoUrl} alt="" class="mb-4 max-h-12 max-w-36 object-contain object-left" />{/if}
 			<h2 id={titleId} class="text-xl font-semibold tracking-tight text-balance [overflow-wrap:anywhere] sm:text-2xl">Welcome to {name}</h2>
-			<div class="md flow-root py-4 text-sm leading-relaxed [overflow-wrap:anywhere] [&>:first-child]:mt-0 [&>:last-child]:mb-0">{@html html}</div>
+			<div class="md welcome-copy flow-root py-4 text-sm leading-relaxed [overflow-wrap:anywhere] [&>:first-child]:mt-0 [&>:last-child]:mb-0">{@html html}</div>
 		</div>
 	</div>
 	<form method="dialog" class="flex shrink-0 justify-end border-t bg-muted/25 px-5 py-3 sm:px-7 sm:py-4">

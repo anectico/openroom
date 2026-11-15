@@ -210,3 +210,17 @@
 	max-width: 100%;
 	height: auto;
 }
+
+.welcome-copy h1 {
+	font-size: 1.5em;
+	line-height: 1.25;
+}
+
+.welcome-copy h2 {
+	font-size: 1.25em;
+	line-height: 1.35;
+}
+
+.welcome-copy {
+	overflow-wrap: anywhere;
+}

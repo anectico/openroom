@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { AppearanceDraft } from '#lib/admin/appearance-draft.ts';
-	import { renderMarkdown } from '#lib/markdown.ts';
+	import { renderWelcome } from '#lib/welcome-markdown.ts';
 	import Entry from '../../r/[token]/+page.svelte';
 	import RoomLayout from '../../v/[linkId]/+layout.svelte';
 	import Documents from '../../v/[linkId]/+page.svelte';
@@ -28,7 +28,7 @@
 		return () => window.removeEventListener('message', receive);
 	});
 	const branding = $derived({ logoUrl: draft?.brand.logoUrl ?? null, coverUrl: draft?.brand.coverUrl ?? null, accentColor: draft?.brand.accentColor ?? null });
-	const welcomeHtml = $derived(renderMarkdown(draft?.welcome ?? ''));
+	const welcomeHtml = $derived(renderWelcome(draft?.welcome ?? ''));
 	const room = $derived({
 		roomName: draft?.name || 'Your data room', branding, installBranding: branding, roomId: '', linkId: '',
 		welcome: draft?.screen === 'welcome' && welcomeHtml ? { html: welcomeHtml, storageKey: 'appearance-preview' } : null,

@@ -92,8 +92,7 @@ Use `get_branding` with `roomId` to inspect effective values, `roomOverrides` an
 defaults. `update_branding` saves a room's optional `name`, `welcomeMarkdown`, `accentColor` and
 `imageBase64` together. Set `coverBase64` with a room ID to upload public cover artwork (PNG, JPEG or WebP up to 700 KB). Set it to null to remove the cover. Leave fields out to preserve them; use null logo/colour to restore workspace
 inheritance. PNG/JPEG/WebP logos under 700 KB are re-encoded and also generate investor favicons.
-Workspace branding requires the owner role. Welcome Markdown appears before entry
-and inside the room, so use text intended for investors; do not put confidential access credentials
+Workspace branding requires the owner role. Room and link welcomes accept Markdown headings, emphasis, lists and links. To color a phrase, use a six-digit hex code in exactly this form: `<span style="color:#155e75">Investor update</span>`. Other HTML is displayed as text. The room welcome appears after access checks, so use text intended for investors; do not put confidential access credentials
 in it. Changes are published by the operation immediately; the admin editor's drafts are local only.
 
 ## Personal welcomes and Start here

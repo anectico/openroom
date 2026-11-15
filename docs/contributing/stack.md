@@ -23,7 +23,7 @@ Prefer a library to writing the same thing ourselves.
 | PDF writing                            | `@cantoo/pdf-lib`                                                                                                                                             | yes    |
 | Zip streaming                          | archiver                                                                                                                                                      | yes    |
 | Logo re-encoding                       | sharp                                                                                                                                                         | yes    |
-| Markdown                               | markdown-it with HTML off                                                                                                                                     | yes    |
+| Markdown                               | markdown-it with HTML off, a restricted text-color rule for welcomes, and ProseMirror for visual welcome editing                                              | yes    |
 
 The independent CLI package uses Commander 14. Its checked-in command catalog is generated from
 OpenAPI by `npm run cli:generate`; CI detects drift. Security overrides pin patched minimatch and

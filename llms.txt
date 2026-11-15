@@ -33,7 +33,7 @@ The installed server exposes its current REST description at /api/v1/openapi.jso
 Room appearance: `get_branding` includes workspace defaults and room overrides. `update_branding`
 saves optional room name, welcome Markdown, logo, cover artwork (`coverBase64`) and colour together; null logo/colour restores
 inheritance. Workspace branding requires owner access. The footer always credits OpenRoom by Anectico. Investor favicons follow logos.
-Welcome text appears in a first-visit dialog after access checks. The editor renders the investor screens with draft branding. Room previews use the full document tree, pins and FAQ. Workspace previews use sample files. Check a specific audience through preview_link. Dismissal is remembered per investor and sharing link in the same browser. See the settings guide for previews and draft saves.
+The room and link welcome editors save Markdown. Text colors use a six-digit hex span as documented in the first-room runbook. Welcome text appears in a first-visit dialog after access checks. The editor renders the investor screens with draft branding. Room previews use the full document tree, pins and FAQ. Workspace previews use sample files. Check a specific audience through preview_link. Dismissal is remembered per investor and sharing link in the same browser. See the settings guide for previews and draft saves.
 
 Investor personalization: `create_link`/`update_link` accept optional `welcomeMarkdown`, visible only
 after access checks to everyone using the link. Null or blank restores the room introduction;

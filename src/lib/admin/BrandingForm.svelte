@@ -6,10 +6,10 @@
 	import * as Field from '#lib/components/ui/field/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
  import * as Tabs from '#lib/components/ui/tabs/index.js';
-	import { Textarea } from '#lib/components/ui/textarea/index.js';
 	import { invalidateAll } from '$app/navigation';
 	import AppearancePreview from './AppearancePreview.svelte';
 	import { op } from './op.ts';
+	import WelcomeEditor from "./WelcomeEditor.svelte";
 
  const wide = new MediaQuery('(min-width: 1280px)');
 	let { roomId, branding, room, disabled = false }: { roomId?: string; branding: Branding; room?: { name: string; welcomeMarkdown: string }; disabled?: boolean } = $props();
@@ -110,7 +110,7 @@
 
 	async function save(event: SubmitEvent) {
 		event.preventDefault();
-		if (busy || reading || disabled) return;
+		if (busy || reading || disabled || welcome.length > 20000) return;
  if (form && !form.checkValidity()) { pane = 'edit'; await tick(); form.reportValidity(); return; }
 		error = '';
 		status = '';
@@ -150,7 +150,7 @@
 			<Field.Group>
 				{#if roomId}
 					<Field.Field><Field.Label for="appearance-name">Room name</Field.Label><Input id="appearance-name" class="min-h-11 sm:min-h-9" required maxlength={120} bind:value={name} /><Field.Description>The title investors see on entry and inside the room.</Field.Description></Field.Field>
-					<Field.Field><Field.Label for="appearance-welcome">Welcome & introduction</Field.Label><Textarea id="appearance-welcome" rows={6} style="field-sizing: fixed" maxlength={20000} bind:value={welcome} placeholder="Welcome. Start with our company overview, then explore the financials." /><Field.Description>Shown in a first-visit dialog after the investor enters the room. Use Markdown for bold text, lists and links.</Field.Description></Field.Field>
+					<Field.Field><Field.Label for="appearance-welcome">Welcome & introduction</Field.Label><WelcomeEditor id="appearance-welcome" label="Welcome & introduction" limit={20000} disabled={disabled || busy} bind:value={welcome} /><Field.Description>Shown in a first-visit dialog after the investor enters the room. Choose Welcome in the live preview to see your draft.</Field.Description></Field.Field>
 					<Field.Field>
 						<Field.Label for="appearance-cover">Room cover image</Field.Label>
 						{#if cover}<img src={cover} alt="Current room cover" class="h-20 w-full rounded-lg object-cover" />{/if}
@@ -169,5 +169,5 @@
  </div>{/snippet}</Tabs.Content><Tabs.Content value="preview">{#snippet child({ props })}<div {...props} hidden={!wide.current && pane !== 'preview'} class="min-w-0" role="tabpanel" aria-label={wide.current ? 'Live appearance preview' : undefined} aria-labelledby={wide.current ? undefined : String(props['aria-labelledby'] ?? '')}>
 		<AppearancePreview {roomId} brand={{ logoUrl: logo, coverUrl: cover, accentColor: color }} {name} {welcome} />
  </div>{/snippet}</Tabs.Content></div></Tabs.Root>
-	<div bind:this={footer} bind:clientHeight={footerHeight} class="sticky bottom-0 flex flex-wrap items-center gap-2 border-t bg-card py-3">{#if error}<p id="appearance-error" class="w-full text-sm text-destructive" role="alert">{#if !inherited && !normalizeColor(hex)}<button type="button" class="text-left underline underline-offset-4" onclick={focusColour}>{error}</button>{:else}{error}{/if}</p>{/if}<Button class="min-h-11 sm:min-h-9" type="submit" disabled={disabled || busy || reading || !dirty}>{busy ? 'Saving…' : 'Save appearance'}</Button><Button class="min-h-11 sm:min-h-9" type="button" variant="outline" disabled={busy || (!dirty && !error)} onclick={cancel} aria-label="Cancel changes"><span class="sm:hidden">Cancel</span><span class="hidden sm:inline">Cancel changes</span></Button><p class="w-full text-xs text-muted-foreground sm:w-auto" role="status">{dirty ? 'Unsaved changes' : status || 'Changes go live only when you save.'}</p></div>
+	<div bind:this={footer} bind:clientHeight={footerHeight} class="sticky bottom-0 flex flex-wrap items-center gap-2 border-t bg-card py-3">{#if error}<p id="appearance-error" class="w-full text-sm text-destructive" role="alert">{#if !inherited && !normalizeColor(hex)}<button type="button" class="text-left underline underline-offset-4" onclick={focusColour}>{error}</button>{:else}{error}{/if}</p>{/if}<Button class="min-h-11 sm:min-h-9" type="submit" disabled={disabled || busy || reading || !dirty || welcome.length > 20000}>{busy ? 'Saving…' : 'Save appearance'}</Button><Button class="min-h-11 sm:min-h-9" type="button" variant="outline" disabled={busy || (!dirty && !error)} onclick={cancel} aria-label="Cancel changes"><span class="sm:hidden">Cancel</span><span class="hidden sm:inline">Cancel changes</span></Button><p class="w-full text-xs text-muted-foreground sm:w-auto" role="status">{dirty ? 'Unsaved changes' : status || 'Changes go live only when you save.'}</p></div>
 </form>

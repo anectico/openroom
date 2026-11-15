@@ -165,13 +165,13 @@ changes together. **Cancel changes** discards your draft. Reset either logo or c
 workspace setting. Investor browser icons follow the effective logo.
 
 The investor header gives your logo a prominent place alongside the room identity. Your brand colour
-also accents the room header, navigation and primary actions. The introduction supports Markdown and appears in a first-visit dialog. Choose **Enter room** to dismiss it. Later visits through the same link in this browser go directly to the room.
+also accents the room header, navigation and primary actions. Select text to make it bold, italic, colored, or linked. Use **Heading** or **Subheading** to change the size of a paragraph, and the list buttons for reading steps. Select **Markdown** to edit the source. The introduction appears in a first-visit dialog. Choose **Enter room** to dismiss it. Later visits through the same link in this browser go directly to the room.
 See [workspace settings](settings.md) for inheritance and preview details.
 
 ### A personal welcome for an investor or audience
 
 In **Share room**, or when editing an existing link in Sharing, expand **Personal welcome**.
-Write up to 4,000 characters of Markdown and switch between **Edit** and **Preview** before saving.
+Use the same formatting toolbar as the room welcome. The limit is 4,000 characters including formatting. Switch between **Edit** and **Preview** before saving.
 On phones the editor fills the screen, with a scrolling body and persistent Save/Cancel controls. Everyone
 using that link sees the same note after completing all access checks. Use separate links for
 different messages. The note replaces the room introduction in the welcome dialog. Leave the field blank or choose **Use room introduction**

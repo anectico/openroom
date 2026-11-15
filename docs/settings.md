@@ -19,8 +19,7 @@ Changes stay in a draft until **Save appearance**. **Cancel changes** restores t
 Button text switches between black and white to suit your colour; navigation and focus indicators
 use a darker, readable variation. The investor and admin footers always show “OpenRoom by Anectico”, with a link to the company website.
 
-In **Room settings & branding**, edit the room name and welcome Markdown alongside its logo and
-colour. The editor shows which values come from the workspace. **Use workspace logo/colour** stages
+In **Room settings & branding**, set the room name, logo and colour. Format the welcome with headings, lists, emphasis, links and text colours. The editor shows which values come from the workspace. **Use workspace logo/colour** stages
 a reset; save to apply it. Later workspace changes flow through to rooms without overrides.
 After access checks, the welcome opens in a dialog with the room logo and optional cover. **Enter room** dismisses it. The same investor and sharing link skip the dialog on later visits in this browser, even if the welcome is edited. A blank welcome skips the dialog. Select **Welcome** in the appearance preview to inspect the draft.
 

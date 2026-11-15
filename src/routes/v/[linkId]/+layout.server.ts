@@ -1,9 +1,9 @@
 import { brandingFor } from '#lib/server/branding.ts';
 import { unreadReplies } from '#lib/server/investor-attention.ts';
-import { renderMarkdown } from '#lib/server/markdown.ts';
 import { requestSummaries } from '#lib/server/requests.ts';
 import { sha256 } from '#lib/server/secrets.ts';
 import { requireViewer } from '#lib/server/viewer/context.ts';
+import { renderWelcome } from '#lib/welcome-markdown.ts';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = (event) => {
@@ -13,7 +13,7 @@ export const load: LayoutServerLoad = (event) => {
 	const welcome =
 		!ctx.needsNda && markdown.trim()
 			? {
-					html: renderMarkdown(markdown),
+					html: renderWelcome(markdown),
 					storageKey: `openroom:welcome-dismissed:${sha256(`${ctx.link.id}:${ctx.preview ? ctx.session.id : ctx.session.viewer_id}`)}`,
 				}
 			: null;
