@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronRight, FolderClosed, Search } from '@lucide/svelte';
+	import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronDown, ChevronRight, FolderClosed, LibraryBig, ListOrdered, MessagesSquare, Search } from '@lucide/svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Empty from '#lib/components/ui/empty/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
@@ -16,6 +16,8 @@
 	import { page } from '$app/state';
 
 	import type { PageData } from './$types';
+
+	const documentGrid = 'divide-y overflow-hidden rounded-xl border bg-card sm:grid sm:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] sm:gap-3 sm:divide-y-0 sm:overflow-visible sm:rounded-none sm:border-0 sm:bg-transparent';
 
 	let { data, appearance = false }: { data: PageData; appearance?: boolean } = $props();
 	const currentUrl = $derived(page.shallow?.url ?? page.url);
@@ -146,15 +148,6 @@
 
 <svelte:head><title>{data.roomName}</title></svelte:head>
 
-{#snippet progress()}
-	<p id="review-progress" tabindex="-1" class="text-xs text-muted-foreground" role="status">
-		{completedPins.length ? `${completedPins.length} of ${data.pins.length} reviewed` : `${data.pins.length} recommended document${data.pins.length === 1 ? '' : 's'}`}
-	</p>
-	{#if completedPins.length && remainingPins.length}
-		<Progress class="w-20" value={completedPins.length / data.pins.length * 100} aria-label="Start here review progress" />
-	{/if}
-{/snippet}
-
 {#snippet reviewDownload(file: { id: string; name: string; version: number | null })}
 	{#key `${data.readingScope}:${file.id}:${file.version}`}
 		<ReviewButton disabled={appearance} linkId={data.linkId} fileId={file.id} version={file.version ?? 1}
@@ -165,15 +158,8 @@
 {#if atRoot && !single && data.pins.length}
 	<a href="#all-documents" class="sr-only focus:not-sr-only focus:inline-block focus:p-2">Skip to all documents</a>
 {/if}
-{#if atRoot && lead}
-	<section class="mb-4" aria-label={resume ? 'Continue reading' : single ? 'Shared document' : 'Start here'}>
-		{#if resume}
-			<h2 class="mb-3 text-base font-semibold">Continue reading</h2>
-		{:else if !single}
-			<div class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1">
-				<h2 class="text-base font-semibold">Start here</h2>{@render progress()}
-			</div>
-		{/if}
+{#snippet featured()}
+	{#if lead}
 		{#snippet leadControls()}
 			{#if lead.kind === 'download'}{@render reviewDownload(lead)}
 			{:else}<span class="inline-flex items-center gap-1.5 py-2 text-xs text-muted-foreground"><Check class="size-4" />Reviewed</span>{/if}
@@ -187,99 +173,122 @@
 			action={resume ? `Resume on page ${resume.page}` : single || lead.kind === 'download' ? undefined : completedPins.length ? 'Open next document' : 'Open first document'}
 			controls={!data.preview && pinOrder.has(lead.id) && (lead.kind === 'download' || reviewed.has(lead.id)) ? leadControls : undefined}
 			version={states.get(lead.id)?.previousVersion ? leadVersion : undefined} />
+	{/if}
+{/snippet}
+
+{#if atRoot && lead && (resume || single)}
+	<section class="reading-panel" aria-label={resume ? 'Continue reading' : 'Shared document'}>
+		{#if resume}<h2 class="panel-title"><BookOpen />Continue reading</h2>{/if}
+		{@render featured()}
 	</section>
 {/if}
-{#if atRoot && !single && (rows.length || completedPins.length)}
-	<section class="mb-5" aria-label="Reading list">
-		{#if resume || !lead}
-			<div class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1"><h2 class="text-base font-semibold">Start here</h2>{@render progress()}</div>
-		{/if}
-		{#if rows.length}
-			<ol class="divide-y overflow-hidden rounded-xl border bg-card">
-				{#each rows as file, index (file.id)}
-					{#snippet controls()}{@render reviewDownload(file)}{/snippet}
-					{#snippet version()}<ReviewVersion state={states.get(file.id)} />{/snippet}
-					<PinnedDocument name={file.name} kind={file.kind} size={file.size} number={pinOrder.get(file.id) ?? 1}
-						href={openDocument(file, true)} change={nodes.get(file.id)?.change}
-						hidden={!expanded && index >= visibleRowLimit}
-						controls={!data.preview && file.kind === 'download' ? controls : undefined}
-						version={states.get(file.id)?.previousVersion ? version : undefined} />
-				{/each}
-			</ol>
-			{#if rows.length > visibleRowLimit}<Button variant="ghost" class="mt-2 min-h-11 w-full sm:hidden" aria-expanded={expanded} onclick={expandPins}>{expanded ? 'Show fewer documents' : 'Show all recommended documents'}</Button>{/if}
-		{/if}
-		{#if completedPins.length}
-			<details bind:open={showReviewed} class="mt-3 rounded-xl border bg-card">
-				<summary class="min-h-11 cursor-pointer px-4 py-3 text-sm font-medium">Reviewed ({completedPins.length})</summary>
-				<ol class="divide-y border-t">{#each completedPins as file (file.id)}
-					<li class="flex flex-wrap items-center justify-between gap-x-3 px-4 py-1">
-						<a class="flex min-h-11 min-w-0 flex-1 items-center gap-2 text-sm [overflow-wrap:anywhere]" href={openDocument(file, true)}>
-							<Check class="size-4 shrink-0 text-primary" />{file.name}
-						</a>
-						{#if file.kind === 'download'}{@render reviewDownload(file)}{/if}
-					</li>
-				{/each}</ol>
-			</details>
-		{/if}
+{#if atRoot && !single && data.pins.length && ((!resume && lead) || rows.length || completedPins.length)}
+	<section class="room-panel" aria-labelledby="start-title">
+		<div class="panel-heading">
+			<div class="flex min-w-0 items-center gap-2">
+				<h2 id="start-title" class="panel-title shrink-0"><ListOrdered /><span>Start here</span></h2>
+				<p id="review-progress" tabindex="-1" class="text-xs text-muted-foreground" role="status">
+					{completedPins.length ? `${completedPins.length} of ${data.pins.length} reviewed` : `${data.pins.length} recommended document${data.pins.length === 1 ? '' : 's'}`}
+				</p>
+			</div>
+			{#if completedPins.length && remainingPins.length}
+				<Progress class="w-20" value={completedPins.length / data.pins.length * 100} aria-label="Start here review progress" />
+			{/if}
+		</div>
+		<div class="panel-body space-y-3">
+			{#if !resume}{@render featured()}{/if}
+			{#if rows.length}
+				<ol class={documentGrid}>
+					{#each rows as file, index (file.id)}
+						{#snippet controls()}{@render reviewDownload(file)}{/snippet}
+						{#snippet version()}<ReviewVersion state={states.get(file.id)} />{/snippet}
+						<PinnedDocument name={file.name} kind={file.kind} size={file.size} number={pinOrder.get(file.id) ?? 1}
+							href={openDocument(file, true)} change={nodes.get(file.id)?.change}
+							hidden={!expanded && index >= visibleRowLimit}
+							controls={!data.preview && file.kind === 'download' ? controls : undefined}
+							version={states.get(file.id)?.previousVersion ? version : undefined} />
+					{/each}
+				</ol>
+				{#if rows.length > visibleRowLimit}<Button variant="ghost" class="mt-2 min-h-11 w-full sm:hidden" aria-expanded={expanded} onclick={expandPins}>{expanded ? 'Show fewer documents' : 'Show all recommended documents'}</Button>{/if}
+			{/if}
+			{#if completedPins.length}
+				<details bind:open={showReviewed} class="mt-3 rounded-xl border bg-card">
+					<summary class="min-h-11 cursor-pointer px-4 py-3 text-sm font-medium">Reviewed ({completedPins.length})</summary>
+					<ol class="divide-y border-t">{#each completedPins as file (file.id)}
+						<li class="flex flex-wrap items-center justify-between gap-x-3 px-4 py-1">
+							<a class="flex min-h-11 min-w-0 flex-1 items-center gap-2 text-sm [overflow-wrap:anywhere]" href={openDocument(file, true)}>
+								<Check class="size-4 shrink-0 text-primary" />{file.name}
+							</a>
+							{#if file.kind === 'download'}{@render reviewDownload(file)}{/if}
+						</li>
+					{/each}</ol>
+				</details>
+			{/if}
+		</div>
 	</section>
 {/if}
 
-{#if showChanges}
-	<nav class="mb-4 flex flex-wrap gap-2" aria-label="Room updates">
-		{#if showChanges && data.changesSince !== null}<Button variant={changedOnly ? 'secondary' : 'outline'} size="sm" class="min-h-11" aria-pressed={changedOnly} onclick={toggleChanges} title={`Changed since ${new Date(data.changesSince).toLocaleString()}`}>{changedCount} changed<ArrowRight data-icon="inline-end" /></Button>{/if}
-	</nav>
-{/if}
-{#if !single}
-	<div id="all-documents" tabindex="-1" class="mt-5 mb-3 flex scroll-mt-4 flex-wrap items-center justify-between gap-2">
-		<div class="flex flex-wrap items-baseline gap-2">
+{#snippet changedFilter()}
+	{#if showChanges && data.changesSince !== null}<Button variant={changedOnly ? 'secondary' : 'outline'} size="sm" class="min-h-11" aria-pressed={changedOnly} onclick={toggleChanges} title={`Changed since ${new Date(data.changesSince).toLocaleString()}`}>{changedCount} changed<ArrowRight data-icon="inline-end" /></Button>{/if}
+{/snippet}
+{#if single}
+	{@render changedFilter()}
+{:else}
+	<section class="room-panel" aria-labelledby="library-title">
+		<div id="all-documents" tabindex="-1" class="panel-heading justify-between scroll-mt-4">
+			<div class="flex min-w-0 flex-wrap items-center gap-2">
 				{#if selectedFolder && folderId && !term && !changedOnly}
 					<Button variant="outline" size="sm" class="min-h-11" aria-label={`Back to ${folderOrigin?.label ?? breadcrumb.at(-2)?.name ?? 'All documents'}`} onclick={backFromFolder}><ArrowLeft data-icon="inline-start" />Back</Button>
 				{/if}
-			<h2 class="text-base font-semibold">{libraryTitle}</h2>
-			<span class="text-xs text-muted-foreground" role="status">{term || changedOnly ? `${matches.length} result${matches.length === 1 ? '' : 's'}` : folderId ? `${matches.length} items` : `${documents.length} documents`}</span>
-		</div>
-		{#if documents.length || term || folderId}
-			<div class="relative w-full sm:w-72"><Search class="pointer-events-none absolute top-3.5 left-3 size-4 text-muted-foreground" />
-				<Input type="search" placeholder="Search by title, folder or index…" aria-label="Search by title, folder or index" maxlength={200} class="min-h-11 pl-9" value={query} oninput={(event) => browse(folderId, event.currentTarget.value)} />
+				<h2 id="library-title" class="panel-title min-w-0 [overflow-wrap:anywhere]">{#if !folderId}<LibraryBig />{/if}<span class="min-w-0">{libraryTitle}</span></h2>
+				<span class="text-xs text-muted-foreground" role="status">{term || changedOnly ? `${matches.length} result${matches.length === 1 ? '' : 's'}` : folderId ? `${matches.length} item${matches.length === 1 ? '' : 's'}` : `${documents.length} documents`}</span>
 			</div>
-		{/if}
-	</div>
-	{#if breadcrumb.length && !term && !changedOnly}
-		<nav class="mb-2 flex flex-wrap items-center gap-2 text-xs" aria-label="Document folders">
-			<button type="button" class="flex min-h-11 items-center text-muted-foreground hover:text-foreground" onclick={() => openFolder('')}>All documents</button>
-			{#each breadcrumb as folder (folder.id)}
-				<ChevronRight class="size-3 text-muted-foreground/50" />
-				<button type="button" class="flex min-h-11 items-center font-medium" onclick={() => openFolder(folder.id)}>{folder.name}</button>
-			{/each}
-		</nav>
-	{/if}
-	<div class="overflow-hidden rounded-xl border bg-card">
-		{#if matches.length}
-			<ul class="divide-y">
-				{#each matches as node (node.id)}
-					<DocumentListItem name={node.name} kind={node.kind} size={node.size} number={node.number}
-						folderPath={term || changedOnly ? folderPaths.get(node.parentId ?? '') : undefined}
-						folder={node.type === 'folder'} childCount={childCounts.get(node.id) ?? 0}
-						href={fileHref(node.id)} downloadHref={canDownload(node.kind) ? downloadHref(node.id) : undefined}
-						previewDownload={appearance && canDownload(node.kind)} change={node.change} onfolder={() => openFolder(node.id, true)} />
-				{/each}
-			</ul>
-		{:else}
-			<Empty.Root class="py-14">
-				<Empty.Header>
-					<Empty.Media variant="icon"><FolderClosed /></Empty.Media>
-					<Empty.Title>{term ? 'No matching documents' : changedOnly ? 'No new or updated documents' : 'Nothing shared here yet'}</Empty.Title>
-					<Empty.Description>{term ? 'Try another title, folder name or index number.' : changedOnly ? 'You’re up to date. New uploads and version changes will appear here.' : 'You’ll find the materials here when the team shares them.'}</Empty.Description>
-				</Empty.Header>
-				{#if term}<Empty.Content><Button variant="outline" size="sm" class="min-h-11 sm:min-h-8" onclick={() => browse(folderId)}>Clear search</Button></Empty.Content>{/if}
-			</Empty.Root>
-		{/if}
-	</div>
+			<div class="flex w-full flex-wrap items-center gap-2 sm:w-auto">
+				{@render changedFilter()}
+				{#if documents.length || term || folderId}
+					<div class="relative w-full sm:w-72"><Search class="pointer-events-none absolute top-3.5 left-3 size-4 text-muted-foreground" />
+						<Input type="search" placeholder="Search by title, folder or index…" aria-label="Search by title, folder or index" maxlength={200} class="min-h-11 pl-9" value={query} oninput={(event) => browse(folderId, event.currentTarget.value)} />
+					</div>
+				{/if}
+			</div>
+		</div>
+		<div class="panel-body">
+			{#if breadcrumb.length > 1 && !term && !changedOnly}
+				<nav class="mb-2 flex flex-wrap items-center gap-2 text-xs" aria-label="Document folders">
+					<button type="button" class="flex min-h-11 items-center text-muted-foreground hover:text-foreground" onclick={() => openFolder('')}>All documents</button>
+					{#each breadcrumb as folder (folder.id)}
+						<ChevronRight class="size-3 text-muted-foreground/50" />
+						{#if folder.id === folderId}<span aria-current="page" class="font-medium [overflow-wrap:anywhere]">{folder.name}</span>{:else}<button type="button" class="flex min-h-11 items-center font-medium [overflow-wrap:anywhere]" onclick={() => openFolder(folder.id)}>{folder.name}</button>{/if}
+					{/each}
+				</nav>
+			{/if}
+			{#if matches.length}
+				<ul aria-label="Document library" class={documentGrid}>
+					{#each matches as node (node.id)}
+						<DocumentListItem name={node.name} kind={node.kind} size={node.size}
+							folderPath={term || changedOnly ? folderPaths.get(node.parentId ?? '') : undefined}
+							folder={node.type === 'folder'} childCount={childCounts.get(node.id) ?? 0}
+							href={fileHref(node.id)} downloadHref={canDownload(node.kind) ? downloadHref(node.id) : undefined}
+							previewDownload={appearance && canDownload(node.kind)} change={node.change} onfolder={() => openFolder(node.id, true)} />
+					{/each}
+				</ul>
+			{:else}
+				<Empty.Root class="rounded-xl border bg-card py-14">
+					<Empty.Header>
+						<Empty.Media variant="icon"><FolderClosed /></Empty.Media>
+						<Empty.Title>{term ? 'No matching documents' : changedOnly ? 'No new or updated documents' : 'Nothing shared here yet'}</Empty.Title>
+						<Empty.Description>{term ? 'Try another title, folder name or index number.' : changedOnly ? 'You’re up to date. New uploads and version changes will appear here.' : 'You’ll find the materials here when the team shares them.'}</Empty.Description>
+					</Empty.Header>
+					{#if term}<Empty.Content><Button variant="outline" size="sm" class="min-h-11 sm:min-h-8" onclick={() => browse(folderId)}>Clear search</Button></Empty.Content>{/if}
+				</Empty.Root>
+			{/if}
+		</div>
+	</section>
 {/if}
-{#if data.faq.length}
-	<section class="mt-8" aria-labelledby="faq-heading">
-		<h2 id="faq-heading" class="mb-4 text-sm font-semibold">Room FAQ</h2>
-		<div class="divide-y rounded-xl border bg-card">
+{#if atRoot && data.faq.length}
+	<section class="room-panel" aria-labelledby="faq-heading">
+		<div class="panel-heading"><h2 id="faq-heading" class="panel-title"><MessagesSquare />Room FAQ</h2></div>
+		<div class="divide-y">
 			{#each data.faq as entry (entry.id)}
 				<details class="group px-4 py-1.5 sm:px-5">
 					<summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium">{entry.question}<ChevronDown class="size-4 shrink-0 transition-transform group-open:rotate-180" /></summary>
@@ -290,3 +299,36 @@
 	</section>
 {/if}
 {#if data.downloads === 'zip'}<div class="mt-4">{#key data.readingScope}<DownloadRoom disabled={appearance} linkId={data.linkId} />{/key}</div>{/if}
+
+<style>
+	.room-panel, .reading-panel {
+		margin-bottom: 1.5rem;
+		overflow: clip;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-xl);
+		background: var(--card);
+	}
+	.panel-title {
+		display: flex;
+		align-items: center;
+		gap: .6rem;
+		font-size: 1.125rem;
+		font-weight: 600;
+		letter-spacing: -.015em;
+	}
+	.panel-heading, .reading-panel > .panel-title {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: .75rem;
+		padding: .875rem clamp(.875rem, 2vw, 1.5rem);
+		border-bottom: 1px solid var(--border);
+		background: color-mix(in srgb, var(--primary) 7%, var(--card));
+	}
+	.panel-title > span, .panel-heading [role="status"] {
+		text-box: trim-both cap alphabetic;
+	}
+	.panel-title :global(svg) { width: 1.1rem; height: 1.1rem; flex-shrink: 0; color: var(--primary); }
+	.panel-body { padding: clamp(.75rem, 2vw, 1.25rem); background: color-mix(in srgb, var(--muted) 35%, var(--card)); }
+	.reading-panel > :global(article) { border: 0; border-radius: 0; }
+</style>

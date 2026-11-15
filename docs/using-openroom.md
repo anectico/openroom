@@ -91,8 +91,8 @@ NDA requirement in defaults or a link. Publishing a replacement requires affecte
 accept the new version. Acceptance records retain the version, signed name, email, verification
 state, time and IP according to the documented privacy rules.
 
-Investors follow their link, pass the configured gates and enter the document list. The branded header brings together the room title, logo, optional cover and welcome. A room with one visible document opens with its title and an **Open document** or **Download file** action. In larger rooms, **Start here** features the first outstanding recommendation and lists the others in reading order. On phones, **Show all recommended documents** expands longer lists.
-Search the library by document title, folder name or section number. Results include matching folders and files within matching folder paths. Section numbers reflect the contents visible through the current sharing link. Opening a document
+Investors follow their link, pass the configured gates and enter the document list. The branded header brings together the room title, logo, optional cover and welcome. A room with one visible document opens with its title and an **Open document** or **Download file** action. In larger rooms, **Start here** features the first outstanding recommendation and shows the remaining documents in reading order, with cards side by side on wider screens and a single list on phones. On phones, **Show all recommended documents** expands longer lists.
+**All documents** uses the same responsive layout for folders, files and search results. Folder cards show the item count. File cards show the file type and size. Search by document title, folder name or section number. Results include matching folders and files within matching folder paths. Section numbers reflect the contents visible through the current sharing link. Opening a document
 and using its return link restores the folder, search and scroll position. A document opened from
 Start here follows that reading order with Previous/Next controls, respecting current permissions.
 
@@ -251,10 +251,9 @@ PDF contains text. Scanned PDFs without text need OCR outside OpenRoom before th
 
 ## Keep your review moving
 
-Your home brings changed documents, unread replies and requests needing action together. The welcome
+Use **Back** beside a folder name to return to the list or search results where you opened it, at the same scroll position. When you open a folder from a direct link, **Back** takes you to its parent. The library shows changed documents, and the **Questions** and **Requests** links show counts for unread replies and requests needing action. The welcome
 note opens on arrival when it is short; longer introductions begin with an excerpt. An explicit
-open/closed choice is remembered until the note changes. Search and folder browsing use a separate
-compact disclosure without overwriting that choice. Continue reading stays near the top.
+**Hide** or **Show welcome** choice is remembered when you reopen the same investor link in this browser, including after signing out and back in. An updated note uses its initial display again. The room header and your welcome choice carry across Documents, Questions and Requests, including folder browsing and search. Continue reading stays near the top.
 
 Use **Mark reviewed** at the end of a recommended document’s reader. For a download-only file, the action is on its recommended card. Open **Reviewed** to revisit completed items. **Undo** in the reader or on a download-only item reverses the choice. A new file version can be reviewed again.
 On return, an available PDF reading position takes precedence over the next recommended file. **Resume on page…** opens that page. The remaining recommendations appear below.

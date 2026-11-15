@@ -52,10 +52,9 @@ only the client receipt. Upload failures do not invalidate page data into an off
 
 ## Investor experience
 
-A compact room header leads to Documents and My questions. The portal supports folder browsing,
+Below the room header, grouped links switch between Documents, Questions and Requests. The portal supports folder browsing,
 search by title, visible folder and section number, and direct viewing/download controls, with private conversations and requests
-alongside them. Phone headings are compact, outstanding file requests are discoverable above the
-documents, and document/reader controls use 44 px touch targets on phones. The footer always credits OpenRoom by Anectico. The gate gives one step at a time,
+alongside them. Phone headings are compact, outstanding file requests appear as a count on Requests, and document/reader controls use 44 px touch targets on phones. The footer always credits OpenRoom by Anectico. The gate gives one step at a time,
 including readable NDA text and visible errors.
 
 The PDF reader fits its page, zoom and question controls on a phone. A question opens a dialog and
@@ -105,6 +104,6 @@ See the [UI standards implementation and screenshot gallery](../reviews/ui-stand
 
 ## Task visibility and resilient layouts
 
-Document rows show full titles at narrow widths so identifying periods and versions remain visible. Search and folder browsing use compact welcome context, retain URL-backed filters and preserve the return location. Entry forms precede the extended welcome. PDF questions use a bounded scrollable dialog and a fixed-size textarea, including when the allowed question length is reached. Active PDF search replaces the mobile secondary toolbar row; page and zoom tools remain available in Reader options.
+The investor home groups Continue reading, Start here, All documents and Room FAQ into separate sections with the same room-accent tint on each heading. Document rows show full titles at narrow widths so identifying periods and versions remain visible. Documents, Questions and Requests share the room header and welcome disclosure. Search and folder browsing retain URL-backed filters and preserve the return location. Entry forms precede the extended welcome. PDF questions use a bounded scrollable dialog and a fixed-size textarea, including when the allowed question length is reached. Active PDF search replaces the mobile secondary toolbar row; page and zoom tools remain available in Reader options.
 
 Appearance focus must stay above the measured sticky footer, and validation must reveal the invalid control. Device samples render at explicit 360/1280 px canvas widths with visible scaling and an actual-size option; Fit to panel follows available width. Sharing-link drafts need a discard decision on dismissal, including navigation. Mobile document controls precede the collapsible pinned summary. Urgent server warnings remain visible; backup setup details use disclosure. Mobile sharing rows reflow protection facts instead of removing them.
