@@ -119,7 +119,9 @@ retrying an interrupted status check continues the existing job. Leaving the pag
 ## Activity and investors
 
 **Analytics** shows investors, firms, file/page reading, video coverage and the activity timeline.
-Filter by time, link or group; export CSV when needed. Reading time estimates active foreground
+The totals at the top follow the applied time, sharing link and group filters. **Filter** and
+**Clear filters** keep the selected report open. **Export CSV** downloads that report with its applied filters.
+Reading time estimates active foreground
 viewing, not a guarantee that someone understood a page. Unverified viewers remain labeled.
 The workspace Investors page combines activity across rooms and opens an individual history.
 Under **Files read**, select **Reading details** to see each version, time on each page and the
