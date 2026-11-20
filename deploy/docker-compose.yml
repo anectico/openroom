@@ -17,7 +17,7 @@ services:
       - "3000"
 
   caddy:
-    image: caddy:2.11.8
+    image: caddy:2.11.9
     restart: unless-stopped
     depends_on:
       - app
