@@ -1,9 +1,7 @@
 export function browseParameters(source: Pick<URLSearchParams, 'get'>) {
 	const out = new URLSearchParams();
-	for (const key of ['q', 'folder']) {
-		const value = source.get(key)?.slice(0, key === 'q' ? 200 : 100);
-		if (value) out.set(key, value);
-	}
+	const folder = source.get('folder')?.slice(0, 100);
+	if (folder) out.set('folder', folder);
 	const y = Number(source.get('y'));
 	if (Number.isFinite(y) && y > 0) out.set('y', String(Math.min(1_000_000, Math.round(y))));
 	if (source.get('changed') === '1') out.set('changed', '1');

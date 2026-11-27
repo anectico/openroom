@@ -37,9 +37,8 @@ export const load: PageServerLoad = (event) => {
 		guidePosition: guide ? index + 1 : null,
 		guideTotal: guide ? files.length : null,
 		backHref: `/v/${ctx.link.id}${back.size ? `?${back}` : ''}`,
-		backLabel: back.get('q')
-			? 'Back to search'
-			: back.get('changed') === '1'
+		backLabel:
+			back.get('changed') === '1'
 				? 'Back to changed documents'
 				: folder
 					? `Back to ${folder.name}`

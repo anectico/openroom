@@ -92,8 +92,8 @@ accept the new version. Acceptance records retain the version, signed name, emai
 state, time and IP according to the documented privacy rules.
 
 Investors follow their link, pass the configured gates and enter the document list. A compact header shows the room title, logo and account controls throughout the investor room. A first-visit dialog presents the optional welcome and cover after access checks. A room with one visible document opens with its title and an **Open document** or **Download file** action. In larger rooms, **Start here** features the first outstanding recommendation and shows the remaining documents in reading order, with cards side by side on wider screens and a single list on phones. On phones, **Show all recommended documents** expands longer lists.
-**All documents** uses the same responsive layout for folders, files and search results. Folder cards show the item count. File cards show the file type and size. Search by document title, folder name or section number. Results include matching folders and files within matching folder paths. Section numbers reflect the contents visible through the current sharing link. Opening a document
-and using its return link restores the folder, search and scroll position. A document opened from
+**All documents** uses the same responsive layout for folders and files. Folder cards show the item count. File cards show the file type and size. Section numbers reflect the contents visible through the current sharing link. Opening a document
+and using its return link restores the folder and scroll position. A document opened from
 Start here follows that reading order with Previous/Next controls, respecting current permissions.
 
 **Continue reading** returns to the last PDF page saved in this browser tab. Reopening that PDF also
@@ -247,7 +247,7 @@ PDF contains text. Scanned PDFs without text need OCR outside OpenRoom before th
 
 ## Keep your review moving
 
-Use **Back** beside a folder name to return to the list or search results where you opened it, at the same scroll position. When you open a folder from a direct link, **Back** takes you to its parent. The library shows changed documents, and the **Questions** and **Requests** links show counts for unread replies and requests needing action. Continue reading stays near the top.
+Use **Back** beside a folder name to return to the list where you opened it, at the same scroll position. When you open a folder from a direct link, **Back** takes you to its parent. The library shows changed documents, and the **Questions** and **Requests** links show counts for unread replies and requests needing action. Continue reading stays near the top.
 
 Choose **Full screen** in a PDF or image viewer to use the whole display. In a pitch deck, use the arrow keys or page buttons to advance one slide at a time. **Exit full screen** returns you to the same page.
 

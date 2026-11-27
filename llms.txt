@@ -41,7 +41,7 @@ omission preserves it on update. `set_pinned_documents` replaces the room's orde
 (maximum six; [] clears it). `get_room.pinnedFileIds` returns the saved order. Investor pins are
 filtered by current permissions and never grant access. See the first-room runbook and product guide.
 
-Investor continuity: Start here drives reader navigation; return links preserve folder/search/scroll.
+Investor continuity: Start here drives reader navigation; return links preserve folder/scroll.
 PDF resume uses tab-local, session-scoped, version-bound storage, separate from reading analytics.
 My questions supports general or permitted-document questions with Awaiting answer/Replied states.
 ZIP preparation has progress, connection retry and an explicit ready-download action. See the
@@ -64,7 +64,7 @@ Investor completion polish adds compact reviewed pins, current-version
 review explanations, PDF end actions and selection-aware tool scrolling. Conversation shortcuts
 preserve reading intent and drafts. Request return summaries require an authorized own submission.
 
-Investor visual refinement: compact tablet pins and room utilities, full-width mobile search, clear
+Investor visual refinement: compact tablet pins and room utilities, clear
 document headings, brand-independent request statuses, deduplicated receipts, stronger message sender
 hierarchy, current-page thumbnail labels and prominent PDF completion navigation. Verification:
 docs/reviews/2026-11-13-investor-visual-refinement.md

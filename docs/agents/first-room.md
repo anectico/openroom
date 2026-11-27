@@ -112,7 +112,7 @@ Neither saving pins nor writing a welcome sends an invitation.
 ## Verify the investor journey
 
 Preview the link's Start here sequence as well as its visible files. Reader Previous/Next follows
-that sequence when opened from a pin. Check folder/search return links and long titles on phones.
+that sequence when opened from a pin. Check folder return links and long titles on phones.
 My questions offers a private room-level question or optional permitted-document context; member
 previews cannot submit. Awaiting answer/Replied describes the last author, not a read receipt.
 

@@ -20,7 +20,7 @@ The reader supports PDFs, images and video. You can upload new versions, publish
 
 ### Investor view
 
-![Aster Robotics investor room with the seed pitch deck, recommended reading, searchable document folders, and room FAQ](docs/images/investor-room-overview.png)
+![Aster Robotics investor room with the seed pitch deck, recommended reading, document folders, and room FAQ](docs/images/investor-room-overview.png)
 
 ## Run locally
 

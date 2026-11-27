@@ -52,8 +52,8 @@ only the client receipt. Upload failures do not invalidate page data into an off
 
 ## Investor experience
 
-Below the room header, grouped links switch between Documents, Questions and Requests. The portal supports folder browsing,
-search by title, visible folder and section number, and direct viewing/download controls, with private conversations and requests
+Below the room header, grouped links switch between Documents, Questions and Requests. The portal supports folder browsing
+and direct viewing/download controls, with private conversations and requests
 alongside them. Phone headings are compact, outstanding file requests appear as a count on Requests, and document/reader controls use 44 px touch targets on phones. The footer always credits OpenRoom by Anectico. The gate gives one step at a time,
 including readable NDA text and visible errors.
 
