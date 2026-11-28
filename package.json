@@ -34,7 +34,7 @@
 		"@types/archiver": "^8.0.0",
 		"@types/better-sqlite3": "^9.6.0",
 		"@types/markdown-it": "^14.2.0",
-		"@types/node": "^24.19.2",
+		"@types/node": "^26.6.10",
 		"@types/nodemailer": "^8.0.2",
 		"bits-ui": "^2.20.2",
 		"clsx": "^2.1.1",
