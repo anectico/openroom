@@ -14,9 +14,13 @@
 	let body = $state(untrack(() => data.versions.find((v) => v.current)?.bodyMarkdown ?? ''));
 	let confirming = $state(false);
 	let error = $state('');
+	let publishing = $state(false);
 
 	async function publish() {
+		if (publishing) return;
+		publishing = true;
 		const r = await attempt('publish_nda', { roomId: room.id, bodyMarkdown: body }, 'New NDA version published');
+		publishing = false;
 		confirming = false;
 		error = r.ok ? '' : r.error;
 	}
@@ -50,19 +54,19 @@
 	</ul>
 {/if}
 
-<AlertDialog.Root bind:open={confirming}>
+<AlertDialog.Root bind:open={() => confirming, (value) => { if (!publishing) confirming = value; }}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>{current ? 'Publish a new NDA version?' : 'Publish the NDA?'}</AlertDialog.Title>
 			<AlertDialog.Description>
 				{current
 					? 'Every investor on a link that requires the NDA must accept the new version before they can continue.'
-					: 'Links can then require it. Turn it on in Link defaults or per link.'}
+					: 'Links can then require it. Turn it on in Default link protection or per link.'}
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<Button onclick={publish}>Publish</Button>
+			<AlertDialog.Cancel disabled={publishing}>Cancel</AlertDialog.Cancel>
+			<Button disabled={publishing} onclick={publish}>{publishing ? 'Publishing…' : 'Publish'}</Button>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

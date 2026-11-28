@@ -53,6 +53,7 @@
 	let importError = $state('');
 	async function importDocument(event: SubmitEvent) {
 		event.preventDefault();
+		if (importing) return;
 		importing = true;
 		importError = '';
 		try {
@@ -70,6 +71,7 @@
 	let folderName = $state('');
 	let folderParent = $state('');
 	let dialogError = $state('');
+	let dialogBusy = $state(false);
 
 	let deleting = $state<TreeNode | null>(null);
 	let deleter = $state<ReturnType<typeof DangerAction>>();
@@ -144,7 +146,10 @@
 
 	async function createFolder(event: SubmitEvent) {
 		event.preventDefault();
+		if (dialogBusy) return;
+		dialogBusy = true;
 		const r = await attempt('create_folder', { roomId: room.id, name: folderName, parentId: folderParent || null }, 'Folder created');
+		dialogBusy = false;
 		if (!r.ok) {
 			dialogError = r.error;
 			return;
@@ -156,11 +161,13 @@
 
 	async function rename(event: SubmitEvent) {
 		event.preventDefault();
-		if (!renaming) return;
+		if (!renaming || dialogBusy) return;
+		dialogBusy = true;
 		const r =
 			renaming.type === 'folder'
 				? await attempt('update_folder', { folderId: renaming.id, name: newName }, 'Renamed')
 				: await attempt('update_file', { fileId: renaming.id, title: newName }, 'Renamed');
+		dialogBusy = false;
 		if (!r.ok) {
 			dialogError = r.error;
 			return;
@@ -171,11 +178,13 @@
 
 	async function move(event: SubmitEvent) {
 		event.preventDefault();
-		if (!moving) return;
+		if (!moving || dialogBusy) return;
+		dialogBusy = true;
 		const r =
 			moving.type === 'folder'
 				? await attempt('update_folder', { folderId: moving.id, parentId: moveTo || null }, 'Moved')
 				: await attempt('update_file', { fileId: moving.id, folderId: moveTo || null }, 'Moved');
+		dialogBusy = false;
 		if (!r.ok) {
 			dialogError = r.error;
 			return;
@@ -204,6 +213,8 @@
 	let roomZip = $state<{ status: string; progress: number; error: string | null } | null>(null);
 
 	async function downloadRoom() {
+		if (roomZip && ['pending', 'running'].includes(roomZip.status)) return;
+		roomZip = { status: 'pending', progress: 0, error: null };
 		try {
 			let r = await op<{ id: string; status: string; progress: number; error: string | null; downloadUrl: string }>(
 				'export_room_zip',
@@ -441,7 +452,7 @@
 				/>
 			</div>
 			{#if dialogError}<p class="text-sm text-destructive" role="alert">{dialogError}</p>{/if}
-			<Dialog.Footer><Button type="submit">Create folder</Button></Dialog.Footer>
+			<Dialog.Footer><Button type="submit" disabled={dialogBusy}>Create folder</Button></Dialog.Footer>
 		</form>
 	</Dialog.Content>
 </Dialog.Root>
@@ -456,7 +467,7 @@
 			<Input aria-label="New name" required maxlength={200} bind:value={newName} />
 			{#if dialogError}<p class="text-sm text-destructive" role="alert">{dialogError}</p>{/if}
 			<div class="flex justify-end">
-				<Button type="submit">Save</Button>
+				<Button type="submit" disabled={dialogBusy}>Save</Button>
 			</div>
 		</form>
 	</Dialog.Content>
@@ -473,7 +484,7 @@
 				options={[{ value: '', label: 'The top of the room' }, ...moveTargets.map((f) => ({ value: f.id, label: `${f.number} ${f.name}` }))]}
 			/>
 			{#if dialogError}<p class="text-sm text-destructive" role="alert">{dialogError}</p>{/if}
-			<Dialog.Footer><Button type="submit">Move</Button></Dialog.Footer>
+			<Dialog.Footer><Button type="submit" disabled={dialogBusy}>Move</Button></Dialog.Footer>
 		</form>
 	</Dialog.Content>
 </Dialog.Root>

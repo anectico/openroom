@@ -107,7 +107,10 @@ export const updateWebhook = defineOperation({
 	http: { method: 'PATCH', path: '/webhooks/{webhookId}' },
 	input: z.object({ webhookId: z.string(), enabled: z.boolean().optional(), events: events.optional() }),
 	output: webhook,
-	audit: { target: (i) => ({ type: 'webhook', id: i.webhookId }), detail: (i) => ({ enabled: i.enabled }) },
+	audit: {
+		target: (i) => ({ type: 'webhook', id: i.webhookId }),
+		detail: (i) => ({ enabled: i.enabled, events: i.events }),
+	},
 	run: (input) => {
 		const h = load(input.webhookId);
 		const disabled =

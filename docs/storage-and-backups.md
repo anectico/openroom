@@ -9,7 +9,8 @@ losing that server loses both. Optional S3 stores documents and the database rep
    storage account. Leave public access off; browser requests go through OpenRoom's access checks.
 2. Create credentials restricted to that bucket. Allow listing objects and multipart uploads,
    reading, writing, deleting and aborting multipart uploads. Include both `files/` and `db/`;
-   frozen room archives also use `exports/`. Litestream needs conditional writes for `db/CURRENT`.
+   frozen room archives also use `exports/`. OpenRoom updates `db/CURRENT` with conditional writes
+   (`If-Match` and `If-None-Match`), so the provider must support them.
 3. Enter the bucket name, S3 endpoint, region, access key ID and secret access key. Copy the endpoint
    from the provider, without the bucket name or an extra path. Keep path-style requests on unless
    the provider requires otherwise. AWS S3 can use an empty endpoint and its actual region.

@@ -1,10 +1,12 @@
 import { error, json } from '@sveltejs/kit';
 import { createZipExport, ExportBusyError } from '#lib/server/exports.ts';
 import { requireViewer } from '#lib/server/viewer/context.ts';
+import { sameOrigin } from '#lib/server/viewer/http.ts';
 import { hit, ipKey } from '#lib/server/viewer/ratelimit.ts';
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = (event) => {
+	if (!sameOrigin(event.request, event.url)) return json({ error: 'Forbidden' }, { status: 403 });
 	const ctx = requireViewer(event);
 	if (ctx.settings.downloads !== 'zip') error(403, 'This link does not allow downloading a zip.');
 	if (!hit(`zip:${ipKey(event.getClientAddress())}`, 10, 60 * 60_000))

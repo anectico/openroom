@@ -32,7 +32,9 @@ Sending to addresses verified in your Cloudflare account is free. Other recipien
 Choose SMTP to use a mail server you already have. Copy its host, port, username, password and
 permitted sender from that server's settings. Port 465 uses TLS immediately; port 587 starts with
 SMTP and negotiates TLS. Use the provider's application password where required, rather than a
-personal sign-in password. This does not require another OpenRoom-specific service.
+personal sign-in password. This does not require another OpenRoom-specific service. A saved
+password is kept only while the host and username stay the same; changing either asks for the
+password again.
 
 ## Problems and limits
 

@@ -16,14 +16,22 @@ function json(status: number, body: unknown, headers: Record<string, string> = {
 	});
 }
 
-function error(status: number, code: string, message: string, detail?: Record<string, unknown>) {
-	return json(status, { error: { code, message, ...detail } });
+function error(
+	status: number,
+	code: string,
+	message: string,
+	detail?: Record<string, unknown>,
+	headers: Record<string, string> = {},
+) {
+	return json(status, { error: { code, message, ...detail } }, headers);
 }
 
 export async function handleRest(request: Request, path: string, ip: string | null) {
 	const owner = await verifyBearer(request.headers.get('authorization'));
 	if (!owner)
-		return error(401, 'unauthorized', 'Send a valid API key as Authorization: Bearer <key>.', undefined);
+		return error(401, 'unauthorized', 'Send a valid API key as Authorization: Bearer <key>.', undefined, {
+			'www-authenticate': 'Bearer realm="OpenRoom"',
+		});
 	const route = matchRoute(request.method, path);
 	if (route === null) return error(404, 'not_found', `No API route ${request.method} ${path}.`);
 	if (route === 'method')
@@ -54,7 +62,14 @@ export async function handleRest(request: Request, path: string, ip: string | nu
 		);
 		return json(200, output);
 	} catch (e) {
-		if (e instanceof OpError) return error(e.status, e.code, e.message, e.detail);
+		if (e instanceof OpError)
+			return error(
+				e.status,
+				e.code,
+				e.message,
+				e.detail,
+				e.status === 401 ? { 'www-authenticate': 'Bearer realm="OpenRoom"' } : {},
+			);
 		console.error(`REST ${route.op.name} failed`, e);
 		return error(500, 'internal', 'Something went wrong on the server. The error was logged.');
 	}

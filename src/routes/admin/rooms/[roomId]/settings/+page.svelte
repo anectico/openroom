@@ -13,10 +13,14 @@
 
 	let retentionDays = $state(untrack(() => data.room.frozenRetentionDays));
 	let copyName = $state(untrack(() => `${data.room.name} (copy)`));
+	let duplicating = $state(false);
 
 	async function duplicate(event: SubmitEvent) {
 		event.preventDefault();
+		if (duplicating) return;
+		duplicating = true;
 		const r = await act<{ id: string }>('duplicate_room', { roomId: room.id, name: copyName }, 'Room duplicated');
+		duplicating = false;
 		if (r) await goto(`/admin/rooms/${r.id}`);
 	}
 
@@ -37,7 +41,7 @@
 	</p>
 	<form class="flex flex-col gap-2 sm:flex-row" onsubmit={duplicate}>
 		<Input aria-label="Name of the copy" required maxlength={120} bind:value={copyName} />
-		<Button type="submit" variant="outline">Duplicate</Button>
+		<Button type="submit" variant="outline" disabled={duplicating}>{duplicating ? 'Duplicating…' : 'Duplicate'}</Button>
 	</form>
 </div>
 

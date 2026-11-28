@@ -25,9 +25,15 @@ export const emailCopy = {
 		subject: `New answer to your question in ${p.room}`,
 		text: `You have a new answer to your question in ${p.room}:\n\n${p.body}\n\n${p.url ? `Read and reply here (open the link you were sent first if your session has ended):\n${p.url}` : 'Open the link you were sent to read and reply.'}`,
 	}),
-	fileRequest: (p: { room: string; title: string; url: string; dueAt: number | null }): Message => ({
+	fileRequest: (p: {
+		room: string;
+		title: string;
+		url: string;
+		dueAt: number | null;
+		timeZone: string;
+	}): Message => ({
 		subject: `File requested in ${p.room}: ${p.title}`,
-		text: `The team behind ${p.room} asks you to upload: ${p.title}${p.dueAt ? ` (due ${new Date(p.dueAt).toISOString().slice(0, 10)})` : ''}.\n\nUpload it here (open the link you were sent first if your session has ended):\n${p.url}`,
+		text: `The team behind ${p.room} asks you to upload: ${p.title}${p.dueAt ? ` (due ${new Intl.DateTimeFormat('en-CA', { timeZone: p.timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(p.dueAt)})` : ''}.\n\nUpload it here (open the link you were sent first if your session has ended):\n${p.url}`,
 	}),
 	test: (p: { origin: string }): Message => ({
 		subject: 'OpenRoom test email',

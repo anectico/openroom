@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ArrowLeft, ChevronLeft, ChevronRight, Download, MessageSquare } from '@lucide/svelte';
+	import { untrack } from 'svelte';
 	import { formatBytes } from '#lib/admin/op.ts';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Dialog from '#lib/components/ui/dialog/index.js';
@@ -53,11 +54,19 @@
 	let tracker: ReadTracker | null = null;
 	let imageElement = $state<HTMLImageElement>();
 
+	const trackedLink = $derived(data.preview ? null : data.linkId);
+	const trackedFile = $derived(data.file.id);
+	const trackedVersion = $derived(data.file.version);
+
 	$effect(() => {
-		if (data.preview || !data.file.version) return;
-		const t = new ReadTracker(data.linkId, data.file.id, data.file.version);
+		const linkId = trackedLink;
+		const fileId = trackedFile;
+		const version = trackedVersion;
+		if (!linkId || !version) return;
+		const t = new ReadTracker(linkId, fileId, version);
 		tracker = t;
-		if (imageElement?.complete && imageElement.naturalWidth) t.setPage(1);
+		const image = untrack(() => imageElement);
+		if (image?.complete && image.naturalWidth) t.setPage(1);
 		const video = document.querySelector<HTMLVideoElement>('main video');
 		if (video) t.watch(video);
 		return () => t.stop();

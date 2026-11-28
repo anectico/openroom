@@ -50,12 +50,12 @@ export async function cleanupReleasedObjects(now = Date.now()) {
 	for (const { key } of rows) {
 		if (getSetting('storage.move.id')) return;
 		if (referenced(key)) continue;
+		const removed = db
+			.prepare('DELETE FROM objects WHERE key = ? AND refcount = 0 AND released_at < ?')
+			.run(key, now - objectRetentionMs);
+		if (!removed.changes) continue;
 		if (config) await s3Connection(config).disk.delete(key);
 		await storage().delete(key);
-		db.prepare('DELETE FROM objects WHERE key = ? AND refcount = 0 AND released_at < ?').run(
-			key,
-			now - objectRetentionMs,
-		);
 	}
 }
 

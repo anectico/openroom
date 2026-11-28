@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { createReadStream, createWriteStream, existsSync, mkdirSync, rmSync } from 'node:fs';
-import { open } from 'node:fs/promises';
+import { open, rename } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
@@ -116,13 +116,19 @@ export async function writeToStorage(
 		return;
 	}
 	const path = localPath(key);
+	const temporary = `${path}.${newId('tmp')}.part`;
 	mkdirSync(dirname(path), { recursive: true });
-	await pipeline(body, createWriteStream(path));
-	const handle = await open(path, 'r+');
 	try {
-		await handle.sync();
+		await pipeline(body, createWriteStream(temporary, { flags: 'wx' }));
+		const handle = await open(temporary, 'r+');
+		try {
+			await handle.sync();
+		} finally {
+			await handle.close();
+		}
+		await rename(temporary, path);
 	} finally {
-		await handle.close();
+		rmSync(temporary, { force: true });
 	}
 }
 

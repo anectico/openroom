@@ -36,7 +36,7 @@ if (!control) throw new Error('The app runtime did not start.');
 const activeUploads = new Set<http.IncomingMessage>();
 
 const addressHeader = process.env.ADDRESS_HEADER?.toLowerCase();
-const xffDepth = Number(process.env.XFF_DEPTH ?? 1);
+const xffDepth = Math.max(1, Number(process.env.XFF_DEPTH) || 1);
 
 function clientIp(req: http.IncomingMessage) {
 	const fallback = req.socket.remoteAddress ?? '';

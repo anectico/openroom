@@ -72,7 +72,7 @@ receive only permitted pins, so preview each restricted link to check the welcom
 These changes do not grant document access or send invitations. Both require admin or owner access.
 
 When reviewing the investor journey, check that Start here Previous/Next follows the intended order
-and that return links restore search/folder context. PDF resume is tab-local, session-scoped and
+and that return links restore folder context. PDF resume is tab-local, session-scoped and
 version-bound; it is separate from server reading analytics and is not written by member previews.
 Investors can ask private room-level or document-specific questions through My questions. Awaiting
 answer/Replied reflects the last author, not an unread-message count. ZIP preparation now exposes a
@@ -98,7 +98,7 @@ file. Verified identity shares reviews across authorized sessions; unverified se
 isolated. These records participate in export/erasure; previews cannot write them. Use a disposable
 real investor session to verify the experience, including current permissions and mobile screenshots.
 
-Completion polish: reviewed pins collapse into Show reviewed; version changes explain re-review;
+Completion polish: reviewed pins collapse into Reviewed; version changes explain re-review;
 PDF completion actions sit at the end of the document. PDF dialogs reveal the selected item on reopen.
 Conversations wrap long text and provide unread/latest/draft shortcuts. Uploads lead with persistent
 own receipts and a secondary Add another file action. The submitted-request return hint is validated
@@ -118,6 +118,6 @@ For UI regression checks, include the maximum 5,000-character document question,
 
 When validating investor and owner recovery, check question drafts against the original file/page, failed-access submission feedback, offline authentication retries, and same-version versus replacement NDA messages. Sharing-link inputs lock while saving; destructive confirmations cannot be dismissed while their operation is pending. Verify completion through the operation result. Include native video keyboard controls, narrow-phone seek width and PDF tools returning focus to Reader options.
 
-For investor-home layout checks, open a link with one visible file, then a room with several pins. Verify the direct file action, ordered recommendations, reader completion, download-only review, Undo and return to the saved PDF page. Check folder and index search with a restricted link. Check zero, one, three and six pins at 320, 390, 768 and desktop widths, including the library, updates, permitted ZIP downloads and FAQ.
+For investor-home layout checks, open a link with one visible file, then a room with several pins. Verify the direct file action, ordered recommendations, reader completion, download-only review, Undo and return to the saved PDF page. Check folder browsing and section numbers with a restricted link. Check zero, one, three and six pins at 320, 390, 768 and desktop widths, including the library, updates, permitted ZIP downloads and FAQ.
 
 Investor branding uses a compact room header and a first-visit welcome dialog with optional cover artwork. Use existing update_branding and link welcome operations to configure examples; do not simulate branding only in screenshots. Verify logo/colour inheritance, bright colours, first and return visits, new welcome revisions, safe Markdown and cross-link isolation. The appearance sample shares the header and welcome components.

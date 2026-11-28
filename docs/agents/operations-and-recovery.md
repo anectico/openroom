@@ -43,7 +43,8 @@ Never copy a database over the running app. A failed key or file check must leav
 and live database unchanged. The launcher alone restores and swaps snapshots.
 
 For a schema rollback, inspect `openroom-server rollback`'s plan and the snapshot. Changes since the
-snapshot are discarded. The host command checks the target image
+snapshot are discarded. The rolled-back database starts with no rollback-snapshot record, so doctor
+reports none until the next update takes a fresh snapshot. The host command checks the target image
 for an explicit S3 capability before stopping a configured install. An image predating S3 support
 cannot serve remote files, so rollback to it is refused before making changes. The migration drill in this revision exercises the current launcher's
 snapshot swap against the earlier journal; it is not a compatibility test of an older released image.

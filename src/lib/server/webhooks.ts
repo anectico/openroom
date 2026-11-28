@@ -42,8 +42,10 @@ type Payload = {
 	at: string;
 };
 
+const slackText = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 export async function sendWebhook(hook: WebhookRow, payload: Payload) {
-	const body = JSON.stringify(hook.format === 'slack' ? { text: payload.text } : payload);
+	const body = JSON.stringify(hook.format === 'slack' ? { text: slackText(payload.text) } : payload);
 	const timestamp = String(Math.floor(Date.now() / 1000));
 	const signature = hmacWith(Buffer.from(decrypt(hook.secret_enc)), `${timestamp}.${body}`);
 	let status = 0;

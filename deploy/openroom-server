@@ -7,6 +7,7 @@ REPO="anectico/openroom"
 IMAGE_REPO="ghcr.io/anectico/openroom"
 
 die() { echo "openroom-server: $*" >&2; exit 1; }
+need_value() { [[ $# -ge 2 && -n "$2" && "$2" != --* ]] || die "missing value for $1"; }
 compose() { docker compose --project-directory "$OPENROOM_DIR" -f "$OPENROOM_DIR/docker-compose.yml" "$@"; }
 env_get() { grep -E "^$1=" "$ENV_FILE" | tail -n1 | cut -d= -f2- || true; }
 env_edit() (
@@ -74,7 +75,7 @@ cmd_update() {
 	local version="" source="" current next
 	while [[ $# -gt 0 ]]; do
 		case "$1" in
-			--source) source="$2"; shift 2 ;;
+			--source) need_value "$@"; source="$2"; shift 2 ;;
 			--*) die "unknown update option $1" ;;
 			*) [[ -z "$version" ]] || die "give one version"; version="$1"; shift ;;
 		esac
@@ -166,8 +167,8 @@ cmd_restore() {
 	local at="" from="file:///data/replica"
 	while [[ $# -gt 0 ]]; do
 		case "$1" in
-			--at) at="$2"; shift 2 ;;
-			--from) from="$2"; shift 2 ;;
+			--at) need_value "$@"; at="$2"; shift 2 ;;
+			--from) need_value "$@"; from="$2"; shift 2 ;;
 			*) die "unknown option $1" ;;
 		esac
 	done

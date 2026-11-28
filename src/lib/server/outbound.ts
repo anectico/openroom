@@ -53,7 +53,8 @@ export function checkUrl(raw: string) {
 	if (
 		isIP(host)
 			? privateAddress(host)
-			: !host.includes('.') || /\.(local|internal|localhost|lan|home|corp)$/i.test(host)
+			: !host.includes('.') ||
+				/\.(local|internal|localhost|localdomain|lan|home|corp|intranet|arpa|test|invalid)$/i.test(host)
 	)
 		throw new OutboundError('Private and internal addresses are not allowed.');
 	return url;

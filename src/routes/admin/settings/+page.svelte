@@ -34,21 +34,27 @@
 	let password = $state('');
 	let testTo = $state('');
 	let busy = $state(false);
+	let savingGeneral = $state(false);
+	let savingEmail = $state(false);
 	const locked = $derived(data.email.source === 'env');
 
 	async function saveGeneral(event: SubmitEvent) {
 		event.preventDefault();
+		if (savingGeneral) return;
 		const input: Record<string, unknown> = {};
-		if (timeZone !== initial.general.timeZone) input.timeZone = timeZone;
+		if (timeZone !== data.general.timeZone) input.timeZone = timeZone;
 		const bytes = Math.round(uploadGb * 1024 ** 3);
-		if (Math.abs(bytes - initial.general.uploadMaxBytes) > 0.05 * 1024 ** 3) input.uploadMaxBytes = bytes;
-		if (cap !== initial.general.emailDailyCap) input.emailDailyCap = cap;
+		if (Math.abs(bytes - data.general.uploadMaxBytes) > 0.05 * 1024 ** 3) input.uploadMaxBytes = bytes;
+		if (cap !== data.general.emailDailyCap) input.emailDailyCap = cap;
 		if (!Object.keys(input).length) return;
+		savingGeneral = true;
 		await act('update_general_settings', input, 'Saved');
+		savingGeneral = false;
 	}
 
 	async function saveEmail(event: SubmitEvent) {
 		event.preventDefault();
+		if (savingEmail) return;
 		const input: Record<string, unknown> = { provider };
 		if (provider !== 'none') input.from = from;
 		if (provider === 'resend' && apiKey) input.apiKey = apiKey;
@@ -57,11 +63,13 @@
 			if (apiToken) input.apiToken = apiToken;
 		}
 		if (provider === 'smtp') Object.assign(input, { host, port, user: user || null, ...(password ? { password } : {}) });
+		savingEmail = true;
 		if (await act('update_email_settings', input, provider === 'none' ? 'Email turned off' : 'Email saved')) {
 			apiKey = '';
 			apiToken = '';
 			password = '';
 		}
+		savingEmail = false;
 	}
 
 	async function test() {
@@ -105,7 +113,7 @@
 				<p class="text-xs text-muted-foreground">Keep it below your provider’s daily limit.</p>
 			</div>
 		</div>
-		<Button type="submit" class="mt-auto self-start">Save preferences</Button>
+		<Button type="submit" class="mt-auto self-start" disabled={savingGeneral}>Save preferences</Button>
 	</form>
 
 	<form id="email" class="flex min-w-0 flex-col gap-5 rounded-xl border bg-card p-5 sm:p-6" onsubmit={saveEmail}>
@@ -213,7 +221,7 @@
 					</div>
 				</div>
 			{/if}
-			<Button type="submit" class="mt-auto self-start">{provider === 'none' ? 'Save email preferences' : 'Save email'}</Button>
+			<Button type="submit" class="mt-auto self-start" disabled={savingEmail}>{provider === 'none' ? 'Save email preferences' : 'Save email'}</Button>
 		{/if}
 	</form>
 	{#if data.email.configured && provider === data.email.provider}

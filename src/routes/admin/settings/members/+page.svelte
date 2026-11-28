@@ -27,10 +27,14 @@
 	type Invitation = (typeof data.invites)[number] & { url: string; emailed: boolean };
 	let created = $state<Invitation | null>(null);
 	let inviteError = $state('');
+	let inviting = $state(false);
 
 	async function invite(event: SubmitEvent) {
 		event.preventDefault();
+		if (inviting) return;
+		inviting = true;
 		const r = await attempt<Invitation>('invite_member', { email, role });
+		inviting = false;
 		if (!r.ok) {
 			inviteError = r.error;
 			return;
@@ -60,7 +64,7 @@
 <svelte:head><title>Members · Settings · OpenRoom</title></svelte:head>
 
 <div class="mb-4 flex justify-end">
-	<Button onclick={() => (inviteOpen = true)}>Invite a member</Button>
+	<Button onclick={() => { inviteError = ''; inviteOpen = true; }}>Invite a member</Button>
 </div>
 
 <div class="overflow-hidden rounded-xl border bg-card">
@@ -141,7 +145,7 @@
 				</div>
 				{#if inviteError}<p class="text-sm text-destructive" role="alert">{inviteError}</p>{/if}
 				<Dialog.Footer>
-					<Button type="submit">{data.emailReady ? 'Send invite' : 'Create invite link'}</Button>
+					<Button type="submit" disabled={inviting}>{data.emailReady ? 'Send invite' : 'Create invite link'}</Button>
 				</Dialog.Footer>
 			</form>
 		</Dialog.Content>

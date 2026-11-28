@@ -77,8 +77,8 @@ export function slugFor(name: string) {
 			.toLowerCase()
 			.normalize('NFKD')
 			.replace(/[^a-z0-9]+/g, '-')
-			.replace(/^-+|-+$/g, '')
-			.slice(0, 40) || 'room';
+			.slice(0, 40)
+			.replace(/^-+|-+$/g, '') || 'room';
 	let slug = base;
 	for (let n = 2; sqlite().prepare('SELECT 1 FROM rooms WHERE slug = ?').get(slug); n++)
 		slug = `${base}-${n}`;

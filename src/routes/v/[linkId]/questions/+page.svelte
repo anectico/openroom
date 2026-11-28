@@ -19,8 +19,9 @@
 	let busy = $state(false);
 	let error = $state('');
 	let sentId = $state('');
+	const scope = $derived(data.readingScope);
 	$effect(() => {
-		data.readingScope;
+		void scope;
 		untrack(() => { open = false; fileId = 'room'; question = error = sentId = ''; busy = false; });
 	});
 	async function send(event: SubmitEvent) {

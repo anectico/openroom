@@ -18,12 +18,16 @@
 	type CreatedKey = { name: string; key: string; mcpUrl: string; apiUrl: string };
 	let created = $state<CreatedKey | null>(null);
 	let error = $state('');
+	let creating = $state(false);
 	const mine = $derived(data.keys.filter((k) => k.memberId === data.member?.id));
 	const others = $derived(data.keys.filter((k) => k.memberId !== data.member?.id));
 
 	async function create(event: SubmitEvent) {
 		event.preventDefault();
+		if (creating) return;
+		creating = true;
 		const r = await attempt<CreatedKey>('create_api_key', { name });
+		creating = false;
 		if (!r.ok) {
 			error = r.error;
 			return;
@@ -48,7 +52,7 @@
 			? ', so they can only read'
 			: ''}.
 	</p>
-	<Button onclick={() => (open = true)}>New API key</Button>
+	<Button onclick={() => { error = ''; open = true; }}>New API key</Button>
 </div>
 
 {#snippet keyTable(keys: typeof data.keys, showOwner: boolean)}
@@ -107,10 +111,10 @@
 			<form class="space-y-4" onsubmit={create}>
 				<div class="space-y-2">
 					<Label for="key-name">Name</Label>
-					<Input id="key-name" required maxlength={80} placeholder="My laptop agent" bind:value={name} />
+					<Input id="key-name" required maxlength={80} placeholder="My laptop agent" disabled={creating} bind:value={name} />
 				</div>
 				{#if error}<p class="text-sm text-destructive" role="alert">{error}</p>{/if}
-				<Dialog.Footer><Button type="submit">Create key</Button></Dialog.Footer>
+				<Dialog.Footer><Button type="submit" disabled={creating}>{creating ? 'Creating…' : 'Create key'}</Button></Dialog.Footer>
 			</form>
 		</Dialog.Content>
 </Dialog.Root>

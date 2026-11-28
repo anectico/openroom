@@ -314,6 +314,12 @@ export const setRoomRetention = defineOperation({
 	},
 	run: (input) => {
 		const r = loadRoom(input.roomId);
+		if (r.frozen_at && r.frozen_at + input.days * 86_400_000 <= Date.now())
+			throw new OpError(
+				400,
+				'retention_past',
+				'That period has already ended for this frozen room, so its archive and activity would be deleted at once. Choose a longer period, or delete the room.',
+			);
 		const sqlite = database().sqlite;
 		sqlite.prepare('UPDATE rooms SET frozen_retention_days = ? WHERE id = ?').run(input.days, r.id);
 		if (r.frozen_at)

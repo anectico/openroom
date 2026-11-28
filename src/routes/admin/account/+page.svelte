@@ -17,10 +17,14 @@
 	let busy = $state(false);
 	let name = $state(untrack(() => data.member?.name ?? ''));
 	let nameError = $state('');
+	let savingName = $state(false);
 
 	async function saveName(event: SubmitEvent) {
 		event.preventDefault();
+		if (savingName) return;
+		savingName = true;
 		const r = await attempt('update_profile', { name }, 'Name saved');
+		savingName = false;
 		nameError = r.ok ? '' : r.error;
 	}
 
@@ -75,7 +79,7 @@
 			<Label for="name">Name</Label>
 			<div class="flex gap-2">
 				<Input id="name" required maxlength={80} bind:value={name} />
-				<Button type="submit" variant="outline">Save</Button>
+				<Button type="submit" variant="outline" disabled={savingName}>{savingName ? 'Saving…' : 'Save'}</Button>
 			</div>
 			{#if nameError}<p class="text-sm text-destructive" role="alert">{nameError}</p>{/if}
 		</div>

@@ -110,6 +110,17 @@ function discardPasswordLink(userId: string, url: string) {
 		.run(passwordLinkId(url), userId);
 }
 
+function lastActiveAt(id: string) {
+	return (
+		database()
+			.sqlite.prepare(
+				`SELECT nullif(max(coalesce((SELECT max(s.updated_at) FROM session s WHERE s.user_id = u.id), 0), coalesce(u.last_active_at, 0)), 0) AS at
+				FROM user u WHERE u.id = ?`,
+			)
+			.get(id) as { at: number | null }
+	).at;
+}
+
 function activeMember(id: string) {
 	const m = findMember(id);
 	if (!m || m.removed_at !== null || !hasPassword(id)) throw notFound('Member');
@@ -348,7 +359,7 @@ export const changeMemberRole = defineOperation({
 			email: m.email,
 			role: input.role,
 			createdAt: m.created_at,
-			lastActiveAt: null,
+			lastActiveAt: lastActiveAt(m.id),
 		};
 	},
 });

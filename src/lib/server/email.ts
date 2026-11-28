@@ -36,9 +36,9 @@ function fromEnv(): EmailConfig | null {
 			provider: 'smtp',
 			from,
 			host: process.env.SMTP_HOST,
-			port: Number(process.env.SMTP_PORT ?? 587),
-			user: process.env.SMTP_USER ?? null,
-			password: process.env.SMTP_PASSWORD ?? null,
+			port: Number(process.env.SMTP_PORT || 587),
+			user: process.env.SMTP_USER || null,
+			password: process.env.SMTP_PASSWORD || null,
 			source: 'env',
 		};
 	const accountId = process.env.CLOUDFLARE_EMAIL_ACCOUNT_ID;
@@ -126,6 +126,15 @@ export function sentLastDay() {
 	return countLastDay(['email.send', 'email.reset', 'email.code', 'email.notice']);
 }
 
+export function recordSent(kind: EmailKind) {
+	const now = Date.now();
+	database()
+		.sqlite.prepare(
+			'INSERT INTO jobs (kind, payload, run_at, max_attempts, created_at, done_at) VALUES (?, ?, ?, ?, ?, ?)',
+		)
+		.run(kind, '{}', now, 1, now, now);
+}
+
 async function sendCloudflare(
 	config: Extract<EmailConfig, { provider: 'cloudflare' }>,
 	to: string,
@@ -163,7 +172,8 @@ async function sendCloudflare(
 		throw new EmailError('Cloudflare did not confirm acceptance of the email.');
 }
 
-export async function deliver(config: EmailConfig, to: string, message: Message) {
+export async function deliver(config: EmailConfig, to: string, raw: Message) {
+	const message = { ...raw, subject: raw.subject.replace(/[\r\n]+/g, ' ').trim() };
 	try {
 		if (config.provider === 'resend') {
 			const { error } = await new Resend(config.apiKey).emails.send({

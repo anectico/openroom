@@ -83,7 +83,7 @@ revoking all links, member removal and storage moves.
 `freeze_room` is permanent: it revokes links, closes requests, makes the room read only and builds
 a checksummed archive. Inspect `get_room_archive`; retry a failed archive and download the ready
 archive through its authorized URL. `set_room_retention` changes its retention, with 730 days as the
-default. Export a viewer's data with `export_viewer_data`; use the documented erasure scope before
+default; a period that would already have ended is refused. Export a viewer's data with `export_viewer_data`; use the documented erasure scope before
 `erase_viewer`. Follow the [recovery runbook](operations-and-recovery.md) for host updates and restore.
 
 ## Room appearance
@@ -142,7 +142,7 @@ isolated. Previews do not persist reviews. Export and erasure include the server
 browser-local drafts and disclosure choices have the separate lifecycle described in the privacy guide.
 
 For completion checks, verify that review saves do not reopen a collapsed welcome, reviewed pins are
-available under Show reviewed, and new current versions explain why another review is needed.
+available under Reviewed, and new current versions explain why another review is needed.
 Scroll a long PDF to its end and test completion/next actions. Reopen Find after choosing a late result
 and Pages near the end of a thumbnail group. Test long URLs, unread/draft shortcuts and real upload
 receipts after reload and return; use separate unverified sessions when checking privacy.
@@ -159,10 +159,10 @@ Personal welcome editing fills the phone screen; its preview uses the same safe 
 Verify short and long welcomes in the first-visit dialog, including keyboard dismissal and a reachable button at phone height. Confirm visible Mark reviewed/Undo labels and file format/size/Section
 metadata. Use real investor sessions for reviews, unread replies and request counts.
 
-When checking the owner UI, verify full document titles, protection summaries on mobile sharing rows, and a discard decision for unsaved link edits. Room appearance shows the full room’s documents, pins and FAQ at the indicated width and scale. Workspace appearance uses sample files; use Actual size for detail and `preview_link` for actual access. Check that entry forms show only access steps and the welcome appears after entry. Search/folder context should remain intact when returning from a document.
+When checking the owner UI, verify full document titles, protection summaries on mobile sharing rows, and a discard decision for unsaved link edits. Room appearance shows the full room’s documents, pins and FAQ at the indicated width and scale. Workspace appearance uses sample files; use Actual size for detail and `preview_link` for actual access. Check that entry forms show only access steps and the welcome appears after entry. Folder context should remain intact when returning from a document.
 
 For reliability checks, draft a page-specific question, move to another page, and confirm its original context before submitting. Navigate to another document and check for an empty draft. Exercise an access change while sending; confirm the draft survives and no false Sent message appears. Test offline authentication retries, unchanged and replacement NDA versions, native video keyboard controls, PDF tool return focus, and pending sharing/destructive actions. Do not treat a disabled pending confirmation as a cancelled operation; inspect its actual result.
 
-For investor-home layout checks, open a link with one visible file, then a room with several pins. Verify the direct file action, ordered recommendations, reader completion, download-only review, Undo and return to the saved PDF page. Check folder and index search with a restricted link. Scroll to a folder and check that both the room Back button and browser Back restore the previous list position. Enter a nested folder directly and verify Back goes up one level. Open a protected pitch deck in full screen, advance a page and exit. Verify the watermark, focus-loss protection and return page. Check request and reply counts on the section links. Check zero, one, three and six pins at 320, 390, 768 and desktop widths, including the library, updates, permitted ZIP downloads and FAQ.
+For investor-home layout checks, open a link with one visible file, then a room with several pins. Verify the direct file action, ordered recommendations, reader completion, download-only review, Undo and return to the saved PDF page. Check folder browsing and section numbers with a restricted link. Scroll to a folder and check that both the room Back button and browser Back restore the previous list position. Enter a nested folder directly and verify Back goes up one level. Open a protected pitch deck in full screen, advance a page and exit. Verify the watermark, focus-loss protection and return page. Check request and reply counts on the section links. Check zero, one, three and six pins at 320, 390, 768 and desktop widths, including the library, updates, permitted ZIP downloads and FAQ.
 
 For branded investor-home checks, configure a real logo, a non-default workspace colour, a room introduction and a separate link-specific welcome through existing operations. Check room override/reset, bright-colour contrast, tall/wide logos, blank introductions and the linked Anectico credit. Verify that dismissing the welcome survives reload, tab closure, note edits and signing back in through the same link in this browser, and that another investor link never receives the first link’s welcome. Inspect desktop and phone screenshots of both the real room and owner sample.

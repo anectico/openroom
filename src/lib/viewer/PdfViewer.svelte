@@ -71,7 +71,8 @@
 		if (readingScope && fileId) rememberPage(readingScope, { fileId, version, page: current });
 	});
 
-	$effect(() => { const page = initialPage; if (ready && page && page > 0) untrack(() => goTo(page)); });
+	const requestedPage = $derived(initialPage);
+	$effect(() => { const page = requestedPage; if (ready && page && page > 0) untrack(() => goTo(page)); });
 
 	onMount(async () => {
 		try {

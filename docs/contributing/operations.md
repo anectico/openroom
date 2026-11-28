@@ -161,4 +161,5 @@ If the build fails (for example, the disk is full), `retry_room_archive` or the 
 builds it again. Deleting a room expires its exports and archive at once.
 
 When the retention period ends, the daily retention job deletes the room's reads and events and the
-archive; NDA acceptances stay.
+archive; NDA acceptances stay. `set_room_retention` refuses a period that has already ended, so a
+retention change never deletes them at once.

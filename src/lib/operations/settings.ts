@@ -5,6 +5,7 @@ import {
 	deliver,
 	EmailError,
 	emailConfig,
+	recordSent,
 	sentLastDay,
 } from '../server/email.ts';
 import { emailCopy } from '../server/email-copy.ts';
@@ -133,6 +134,8 @@ export const updateEmailSettings = defineOperation({
 				'smtp_port',
 				'smtp_user',
 				'smtp_password',
+				'last_ok_at',
+				'last_error',
 			])
 				deleteSetting(`email.${k}`);
 			return status();
@@ -151,6 +154,14 @@ export const updateEmailSettings = defineOperation({
 			if (input.apiToken) setSecretSetting('email.cloudflare_token', input.apiToken);
 			setSetting('email.cloudflare_account_id', input.accountId);
 		} else {
+			const sameServer =
+				input.host === getSetting('email.smtp_host') &&
+				(input.user ?? null) === getSetting('email.smtp_user');
+			if (input.password === undefined && !sameServer && getSecretSetting('email.smtp_password')) {
+				if (input.user)
+					throw new OpError(400, 'missing_password', 'Enter the SMTP password for this server and user.');
+				deleteSetting('email.smtp_password');
+			}
 			setSetting('email.smtp_host', input.host);
 			setSetting('email.smtp_port', String(input.port));
 			setSetting('email.smtp_user', input.user ?? null);
@@ -176,6 +187,13 @@ export const testEmail = defineOperation({
 		if (!config) throw new OpError(409, 'email_not_set_up', 'Set up email first.');
 		const to = normaliseEmail(input.to ?? findMember(ctx.actor.userId)?.email ?? '');
 		if (!to) throw new OpError(400, 'invalid_email', 'Give a valid email to send the test to.');
+		if (sentLastDay() >= dailyCap())
+			return {
+				sent: false,
+				to,
+				error: `The daily email cap of ${dailyCap()} is reached; try again later or raise it in Settings.`,
+			};
+		recordSent('email.send');
 		try {
 			await deliver(config, to, emailCopy.test({ origin: publicOrigin() }));
 			return { sent: true, to, error: null };

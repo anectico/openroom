@@ -451,9 +451,9 @@ export const markNoticesRead = defineOperation({
 				.run(ctx.actor.userId, now);
 		else {
 			const insert = sqlite().prepare(
-				'INSERT OR IGNORE INTO notice_reads (notice_id, user_id, read_at) VALUES (?, ?, ?)',
+				'INSERT OR IGNORE INTO notice_reads (notice_id, user_id, read_at) SELECT id, ?, ? FROM notices WHERE id = ?',
 			);
-			for (const id of input.ids ?? []) insert.run(id, ctx.actor.userId, now);
+			for (const id of input.ids ?? []) insert.run(ctx.actor.userId, now, id);
 		}
 		return { ok: true as const };
 	},
@@ -491,7 +491,9 @@ export const setNotificationPref = defineOperation({
 	role: 'observer',
 	http: { method: 'PUT', path: '/notifications/prefs' },
 	input: z.object({
-		event: z.enum(Object.keys(noticeEvents) as [keyof typeof noticeEvents]),
+		event: z.enum(
+			Object.keys(noticeEvents).filter((event) => event !== 'email_cap') as [keyof typeof noticeEvents],
+		),
 		email: z.boolean(),
 	}),
 	output: prefs,

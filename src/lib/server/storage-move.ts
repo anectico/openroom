@@ -3,7 +3,7 @@ import { existsSync, rmSync } from 'node:fs';
 import { database } from './db/index.ts';
 import { enqueue } from './jobs.ts';
 import { s3Config, s3Connection, s3Identity } from './s3.ts';
-import { setSetting } from './settings.ts';
+import { getSetting, setSetting } from './settings.ts';
 import { diskStream, localPath, writeToStorage } from './storage.ts';
 
 export function queueStorageMove() {
@@ -20,7 +20,7 @@ export function queueStorageMove() {
 
 export async function moveDiskObjects() {
 	const config = s3Config();
-	if (!config) return;
+	if (!config || getSetting('storage.move.id')) return;
 	const identity = s3Identity(config);
 	const db = database().sqlite;
 	const rows = db
@@ -28,6 +28,7 @@ export async function moveDiskObjects() {
 		.all() as { key: string; size: number; sha256: string }[];
 	try {
 		for (const row of rows) {
+			if (getSetting('storage.move.id')) return;
 			if (existsSync(localPath(row.key)))
 				await writeToStorage(row.key, diskStream(row.key), row.size, 's3', config);
 			const stream = await s3Connection(config).disk.getStream(row.key);

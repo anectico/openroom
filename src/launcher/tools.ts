@@ -1,5 +1,14 @@
 import { spawnSync } from 'node:child_process';
-import { existsSync, readdirSync, readFileSync, rmSync, statfsSync, statSync, writeFileSync } from 'node:fs';
+import {
+	existsSync,
+	readdirSync,
+	readFileSync,
+	renameSync,
+	rmSync,
+	statfsSync,
+	statSync,
+	writeFileSync,
+} from 'node:fs';
 import { join } from 'node:path';
 import { openSqlite } from '../lib/server/db/connection.ts';
 import { dataDir, dbPath, rollbackMarkerPath } from '../lib/server/paths.ts';
@@ -128,7 +137,11 @@ function rollbackPlan(previousJournalPath: string, apply: boolean) {
 	if (!snapshot || !existsSync(snapshot.path)) {
 		throw new Error(`No snapshot taken before ${extra[0]}; cannot roll back the database safely.`);
 	}
-	if (apply) writeFileSync(rollbackMarkerPath, JSON.stringify({ snapshot: snapshot.path }));
+	if (apply) {
+		const temporary = `${rollbackMarkerPath}.tmp`;
+		writeFileSync(temporary, JSON.stringify({ snapshot: snapshot.path }), { mode: 0o600, flush: true });
+		renameSync(temporary, rollbackMarkerPath);
+	}
 	const ageDays = (Date.now() - snapshot.created_at) / 86_400_000;
 	return {
 		action: 'swap',

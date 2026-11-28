@@ -29,6 +29,10 @@ export const litestreamBin = process.env.LITESTREAM_BIN ?? 'litestream';
 
 export class StartupError extends Error {}
 
+function removeDatabaseFiles(path: string) {
+	for (const suffix of ['', '-wal', '-shm']) rmSync(path + suffix, { force: true });
+}
+
 function run(args: string[], config: ReturnType<typeof s3FromEnv> = null) {
 	const result = spawnSync(litestreamBin, args, { stdio: 'inherit', env: litestreamEnv(config) });
 	if (result.error) throw new StartupError(`Could not run Litestream: ${result.error.message}`);
@@ -55,14 +59,14 @@ export async function restoreIfRequested() {
 		throw new StartupError(`No replica found at ${from} (no CURRENT file). Nothing was restored or created.`);
 	mkdirSync(dbDir, { recursive: true });
 	const staging = `${dbPath}.restoring`;
-	rmSync(staging, { force: true });
+	removeDatabaseFiles(staging);
 	writeLitestreamConfig(entry.prefix, from, config);
 	const args = ['restore', '-if-db-not-exists', '-config', litestreamConfigPath, '-o', staging];
 	if (at) args.push('-timestamp', at.toISOString());
 	args.push(dbPath);
 	console.log(`Restoring from ${from} prefix ${entry.prefix}${at ? ` at ${at.toISOString()}` : ''}`);
 	if (run(args, config) !== 0 || !existsSync(staging)) {
-		rmSync(staging, { force: true });
+		removeDatabaseFiles(staging);
 		throw new StartupError(
 			`Restore from ${from} failed. Nothing was created; check RESTORE_FROM and the keys.`,
 		);
@@ -89,7 +93,7 @@ export async function restoreIfRequested() {
 		await appendPrefix('restore', replicaRoot(config), config);
 		renameSync(staging, dbPath);
 	} catch (error) {
-		rmSync(staging, { force: true });
+		removeDatabaseFiles(staging);
 		throw error;
 	}
 	return true;
@@ -118,6 +122,7 @@ function carryLiveState(livePath: string, snapshotPath: string) {
 		const live = (name: string) =>
 			!!snap.prepare("SELECT 1 FROM live.sqlite_master WHERE type = 'table' AND name = ?").get(name);
 		snap.transaction(() => {
+			if (tableExists(snap, '_snapshots')) snap.exec('DELETE FROM main._snapshots');
 			if (tableExists(snap, 'settings') && live('settings')) {
 				const cols = sharedColumns(snap, 'settings').map((c) => `"${c}"`);
 				if (cols.includes('"key"')) {
@@ -188,14 +193,14 @@ export async function rollbackIfMarked() {
 		}
 		if (!existsSync(marker.snapshot))
 			throw new StartupError(`Rollback snapshot is missing: ${marker.snapshot}`);
-		for (const suffix of ['', '-wal', '-shm']) rmSync(staged + suffix, { force: true });
+		removeDatabaseFiles(staged);
 		copyFileSync(marker.snapshot, staged);
 		let config: ReturnType<typeof s3Config>;
 		try {
 			carryLiveState(dbPath, staged);
 			config = await inspectRollback(staged);
 		} catch (error) {
-			rmSync(staged, { force: true });
+			removeDatabaseFiles(staged);
 			throw error;
 		}
 		const root = replicaRoot(config);

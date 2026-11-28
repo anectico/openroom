@@ -62,10 +62,10 @@ any version, from the Files tab.
 
 ## Navigation and reading continuity
 
-The document list uses shallow URL state (`q`, `folder`, `expanded`, `changed`) and reads SvelteKit 3's
+The document list uses shallow URL state (`folder`, `expanded`, `changed`) and reads SvelteKit 3's
 `page.shallow.url` when present. Reader links carry a bounded return scroll offset (`y`). Return URLs
 are constructed from an allowlist of parameters on this room's route, never an arbitrary destination.
-Search and folder results still use the server's permission-filtered tree.
+Folder and changed-document results still use the server's permission-filtered tree.
 
 `guide=1` selects the room's ordered visible pins for reader Previous/Next navigation when the
 current file belongs to that list. Every reader load rechecks the session and permissions. If a

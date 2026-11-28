@@ -14,10 +14,14 @@
 	let name = $state('');
 	let defaultAccess = $state<'view' | 'none'>('none');
 	let error = $state('');
+	let creating = $state(false);
 
 	async function create(event: SubmitEvent) {
 		event.preventDefault();
+		if (creating) return;
+		creating = true;
 		const r = await attempt<{ id: string }>('create_group', { roomId: room.id, name, defaultAccess }, 'Group created');
+		creating = false;
 		if (!r.ok) {
 			error = r.error;
 			return;
@@ -35,7 +39,7 @@
 	<p class="text-sm text-muted-foreground">
 		A group decides which folders and files its links see. A link without a group sees the whole room.
 	</p>
-	{#if !room.frozenAt}<Button onclick={() => (open = true)}>New group</Button>{/if}
+	{#if !room.frozenAt && data.member?.role !== 'observer'}<Button onclick={() => (open = true)}>New group</Button>{/if}
 </div>
 
 {#if data.groups.length === 0}
@@ -80,7 +84,7 @@
 				/>
 			</div>
 			{#if error}<p class="text-sm text-destructive" role="alert">{error}</p>{/if}
-			<Dialog.Footer><Button type="submit">Create group</Button></Dialog.Footer>
+			<Dialog.Footer><Button type="submit" disabled={creating}>{creating ? 'Creating…' : 'Create group'}</Button></Dialog.Footer>
 		</form>
 	</Dialog.Content>
 </Dialog.Root>

@@ -7,8 +7,14 @@ import { recordAcceptance } from '#lib/server/viewer/gates.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 function safeNext(url: URL, linkId: string) {
+	const base = `/v/${linkId}`;
 	const next = url.searchParams.get('next') ?? '';
-	return next.startsWith(`/v/${linkId}`) && !next.startsWith(`/v/${linkId}/nda`) ? next : `/v/${linkId}`;
+	const path = next.split(/[?#]/, 1)[0];
+	return (path === base || path.startsWith(`${base}/`)) &&
+		path !== `${base}/nda` &&
+		!path.startsWith(`${base}/nda/`)
+		? next
+		: base;
 }
 
 export const load: PageServerLoad = (event) => {

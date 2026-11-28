@@ -187,7 +187,7 @@ document list if someone has uploaded or deleted a file while the editor is open
 Pins are shared across the room. Each investor sees only pinned files their link can access;
 pinning never grants access or reveals a hidden file's title. The section disappears if none are
 visible. Cards open the document viewer or download a download-only file. The reading list appears
-at the document root and hides while searching or browsing folders. Preview each restricted link
+at the document root and hides while browsing folders. Preview each restricted link
 to check its note and visible reading order before sharing.
 
 Renaming, moving or uploading a new version keeps a document pinned. Deleting a document removes
@@ -251,7 +251,7 @@ Use **Back** beside a folder name to return to the list where you opened it, at 
 
 Choose **Full screen** in a PDF or image viewer to use the whole display. In a pitch deck, use the arrow keys or page buttons to advance one slide at a time. **Exit full screen** returns you to the same page.
 
-Use **Mark reviewed** at the end of a recommended document’s reader. The footer names the next document in reading order and includes a link back to the library, folder or search. For a download-only file, the action is on its recommended card. Open **Reviewed** to revisit completed items. **Undo** in the reader or on a download-only item reverses the choice. A new file version can be reviewed again.
+Use **Mark reviewed** at the end of a recommended document’s reader. The footer names the next document in reading order and includes a link back to the library or folder. For a download-only file, the action is on its recommended card. Open **Reviewed** to revisit completed items. **Undo** in the reader or on a download-only item reverses the choice. A new file version can be reviewed again.
 On return, an available PDF reading position takes precedence over the next recommended file. **Resume on page…** opens that page. The remaining recommendations appear below.
 Verified investors keep their checklist across verified sessions; unverified visitors keep it only in
 their current session. It is a personal checklist, not team approval or a read receipt.
@@ -259,7 +259,7 @@ their current session. It is a personal checklist, not team approval or a read r
 **Requests** shows outstanding items in due-date order. Open **Submissions & history** for submitted
 or closed items. You can still add files to a submitted request while it remains open.
 
-On phones, PDF zoom controls are in **Zoom options**. **Pages** opens a scrollable thumbnail dialog
+On phones, PDF zoom controls are in **Reader options**. **Pages** opens a scrollable thumbnail dialog
 with pagination kept in view. Selecting a Find result closes the dialog and keeps result navigation
 beside the reading controls. Reopen Find to see the selected result; clear search to remove highlights.
 
@@ -267,7 +267,7 @@ Conversation page references take you to that page in the current authorized doc
 local timestamps and save draft text in this tab through reloads. Drafts clear after a successful send
 or sign-out. If delivery cannot be confirmed, check the conversation before retrying.
 
-Reviewed Start here documents now move into **Show reviewed**, keeping remaining items prominent in
+Reviewed Start here documents now move into **Reviewed**, keeping remaining items prominent in
 the team's original order. **All documents** in the Start here header goes directly to the folder list. When a previously reviewed
 file changes version, **New version — review again** explains the reset with the version/date.
 
@@ -282,7 +282,7 @@ request and opens its history; outstanding requests remain listed first.
 
 ## Clearer reading and submission controls
 
-Search is next to **All documents** and fills the phone width. The heading changes when browsing a folder or searching. **Questions** and **Requests** are available in the main navigation. Unread replies and outstanding requests have shortcuts beside the library. Permitted ZIP downloads appear below the list. File format, size and section share a compact metadata line.
+The **All documents** heading changes when browsing a folder. **Questions** and **Requests** are available in the main navigation. Unread replies and outstanding requests have shortcuts beside the library. Permitted ZIP downloads appear below the list. File format, size and section share a compact metadata line.
 
 Request badges use both icons and words: amber **Action needed**, green **Uploaded**, and neutral
 **Closed**. Uploaded confirms receipt only. The newest receipt appears once; **Previous submissions**

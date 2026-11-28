@@ -6,6 +6,7 @@ import { blockValue, type Entry, parseEntries } from '../server/access.ts';
 import { database } from '../server/db/index.ts';
 import { emailReady, sendEmail } from '../server/email.ts';
 import { emailCopy } from '../server/email-copy.ts';
+import { normaliseEmail } from '../server/emails.ts';
 import { newId } from '../server/ids.ts';
 import { findMember } from '../server/members.ts';
 import { publicOrigin } from '../server/origin.ts';
@@ -527,7 +528,7 @@ export const previewLink = defineOperation({
 	http: { method: 'POST', path: '/links/{linkId}/preview' },
 	input: z.object({ linkId: z.string() }),
 	output: z.object({ url: z.string(), expiresAt: z.number() }),
-	audit: { target: (i) => ({ type: 'link', id: i.linkId }) },
+	audit: { target: (i) => ({ type: 'link', id: i.linkId, roomId: loadLink(i.linkId).room_id }) },
 	run: (input, ctx) => {
 		const row = loadLink(input.linkId);
 		if (statusOf(row) !== 'active')
@@ -553,10 +554,10 @@ export const sendLinkInvites = defineOperation({
 		'Email the link to the individual emails on its allow list (domains are skipped). Needs email. Give emails to send to only some of them.',
 	role: 'admin',
 	http: { method: 'POST', path: '/links/{linkId}/invites' },
-	input: z.object({ linkId: z.string(), emails: z.array(z.string()).max(1000).optional() }),
+	input: z.object({ linkId: z.string(), emails: z.array(z.string().max(320)).max(1000).optional() }),
 	output: z.object({ sent: z.number(), skipped: z.array(z.string()) }),
 	audit: {
-		target: (i) => ({ type: 'link', id: i.linkId }),
+		target: (i) => ({ type: 'link', id: i.linkId, roomId: loadLink(i.linkId).room_id }),
 		detail: (_i, o) => ({ sent: o.sent, skipped: o.skipped.length }),
 	},
 	run: (input, ctx) => {
@@ -570,9 +571,9 @@ export const sendLinkInvites = defineOperation({
 				value: string;
 			}[]
 		).map((r) => r.value);
-		const wanted = input.emails ? new Set(input.emails.map((e) => e.trim().toLowerCase())) : null;
+		const wanted = input.emails ? new Set(input.emails.map((e) => normaliseEmail(e))) : null;
 		const targets = listed.filter((e) => !wanted || wanted.has(e));
-		const skipped = input.emails ? input.emails.filter((e) => !listed.includes(e.trim().toLowerCase())) : [];
+		const skipped = input.emails ? input.emails.filter((e) => !listed.includes(normaliseEmail(e) ?? '')) : [];
 		const member = findMember(ctx.actor.userId);
 		const token = decrypt(row.token_enc);
 		const url = `${publicOrigin()}/r/${token}`;

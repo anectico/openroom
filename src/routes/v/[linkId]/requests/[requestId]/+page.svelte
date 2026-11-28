@@ -37,7 +37,13 @@
 			signal.addEventListener('abort', () => xhr.abort(), { once: true });
 			xhr.setRequestHeader('content-type', 'application/octet-stream');
 			xhr.upload.onprogress = (e) => e.lengthComputable && (progress = e.loaded / e.total);
-			xhr.onload = () => (xhr.status === 200 ? resolve() : reject(new Error('The upload failed. Try again.')));
+			xhr.onload = () => {
+				if (xhr.status === 200) return resolve();
+				let reason: unknown;
+				try { reason = JSON.parse(xhr.responseText)?.error?.message; } catch {}
+				if (xhr.status === 404 && reason === 'This file request is no longer available to this session.') closed = true;
+				reject(new Error(typeof reason === 'string' ? reason : 'The upload failed. Try again.'));
+			};
 			xhr.onerror = () => reject(new Error('The connection broke. Try again.'));
 			xhr.send(file);
 		});
@@ -52,8 +58,9 @@
 		});
 		const json = await r.json().catch(() => null);
 		signal.throwIfAborted();
-		if (r.status === 404 && json?.message === 'This request is closed or no longer open to you.') closed = true;
-		if (!r.ok) throw new Error(json?.error ?? json?.message ?? 'Something went wrong.');
+		const reason = json?.error ?? json?.message;
+		if (r.status === 404 && reason === 'This request is closed or no longer open to you.') closed = true;
+		if (!r.ok) throw new Error(reason ?? 'Something went wrong.');
 		return json;
 	}
 

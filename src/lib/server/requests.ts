@@ -242,6 +242,7 @@ export function emailRequest(request: RequestRow) {
 					title: request.title,
 					url: `${publicOrigin()}/v/${r.linkId}/requests/${request.id}`,
 					dueAt: request.due_at,
+					timeZone: getSetting('general.time_zone') ?? 'UTC',
 				}),
 			});
 			sent++;

@@ -137,7 +137,7 @@ if command -v firewall-cmd >/dev/null 2>&1 && firewall-cmd --state >/dev/null 2>
 fi
 
 port_busy() {
-	command -v ss >/dev/null 2>&1 && ss -ltnH "sport = :$1" 2>/dev/null | grep -q .
+	command -v ss >/dev/null 2>&1 && ss -ltunH "sport = :$1" 2>/dev/null | grep -q .
 }
 for port in 80 443; do
 	transport=tcp
