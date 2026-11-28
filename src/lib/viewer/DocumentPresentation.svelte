@@ -5,7 +5,7 @@
 	import { Button } from '#lib/components/ui/button/index.js';
 	import Watermark from './Watermark.svelte';
 
-	let { title, pdf, image, page = 1, watermark, obscured = false, open = $bindable(false), onpage, onexit }: {
+	let { title, pdf, image, page = 1, watermark, obscured = false, open = $bindable(false), onpage, onexit, buttonClass = '' }: {
 		title: string;
 		pdf?: PDFDocumentProxy | null;
 		image?: string;
@@ -15,6 +15,7 @@
 		open?: boolean;
 		onpage?: (page: number) => void;
 		onexit?: () => void;
+		buttonClass?: string;
 	} = $props();
 
 	let dialog: HTMLDialogElement;
@@ -24,7 +25,7 @@
 	let failed = $state(false);
 	let native = false;
 
-	function enter() {
+	export function enter() {
 		dialog.showModal();
 		open = true;
 		if (document.fullscreenEnabled && !document.fullscreenElement) {
@@ -100,7 +101,7 @@
 </script>
 
 <svelte:document onfullscreenchange={fullscreenChanged} />
-<Button variant="ghost" size="sm" class="min-h-11 px-2 sm:min-h-8" aria-label="Full screen" title="Full screen" disabled={!pdf && !image} onclick={enter}>
+<Button variant="ghost" size="sm" class="min-h-11 px-2 sm:min-h-8 {buttonClass}" aria-label="Full screen" title="Full screen" disabled={!pdf && !image} onclick={enter}>
 	<Maximize /><span class="hidden sm:inline">Full screen</span>
 </Button>
 <dialog bind:this={dialog} aria-label={title} onclose={closed} onkeydown={keys} class="presentation fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none overflow-hidden border-0 bg-zinc-950 p-0 text-white open:flex open:flex-col">

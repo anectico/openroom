@@ -23,7 +23,7 @@ export const emailCopy = {
 	}),
 	questionReply: (p: { room: string; body: string; url: string | null }): Message => ({
 		subject: `New answer to your question in ${p.room}`,
-		text: `You have a new answer to your question in ${p.room}:\n\n${p.body}\n\n${p.url ? `Read and reply here (open the link you were sent first if your session has ended):\n${p.url}` : 'Open the link you were sent to read and reply.'}`,
+		text: `You have a new answer to your question in ${p.room}:\n\n${p.body}\n\n${p.url ? `Read and reply here:\n${p.url}\n\nIf your session has ended, open your invitation link and you will be brought back to this answer.` : 'Open the link you were sent to read and reply.'}`,
 	}),
 	fileRequest: (p: {
 		room: string;
@@ -33,7 +33,7 @@ export const emailCopy = {
 		timeZone: string;
 	}): Message => ({
 		subject: `File requested in ${p.room}: ${p.title}`,
-		text: `The team behind ${p.room} asks you to upload: ${p.title}${p.dueAt ? ` (due ${new Intl.DateTimeFormat('en-CA', { timeZone: p.timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(p.dueAt)})` : ''}.\n\nUpload it here (open the link you were sent first if your session has ended):\n${p.url}`,
+		text: `The team behind ${p.room} asks you to upload: ${p.title}${p.dueAt ? ` (due ${new Intl.DateTimeFormat('en-CA', { timeZone: p.timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(p.dueAt)})` : ''}.\n\nUpload it here:\n${p.url}\n\nIf your session has ended, open your invitation link and you will be brought back to this request.`,
 	}),
 	test: (p: { origin: string }): Message => ({
 		subject: 'OpenRoom test email',

@@ -27,6 +27,10 @@ The server (`src/lib/server/viewer/tracking.ts`):
   (once per investor and version, when they spent at least a second on the room's "read past" share
   of the pages, or watched that share of a video).
 
+The gate and the room footer tell investors what is recorded. `recordedFacts()` in the same file
+builds that list from the link's settings, so it always matches what this section describes for that
+link. `page_reads` also drives where the PDF reader resumes (see [viewer.md](viewer.md)).
+
 Members' previews and members' own visits never create rows. A download is recorded once per
 session and file in 10 minutes, whether or not the request carries a Range header; download routes
 allow 120 requests a minute per session, and accepting the NDA again is refused when it is already
@@ -42,10 +46,15 @@ read-past threshold adds the same investor's time across sessions for each page 
 `get_room_activity` returns a plain summary, then the room by investor (visits, files, time,
 downloads, answers, last seen), by firm (email domain; free mail such as gmail.com is never a firm),
 by file (viewers, average time, versions read, time per page, viewers per tenth of a video), a
-timeline and who is viewing now (a beacon in the last minute, with the PDF or video the session read last). It filters by link, group and time.
-The timeline names each event in words ("Asked about", "Uploaded a file for" and the request). The Activity tab exports each view as CSV, with cells starting with `=`, `+`, `-`, `@`, tab or return
+timeline, who is viewing now (a beacon in the last minute, with the PDF or video the session read last)
+and `notOpened`: exact emails on the allow lists of active links that have no non-preview session in
+the room, with the link and when it was sent. `notOpened` is empty for observers, who cannot see allow
+lists. It filters by link, group and time.
+The timeline names each event in words ("Asked about", "Uploaded a file for" and the request). The Analytics tab exports each view as CSV, including Not opened yet, with cells starting with `=`, `+`, `-`, `@`, tab or return
 prefixed so spreadsheets never run them. `list_viewers` and `get_viewer` cover investors across
 rooms.
+`get_room` adds `updatedAt` and `viewerCount` (distinct investors with page or video reads, previews
+excluded; a folder counts everything inside it) to each tree item for the Documents tab.
 Link, group and time filters also apply to custom answers, versions read and the current-viewer
 list; supplying both a link and group selects their intersection. Video tenths describe the current
 version and count each investor once, including when that investor has several sessions. Current
@@ -53,8 +62,8 @@ viewers must still have access and satisfy the current NDA gate.
 
 ## Notifications
 
-Notices are written for: first open of a link by an investor (or every visit on links with "notify me
-on every view"), NDA accepted, file mostly read, file or zip downloaded, and the daily email cap. Each
+Notices are written for: first open of a link by an investor (or every visit on links with "Notify me
+on every visit"), NDA accepted, file mostly read, file or zip downloaded, and the daily email cap. Each
 member has their own read state. Email goes to every member who wants that event (owners and admins by
 default, observers only when they switch it on), through the email queue and its cap; when the cap
 is reached, owners get one email about it sent outside the cap. Notice emails may use at most 30%

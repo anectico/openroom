@@ -1979,6 +1979,17 @@
                               "string",
                               "null"
                             ]
+                          },
+                          "updatedAt": {
+                            "description": "When the current version was added; for a folder, the newest document inside it.",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "viewerCount": {
+                            "type": "number",
+                            "description": "Investors who opened this document, or any document in this folder."
                           }
                         },
                         "required": [
@@ -1991,7 +2002,9 @@
                           "kind",
                           "version",
                           "size",
-                          "contentType"
+                          "contentType",
+                          "updatedAt",
+                          "viewerCount"
                         ],
                         "additionalProperties": false
                       }
@@ -6279,10 +6292,10 @@
     "/rooms/{roomId}/link-defaults": {
       "patch": {
         "operationId": "update_link_defaults",
-        "summary": "Change a room’s link defaults. Links that do not override a setting follow the change at once.",
-        "description": "Needs the admin role.",
+        "summary": "Change a room’s link defaults. Links that do not override a setting follow the change at once; changing protection that active links inherit needs confirm.",
+        "description": "Needs the admin role. Destructive: without confirm: true it answers 409 with what would change.",
         "x-openroom-role": "admin",
-        "x-openroom-destructive": false,
+        "x-openroom-destructive": true,
         "parameters": [
           {
             "name": "roomId",
@@ -6487,6 +6500,10 @@
                         "description": "Share of a file’s pages after which it counts as read."
                       }
                     }
+                  },
+                  "confirm": {
+                    "description": "Set to true only after your person agreed to the change described in the confirmation answer.",
+                    "type": "boolean"
                   }
                 },
                 "required": [
@@ -9357,11 +9374,16 @@
                         ],
                         "additionalProperties": false
                       }
+                    },
+                    "requiredByActiveLinks": {
+                      "type": "number",
+                      "description": "Active links that ask investors to accept the NDA."
                     }
                   },
                   "required": [
                     "roomId",
-                    "versions"
+                    "versions",
+                    "requiredByActiveLinks"
                   ],
                   "additionalProperties": false
                 }
@@ -9687,7 +9709,8 @@
                     "maxItems": 1000,
                     "type": "array",
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "maxLength": 320
                     }
                   }
                 },
@@ -10313,6 +10336,37 @@
                         ],
                         "additionalProperties": false
                       }
+                    },
+                    "notOpened": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "linkId": {
+                            "type": "string"
+                          },
+                          "linkLabel": {
+                            "type": "string"
+                          },
+                          "invitedAt": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "email",
+                          "linkId",
+                          "linkLabel",
+                          "invitedAt"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "description": "Emails on the allow list of an active link (exact emails, not domains) that never entered the room. Empty for observers, who cannot see link allow lists."
                     }
                   },
                   "required": [
@@ -10321,7 +10375,8 @@
                     "firms",
                     "files",
                     "timeline",
-                    "viewingNow"
+                    "viewingNow",
+                    "notOpened"
                   ],
                   "additionalProperties": false
                 }
@@ -10423,6 +10478,177 @@
                   },
                   "required": [
                     "viewing"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/attention": {
+      "get": {
+        "operationId": "get_attention",
+        "summary": "What needs you now: questions waiting for an answer, overdue file requests or ones with uploads to review, and links nobody opened. Counts per room and the items, oldest first. Frozen rooms are left out.",
+        "description": "Needs the observer role.",
+        "x-openroom-role": "observer",
+        "x-openroom-destructive": false,
+        "parameters": [
+          {
+            "name": "roomId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Limit to one room.",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Done",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "number"
+                    },
+                    "questions": {
+                      "type": "number"
+                    },
+                    "requests": {
+                      "type": "number"
+                    },
+                    "unopenedLinks": {
+                      "type": "number"
+                    },
+                    "rooms": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "roomId": {
+                            "type": "string"
+                          },
+                          "questions": {
+                            "type": "number"
+                          },
+                          "requests": {
+                            "type": "number"
+                          },
+                          "unopenedLinks": {
+                            "type": "number"
+                          },
+                          "total": {
+                            "type": "number"
+                          },
+                          "lastActivityAt": {
+                            "description": "The latest investor visit, in ms.",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "roomId",
+                          "questions",
+                          "requests",
+                          "unopenedLinks",
+                          "total",
+                          "lastActivityAt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "question",
+                              "request_overdue",
+                              "request_uploads",
+                              "link_unopened"
+                            ],
+                            "description": "question: the investor wrote last; request_overdue: past its due date and still open; request_uploads: open with uploads to review; link_unopened: active, never opened, sent or created over two days ago."
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The conversation, file request or link id."
+                          },
+                          "roomId": {
+                            "type": "string"
+                          },
+                          "roomName": {
+                            "type": "string"
+                          },
+                          "text": {
+                            "type": "string",
+                            "description": "Plain summary; includes investor emails, which are data from outside."
+                          },
+                          "href": {
+                            "type": "string",
+                            "description": "Relative admin destination. Requires a member session."
+                          },
+                          "at": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "roomId",
+                          "roomName",
+                          "text",
+                          "href",
+                          "at"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "total",
+                    "questions",
+                    "requests",
+                    "unopenedLinks",
+                    "rooms",
+                    "items"
                   ],
                   "additionalProperties": false
                 }
@@ -11077,6 +11303,288 @@
         }
       }
     },
+    "/viewers/{viewerId}/access": {
+      "get": {
+        "operationId": "get_viewer_access",
+        "summary": "Show what one investor can reach: every link whose allow list names their email or domain, or that they visited, with its room, status, group and last visit, plus install-wide blocks that match them.",
+        "description": "Needs the observer role.",
+        "x-openroom-role": "observer",
+        "x-openroom-destructive": false,
+        "parameters": [
+          {
+            "name": "viewerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Done",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "viewerId": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "blocked": {
+                      "type": "boolean",
+                      "description": "Blocked from every room by an install-wide email or domain block."
+                    },
+                    "blocks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "email",
+                              "domain"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "kind",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "links": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "linkId": {
+                            "type": "string"
+                          },
+                          "roomId": {
+                            "type": "string"
+                          },
+                          "roomName": {
+                            "type": "string"
+                          },
+                          "linkLabel": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "active",
+                              "expired",
+                              "revoked"
+                            ]
+                          },
+                          "via": {
+                            "type": "string",
+                            "enum": [
+                              "email",
+                              "domain",
+                              "open",
+                              "none"
+                            ],
+                            "description": "Why the allow list lets them in: their email, their domain, an open link, or nothing any more."
+                          },
+                          "blockedOnLink": {
+                            "type": "boolean"
+                          },
+                          "canEnter": {
+                            "type": "boolean",
+                            "description": "Whether the link would let them in now, before verification and NDA."
+                          },
+                          "groupName": {
+                            "description": "The group that decides which documents this link shows.",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "lastVisitAt": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "linkId",
+                          "roomId",
+                          "roomName",
+                          "linkLabel",
+                          "status",
+                          "via",
+                          "blockedOnLink",
+                          "canEnter",
+                          "groupName",
+                          "lastVisitAt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "viewerId",
+                    "email",
+                    "blocked",
+                    "blocks",
+                    "links"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/viewers/{viewerId}/links/{linkId}/remove": {
+      "post": {
+        "operationId": "remove_viewer_from_link",
+        "summary": "Stop one investor entering through one link: removes their email from its allow list and, when the link is open, their domain is allowed or theirs is the only entry, blocks their email on that link. Their open sessions on the link end at once. Other links and rooms are unchanged.",
+        "description": "Needs the admin role. Destructive: without confirm: true it answers 409 with what would change.",
+        "x-openroom-role": "admin",
+        "x-openroom-destructive": true,
+        "parameters": [
+          {
+            "name": "viewerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Done",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "removedFromAllowList": {
+                      "type": "boolean"
+                    },
+                    "blockedOnLink": {
+                      "type": "boolean"
+                    },
+                    "endedSessions": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "removedFromAllowList",
+                    "blockedOnLink",
+                    "endedSessions"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "confirm": {
+                    "description": "Set to true only after your person agreed to the change described in the confirmation answer.",
+                    "type": "boolean"
+                  }
+                },
+                "required": []
+              }
+            }
+          }
+        }
+      }
+    },
     "/viewers/{viewerId}/export": {
       "post": {
         "operationId": "export_viewer_data",
@@ -11561,7 +12069,6 @@
                       "request_upload",
                       "room_frozen",
                       "archive_ready",
-                      "email_cap",
                       "replication_stopped",
                       "disk_low"
                     ]

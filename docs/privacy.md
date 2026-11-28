@@ -60,3 +60,7 @@ the session and conversation. They clear after confirmed submission or sign-out;
 in server exports or remotely removed by server erasure. Welcome disclosure choices store only a
 content revision and optional open/closed choice in the same tab. Browser site-data controls can clear
 these local records; a new investor session uses a different namespace.
+
+When a session has ended and an investor opens a room address, a cookie for that link keeps the
+address (a path in the room, no document contents) for one hour so the gate can return them there.
+It is deleted when used or at sign-out.

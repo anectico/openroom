@@ -10,6 +10,7 @@ import {
 	setNotificationPref,
 } from './activity.ts';
 import { createApiKey, listApiKeys, revokeApiKey } from './api-keys.ts';
+import { getAttention } from './attention.ts';
 import { listAuditLog } from './audit.ts';
 import { addBlocks, listBlocks, removeBlock } from './blocks.ts';
 import { getBranding, setLogo, updateBranding } from './branding.ts';
@@ -26,6 +27,7 @@ import {
 } from './files.ts';
 import { createGroup, deleteGroup, getGroup, listGroups, setGroupAccess, updateGroup } from './groups.ts';
 import { uploadFromUrl, uploadInline } from './ingestion.ts';
+import { getViewerAccess, removeViewerFromLink } from './investors.ts';
 import {
 	createLink,
 	getLink,
@@ -161,8 +163,11 @@ export const operations: Operation[] = [
 	getExport,
 	getRoomActivity,
 	getViewingNow,
+	getAttention,
 	listViewers,
 	getViewer,
+	getViewerAccess,
+	removeViewerFromLink,
 	exportViewerData,
 	eraseViewer,
 	listNotices,

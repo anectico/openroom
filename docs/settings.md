@@ -6,8 +6,9 @@ can manage their own account and API keys. On a phone, choose a settings section
 
 ## General, branding and email
 
-Choose the time zone used by admin dates and emails, the maximum upload size and the daily email
-cap. The domain is managed on the host with `openroom-server set-domain DOMAIN`; the change updates
+The **General** section holds workspace preferences, appearance and email. Choose the time zone used
+by admin dates and emails, the maximum upload size and the daily email cap. **Save preferences**
+stays disabled until something changes. The domain is managed on the host with `openroom-server set-domain DOMAIN`; the change updates
 both Caddy and the app's public origin. Limits apply to new operations after saving.
 
 **Workspace appearance** provides a logo and brand colour, with live
@@ -19,9 +20,9 @@ Changes stay in a draft until **Save appearance**. **Cancel changes** restores t
 Button text switches between black and white to suit your colour; navigation and focus indicators
 use a darker, readable variation. The investor and admin footers always show “OpenRoom by Anectico”, with a link to the company website.
 
-In **Room settings & branding**, set the room name, logo and colour. Format the welcome with headings, lists, emphasis, links and text colours. The editor shows which values come from the workspace. **Use workspace logo/colour** stages
+In the room's **Settings → General → Room appearance**, set the room name, logo and colour. Format the welcome with headings, lists, emphasis, links and text colours. The editor shows which values come from the workspace. **Use workspace logo/colour** stages
 a reset; save to apply it. Later workspace changes flow through to rooms without overrides.
-After access checks, the welcome opens in a dialog with the room logo and optional cover. **Enter room** dismisses it. The same investor and sharing link skip the dialog on later visits in this browser, even if the welcome is edited. A blank welcome skips the dialog. Select **Welcome** in the appearance preview to inspect the draft.
+After access checks, the welcome opens in a dialog with the room logo and optional cover. **Start reading** opens the first pinned or readable document; **Browse documents** (or **Enter room** when nothing can be read in the browser) dismisses it. The same investor and sharing link skip the dialog on later visits in this browser, even if the welcome is edited. A blank welcome skips the dialog. Select **Welcome** in the appearance preview to inspect the draft.
 
 On phones and tablets, switch between **Edit** and **Preview** while retaining your draft; the save
 bar stays available. Desktop shows both together. The preview scrolls within a bounded frame and
@@ -32,6 +33,8 @@ Appearance keyboard focus scrolls clear of the save bar. Invalid brand colours s
 The editor renders the investor Documents, Questions, Requests and email-entry screens at the selected width. Room settings show the full document tree, ordered pins and shared FAQ. Workspace settings use example documents. Account actions are disabled and private conversations, submissions and reading history are excluded. Use **Preview as investor** on a sharing link to check its specific welcome and document access. Password, verification and NDA steps follow the link settings at entry.
 
 Email is optional. Select Resend, Cloudflare or SMTP to see its setup steps, enter the sender and credentials, save, then send a test.
+The sender's display name (`Acme` in `Acme <rooms@acme.com>`) is shown to investors at the gate as
+"Shared by Acme".
 Leave a saved secret empty to keep it; it is never shown again. Server environment overrides are
 read-only in the UI. The [email guide](email.md) explains sender verification, Gmail app passwords,
 daily limits and delivery errors. Turn investor verification on only after a successful test.
@@ -53,7 +56,9 @@ bucket for at least 30 days and keep the secret key off the server.
 Invite a member and choose owner, admin or observer. Without email, copy the one-time password-setup
 link and send it through your usual channel. The invitation confirmation shows the recipient, workspace role and expiry. The link expires after seven days. Pending invites can
 be replaced or canceled. Changing a member's role changes their API-key permissions on the next
-request. Removal ends their access. The last active owner cannot be removed or demoted.
+request. Removal ends their access. The last active owner cannot be removed or demoted. You cannot
+change your own role; another owner can. Making someone an owner, lowering a role and cancelling an
+invite each ask you to confirm first.
 
 ![Members on a phone](reviews/ui-release/members-phone.jpg)
 

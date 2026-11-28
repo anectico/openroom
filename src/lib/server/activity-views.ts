@@ -243,6 +243,27 @@ export function roomFiles(roomId: string, f: Filters) {
 	});
 }
 
+export function notOpened(roomId: string, f: Filters) {
+	const links = f.linkIds ? `AND l.id IN (${f.linkIds.map(() => '?').join(',') || "''"})` : '';
+	return sqlite()
+		.prepare(
+			`SELECT a.value AS email, l.id AS linkId, l.label AS linkLabel, l.invited_at AS invitedAt
+			FROM link_allow a JOIN links l ON l.id = a.link_id
+			WHERE l.room_id = ? AND a.kind = 'email' AND l.revoked_at IS NULL AND (l.expires_at IS NULL OR l.expires_at > ?) ${links}
+			AND NOT EXISTS (
+				SELECT 1 FROM viewer_sessions s JOIN links l2 ON l2.id = s.link_id JOIN viewers v ON v.id = s.viewer_id
+				WHERE l2.room_id = l.room_id AND s.preview_by IS NULL AND lower(v.email) = lower(a.value)
+			)
+			ORDER BY l.label, a.value`,
+		)
+		.all(roomId, Date.now(), ...(f.linkIds ?? [])) as {
+		email: string;
+		linkId: string;
+		linkLabel: string;
+		invitedAt: number | null;
+	}[];
+}
+
 export function roomTimeline(roomId: string, f: Filters, limit = 300) {
 	const links = f.linkIds ? `AND e.link_id IN (${f.linkIds.map(() => '?').join(',') || "''"})` : '';
 	return sqlite()

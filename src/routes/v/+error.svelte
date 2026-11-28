@@ -11,7 +11,7 @@
 	{#if branding?.logoUrl}<img src={branding.logoUrl} alt="" class="mb-2 h-12 w-auto object-contain" />{/if}
 	{#if page.status === 401}
 		<h1 class="text-xl font-semibold">Your session has ended</h1>
-		<p class="max-w-sm text-sm text-muted-foreground">Open the link you were sent again.</p>
+		<p class="max-w-sm text-sm text-muted-foreground">Open your invitation link and we’ll bring you back here.</p>
 	{:else if page.status >= 500}
 		<h1 class="text-xl font-semibold">Something went wrong</h1>
 		<p class="max-w-sm text-sm text-muted-foreground">Reload the page. If it keeps happening, tell the person who sent you the link.</p>

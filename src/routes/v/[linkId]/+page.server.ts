@@ -17,7 +17,18 @@ export const load: PageServerLoad = (event) => {
 			.all(ctx.room.id) as { id: string; question: string; answer_markdown: string }[]
 	).map((f) => ({ id: f.id, question: f.question, answerHtml: renderMarkdown(f.answer_markdown) }));
 	const changes = documentChanges(ctx, visibleTree(ctx.room.id, ctx.link.id));
-	const tree = changes.tree;
+	const updated = new Map(
+		(
+			database()
+				.sqlite.prepare(
+					'SELECT f.id, v.created_at FROM files f JOIN file_versions v ON v.file_id = f.id AND v.version = f.current_version WHERE f.room_id = ?',
+				)
+				.all(ctx.room.id) as { id: string; created_at: number }[]
+		).map((row) => [row.id, row.created_at]),
+	);
+	const tree: ((typeof changes.tree)[number] & { updatedAt?: number | null })[] = changes.tree.map((node) =>
+		node.type === 'file' ? { ...node, updatedAt: updated.get(node.id) } : node,
+	);
 	const reviewStates = documentReviewStates(ctx, visiblePins(ctx.room.id, tree));
 	return {
 		reviewedIds: reviewStates.filter((state) => state.reviewed).map((state) => state.fileId),

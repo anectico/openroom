@@ -46,6 +46,7 @@ export type Activity = {
 		viewerId: string | null;
 	}[];
 	viewingNow: { sessionId: string; email: string | null; fileTitle: string | null; viewerId: string }[];
+	notOpened: { email: string; linkId: string; linkLabel: string; invitedAt: number | null }[];
 };
 
 export const load: PageServerLoad = async ({ locals, params, url }) => {

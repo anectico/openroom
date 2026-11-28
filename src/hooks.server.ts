@@ -25,9 +25,19 @@ const securityHeaders: Record<string, string> = {
 	'cross-origin-opener-policy': 'same-origin',
 };
 
+function withTheme(saved: string | undefined) {
+	const theme = saved === 'light' || saved === 'dark' ? saved : 'system';
+	return ({ html }: { html: string }) =>
+		html.replace(
+			'<html lang="en">',
+			`<html lang="en" data-theme="${theme}"${theme === 'dark' ? ' class="dark"' : ''}>`,
+		);
+}
+
 export const handle: Handle = async ({ event, resolve }) => {
 	const routeId = event.route.id ?? '';
 	const admin = routeId === '/admin' || routeId.startsWith('/admin/');
+	const themed = admin && routeId !== '/admin/appearance-preview';
 	event.locals.member = null;
 	if (admin) {
 		const session = await auth().api.getSession({ headers: event.request.headers });
@@ -45,7 +55,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 						location: `/admin/login?next=${encodeURIComponent(event.url.pathname + event.url.search)}`,
 					},
 				})
-			: await svelteKitHandler({ auth: auth(), event, resolve, building });
+			: await svelteKitHandler({
+					auth: auth(),
+					event,
+					resolve: themed
+						? (e) => resolve(e, { transformPageChunk: withTheme(event.cookies.get('openroom_theme')) })
+						: resolve,
+					building,
+				});
 	for (const [name, value] of Object.entries(securityHeaders)) {
 		if (!response.headers.has(name)) response.headers.set(name, value);
 	}

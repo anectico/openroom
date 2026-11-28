@@ -40,7 +40,9 @@ export const actions: Actions = {
 			.trim()
 			.slice(0, 120);
 		if (!name || form.get('accept') !== 'on')
-			return fail(400, { error: 'Type your name and tick “I accept” to continue.' });
+			return fail(400, {
+				error: 'Type your full name and tick “I have read and agree to this NDA” to continue.',
+			});
 		const version = ctx.room.current_nda_version_id;
 		if (form.get('version') !== version)
 			return fail(409, {

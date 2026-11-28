@@ -24,7 +24,14 @@ Never expose API keys, member passwords or `OPENROOM_SECRET_KEY` in chat or comm
   See [CLI and MCP](https://github.com/anectico/openroom/blob/main/docs/cli.md).
 - Protect sharing: inspect effective link defaults, allow/block rules, expiry, verification, NDA and
   group inheritance. Use distinct custom field labels. A preview requires its creator to retain admin or owner access. Preview each restricted link before sharing. A link without a group sees the
-  whole room. Email verification needs configured email delivery. Use `update_email_settings` for Resend, Cloudflare or SMTP and `test_email` to check delivery.
+  whole room. Email verification needs configured email delivery. `update_link_defaults` asks for
+  confirmation, naming the affected links, when a protection setting changes on active links that
+  inherit it. To duplicate a link, `create_link` with its audience, group and overrides; never copy
+  a password. For one investor, `get_viewer_access` shows how each link admits them and
+  `remove_viewer_from_link` (with confirmation) takes them off one link and ends their sessions there. Use `update_email_settings` for Resend, Cloudflare or SMTP and `test_email` to check delivery.
+- Find what is waiting: `get_attention` (optional `roomId`) lists questions where the investor wrote
+  last, file requests overdue or with uploads to review, and active links unopened after two days.
+  `get_room_activity.notOpened` lists allow-listed emails that never entered (empty for observers).
 - Follow activity: `list_notices` includes `href` for the relevant member-only conversation or
   file request; the URL does not authorize access or replying. Distinguish verified and unverified identities and approximate viewing time.
   Use `get_viewer` and its `reads[].versions` for per-page timing and watched video ranges across
@@ -72,11 +79,12 @@ receive only permitted pins, so preview each restricted link to check the welcom
 These changes do not grant document access or send invitations. Both require admin or owner access.
 
 When reviewing the investor journey, check that Start here Previous/Next follows the intended order
-and that return links restore folder context. PDF resume is tab-local, session-scoped and
-version-bound; it is separate from server reading analytics and is not written by member previews.
+and that return links restore folder context. PDF resume is version-bound: the tab's saved page
+first, then the last page in server reading activity for that investor (or unverified session);
+member previews neither save nor resume.
 Investors can ask private room-level or document-specific questions through My questions. Awaiting
 answer/Replied reflects the last author, not an unread-message count. ZIP preparation now exposes a
-Download zip action when ready and offers retry after connection failures. No new owner operations
+Save ZIP action when ready and offers retry after connection failures. No new owner operations
 are needed for these investor-only controls.
 
 Returning-investor checks: New/Updated badges compare visible document versions with the prior visit;
@@ -89,7 +97,7 @@ These investor controls introduce no additional owner operations. See the produc
 Investor follow-through: home combines changed documents, unread replies and requests needing action.
 For either welcome, send Markdown for headings, emphasis, links and lists. Use `<span style="color:#155e75">text</span>` for color.
 
-The welcome dialog opens once per investor and link in the same browser. Enter room dismisses it. Requests
+The welcome dialog opens once per investor and link in the same browser, never over the reader. Start reading opens the first pinned or readable document; Browse documents (or Enter room) dismisses it. Requests
 sorts action items by due date and puts submitted/closed items in history. PDF Pages uses a bounded
 dialog; Find retains selected results and sticky matching-page navigation. Conversation page references
 open the current authorized PDF page; reply drafts are tab-local and clear after success or sign-out.
@@ -121,3 +129,5 @@ When validating investor and owner recovery, check question drafts against the o
 For investor-home layout checks, open a link with one visible file, then a room with several pins. Verify the direct file action, ordered recommendations, reader completion, download-only review, Undo and return to the saved PDF page. Check folder browsing and section numbers with a restricted link. Check zero, one, three and six pins at 320, 390, 768 and desktop widths, including the library, updates, permitted ZIP downloads and FAQ.
 
 Investor branding uses a compact room header and a first-visit welcome dialog with optional cover artwork. Use existing update_branding and link welcome operations to configure examples; do not simulate branding only in screenshots. Verify logo/colour inheritance, bright colours, first and return visits, new welcome revisions, safe Markdown and cross-link isolation. The appearance sample shares the header and welcome components.
+
+For gate checks, use a real link: confirm Step n of N, the Shared by line (only with a sender display name), What this room records matching the link's downloads, watermark and screenshot settings, code autofill and the 30-minute timeout notice, and the NDA Markdown download during the gate and from the room footer. Sign out, open an emailed room address, pass the gate and confirm the investor lands on that page.

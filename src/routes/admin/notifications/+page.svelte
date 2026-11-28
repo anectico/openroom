@@ -4,6 +4,7 @@
 		FileUp, HardDrive, Inbox, Link2, Mail, MailWarning, MessageSquare, Snowflake,
 	} from '@lucide/svelte';
 	import { act } from '#lib/admin/op.ts';
+	import PageHeading from '#lib/admin/PageHeading.svelte';
 	import When from '#lib/admin/When.svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { cn } from '#lib/utils.js';
@@ -43,10 +44,9 @@
 
 <svelte:head><title>Notifications · OpenRoom</title></svelte:head>
 
-<header class="mb-5 flex flex-wrap items-center justify-between gap-3">
-	<h1 class="text-2xl font-semibold">Notifications</h1>
-	<Button href="/admin/account#email-preferences" variant="outline"><Mail aria-hidden="true" />Email preferences</Button>
-</header>
+<PageHeading title="Notifications" description="Investor visits, NDA acceptances, questions, downloads and server notices, newest first." eyebrow="Workspace">
+	{#snippet actions()}<Button href="/admin/account#email-preferences" variant="outline"><Mail aria-hidden="true" />Email preferences</Button>{/snippet}
+</PageHeading>
 
 <section aria-label="Notification inbox" class="@container/inbox overflow-hidden rounded-xl border bg-card">
 	<header class="flex flex-wrap items-center justify-between gap-2 border-b bg-muted/25 px-4 py-3 sm:px-5">

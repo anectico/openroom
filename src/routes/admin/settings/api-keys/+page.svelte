@@ -7,6 +7,7 @@
 	import When from '#lib/admin/When.svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Dialog from '#lib/components/ui/dialog/index.js';
+	import * as Field from '#lib/components/ui/field/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
 	import { Label } from '#lib/components/ui/label/index.js';
 	import * as Table from '#lib/components/ui/table/index.js';
@@ -71,7 +72,7 @@
 				{#each keys as k (k.id)}
 					<Table.Row>
 						<Table.Cell class="max-w-0 whitespace-normal py-4">
-							<p class="font-medium break-words">{k.name ?? 'Unnamed'}</p><span class="font-mono text-xs text-muted-foreground">{k.start}…</span><p class="mt-1 text-[11px] break-all text-muted-foreground sm:hidden">{showOwner ? k.memberEmail : `Created ${formatDate(k.createdAt, data.timeZone)}`}<br />Last used <When at={k.lastUsedAt} timeZone={data.timeZone} /></p>
+							<p class="font-medium break-words">{k.name ?? 'Unnamed'}</p><span class="font-mono text-xs text-muted-foreground">{k.start}…</span><p class="mt-1 text-xs break-all text-muted-foreground sm:hidden">{showOwner ? k.memberEmail : `Created ${formatDate(k.createdAt, data.timeZone)}`}<br />Last used <When at={k.lastUsedAt} timeZone={data.timeZone} /></p>
 						</Table.Cell>
 						{#if showOwner}<Table.Cell class="hidden text-sm sm:table-cell">{k.memberEmail}</Table.Cell>{/if}
 						<Table.Cell class="hidden text-sm text-muted-foreground sm:table-cell">{formatDate(k.createdAt, data.timeZone)}</Table.Cell>
@@ -95,28 +96,24 @@
 {/snippet}
 
 {#if mine.length === 0}
-	<div class="rounded-lg border bg-background p-8 text-center text-muted-foreground">You have no API keys.</div>
+	<div class="rounded-xl border bg-card p-8 text-center text-sm text-muted-foreground">You have no API keys.</div>
 {:else}
 	{@render keyTable(mine, false)}
 {/if}
 
 {#if others.length}
-	<h2 class="mt-8 mb-3 text-lg font-medium">Other members’ keys</h2>
+	<h2 class="mt-8 mb-3 text-base font-semibold">Other members’ keys</h2>
 	{@render keyTable(others, true)}
 {/if}
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="sm:max-w-2xl">
-			<Dialog.Header><Dialog.Title>New API key</Dialog.Title></Dialog.Header>
-			<form class="space-y-4" onsubmit={create}>
-				<div class="space-y-2">
-					<Label for="key-name">Name</Label>
-					<Input id="key-name" required maxlength={80} placeholder="My laptop agent" disabled={creating} bind:value={name} />
-				</div>
-				{#if error}<p class="text-sm text-destructive" role="alert">{error}</p>{/if}
-				<Dialog.Footer><Button type="submit" disabled={creating}>{creating ? 'Creating…' : 'Create key'}</Button></Dialog.Footer>
-			</form>
-		</Dialog.Content>
+	<Dialog.Content>
+		<Dialog.Header><Dialog.Title>New API key</Dialog.Title><Dialog.Description>The key acts as you, with your {data.member?.role ?? ''} role, from the REST API, MCP or the CLI. You see it once, right after creating it.</Dialog.Description></Dialog.Header>
+		<form class="flex flex-col gap-6" onsubmit={create}>
+			<Field.Group><Field.Field data-invalid={!!error}><Field.Label for="key-name">Name</Field.Label><Input id="key-name" required maxlength={80} placeholder="My laptop agent" disabled={creating} bind:value={name} aria-invalid={!!error} /><Field.Description>Where the key is used, so you can tell keys apart later.</Field.Description>{#if error}<Field.Error>{error}</Field.Error>{/if}</Field.Field></Field.Group>
+			<Dialog.Footer><Button type="button" variant="outline" onclick={() => (open = false)}>Cancel</Button><Button type="submit" disabled={creating}>{creating ? 'Creating…' : 'Create key'}</Button></Dialog.Footer>
+		</form>
+	</Dialog.Content>
 </Dialog.Root>
 
 <Dialog.Root bind:open={resultOpen} onOpenChange={(o) => { if (!o) created = null; }}>

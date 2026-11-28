@@ -2,6 +2,7 @@
 	import { ArrowDownToLine, Bell, FileText, FolderClosed, KeyRound, Link2, ListFilter, MessageSquare, ScrollText, Users, Webhook } from '@lucide/svelte';
 	import type { AuditEntry } from '#lib/admin/audit.ts';
 	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
+	import PageHeading from '#lib/admin/PageHeading.svelte';
 	import When from '#lib/admin/When.svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Label } from '#lib/components/ui/label/index.js';
@@ -34,8 +35,7 @@
 
 <svelte:head><title>Audit log · OpenRoom</title></svelte:head>
 
-<h1 class="mb-2 text-2xl font-semibold">Audit log</h1>
-<p class="mb-6 text-sm text-muted-foreground">Every change members, API keys and the server tools made. It cannot be edited.</p>
+<PageHeading title="Audit log" description="Every change members, API keys and the server tools made. It cannot be edited." eyebrow="Workspace" />
 
 <section class="min-w-0 overflow-hidden rounded-xl border bg-card" aria-label="Audit entries">
 <form class="grid min-w-0 grid-cols-2 items-end gap-3 border-b bg-muted/25 p-4 sm:flex sm:flex-wrap sm:px-5" method="GET">
@@ -108,7 +108,7 @@
 	<div class="grid min-w-0 justify-items-start gap-0.5 text-xs">
 		{#if entry.roomId}<a class="text-primary underline-offset-2 hover:underline [overflow-wrap:anywhere]" href="/admin/rooms/{entry.roomId}">{roomNames.get(entry.roomId) ?? 'Room'}</a>{/if}
 		{#if entry.targetType !== 'room' || !entry.roomId}
-			<span class="text-muted-foreground [overflow-wrap:anywhere]">{entry.targetType ? readable(entry.targetType) : entry.roomId || entry.targetId ? '' : '—'}{entry.targetId ? ' ' : ''}<span class="font-mono text-[11px]">{entry.targetId ?? ''}</span></span>
+			<span class="text-muted-foreground [overflow-wrap:anywhere]">{entry.targetType ? readable(entry.targetType) : entry.roomId || entry.targetId ? '' : '—'}{entry.targetId ? ' ' : ''}<span class="font-mono text-xs">{entry.targetId ?? ''}</span></span>
 		{/if}
 	</div>
 {/snippet}

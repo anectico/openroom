@@ -15,7 +15,9 @@ call the same operations.
 - `input` and `output` Zod schemas (GET inputs come from the query string, so numbers use
   `z.coerce` and booleans `z.stringbool`);
 - `destructive`, for actions that need `confirm: true`: it returns the sentence that says exactly what
-  would change, which the caller gets as a 409 `confirmation_required` answer first;
+  would change, which the caller gets as a 409 `confirmation_required` answer (with `wouldChange`)
+  first. It may return `null` when this particular input needs no confirmation, and the operation
+  then runs at once (`update_link_defaults` does this when no active link would change);
 - `audit`, the target and an allow list of detail fields. Never put emails, names, labels or tokens in
   the detail. Every operation that is not a GET must have one; the registry refuses to load otherwise.
 
@@ -106,6 +108,23 @@ every room; per-link blocks are set with the link.
 
 Revoking is final. `revoke_all_links` revokes every link of a room and needs `confirm: true`.
 
+Duplicating a link is `create_link` with the source link's audience, group and overrides; the admin
+editor leaves out the password, a past expiry and blocks on erased investors, and the new link gets
+its own address.
+
+`update_link_defaults` takes `confirm`. When the change touches a protection setting
+(`verifyEmail`, `requireNda`, `watermark`, `screenshotProtection`, `downloads`) that active,
+unexpired links inherit, it first answers 409 `confirmation_required` and names those links in
+`wouldChange`; other changes apply without confirmation.
+
+`get_viewer_access` (observer) lists, for one investor, every link whose allow list names their
+email or domain or that they visited, with room, status, how they are allowed, group, block and last
+visit, plus install-wide blocks that match them. `remove_viewer_from_link` (admin, needs confirm)
+stops one investor entering through one link: it deletes their email entry from the allow list when
+other entries remain (or the link is open); when they would still be allowed (an open link, a
+domain entry, or theirs was the only entry) it blocks their email on that link. Their sessions on
+the link end at once, and the audit entry records the link and what changed.
+
 ## Email
 
 `src/lib/server/email.ts` sends through Resend, the Cloudflare Email Sending REST API or SMTP (Nodemailer). The configuration comes from the
@@ -131,6 +150,12 @@ in `src/lib/admin/uploads.svelte.ts` (one file at a time, progress, retry, whole
 Dropped native directories are read to completion, including repeated directory-reader batches and
 empty folders. The destination is the folder selected when dropping. Picker uploads use relative
 file paths; both paths call the same folder and upload operations and skip hidden entries.
+
+`get_attention` (observer, `GET /attention`, optional `roomId`) feeds the overview's Needs attention
+card and the room tab counts: conversations where the investor wrote last, open file requests that
+are overdue or have uploads, and active links never opened, sent or created more than two days ago.
+Frozen rooms are left out. Its `text` fields include investor emails, which are outside data.
+`get_nda` returns `requiredByActiveLinks`, the number of active links that require the NDA.
 
 `get_viewer` returns per-file `versions` with page timing and watched video ranges across that
 investor's sessions. The same output schema drives the admin drill-down, REST, MCP and generated CLI.

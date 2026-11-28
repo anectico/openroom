@@ -3,6 +3,7 @@ import { describeNotice, emailWanted, noticeEvents, noticeHref } from '../server
 import {
 	filtersFor,
 	firmOf,
+	notOpened,
 	roomFiles,
 	roomFirms,
 	roomInvestors,
@@ -15,6 +16,7 @@ import { findMember } from '../server/members.ts';
 import { publicOrigin } from '../server/origin.ts';
 import { exportViewerData as buildViewerExport } from '../server/viewer-data.ts';
 import { defineOperation, notFound, ok } from './define.ts';
+import { allowed } from './execute.ts';
 import { loadRoom } from './rooms.ts';
 
 const sqlite = () => database().sqlite;
@@ -121,9 +123,21 @@ export const getRoomActivity = defineOperation({
 			}),
 		),
 		viewingNow: z.array(now),
+		notOpened: z
+			.array(
+				z.object({
+					email: z.string(),
+					linkId: z.string(),
+					linkLabel: z.string(),
+					invitedAt: z.number().nullable(),
+				}),
+			)
+			.describe(
+				'Emails on the allow list of an active link (exact emails, not domains) that never entered the room. Empty for observers, who cannot see link allow lists.',
+			),
 	}),
 	audit: false,
-	run: (input) => {
+	run: (input, ctx) => {
 		const room = loadRoom(input.roomId);
 		const f = filtersFor(room.id, input);
 		const investors = roomInvestors(room.id, f);
@@ -135,6 +149,7 @@ export const getRoomActivity = defineOperation({
 			files: roomFiles(room.id, f),
 			timeline: roomTimeline(room.id, f, input.timelineLimit),
 			viewingNow: viewingNow(room.id, f),
+			notOpened: allowed(ctx.actor.role, 'admin') ? notOpened(room.id, f) : [],
 		};
 	},
 });

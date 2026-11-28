@@ -2,7 +2,7 @@
 
 ## Branding
 
-Branding is set for the install (Settings → General and email, owner only) and can be overridden per
+Branding is set for the install (Settings → General, owner only) and can be overridden per
 room (room Settings). Operations: `get_branding`, `update_branding`, `set_logo`.
 
 - **Logo.** PNG, JPEG or WebP under 700 KB. The server re-encodes it with sharp to a PNG of at most

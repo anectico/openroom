@@ -3,6 +3,7 @@ import { documentReviewStates } from '#lib/server/document-reviews.ts';
 import { visiblePins } from '#lib/server/pins.ts';
 import { visibleTree } from '#lib/server/viewer/access.ts';
 import { requireViewer } from '#lib/server/viewer/context.ts';
+import { lastReadPage } from '#lib/server/viewer/resume.ts';
 import { currentVersion } from '#lib/server/viewer/serve.ts';
 import { trackOnce } from '#lib/server/viewer/tracking.ts';
 import { browseParameters } from '#lib/viewer/navigation.ts';
@@ -33,6 +34,7 @@ export const load: PageServerLoad = (event) => {
 		initialPage: /^\d{1,6}$/.test(event.url.searchParams.get('page') ?? '')
 			? Number(event.url.searchParams.get('page'))
 			: null,
+		resumePage: node.kind === 'pdf' ? (lastReadPage(ctx, node.id)?.page ?? null) : null,
 		guide,
 		guidePosition: guide ? index + 1 : null,
 		guideTotal: guide ? files.length : null,

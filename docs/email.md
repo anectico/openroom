@@ -4,10 +4,14 @@ Email is optional. Without it, copy investor links and member invitation address
 verification requires delivery; OpenRoom refuses to enable that gate without an email configuration.
 In-app notifications and document access continue to work without a provider.
 
-An owner opens **Settings → General and email**, chooses a provider, enters the sender and
+An owner opens **Settings → General**, chooses a provider, enters the sender and
 credentials, saves, then uses **Send a test email** to an address they control. A saved configuration
 alone does not prove delivery: check the test result and the receiving inbox before requiring email
 verification on investor links.
+
+Give the sender a display name, such as `Acme <rooms@acme.com>`: investors see it at the gate as
+"Shared by Acme". Answer and file-request emails link to the exact page; if the investor's session
+has ended, opening their invitation link brings them back to it.
 
 ## Resend
 

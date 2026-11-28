@@ -1,3 +1,4 @@
+import type { LinkSettings } from '../../schemas/link-settings.ts';
 import { notify, recordEvent } from '../activity.ts';
 import { database } from '../db/index.ts';
 import type { ViewerContext } from './access.ts';
@@ -250,4 +251,16 @@ export function trackDownload(
 		fileVersionId: fileId ? (currentVersionId(fileId)?.id ?? null) : null,
 	});
 	notify('download', { ...base, detail: zip ? { zip: true } : null });
+}
+
+export function recordedFacts(
+	settings: Pick<LinkSettings, 'downloads' | 'watermark' | 'screenshotProtection'>,
+	downloadOnlyFiles: boolean,
+) {
+	const facts = ['Your email, IP address and browser on each visit', 'Which pages you view and for how long'];
+	if (settings.downloads !== 'none' || downloadOnlyFiles) facts.push('Which documents you download');
+	if (settings.watermark) facts.push('Pages carry a watermark with your email, IP address and the time');
+	if (settings.screenshotProtection)
+		facts.push('Documents are hidden while you are in another window or tab, and printing is blocked');
+	return facts;
 }

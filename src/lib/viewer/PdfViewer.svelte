@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ChevronLeft, ChevronRight, Ellipsis, Grid2X2, Minus, MoveHorizontal, Plus, Search, X } from '@lucide/svelte';
+	import { ChevronLeft, ChevronRight, Download, Ellipsis, Grid2X2, Maximize, Minus, MoveHorizontal, Plus, RotateCw, Search, X } from '@lucide/svelte';
 	import type { PDFDocumentProxy, TextLayer } from 'pdfjs-dist';
 	import { onDestroy, onMount, type Snippet, tick, untrack } from 'svelte';
 	import { Button, buttonVariants } from '#lib/components/ui/button/index.js';
@@ -18,11 +18,15 @@
 		fileId,
 		version = 1,
 		initialPage = null,
+		resumePage = null,
 		watermark = null,
+		downloadHref = null,
 		onpage,
+		onreload,
 		actions,
+		menu,
 		navigation,
-	}: { url: string; title: string; obscured?: boolean; readingScope?: string; fileId?: string; version?: number; initialPage?: number | null; watermark?: string | null; onpage?: (page: number) => void; actions?: Snippet; navigation?: Snippet } = $props();
+	}: { url: string; title: string; obscured?: boolean; readingScope?: string; fileId?: string; version?: number; initialPage?: number | null; resumePage?: number | null; watermark?: string | null; downloadHref?: string | null; onpage?: (page: number) => void; onreload?: () => void; actions?: Snippet; menu?: Snippet; navigation?: Snippet } = $props();
 
 	let host = $state<HTMLDivElement>();
 	let doc = $state.raw<PDFDocumentProxy | null>(null);
@@ -31,6 +35,7 @@
 	let toolsMode = $state<'search' | 'pages'>('search');
 	let toolsOpen = $state(false);
 	let presenting = $state(false);
+	let presentation = $state<{ enter(): void }>();
 	let toolbar = $state<HTMLElement>();
 	let pdfTools = $state<{ previousResult(): void; nextResult(): void; clearSearch(): void }>();
 	let searchState = $state({ count: 0, active: -1, busy: false });
@@ -48,8 +53,20 @@
 	let zoom = $state(1);
 	let fit = $state(1);
 	let jump = $state('1');
-	let error = $state('');
+	type Failure = 'network' | 'session' | 'version' | 'gone' | 'other';
+	let failure = $state<Failure | null>(null);
+	let notice = $state<Failure | null>(null);
 	let loading = $state(true);
+	let pinch = $state(1);
+	let pinchTimer: ReturnType<typeof setTimeout> | null = null;
+	let checking = false;
+	const failures: Record<Failure, string> = {
+		network: 'The document could not be loaded. Check your connection and try again.',
+		session: 'Your session ended. Open your invitation link again.',
+		version: 'A new version of this document is available.',
+		gone: 'This document is no longer available.',
+		other: 'This document could not be opened.',
+	};
 	const rendered = new Map<number, number>();
 	const tasks = new Map<number, { cancel: () => void }>();
 	let observer: IntersectionObserver | null = null;
@@ -59,11 +76,16 @@
 	let frame = 0;
 	let quietUntil = 0;
 	let firstWidth = 0;
+	let firstHeight = 0;
 	let resizer: ResizeObserver | null = null;
 	let resizeTimer: ReturnType<typeof setTimeout> | null = null;
-	const fitFor = () => Math.max(0.1, ((host?.clientWidth ?? 800) - 16) / firstWidth);
+	const fitFor = () => {
+		const available = (host?.clientWidth ?? 800) - 16;
+		return Math.max(0.1, (firstHeight > firstWidth ? Math.min(available, 1100) : available) / firstWidth);
+	};
 
 	const scale = $derived(fit * zoom);
+	const quality = $derived(scale * pinch);
 
 	$effect(() => {
 		if (!ready) return;
@@ -74,7 +96,31 @@
 	const requestedPage = $derived(initialPage);
 	$effect(() => { const page = requestedPage; if (ready && page && page > 0) untrack(() => goTo(page)); });
 
-	onMount(async () => {
+	async function classify(): Promise<Failure> {
+		if (!navigator.onLine) return 'network';
+		try {
+			const r = await fetch(url, { method: 'HEAD', redirect: 'manual', cache: 'no-store', credentials: 'same-origin' });
+			if (r.type === 'opaqueredirect' || r.status === 401) return 'session';
+			if (r.status === 409) return 'version';
+			if (r.status === 403 || r.status === 404) return 'gone';
+			if (r.status >= 500 || r.status === 429) return 'network';
+			return 'other';
+		} catch {
+			return 'network';
+		}
+	}
+
+	async function checkLive() {
+		if (checking || destroyed || notice) return;
+		checking = true;
+		const result = await classify();
+		checking = false;
+		if (!destroyed && (result === 'version' || result === 'session' || result === 'gone')) notice = result;
+	}
+
+	async function load() {
+		failure = null;
+		loading = true;
 		try {
 			const pdfjs = await import('pdfjs-dist');
 			TextLayerClass = pdfjs.TextLayer;
@@ -97,18 +143,20 @@
 			const first = (await doc.getPage(1)).getViewport({ scale: 1 });
 			sizes = Array.from({ length: total }, () => ({ width: first.width, height: first.height }));
 			firstWidth = first.width;
+			firstHeight = first.height;
 			fit = fitFor();
 			loading = false;
 			await tick();
 			observe();
 			const saved = readingScope && fileId ? readingPlaces(readingScope).find((p) => p.fileId === fileId && p.version === version) : null;
+			const place = saved?.page ?? resumePage ?? 0;
 			if (initialPage && initialPage > 0) goTo(initialPage);
-			else if (saved && saved.page > 1) {
-				resumed = Math.min(saved.page, total);
+			else if (place > 1) {
+				resumed = Math.min(place, total);
 				goTo(resumed);
 			}
 			ready = true;
-			if (host) {
+			if (host && !resizer) {
 				resizer = new ResizeObserver(() => {
 					if (resizeTimer) clearTimeout(resizeTimer);
 					resizeTimer = setTimeout(refit, 150);
@@ -116,9 +164,37 @@
 				resizer.observe(host);
 			}
 		} catch {
-			error = 'This document could not be opened.';
+			if (destroyed) return;
+			const result = await classify();
+			if (destroyed) return;
+			failure = result;
 			loading = false;
 		}
+	}
+
+	async function retry() {
+		const previous = loadingTask;
+		loadingTask = null;
+		doc = null;
+		await previous?.destroy().catch(() => {});
+		await load();
+	}
+
+	function pinched() {
+		if (pinchTimer) clearTimeout(pinchTimer);
+		pinchTimer = setTimeout(() => {
+			const next = Math.min(4, Math.max(1, Math.round((window.visualViewport?.scale ?? 1) * 2) / 2));
+			if (destroyed || next === pinch) return;
+			pinch = next;
+			rendered.clear();
+			observe();
+		}, 300);
+	}
+
+	onMount(() => {
+		window.visualViewport?.addEventListener('resize', pinched);
+		void load();
+		return () => window.visualViewport?.removeEventListener('resize', pinched);
 	});
 
 	onDestroy(() => {
@@ -127,6 +203,7 @@
 		if (frame) cancelAnimationFrame(frame);
 		resizer?.disconnect();
 		if (resizeTimer) clearTimeout(resizeTimer);
+		if (pinchTimer) clearTimeout(pinchTimer);
 		for (const t of tasks.values()) t.cancel();
 		for (const layer of textLayers.values()) layer.cancel();
 		void loadingTask?.destroy();
@@ -187,19 +264,28 @@
 	}
 
 	async function render(n: number) {
-		if (!doc || rendered.get(n) === scale) return;
-		const wanted = scale;
+		if (!doc || rendered.get(n) === quality) return;
+		const wanted = quality;
+		const layout = scale;
+		const sharpen = pinch;
 		textLayers.get(n)?.cancel();
 		textLayers.delete(n);
 		rendered.set(n, wanted);
 		tasks.get(n)?.cancel();
 		for (const other of [...rendered.keys()]) if (Math.abs(other - n) > keepAround * 2 && Math.abs(other - current) > keepAround) release(other);
-		const page = await doc.getPage(n);
+		let page: Awaited<ReturnType<PDFDocumentProxy['getPage']>>;
+		try {
+			page = await doc.getPage(n);
+		} catch {
+			rendered.delete(n);
+			void checkLive();
+			return;
+		}
 		if (rendered.get(n) !== wanted) return;
-		const base = page.getViewport({ scale: wanted });
-		const density = Math.min(window.devicePixelRatio || 1, Math.sqrt(maxPixels / (base.width * base.height)));
-		const viewport = page.getViewport({ scale: wanted * density });
-		sizes[n - 1] = { width: base.width / wanted, height: base.height / wanted };
+		const base = page.getViewport({ scale: layout });
+		const density = Math.min((window.devicePixelRatio || 1) * sharpen, Math.sqrt(maxPixels / (base.width * base.height)));
+		const viewport = page.getViewport({ scale: layout * density });
+		sizes[n - 1] = { width: base.width / layout, height: base.height / layout };
 		const canvas = host?.querySelector<HTMLCanvasElement>(`[data-page="${n}"] canvas`);
 		const context = canvas?.getContext('2d');
 		if (!canvas || !context) return;
@@ -222,8 +308,9 @@
 					highlightPdfText(container, searchTerm);
 				} catch { if (!destroyed && rendered.get(n) === wanted) textError = 'Some text could not be loaded. Reload the document to try again.'; }
 			}
-		} catch {
+		} catch (e) {
 			rendered.delete(n);
+			if ((e as Error)?.name !== 'RenderingCancelledException') void checkLive();
 		}
 	}
 
@@ -272,37 +359,45 @@
 
 <svelte:window onkeydown={keys} onscrollcapture={scrolled} onresize={scrolled} />
 
-{#if resumed}<p class="mb-2 text-xs text-muted-foreground" role="status">Resumed at page {resumed} · saved in this tab</p>{/if}
-
-{#snippet zoomMenu()}
-<DropdownMenu.Root><DropdownMenu.Trigger class={buttonVariants({ variant: 'ghost', size: 'icon', class: 'size-11' })} aria-label="Reader options"><Ellipsis /></DropdownMenu.Trigger><DropdownMenu.Content align="end" class="min-w-48"><DropdownMenu.Group><DropdownMenu.GroupHeading>Page {current} of {total}</DropdownMenu.GroupHeading><DropdownMenu.Item class="min-h-11" disabled={current <= 1} onSelect={() => goTo(current - 1)}><ChevronLeft />Previous page</DropdownMenu.Item><DropdownMenu.Item class="min-h-11" disabled={current >= total} onSelect={() => goTo(current + 1)}><ChevronRight />Next page</DropdownMenu.Item><DropdownMenu.Item class="min-h-11" onSelect={() => showTools('pages')}><Grid2X2 />Page thumbnails</DropdownMenu.Item></DropdownMenu.Group><DropdownMenu.Separator /><DropdownMenu.Group><DropdownMenu.GroupHeading>Zoom · {Math.round(zoom * 100)}%</DropdownMenu.GroupHeading><DropdownMenu.Item class="min-h-11" disabled={zoom <= 0.5} onSelect={() => setZoom(zoom - 0.25)}><Minus />Zoom out</DropdownMenu.Item><DropdownMenu.Item class="min-h-11" disabled={zoom >= 4} onSelect={() => setZoom(zoom + 0.25)}><Plus />Zoom in</DropdownMenu.Item><DropdownMenu.Item class="min-h-11" onSelect={() => setZoom(1)}><MoveHorizontal aria-hidden="true" />Fit width</DropdownMenu.Item></DropdownMenu.Group></DropdownMenu.Content></DropdownMenu.Root>
+{#snippet readerMenu()}
+<DropdownMenu.Root><DropdownMenu.Trigger class={buttonVariants({ variant: 'ghost', size: 'icon' })} aria-label="Reader options"><Ellipsis /></DropdownMenu.Trigger><DropdownMenu.Content align="end" class="min-w-56"><DropdownMenu.Group><DropdownMenu.GroupHeading>Page {current} of {total}</DropdownMenu.GroupHeading><DropdownMenu.Item class="min-h-11" disabled={!doc} onSelect={() => showTools('search')}><Search />Find in document</DropdownMenu.Item><DropdownMenu.Item class="min-h-11" disabled={!doc} onSelect={() => showTools('pages')}><Grid2X2 />Pages</DropdownMenu.Item><DropdownMenu.Item class="min-h-11" disabled={!doc} onSelect={() => presentation?.enter()}><Maximize />Full screen</DropdownMenu.Item></DropdownMenu.Group><DropdownMenu.Separator /><DropdownMenu.Group><DropdownMenu.GroupHeading>Zoom · {Math.round(zoom * 100)}%</DropdownMenu.GroupHeading><DropdownMenu.Item class="min-h-11" disabled={zoom <= 0.5} onSelect={() => setZoom(zoom - 0.25)}><Minus />Zoom out</DropdownMenu.Item><DropdownMenu.Item class="min-h-11" disabled={zoom >= 4} onSelect={() => setZoom(zoom + 0.25)}><Plus />Zoom in</DropdownMenu.Item><DropdownMenu.Item class="min-h-11" onSelect={() => setZoom(1)}><MoveHorizontal aria-hidden="true" />Fit width</DropdownMenu.Item></DropdownMenu.Group>{#if menu}<DropdownMenu.Separator />{@render menu()}{/if}</DropdownMenu.Content></DropdownMenu.Root>
 {/snippet}
-<section bind:this={toolbar} class="sticky top-0 z-10 mb-4 flex flex-wrap items-center justify-between gap-x-1 gap-y-1 rounded-xl border bg-card/95 p-2 text-xs shadow-sm backdrop-blur sm:gap-x-3" aria-label="PDF controls">
- <div class="flex w-full items-center justify-between gap-1 sm:w-auto sm:justify-start">
+<section bind:this={toolbar} class="sticky top-0 z-10 mb-2 flex flex-wrap items-center justify-between gap-x-1 gap-y-1 border-b bg-card/95 px-1 py-1 text-xs shadow-sm backdrop-blur sm:mb-4 sm:gap-x-3 sm:rounded-xl sm:border sm:p-2" aria-label="PDF controls">
+ <div class="flex w-full min-w-0 items-center gap-1 sm:w-auto">
   {#if navigation}{@render navigation()}{/if}
-  <Button variant="ghost" size="icon" class="hidden size-8 sm:inline-flex" onclick={() => goTo(current - 1)} disabled={current <= 1} aria-label="Previous page"><ChevronLeft /></Button>
-  <form class="flex items-center gap-1" onsubmit={(e) => { e.preventDefault(); goTo(Number(jump)); }}><label class="sr-only" for="pdf-page">Page</label><input id="pdf-page" class="h-11 w-10 rounded-md border border-input bg-background px-1 text-center tabular-nums sm:h-7 sm:w-9" inputmode="numeric" bind:value={jump} /><span class="whitespace-nowrap text-muted-foreground">of {total || '…'}</span></form>
-  <Button variant="ghost" size="icon" class="hidden size-8 sm:inline-flex" onclick={() => goTo(current + 1)} disabled={current >= total} aria-label="Next page"><ChevronRight /></Button>
-  <DocumentPresentation {title} pdf={doc} page={current} {watermark} {obscured} bind:open={presenting} onpage={(n) => { current = n; jump = String(n); }} onexit={() => goTo(current)} />
-  <div class="flex items-center sm:hidden">{@render zoomMenu()}{#if actions}{@render actions()}{/if}</div>
+  <p class="min-w-0 flex-1 truncate text-sm font-medium sm:hidden" title={title}>{title}</p>
+  <Button variant="ghost" size="icon-sm" class="hidden sm:inline-flex" onclick={() => goTo(current - 1)} disabled={current <= 1} aria-label="Previous page"><ChevronLeft /></Button>
+  <form class="flex shrink-0 items-center gap-1" onsubmit={(e) => { e.preventDefault(); goTo(Number(jump)); }}><label class="sr-only" for="pdf-page">Page</label><input id="pdf-page" class="h-11 w-10 rounded-md border border-input bg-background px-1 text-center text-sm tabular-nums sm:h-7 sm:w-9 sm:text-xs" inputmode="numeric" bind:value={jump} /><span class="whitespace-nowrap text-muted-foreground">of {total || '…'}</span></form>
+  <Button variant="ghost" size="icon-sm" class="hidden sm:inline-flex" onclick={() => goTo(current + 1)} disabled={current >= total} aria-label="Next page"><ChevronRight /></Button>
+  <DocumentPresentation bind:this={presentation} buttonClass="hidden sm:inline-flex" {title} pdf={doc} page={current} {watermark} {obscured} bind:open={presenting} onpage={(n) => { current = n; jump = String(n); }} onexit={() => goTo(current)} />
+  <div class="shrink-0 sm:hidden">{@render readerMenu()}</div>
  </div>
- <div class={searchState.count > 0 ? 'hidden items-center gap-1 sm:flex' : 'flex w-full items-center justify-between gap-1 sm:w-auto sm:justify-start'}>
-  <div class="hidden items-center gap-1 sm:flex"><Button variant="ghost" size="icon" class="size-8" onclick={() => setZoom(zoom - 0.25)} disabled={zoom <= 0.5} aria-label="Zoom out"><Minus /></Button><span class="w-9 text-center tabular-nums">{Math.round(zoom * 100)}%</span><Button variant="ghost" size="icon" class="size-8" onclick={() => setZoom(zoom + 0.25)} disabled={zoom >= 4} aria-label="Zoom in"><Plus /></Button><Button variant="ghost" size="sm" onclick={() => setZoom(1)}>Fit width</Button></div>
-  <Button variant="ghost" size="sm" class="min-h-11 sm:min-h-8" disabled={!doc} onclick={() => showTools('search')} aria-label="Find in PDF"><Search /><span>Find</span></Button>
-  <Button variant="ghost" size="sm" class="min-h-11 sm:min-h-8" disabled={!doc} onclick={() => showTools('pages')} aria-label="Show page thumbnails"><Grid2X2 /><span>Pages</span></Button>
-  <div class="hidden sm:block">{#if actions}{@render actions()}{/if}</div>
+ <div class="hidden items-center gap-1 sm:flex">
+  <Button variant="ghost" size="icon-sm" onclick={() => setZoom(zoom - 0.25)} disabled={zoom <= 0.5} aria-label="Zoom out"><Minus /></Button><span class="w-9 text-center tabular-nums">{Math.round(zoom * 100)}%</span><Button variant="ghost" size="icon-sm" onclick={() => setZoom(zoom + 0.25)} disabled={zoom >= 4} aria-label="Zoom in"><Plus /></Button><Button variant="ghost" size="sm" onclick={() => setZoom(1)}>Fit width</Button>
+  <Button variant="ghost" size="sm" disabled={!doc} onclick={() => showTools('search')} aria-label="Find in document"><Search /><span>Find</span></Button>
+  <Button variant="ghost" size="sm" disabled={!doc} onclick={() => showTools('pages')} aria-label="Show page thumbnails"><Grid2X2 /><span>Pages</span></Button>
+  {#if actions}{@render actions()}{/if}
  </div>
- {#if searchState.count > 0}<div class="flex w-full items-center justify-between gap-1 border-t pt-1"><Button variant="ghost" class="h-auto min-h-11 min-w-0 whitespace-normal px-2 text-left text-xs sm:min-h-8" aria-label="Find in PDF: {searchState.count} matching pages" onclick={() => showTools('search')}>{searchState.active >= 0 ? `${searchState.active + 1} of ${searchState.count} matches` : `${searchState.count} matches`}</Button><div class="flex shrink-0"><Button variant="ghost" size="icon" class="size-11 sm:size-8" aria-label="Previous search result" disabled={searchState.active <= 0} onclick={() => pdfTools?.previousResult()}><ChevronLeft /></Button><Button variant="ghost" size="icon" class="size-11 sm:size-8" aria-label="Next search result" disabled={searchState.active >= searchState.count - 1} onclick={() => pdfTools?.nextResult()}><ChevronRight /></Button><Button variant="ghost" size="icon" class="size-11 sm:size-8" aria-label="Clear document search" onclick={() => pdfTools?.clearSearch()}><X /></Button></div></div>{/if}
+ {#if searchState.count > 0}<div class="flex w-full items-center justify-between gap-1 border-t pt-1"><Button variant="ghost" class="h-auto min-h-11 min-w-0 whitespace-normal px-2 text-left text-xs sm:min-h-8" aria-label="Find in document: {searchState.count} matching pages" onclick={() => showTools('search')}>{searchState.active >= 0 ? `${searchState.active + 1} of ${searchState.count} matches` : `${searchState.count} matches`}</Button><div class="flex shrink-0"><Button variant="ghost" size="icon-sm" aria-label="Previous search result" disabled={searchState.active <= 0} onclick={() => pdfTools?.previousResult()}><ChevronLeft /></Button><Button variant="ghost" size="icon-sm" aria-label="Next search result" disabled={searchState.active >= searchState.count - 1} onclick={() => pdfTools?.nextResult()}><ChevronRight /></Button><Button variant="ghost" size="icon-sm" aria-label="Clear document search" onclick={() => pdfTools?.clearSearch()}><X /></Button></div></div>{/if}
+{#if resumed && current === resumed}<p class="flex w-full flex-wrap items-center gap-x-1 border-t px-2 pt-1 text-xs text-muted-foreground" role="status">Resumed at page {resumed} ·<button type="button" class="inline-flex min-h-11 items-center px-1 font-medium text-primary underline-offset-4 hover:underline sm:min-h-6" onclick={() => { resumed = 0; goTo(1); }}>Start from page 1</button></p>{/if}
 </section>
 
 {#if doc}<PdfTools bind:this={pdfTools} {doc} {watermark} mode={toolsMode} {current} bind:open={toolsOpen} onpage={goTo} onquery={(query) => (searchTerm = query)} onstate={(state) => (searchState = state)} onreturnfocus={() => toolsTrigger?.focus({ preventScroll: true })} />{/if}
-{#if textError}<p role="status" class="mb-3 text-xs text-muted-foreground">{textError}</p>{/if}
+{#if notice}<div class="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border bg-card px-3 py-2 text-sm" role="alert"><p>{failures[notice]}</p>{#if notice === 'version' && onreload}<Button size="sm" onclick={onreload}><RotateCw data-icon="inline-start" />Reload</Button>{/if}</div>{/if}
+{#if textError}<p role="status" class="mb-3 px-2 text-xs text-muted-foreground sm:px-0">{textError}</p>{/if}
 
-<div bind:this={host} class="space-y-4 overflow-x-auto">
+<div bind:this={host} class="space-y-2 overflow-x-auto sm:space-y-4">
 	{#if loading}
-		<p class="py-20 text-center text-muted-foreground">Opening the document…</p>
-	{:else if error}
-		<p class="py-20 text-center text-destructive">{error}</p>
+		<div class="mx-auto flex aspect-[4/3] w-full max-w-4xl animate-pulse flex-col gap-[3%] bg-white p-[6%] shadow-sm" role="status" aria-label="Opening the document">
+			<div class="h-[7%] w-3/5 rounded bg-muted"></div><div class="h-[3%] w-4/5 rounded bg-muted/70"></div><div class="h-[3%] w-3/4 rounded bg-muted/70"></div><div class="mt-[4%] flex-1 rounded bg-muted/50"></div>
+		</div>
+	{:else if failure}
+		<div class="mx-auto flex max-w-md flex-col items-center gap-4 rounded-xl border bg-card px-6 py-12 text-center" role="alert">
+			<p class="font-medium">{failures[failure]}</p>
+			{#if failure === 'network'}<Button onclick={retry}><RotateCw data-icon="inline-start" />Try again</Button>
+			{:else if failure === 'version' && onreload}<Button onclick={onreload}><RotateCw data-icon="inline-start" />Reload</Button>
+			{:else if failure === 'other' && downloadHref}<p class="text-sm text-muted-foreground">You can download it and open it on your device instead.</p><Button variant="outline" href={downloadHref}><Download data-icon="inline-start" />Download</Button>{/if}
+		</div>
 	{:else}
 		{#each sizes as size, i (i)}
 			<section
@@ -318,6 +413,14 @@
 		{/each}
 	{/if}
 </div>
+
+{#if ready && !failure}
+	<div class="fixed right-3 bottom-3 z-20 flex items-center rounded-full border bg-card/95 shadow-md backdrop-blur sm:hidden" role="toolbar" aria-label="Zoom">
+		<Button variant="ghost" size="icon" class="rounded-full" onclick={() => setZoom(zoom - 0.25)} disabled={zoom <= 0.5} aria-label="Zoom out"><Minus /></Button>
+		<button type="button" class="min-h-11 min-w-12 text-xs tabular-nums" onclick={() => setZoom(1)} aria-label="Fit width, current zoom {Math.round(zoom * 100)}%">{Math.round(zoom * 100)}%</button>
+		<Button variant="ghost" size="icon" class="rounded-full" onclick={() => setZoom(zoom + 0.25)} disabled={zoom >= 4} aria-label="Zoom in"><Plus /></Button>
+	</div>
+{/if}
 
 <style>
 	.pdf-text-layer { position: absolute; inset: 0; overflow: clip; line-height: 1; text-align: initial; letter-spacing: normal; word-spacing: normal; text-size-adjust: none; transform-origin: 0 0; --min-font-size: 1; --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size)); --min-font-size-inv: calc(1 / var(--min-font-size)); }
