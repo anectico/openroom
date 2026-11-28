@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { parseDate, today } from '@internationalized/date';
 	import { ArrowRight, ArrowUpRight, ChevronDown, Copy, Eye, Mail } from '@lucide/svelte';
 	import { tick, untrack } from 'svelte';
 	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
@@ -24,6 +25,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 		defaults,
 		hasNda,
 		link = null,
+		template = null,
 		emailReady,
 		isOwner,
 		timeZone = 'UTC',
@@ -34,6 +36,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 		defaults: LinkSettings;
 		hasNda: boolean;
 		link?: Link | null;
+		template?: Link | null;
 		emailReady: boolean;
 		isOwner: boolean;
 		timeZone?: string;
@@ -46,7 +49,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 		{ key: 'requireNda', label: 'NDA' },
 		{ key: 'watermark', label: 'Watermark' },
 		{ key: 'screenshotProtection', label: 'Screenshot protection' },
-		{ key: 'notifyEveryView', label: 'Notify me on every view' },
+		{ key: 'notifyEveryView', label: 'Notify me on every visit' },
 	] as const;
 
 	let label = $state('');
@@ -91,10 +94,12 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 	const individualEmails = $derived(created?.allow.filter((entry) => entry.kind === 'email') ?? []);
 
 	let openedEmailSetup = false;
+	let openedNdaSetup = false;
 	async function refreshEmailSetup() {
-		if (!open || !openedEmailSetup) return;
+		if (!open || (!openedEmailSetup && !openedNdaSetup)) return;
 		await invalidateAll().catch(() => {});
 		if (emailReady) openedEmailSetup = false;
+		if (hasNda) openedNdaSetup = false;
 	}
 
 	async function refreshGroups() {
@@ -130,24 +135,25 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 			invitationSent = false;
 			availableGroups = groups;
 			groupError = '';
-			label = link?.label ?? '';
-			welcome = link?.welcomeMarkdown ?? '';
+			const source = link ?? template;
+			label = link ? link.label : template ? `${template.label} (copy)`.slice(0, 120) : '';
+			welcome = source?.welcomeMarkdown ?? '';
 			welcomePane = 'edit';
-			welcomeExpanded = !!link?.welcomeMarkdown;
-			isOpen = link?.open ?? false;
-			allow = link?.allow.map((e) => e.value).join('\n') ?? '';
-			blocks = link?.blocks.map((e) => e.value).join('\n') ?? '';
+			welcomeExpanded = !!source?.welcomeMarkdown;
+			isOpen = source?.open ?? false;
+			allow = source?.allow.map((e) => e.value).join('\n') ?? '';
+			blocks = source?.blocks.filter((e) => link || e.value !== 'Erased investor').map((e) => e.value).join('\n') ?? '';
 			password = '';
 			removePassword = false;
-			const start = link?.expiresAt ? localDate(link.expiresAt) : '';
+			const start = source?.expiresAt && source.expiresAt > Date.now() ? localDate(source.expiresAt) : '';
 			expires = start;
-			initialExpires = start;
+			initialExpires = link ? start : '';
 			const next: Record<string, Choice> = {};
 			for (const t of toggles)
-				next[t.key] = link?.overridden.includes(t.key) ? (link.settings[t.key] ? 'on' : 'off') : 'room';
+				next[t.key] = source?.overridden.includes(t.key) ? (source.settings[t.key] ? 'on' : 'off') : 'room';
 			choices = next;
-			downloads = link?.overridden.includes('downloads') ? link.settings.downloads : 'room';
-			groupId = link?.groupId ?? '';
+			downloads = source?.overridden.includes('downloads') ? source.settings.downloads : 'room';
+			groupId = source?.groupId ?? '';
 			error = '';
  initialDraft = JSON.stringify({ label, welcome, isOpen, allow, blocks, password, removePassword, expires, choices, downloads, groupId });
  discardOpen = false;
@@ -155,8 +161,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 	});
 
 	function localDate(ms: number) {
-		const d = new Date(ms);
-		return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+		return new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(ms);
 	}
 
 	const lines = (text: string) =>
@@ -171,7 +176,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 	async function save(event: SubmitEvent) {
 		event.preventDefault();
 		if (busy || welcome.length > 4000) return;
-		if (groupId && !availableGroups.some((group) => group.id === groupId)) { error = 'This group is no longer available. Select a document group before saving.'; return; }
+		if (groupId && !availableGroups.some((group) => group.id === groupId)) { error = 'This group is no longer available. Choose another group before saving.'; return; }
 		busy = true;
 		error = '';
 		const settings: Record<string, unknown> = {};
@@ -185,7 +190,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 		const body: Record<string, unknown> = { welcomeMarkdown: welcome.trim() || null, label, open: isOpen, blocks: lines(blocks), settings, groupId: groupId || null };
 		if (!isOpen) body.allow = lines(allow);
 		if (!link || expires !== initialExpires)
-			body.expiresAt = expires ? new Date(`${expires}T23:59:59`).getTime() : null;
+			body.expiresAt = expires ? parseDate(expires).add({ days: 1 }).toDate(timeZone).getTime() - 1 : null;
 		if (password) body.password = password;
 		else if (removePassword) body.password = null;
 		try {
@@ -214,7 +219,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 				{#if verified}
 					This link requires a code. Investors cannot enter until email delivery is configured or verification is turned off.
 				{:else}
-					{anyEmail ? 'Visitors can enter an email address without proving they own it.' : 'Visitors can enter an allowed email address without proving they own it.'}
+					{anyEmail ? 'Investors can enter an email address without proving they own it.' : 'Investors can enter an allowed email address without proving they own it.'}
 				{/if}
 				{#if isOwner}
 					{#if !verified}<p>{created ? 'To require a code, connect a provider and edit this link.' : 'Connect a provider, then choose On to require a code.'}</p>{/if}
@@ -227,17 +232,17 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 	{:else if verified}
 		<p class="text-xs text-muted-foreground">Investors must enter the code sent to their email address.</p>
 	{:else}
-		<p class="text-xs text-muted-foreground">{anyEmail ? 'Visitors can enter an email address without proving they own it.' : 'Visitors can enter an allowed email address without proving they own it.'}</p>
+		<p class="text-xs text-muted-foreground">{anyEmail ? 'Investors can enter an email address without proving they own it.' : 'Investors can enter an allowed email address without proving they own it.'}</p>
 	{/if}
 {/snippet}
 
 <svelte:window onfocus={refreshEmailSetup} onbeforeunload={(event) => { if (open && dirty) event.preventDefault(); }} />
 <Dialog.Root bind:open={() => open, requestOpen}>
-	<Dialog.Content class="grid transition-none max-sm:inset-0 max-sm:h-full max-sm:max-h-full max-sm:max-w-full max-sm:translate-none max-sm:rounded-none sm:max-h-[90dvh] grid-rows-[auto_minmax(0,1fr)] gap-0 overflow-hidden p-0 sm:max-w-[620px]">
-		<Dialog.Header class="border-b px-5 py-4 pr-14 sm:px-6 sm:py-5 sm:pr-16"><Dialog.Title>{created ? 'Sharing link created' : link ? 'Edit sharing link' : 'Create a sharing link'}</Dialog.Title><Dialog.Description>{created ? 'Review access, then copy the link or send an invitation.' : 'Choose who can enter and which documents they can see.'}</Dialog.Description></Dialog.Header>
+	<Dialog.Content class="grid grid-rows-[auto_minmax(0,1fr)] gap-0 overflow-hidden p-0 transition-none max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:w-full max-sm:max-w-full max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none max-sm:ring-0 sm:max-h-[90dvh] sm:max-w-[620px]">
+		<Dialog.Header class="shrink-0 border-b px-5 py-4 pr-14 text-left sm:px-6 sm:py-5 sm:pr-16"><Dialog.Title>{created ? 'Sharing link created' : link ? 'Edit sharing link' : template ? 'Duplicate sharing link' : 'Create a sharing link'}</Dialog.Title><Dialog.Description>{created ? 'Review access, then copy the link or send an invitation.' : template ? `A new link with a new address, starting from “${template.label}”.` : 'Choose who can enter and which documents they can see.'}</Dialog.Description></Dialog.Header>
 		{#if created}
 			<div class="flex min-h-0 flex-col">
-				<div class="flex min-h-0 flex-col gap-5 overflow-y-auto px-6 py-5">
+				<div class="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto overscroll-contain px-5 py-5 sm:px-6">
 					<Field.Field><Field.Label for="created-link">{created.label}</Field.Label><Input id="created-link" readonly value={created.url} onclick={(event) => event.currentTarget.select()} /></Field.Field>
 					<LinkAccessSummary link={created} {timeZone} />
 					{@render verificationHelp(created.settings.verifyEmail, created.open)}
@@ -250,7 +255,7 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 			</div>
 		{:else}
 		<form class="flex min-h-0 flex-col" onsubmit={save}>
-			<fieldset disabled={busy} class="min-h-0 min-w-0 overflow-y-auto px-6 py-5">
+			<fieldset disabled={busy} class="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain px-5 pt-5 pb-8 sm:px-6">
 				<Field.Group class="gap-5">
 					<Field.Field><Field.Label for="link-label">Link name</Field.Label><Input id="link-label" required maxlength={120} placeholder="e.g. Northstar Capital" bind:value={label} /><Field.Description>Only your team sees this name.</Field.Description></Field.Field>
 					<Field.Field>
@@ -288,19 +293,19 @@ import { beforeNavigate, invalidateAll } from '$app/navigation';
 						</details></Field.Field>
 
 					<details class="group rounded-xl border">
-						<summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3.5"><span><span class="block text-sm font-medium">Document protection</span><span class="mt-1 block text-[11px] text-muted-foreground">{effective('watermark') ? 'Watermarked' : 'No watermark'} · {effective('requireNda') ? 'NDA required' : 'No NDA'} · {downloadLabels[downloads === 'room' ? defaults.downloads : downloads]}</span></span><ChevronDown class="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" /></summary>
+						<summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3.5"><span><span class="block text-sm font-medium">Document protection</span><span class="mt-1 block text-xs text-muted-foreground">{effective('watermark') ? 'Watermarked' : 'No watermark'} · {effective('requireNda') ? 'NDA required' : 'No NDA'} · {downloadLabels[downloads === 'room' ? defaults.downloads : downloads]}</span></span><ChevronDown class="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" /></summary>
 						<div class="flex flex-col gap-4 border-t px-4 py-4">
 							{#each toggles.filter((item) => item.key !== 'verifyEmail') as toggle (toggle.key)}<Field.Field orientation="horizontal"><Field.Label for="choice-{toggle.key}" class="min-w-0 text-xs">{toggle.label}</Field.Label><ChoiceSelect id="choice-{toggle.key}" class="min-h-11" bind:value={choices[toggle.key]}
 								options={[{ value: 'room', label: `Room default (${defaults[toggle.key] ? 'on' : 'off'})` }, { value: 'on', label: 'On', disabled: toggle.key === 'requireNda' && !hasNda && choices[toggle.key] !== 'on' }, { value: 'off', label: 'Off' }]}
 							/></Field.Field>{/each}
-							{#if !hasNda}<p class="text-[11px] text-muted-foreground">Add NDA text in Room settings before requiring an agreement.</p>{/if}
+							{#if !hasNda}<p class="text-xs text-muted-foreground">Publish the room’s NDA before requiring an agreement. <a href="/admin/rooms/{roomId}/nda" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-medium text-foreground underline-offset-2 hover:underline" onclick={() => (openedNdaSetup = true)}>Set up the NDA <ArrowUpRight class="size-3.5" /><span class="sr-only">(opens in a new tab)</span></a></p>{/if}
 							<Field.Field orientation="horizontal"><Field.Label for="choice-downloads" class="text-xs">Downloads</Field.Label><ChoiceSelect id="choice-downloads" class="min-h-11" bind:value={downloads}
-								options={[{ value: 'room', label: `Room default (${downloadLabels[defaults.downloads]})` }, { value: 'none', label: 'No downloads' }, { value: 'per_file', label: 'Each file' }, { value: 'zip', label: 'All allowed files as one zip' }]}
+								options={[{ value: 'room', label: `Room default (${downloadLabels[defaults.downloads]})` }, { value: 'none', label: downloadLabels.none }, { value: 'per_file', label: downloadLabels.per_file }, { value: 'zip', label: downloadLabels.zip }]}
 							/></Field.Field>
-							<p class="text-xs leading-relaxed text-muted-foreground">Download-only files stay downloadable even with “No downloads”. Choose a document group above to hide them.</p>
+							<p class="text-xs leading-relaxed text-muted-foreground">Download-only documents stay downloadable even with “No downloads”. Choose a group above to hide them.</p>
 						</div>
 					</details>
-					<details class="group rounded-xl border"><summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3.5 text-sm font-medium">Password, expiry & blocked emails<ChevronDown class="size-4 text-muted-foreground transition-transform group-open:rotate-180" /></summary><div class="flex flex-col gap-5 border-t px-4 py-4"><Field.Group class="gap-5"><Field.Field><Field.Label for="link-password">{link?.hasPassword ? 'New password' : 'Password (optional)'}</Field.Label><Input id="link-password" type="password" autocomplete="new-password" minlength={8} bind:value={password} />{#if link?.hasPassword}<label class="flex items-center gap-2 text-xs"><input type="checkbox" bind:checked={removePassword} disabled={!!password} />Remove the existing password</label>{/if}</Field.Field><Field.Field><Field.Label for="link-expires">Expiry date (optional)</Field.Label><Input id="link-expires" class="min-w-0" type="date" min={localDate(Date.now())} bind:value={expires} /></Field.Field><Field.Field><Field.Label for="link-blocks">Blocked emails or domains</Field.Label><Textarea id="link-blocks" rows={2} placeholder="restricted@fund.com" bind:value={blocks} /><Field.Description>Blocks always take priority over allowed emails.</Field.Description></Field.Field></Field.Group></div></details>
+					<details class="group rounded-xl border"><summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3.5 text-sm font-medium">Password, expiry & blocked emails<ChevronDown class="size-4 text-muted-foreground transition-transform group-open:rotate-180" /></summary><div class="flex flex-col gap-5 border-t px-4 py-4"><Field.Group class="gap-5"><Field.Field><Field.Label for="link-password">{link?.hasPassword ? 'New password' : 'Password (optional)'}</Field.Label><Input id="link-password" type="password" autocomplete="new-password" minlength={8} bind:value={password} />{#if !link && template?.hasPassword}<Field.Description>The original link’s password is not copied. Set a new one if this link needs it.</Field.Description>{/if}{#if link?.hasPassword}<label class="flex items-center gap-2 text-xs"><input type="checkbox" bind:checked={removePassword} disabled={!!password} />Remove the existing password</label>{/if}</Field.Field><Field.Field><Field.Label for="link-expires">Expiry date (optional)</Field.Label><Input id="link-expires" class="min-w-0" type="date" min={today(timeZone).toString()} aria-describedby="link-expires-zone" bind:value={expires} /><Field.Description id="link-expires-zone">The link stops working at the end of this day in {timeZone}, the workspace time zone.</Field.Description></Field.Field><Field.Field><Field.Label for="link-blocks">Blocked emails or domains</Field.Label><Textarea id="link-blocks" rows={2} placeholder="restricted@fund.com" bind:value={blocks} /><Field.Description>Blocks always take priority over allowed emails.</Field.Description></Field.Field></Field.Group></div></details>
 					<details class="group rounded-xl border" bind:open={welcomeExpanded}>
 						<summary class="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3"><span><span class="block text-sm font-medium">Personal welcome</span><span class="mt-1 block text-xs text-muted-foreground">{welcome.trim() ? 'Custom note for this link' : 'Using the room introduction'}</span></span><ChevronDown class="size-4 shrink-0 transition-transform group-open:rotate-180" /></summary>
 						<Tabs.Root bind:value={welcomePane} class="border-t p-4"><Tabs.List aria-label="Personal welcome editor" class="h-auto"><Tabs.Trigger value="edit" class="min-h-11">Edit</Tabs.Trigger><Tabs.Trigger value="preview" class="min-h-11">Preview</Tabs.Trigger></Tabs.List><Tabs.Content value="edit" class="pt-3"><Field.Field><Field.Label for="link-welcome">Message for this audience</Field.Label><WelcomeEditor id="link-welcome" label="Message for this audience" limit={4000} disabled={busy} bind:value={welcome} /><Field.Description>Everyone using this link sees this note after passing access checks. It replaces the room introduction inside the room. Leave blank to use the room introduction.</Field.Description></Field.Field>{#if welcome.trim()}<Button type="button" variant="ghost" class="mt-2 min-h-11" onclick={() => (welcome = '')}>Use room introduction</Button>{/if}</Tabs.Content><Tabs.Content value="preview" class="pt-3">{#if welcome.trim()}<div class="md welcome-copy text-sm leading-relaxed [overflow-wrap:anywhere] [&_img]:max-w-full">{@html welcomeHtml}</div>{:else}<p class="text-sm text-muted-foreground">This link will use the room introduction. Add a message in Edit to personalize it.</p>{/if}</Tabs.Content></Tabs.Root>

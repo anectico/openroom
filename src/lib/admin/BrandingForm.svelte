@@ -18,7 +18,7 @@
 	let savedWelcome = $state(untrack(() => room?.welcomeMarkdown ?? ''));
 	let name = $state(untrack(() => savedName));
 	let welcome = $state(untrack(() => savedWelcome));
-	let hex = $state(untrack(() => branding.accentColor ?? defaultAccent));
+	let hex = $state(untrack(() => normalizeColor(branding.accentColor ?? '') ?? defaultAccent));
 	let inherited = $state(untrack(() => roomId ? !branding.roomOverrides?.accentColor : !branding.accentColor));
 	let imageBase64 = $state<string | null | undefined>(undefined);
 	let previewImage = $state<string | null>(null);
@@ -52,7 +52,7 @@
 	let error = $state('');
 	let status = $state('');
 	let selection = 0;
-	const color = $derived(inherited ? (roomId ? base.workspace.accentColor : null) : normalizeColor(hex));
+	const color = $derived(inherited ? (roomId ? normalizeColor(base.workspace.accentColor ?? '') : null) : normalizeColor(hex));
 	const logo = $derived(imageBase64 === undefined ? base.logoUrl : imageBase64 === null ? (roomId ? base.workspace.logoUrl : null) : previewImage);
 	const dirty = $derived(coverBase64 !== undefined || imageBase64 !== undefined || name !== savedName || welcome !== savedWelcome || inherited !== (roomId ? !base.roomOverrides?.accentColor : !base.accentColor) || (!inherited && normalizeColor(hex) !== base.accentColor));
 
@@ -64,7 +64,7 @@
 		reading = false;
 		name = savedName;
 		welcome = savedWelcome;
-		hex = base.accentColor ?? defaultAccent;
+		hex = normalizeColor(base.accentColor ?? '') ?? defaultAccent;
 		inherited = roomId ? !base.roomOverrides?.accentColor : !base.accentColor;
 		imageBase64 = undefined;
 		previewImage = null;
@@ -163,7 +163,7 @@
 					</Field.Field>
 				{/if}
 				<Field.Field><Field.Label for="appearance-logo">Logo & browser icon</Field.Label><div class="flex flex-wrap items-center gap-3"><div class="flex h-16 w-36 items-center justify-center rounded-lg border bg-muted/30">{#if logo}<img src={logo} alt="Current logo preview" class="max-h-12 max-w-32 object-contain" />{:else}<span class="text-xs text-muted-foreground">No logo</span>{/if}</div><Button class="min-h-11 sm:min-h-9" type="button" variant="outline" onclick={() => input?.click()} disabled={reading}>{reading ? 'Reading image…' : 'Choose logo'}</Button></div><input id="appearance-logo" bind:this={input} type="file" accept="image/png,image/jpeg,image/webp" class="hidden" onchange={(e) => pick(e, 'logo')} /><Field.Description>{roomId ? (imageBase64 === null || (imageBase64 === undefined && !base.roomOverrides?.logo) ? 'Using workspace logo.' : 'Custom logo for this room.') : 'Your default logo for all rooms.'} PNG, JPEG or WebP, up to 700 KB. A browser icon is generated automatically.</Field.Description><div><Button class="min-h-11 sm:min-h-9" type="button" variant="ghost" size="sm" onclick={() => { selection++; reading = false; imageBase64 = null; previewImage = null; if (input) input.value = ''; }}>{roomId ? 'Use workspace logo' : 'Remove logo'}</Button></div></Field.Field>
-				<Field.Field data-invalid={!inherited && !normalizeColor(hex)}><Field.Label for="appearance-color">Brand colour</Field.Label><div class="flex flex-wrap items-center gap-3"><input type="color" aria-label="Pick brand colour" class="h-11 w-14 cursor-pointer rounded-md border p-1" value={color ?? defaultAccent} oninput={(e) => { hex = e.currentTarget.value; inherited = false; }} /><Input id="appearance-color" aria-describedby={!inherited && !normalizeColor(hex) ? 'appearance-color-error' : undefined} class="min-h-11 w-32 font-mono sm:min-h-9" maxlength={7} value={inherited ? color ?? defaultAccent : hex} aria-invalid={!inherited && !normalizeColor(hex)} oninput={(e) => { hex = e.currentTarget.value; inherited = false; }} /></div>{#if !inherited && !normalizeColor(hex)}<p id="appearance-color-error" class="text-sm text-destructive">Enter a colour like #286344.</p>{/if}<Field.Description>{inherited ? roomId ? 'Using workspace colour.' : 'Using the default colour.' : roomId ? 'Custom colour for this room.' : 'Custom workspace colour.'} Button text and links adjust automatically for readability.</Field.Description><div><Button class="min-h-11 sm:min-h-9" type="button" variant="ghost" size="sm" onclick={() => { inherited = true; hex = (roomId ? base.workspace.accentColor : null) ?? defaultAccent; }}>{roomId ? 'Use workspace colour' : 'Use default colour'}</Button></div></Field.Field>
+				<Field.Field data-invalid={!inherited && !normalizeColor(hex)}><Field.Label for="appearance-color">Brand colour</Field.Label><div class="flex flex-wrap items-center gap-3"><input type="color" aria-label="Pick brand colour" class="h-11 w-14 cursor-pointer rounded-md border p-1" {@attach (node) => { node.value = color ?? defaultAccent; }} oninput={(e) => { hex = e.currentTarget.value; inherited = false; }} /><Input id="appearance-color" aria-describedby={!inherited && !normalizeColor(hex) ? 'appearance-color-error' : undefined} class="min-h-11 w-32 font-mono sm:min-h-9" maxlength={7} value={inherited ? color ?? defaultAccent : hex} aria-invalid={!inherited && !normalizeColor(hex)} oninput={(e) => { hex = e.currentTarget.value; inherited = false; }} /></div>{#if !inherited && !normalizeColor(hex)}<p id="appearance-color-error" class="text-sm text-destructive">Enter a colour like #286344.</p>{/if}<Field.Description>{inherited ? roomId ? 'Using workspace colour.' : 'Using the default colour.' : roomId ? 'Custom colour for this room.' : 'Custom workspace colour.'} Button text and links adjust automatically for readability.</Field.Description><div><Button class="min-h-11 sm:min-h-9" type="button" variant="ghost" size="sm" onclick={() => { inherited = true; hex = (roomId ? normalizeColor(base.workspace.accentColor ?? '') : null) ?? defaultAccent; }}>{roomId ? 'Use workspace colour' : 'Use default colour'}</Button></div></Field.Field>
 			</Field.Group>
 		</fieldset>
  </div>{/snippet}</Tabs.Content><Tabs.Content value="preview">{#snippet child({ props })}<div {...props} hidden={!wide.current && pane !== 'preview'} class="min-w-0" role="tabpanel" aria-label={wide.current ? 'Live appearance preview' : undefined} aria-labelledby={wide.current ? undefined : String(props['aria-labelledby'] ?? '')}>

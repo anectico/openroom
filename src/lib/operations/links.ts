@@ -500,13 +500,53 @@ export const newLinkAddress = defineOperation({
 	},
 });
 
+const protectionKeys = [
+	'verifyEmail',
+	'requireNda',
+	'watermark',
+	'screenshotProtection',
+	'downloads',
+] as const;
+const protectionLabels: Record<(typeof protectionKeys)[number], string> = {
+	verifyEmail: 'email verification',
+	requireNda: 'NDA',
+	watermark: 'watermark',
+	screenshotProtection: 'screenshot protection',
+	downloads: 'downloads',
+};
+
+function inheritingLinks(roomId: string, keys: readonly string[]) {
+	const rows = sqlite()
+		.prepare(
+			'SELECT * FROM links WHERE room_id = ? AND revoked_at IS NULL AND (expires_at IS NULL OR expires_at > ?) ORDER BY label',
+		)
+		.all(roomId, Date.now()) as LinkRow[];
+	return rows.filter((row) => {
+		const own = JSON.parse(row.settings_json) as Record<string, unknown>;
+		return keys.some((key) => !(key in own));
+	});
+}
+
 export const updateLinkDefaults = defineOperation({
 	name: 'update_link_defaults',
-	summary: 'Change a room’s link defaults. Links that do not override a setting follow the change at once.',
+	summary:
+		'Change a room’s link defaults. Links that do not override a setting follow the change at once; changing protection that active links inherit needs confirm.',
 	role: 'admin',
 	http: { method: 'PATCH', path: '/rooms/{roomId}/link-defaults' },
-	input: z.object({ roomId: z.string(), settings: overrides }),
+	input: z.object({ roomId: z.string(), settings: overrides, ...confirmField }),
 	output: z.object({ roomId: z.string(), linkDefaults: linkSettings }),
+	destructive: (input) => {
+		const room = loadRoom(input.roomId);
+		const before = roomDefaults(room);
+		const changed = protectionKeys.filter(
+			(key) => key in input.settings && JSON.stringify(input.settings[key]) !== JSON.stringify(before[key]),
+		);
+		if (!changed.length) return null;
+		const affected = inheritingLinks(room.id, changed);
+		if (!affected.length) return null;
+		const names = affected.map((l) => `“${l.label}”`);
+		return `This changes protection (${changed.map((key) => protectionLabels[key]).join(', ')}) on ${affected.length} active link(s) that follow the room defaults: ${names.slice(0, 20).join(', ')}${names.length > 20 ? ` and ${names.length - 20} more` : ''}. Investors on them see the change at once.`;
+	},
 	audit: {
 		target: (i) => ({ type: 'room', id: i.roomId, roomId: i.roomId }),
 		detail: (i) => ({ fields: Object.keys(i.settings) }),

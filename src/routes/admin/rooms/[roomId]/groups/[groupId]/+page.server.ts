@@ -22,6 +22,9 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 		linkCount: number;
 		tree: Node[];
 	}>(locals, 'get_group', { groupId: params.groupId });
-	const { links } = await runOp<{ links: Link[] }>(locals, 'list_links', { roomId: params.roomId });
+	const links =
+		locals.member?.role === 'observer'
+			? []
+			: (await runOp<{ links: Link[] }>(locals, 'list_links', { roomId: params.roomId })).links;
 	return { group, links: links.filter((l) => l.groupId === group.id) };
 };

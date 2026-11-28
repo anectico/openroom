@@ -3,17 +3,19 @@
 The admin workspace keeps navigation and daily work separate. A fixed desktop sidebar holds the
 workspace sections and recent rooms; a dialog exposes the same destinations, including Settings,
 on a phone. The header gives location and account context. Warm neutral surfaces, a green primary
-color, consistent spacing and the existing Inter/Lucide/shadcn-svelte system carry through the app.
+color, consistent spacing and the existing Plus Jakarta Sans/Lucide/shadcn-svelte system carry through the app.
 
 Dashboard filters and form choices use the shared Select with a checked option, keyboard navigation and typeahead. Filter buttons and select triggers are 36 px tall on desktop and 44 px on phones. Action menus pair each command with a leading icon and separate destructive actions.
 The email provider selector bundles the [Resend brand icon](https://resend.com/brand) and the [Cloudflare Developers mark](https://developers.cloudflare.com/).
 
-Settings and room sections share responsive route navigation. Links wrap at wider sizes and collapse to a section menu when space is limited. In-page tab lists grow to fit their controls.
+Settings and room sections share responsive route navigation (`SectionNav`). Links wrap at wider sizes and collapse to a section menu when space is limited. A tab may carry a `count`, drawn as an `attention` badge in both the tab row and the menu. In-page tab lists grow to fit their controls.
 
 ## Main flows
 
-- **Overview:** rooms and recent investor activity are primary. Four compact metrics, optional
-  service setup and current viewers give context without reserving a large empty live-view area.
+- **Overview:** rooms, the Needs attention card and recent investor activity are primary. Four
+  compact metrics (Rooms, Awaiting answer, File requests to review, Active links), a three-step
+  first run, optional service setup and current viewers give context without reserving a large
+  empty live-view area.
   Phone metrics share one compact summary, leaving the room list visible in the first viewport.
   Current viewers refresh through `get_viewing_now` every 15 seconds while visible, without
   invalidating page data. A timestamp, manual refresh and stale-state message replace the static
@@ -57,8 +59,9 @@ and direct viewing/download controls, with private conversations and requests
 alongside them. Phone headings are compact, outstanding file requests appear as a count on Requests, and document/reader controls use 44 px touch targets on phones. The footer always credits OpenRoom by Anectico. The gate gives one step at a time,
 including readable NDA text and visible errors.
 
-The PDF reader fits its page, zoom and question controls on a phone. A question opens a dialog and
-captures the page before editing. Arrow keys in its textarea do not navigate the document. Each
+On a phone the PDF reader is immersive: one bar with back, title, page and a menu, a floating zoom
+control, and no room header, tabs or footer. A question opens a dialog and captures the page before
+editing. Arrow keys in its textarea do not navigate the document. Each
 watermarked page keeps diagonal identity text and a readable identity footer; fewer, smaller rows
 leave the document readable. This is a visual deterrent, not a restriction on a determined visitor.
 
@@ -104,6 +107,42 @@ See the [UI standards implementation and screenshot gallery](../reviews/ui-stand
 
 ## Task visibility and resilient layouts
 
-Continue reading has a tinted header. Start here, All documents and Room FAQ use headings and spacing to separate sections. Document rows show full titles at narrow widths so identifying periods and versions remain visible. All investor room screens use the compact identity header. The optional welcome is a first-visit dialog after access checks. Search and folder browsing retain URL-backed filters and preserve the return location. PDF questions use a bounded scrollable dialog and a fixed-size textarea, including when the allowed question length is reached. Active PDF search replaces the mobile secondary toolbar row; page and zoom tools remain available in Reader options.
+Continue reading has a tinted header. Start here, All documents and Room FAQ use headings and spacing to separate sections. Document rows show full titles at narrow widths so identifying periods and versions remain visible. All investor room screens use the compact identity header. The optional welcome is a first-visit dialog after access checks. Folder browsing keeps its location in the URL and preserves the return location. PDF questions use a bounded scrollable dialog and a fixed-size textarea, including when the allowed question length is reached. On phones the immersive PDF bar keeps page and zoom tools in its menu, with a floating zoom control.
 
 Appearance focus must stay above the measured sticky footer, and validation must reveal the invalid control. Device samples render at explicit 360/1280 px canvas widths with visible scaling and an actual-size option; Fit to panel follows available width. Sharing-link drafts need a discard decision on dismissal, including navigation. Mobile document controls precede the collapsible pinned summary. Urgent server warnings remain visible; backup setup details use disclosure. Mobile sharing rows reflow protection facts instead of removing them.
+
+## Words and visual conventions
+
+Use one name for each thing on every screen, in emails and in docs:
+
+| Use                                                  | Not                                                |
+| ---------------------------------------------------- | -------------------------------------------------- |
+| Documents                                            | Files (except "file request" and file-type labels) |
+| Sharing (the tab), sharing link or link              | Links page, share URL                              |
+| Investors                                            | Viewers, visitors                                  |
+| Groups (investor groups that decide document access) | Document groups, investor group & permissions      |
+| Notify me on every visit                             | Every view                                         |
+| Individual documents / ZIP                           | Each file / zip                                    |
+| Last 7 days                                          | 7d, this week                                      |
+| Room settings (the room's Settings tab)              | Gear, room configuration                           |
+
+Every workspace page opens with `PageHeading`; every room section opens with `SectionHeading`.
+Panels use `rounded-xl border bg-card`. Text that carries information is at least `text-xs`
+(12 px). Buttons, icon buttons and menu triggers are 44 px on phones; the shared `Button` sizes
+apply that floor below the `sm` breakpoint, so do not shrink them with one-off classes.
+Red (`destructive`) is for actions that remove data or access and for failures that need action
+now; routine or reversible actions use `outline`. Notices that ask for optional setup use the
+`attention` token, not red.
+
+The `attention` token marks things that wait for the member: tab and sidebar counts, the Needs
+attention card and optional-setup notices. Counts are numbers with a screen-reader suffix ("need
+attention"), never colour alone.
+
+## Dark theme
+
+Admin pages offer Light, Dark and System in the account menu. `POST /admin/theme` saves the choice in
+the `openroom_theme` cookie; `src/hooks.server.ts` writes `data-theme` (and `class="dark"` for Dark)
+on `<html>` for admin routes, and a small script in `src/app.html` adds `dark` for System before
+first paint. Investor pages and the appearance preview are never themed, so room branding is always
+judged on light surfaces. Use the semantic tokens (`background`, `card`, `muted`, `primary`,
+`attention`, `success`, `destructive`) rather than fixed colours, so both themes follow.

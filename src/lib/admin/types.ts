@@ -1,7 +1,7 @@
 export const downloadLabels = {
 	none: 'No downloads',
-	per_file: 'Each file',
-	zip: 'All allowed files as one zip',
+	per_file: 'Individual documents',
+	zip: 'ZIP of all allowed documents',
 };
 
 export type LinkSettings = {
@@ -26,6 +26,8 @@ export type TreeNode = {
 	version: number | null;
 	size: number | null;
 	contentType: string | null;
+	updatedAt?: number | null;
+	viewerCount?: number;
 };
 
 export type Room = {

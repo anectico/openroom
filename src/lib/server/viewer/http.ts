@@ -32,3 +32,16 @@ export function sameOrigin(request: Request, url: URL) {
 		return false;
 	}
 }
+
+export function ndaCopyResponse(roomName: string, nda: { body_markdown: string; created_at: number }) {
+	const date = new Date(nda.created_at).toISOString().slice(0, 10);
+	const name = `NDA ${roomName} ${date}`.replace(/[^A-Za-z0-9 ._-]+/g, '').trim() || 'NDA';
+	const body = `# Non-disclosure agreement: ${roomName}\n\nVersion of ${date}\n\n${nda.body_markdown.trim()}\n`;
+	return new Response(body, {
+		headers: {
+			'content-type': 'text/markdown; charset=utf-8',
+			'content-disposition': `attachment; filename="${name}.md"; filename*=UTF-8''${encodeURIComponent(`${name}.md`)}`,
+			'x-content-type-options': 'nosniff',
+		},
+	});
+}

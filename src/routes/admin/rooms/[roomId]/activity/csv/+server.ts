@@ -61,6 +61,11 @@ export const GET: RequestHandler = async ({ locals, params, url }) => {
 			['time', 'event', 'email', 'file', 'request'],
 			...a.timeline.map((e) => [iso(e.at), e.kind, e.email, e.fileTitle, e.requestTitle]),
 		]);
+	else if (view === 'pending')
+		body = csv([
+			['email', 'link', 'invited_at'],
+			...a.notOpened.map((p) => [p.email, p.linkLabel, iso(p.invitedAt)]),
+		]);
 	else error(400, 'Unknown view');
 	return new Response(body, {
 		headers: {

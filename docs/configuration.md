@@ -17,7 +17,7 @@ live in `/opt/openroom/.env`. Only `ADMIN_EMAIL` is required; `install.sh` fills
 | `RESTORE_AT`                   | empty                     | Set only during a restore: restore to this time (ISO 8601) instead of the latest point.                 |
 
 Optional, for people who manage configuration as code. Email is normally set up in the admin pages
-(Settings → General and email); when these are set they win, and the admin page shows email as set by
+(Settings → General); when these are set they win, and the admin page shows email as set by
 the server.
 
 | Variable                                                    | What it does                                                                     |
@@ -26,6 +26,10 @@ the server.
 | `RESEND_API_KEY`                                            | Send through Resend.                                                             |
 | `CLOUDFLARE_EMAIL_ACCOUNT_ID`, `CLOUDFLARE_EMAIL_API_TOKEN` | Send through Cloudflare Email Sending using an account-scoped sending token.     |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`      | Send through any SMTP server (port 587 by default; 465 uses TLS from the start). |
+
+The display name in `EMAIL_FROM` (`Acme` in `Acme <rooms@acme.com>`), or in the sender saved in the
+admin pages, is shown to investors at the gate as "Shared by Acme". Without a display name the line
+is hidden.
 
 Set inside the container by the Compose file or the image, not in `.env`:
 

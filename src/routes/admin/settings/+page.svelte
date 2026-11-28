@@ -37,15 +37,19 @@
 	let savingGeneral = $state(false);
 	let savingEmail = $state(false);
 	const locked = $derived(data.email.source === 'env');
-
-	async function saveGeneral(event: SubmitEvent) {
-		event.preventDefault();
-		if (savingGeneral) return;
+	const generalChanges = $derived.by(() => {
 		const input: Record<string, unknown> = {};
 		if (timeZone !== data.general.timeZone) input.timeZone = timeZone;
 		const bytes = Math.round(uploadGb * 1024 ** 3);
 		if (Math.abs(bytes - data.general.uploadMaxBytes) > 0.05 * 1024 ** 3) input.uploadMaxBytes = bytes;
 		if (cap !== data.general.emailDailyCap) input.emailDailyCap = cap;
+		return input;
+	});
+
+	async function saveGeneral(event: SubmitEvent) {
+		event.preventDefault();
+		if (savingGeneral) return;
+		const input = generalChanges;
 		if (!Object.keys(input).length) return;
 		savingGeneral = true;
 		await act('update_general_settings', input, 'Saved');
@@ -113,7 +117,7 @@
 				<p class="text-xs text-muted-foreground">Keep it below your provider’s daily limit.</p>
 			</div>
 		</div>
-		<Button type="submit" class="mt-auto self-start" disabled={savingGeneral}>Save preferences</Button>
+		<Button type="submit" class="mt-auto self-start" disabled={savingGeneral || !Object.keys(generalChanges).length}>Save preferences</Button>
 	</form>
 
 	<form id="email" class="flex min-w-0 flex-col gap-5 rounded-xl border bg-card p-5 sm:p-6" onsubmit={saveEmail}>
@@ -122,7 +126,7 @@
 			{#if data.email.configured}<Badge variant="secondary">Set up</Badge>{:else}<Badge variant="outline">Off</Badge>{/if}
 		</div>
 		<p class="text-sm text-muted-foreground">
-			Unlocks email verification codes for investors, invite and reset links by email, and notices to you.
+			Optional. Sends investors verification codes, sends member invitations and password resets, and emails you notifications and replies.
 			{data.email.sentLastDay} of {data.email.dailyCap} emails sent in the last 24 hours.
 		</p>
 		{#if locked}
@@ -132,7 +136,7 @@
 				<legend class="mb-2 text-sm font-medium">Delivery provider</legend>
 				<div class="grid grid-cols-2 gap-2">
 					{#each providers as option (option.value)}
-						<label class="flex min-h-11 cursor-pointer items-center gap-2.5 rounded-lg border bg-background px-3 py-2.5 text-sm font-medium hover:bg-muted/50 has-checked:border-primary has-checked:bg-primary/5 has-checked:text-primary has-focus-visible:ring-2 has-focus-visible:ring-ring">
+						<label class="flex min-h-11 cursor-pointer items-center gap-2.5 rounded-lg border bg-card px-3 py-2.5 text-sm font-medium hover:bg-muted/50 has-checked:border-primary has-checked:bg-primary/5 has-checked:text-primary has-focus-visible:ring-2 has-focus-visible:ring-ring">
 							<span aria-hidden="true" class="flex size-5 shrink-0 items-center justify-center">
 								{#if 'logo' in option}
 									<img src={option.logo} alt="" class={option.value === 'resend' ? 'size-8 max-w-none shrink-0 dark:invert' : 'w-5'} />
@@ -247,7 +251,7 @@
 </div>
 
 	<div class="mt-6 space-y-4 rounded-xl border bg-card p-5 sm:p-6">
-		<h2 class="font-semibold">Workspace appearance</h2>
-		<p class="text-sm text-muted-foreground">Shown on investor pages; each room can use its own instead.</p>
+		<div><h2 class="font-semibold">Workspace appearance</h2>
+		<p class="mt-1 text-sm text-muted-foreground">Logo and colour on investor pages. Each room can use its own in its Settings tab.</p></div>
 		<BrandingForm branding={data.branding} />
 	</div>

@@ -43,15 +43,15 @@
 				if (disposed) return;
 				job = await request(`${base}/${job.id}`);
 			}
-			if (job?.status === 'failed') message = job.error || 'The zip could not be prepared. Try again.';
+			if (job?.status === 'failed') message = job.error || 'The ZIP could not be prepared. Try again.';
 		} catch (error) {
 			if (!disposed) message = error instanceof Error ? error.message : 'The download could not be prepared. Try again.';
 		} finally { busy = false; }
 	}
 </script>
 
-<section class="flex flex-col justify-center rounded-xl border bg-card p-3" aria-label="Download documents">
- {#if job?.status === 'ready' && !message}<Button href="/v/{linkId}/zip/{job.id}?download=1" variant="ghost" class="min-h-11 justify-start"><Download data-icon="inline-start" />Download zip</Button><p class="px-3 text-xs text-muted-foreground" role="status">Your zip is ready.</p>
- {:else}<Button variant="ghost" class="min-h-11 justify-start" disabled={busy || disabled} onclick={prepare}>{#if message}<RefreshCw data-icon="inline-start" />{:else}<Download data-icon="inline-start" />{/if}{busy ? `Preparing… ${job?.progress ?? 0}%` : message ? 'Retry download' : 'Download documents'}</Button><p class="px-3 text-xs text-muted-foreground" role="status">{busy ? 'Keep this page open while your zip is prepared.' : 'A zip of the files shared with you'}</p>{/if}
- {#if message}<p role="alert" class="mt-2 px-3 text-xs text-destructive">{message}</p>{/if}
-</section>
+<div class="flex min-w-0 flex-col gap-1 sm:items-end">
+ {#if job?.status === 'ready' && !message}<Button href="/v/{linkId}/zip/{job.id}?download=1" variant="outline" size="sm"><Download data-icon="inline-start" />Save ZIP</Button><p class="text-xs text-muted-foreground" role="status">Your ZIP is ready.</p>
+ {:else}<Button variant="outline" size="sm" disabled={busy || disabled} onclick={prepare}>{#if message}<RefreshCw data-icon="inline-start" />{:else}<Download data-icon="inline-start" />{/if}{busy ? `Preparing… ${job?.progress ?? 0}%` : message ? 'Retry ZIP' : 'Download all as ZIP'}</Button>{#if busy}<p class="text-xs text-muted-foreground" role="status">Keep this page open while your ZIP is prepared.</p>{/if}{/if}
+ {#if message}<p role="alert" class="max-w-xs text-xs text-destructive sm:text-right">{message}</p>{/if}
+</div>

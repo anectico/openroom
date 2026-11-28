@@ -40,6 +40,26 @@ type Viewer = {
 	}[];
 };
 
+type Access = {
+	viewerId: string;
+	email: string | null;
+	blocked: boolean;
+	blocks: { id: string; kind: 'email' | 'domain'; value: string }[];
+	links: {
+		linkId: string;
+		roomId: string;
+		roomName: string;
+		linkLabel: string;
+		status: 'active' | 'expired' | 'revoked';
+		via: 'email' | 'domain' | 'open' | 'none';
+		blockedOnLink: boolean;
+		canEnter: boolean;
+		groupName: string | null;
+		lastVisitAt: number | null;
+	}[];
+};
+
 export const load: PageServerLoad = async ({ locals, params }) => ({
 	viewer: await runOp<Viewer>(locals, 'get_viewer', { viewerId: params.viewerId }),
+	access: await runOp<Access>(locals, 'get_viewer_access', { viewerId: params.viewerId }),
 });

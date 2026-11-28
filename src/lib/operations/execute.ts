@@ -40,12 +40,13 @@ export async function execute(op: Operation, rawInput: unknown, ctx: Context) {
 	const input = parsed.data as Record<string, unknown>;
 	if (op.destructive && input.confirm !== true) {
 		const wouldChange = await op.destructive(input, ctx);
-		throw new OpError(
-			409,
-			'confirmation_required',
-			`${wouldChange} Ask your person before calling ${op.name} again with confirm: true.`,
-			{ wouldChange },
-		);
+		if (wouldChange !== null)
+			throw new OpError(
+				409,
+				'confirmation_required',
+				`${wouldChange} Ask your person before calling ${op.name} again with confirm: true.`,
+				{ wouldChange },
+			);
 	}
 	const audit = (output: unknown) => {
 		if (!op.audit) return;

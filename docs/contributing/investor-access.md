@@ -7,8 +7,15 @@ How an investor gets from a link to the room, and how every later request is che
 
 `/r/<token>` looks the link up by the SHA-256 of its token. An unknown, expired or revoked link, or
 too many lookups from one IP, all show the same "link not available" page. Progress through the
-gates is a `gate_progress` row behind a short-lived cookie (`og_<link id>`, 30 minutes); the raw link
-token is never stored in it.
+gates is a `gate_progress` row (30 minutes) behind a cookie (`og_<link id>`); the raw link token is
+never stored in it. The cookie lives a day longer than the row, so a cookie whose row has expired
+tells the page that the gate timed out; the investor sees "Your sign-in timed out" on the password
+or email step and starts again.
+
+`gateSteps()` lists the steps this link uses, for "Step n of N" and the steps panel. The first step
+also shows `recordedFacts()` (`src/lib/server/viewer/tracking.ts`), built from the link's downloads,
+watermark and screenshot settings and whether any visible file is download-only, and "Shared by"
+with the display name of the configured email sender (`sharedBy()`), hidden when there is none.
 
 The steps, each skipped when the link doesn't use it:
 
@@ -17,7 +24,8 @@ The steps, each skipped when the link doesn't use it:
 2. **Email**: normalised. An email that is not allowed, or is blocked, is refused with a clear message
    when verification is off; with verification on it continues to the code step exactly like an
    allowed email, but no code is sent and no code can match.
-3. **Code**: six digits, valid 10 minutes, emailed through the jobs queue (`email.code`). Codes may
+3. **Code**: six digits, valid 10 minutes, emailed through the jobs queue (`email.code`). The input
+   is numeric with `autocomplete="one-time-code"` and submits itself at six digits. Codes may
    use at most 60% of the daily email cap, so anonymous visitors can never starve invites and
    password resets. Limits: one send per minute per gate and email; 10 sends a day per email and IP,
    30 per email and 300 per link; 10 sends an hour per IP. Five tries per code; 20 a day per email
@@ -33,10 +41,34 @@ The steps, each skipped when the link doesn't use it:
 4. **Questions**: the link's custom fields.
 5. **NDA**: name and acceptance, stored in `nda_acceptances` with the version, email, IP and time.
    The form carries the version shown; if a new version was published meanwhile, the investor is
-   asked to read it first.
+   asked to read it first. `GET /r/<token>/nda` downloads the current text as Markdown, only while
+   the gate cookie is on the NDA step; inside the room `GET /v/<link id>/nda/copy` downloads the
+   version this session accepted (or the current one while a new version waits for acceptance).
 
 The last step creates the viewer (one per email, keyed by its HMAC), a `viewer_sessions` row and the
-session cookie (`ov_<link id>`, 7 days), and redirects to `/v/<link id>`.
+session cookie (`ov_<link id>`, 7 days), and redirects to `/v/<link id>`, or to the remembered room
+page described below.
+
+## Returning to a page after the session ended
+
+When a GET page under `/v/<link id>` finds no session (for example an emailed answer or file request
+opened a week later), the room layout stores the path in `on_<link id>` for one hour and shows "Your
+session has ended". After the gate, or when `/r/<token>` finds an open session, the investor is sent
+there and the cookie is deleted. `safeRoomPath()` in `src/lib/server/viewer/context.ts` validates the
+value both when it is saved and when it is read: at most 300 characters, the same link only, plain
+path and query characters, and never `signout`, `nda`, `files`, `zip`, `beacon`, `ask`, `review` or
+`preview`. It never grants access; the session is checked again on arrival.
+
+## Sign-out and errors
+
+Sign-out is a form `POST /v/<link id>/signout`. It ends the session, clears the session and return
+cookies, and redirects to a signed-out page with the room's branding.
+
+`src/routes/v/[linkId]/+error.svelte` names what is unavailable (an ended session, a document no
+longer shared, a closed request, a missing conversation) with a link back to Documents, Requests or
+Questions. Errors from `+server.ts` routes render `src/error.html`, a self-contained OpenRoom page that needs no scripts.
+Download and ZIP endpoints return short plain messages, such as "Downloads are turned off for this
+room."
 
 ## Every request
 
@@ -66,8 +98,7 @@ Custom fields are set in the room's link defaults; a per-link override exists in
 
 `/v/<link id>/files/<file id>` streams the current version with Range support, `nosniff` and
 `Content-Security-Policy: sandbox`, only when the file is visible to the link. Download rules are in
-[viewer.md](viewer.md). The
-viewer with watermark arrives in M3.
+[viewer.md](viewer.md).
 
 ## Preview
 

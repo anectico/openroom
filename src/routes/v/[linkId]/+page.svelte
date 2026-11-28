@@ -61,7 +61,6 @@
 	function browseUrl(folder: string) {
 		const url = new URL(currentUrl.href);
 		url.searchParams.delete('y');
-		url.searchParams.delete('q');
 		if (folder) url.searchParams.set('folder', folder); else url.searchParams.delete('folder');
 		return url;
 	}
@@ -233,8 +232,9 @@
 				<h2 id="library-title" class="panel-title min-w-0 [overflow-wrap:anywhere]">{#if !folderId}<LibraryBig />{/if}<span class="min-w-0">{libraryTitle}</span></h2>
 				<span class="text-xs text-muted-foreground" role="status">{changedOnly ? `${matches.length} result${matches.length === 1 ? '' : 's'}` : folderId ? `${matches.length} item${matches.length === 1 ? '' : 's'}` : `${documents.length} documents`}</span>
 			</div>
-			<div class="flex w-full flex-wrap items-center gap-2 sm:w-auto">
+			<div class="flex w-full flex-wrap items-start gap-2 sm:w-auto">
 				{@render changedFilter()}
+				{#if data.downloads === 'zip'}{#key data.readingScope}<DownloadRoom disabled={appearance} linkId={data.linkId} />{/key}{/if}
 			</div>
 		</div>
 		<div>
@@ -254,7 +254,7 @@
 							folderPath={changedOnly ? folderPaths.get(node.parentId ?? '') : undefined}
 							folder={node.type === 'folder'} childCount={childCounts.get(node.id) ?? 0}
 							href={fileHref(node.id)} downloadHref={canDownload(node.kind) ? downloadHref(node.id) : undefined}
-							previewDownload={appearance && canDownload(node.kind)} change={node.change} onfolder={() => openFolder(node.id, true)} />
+							previewDownload={appearance && canDownload(node.kind)} change={node.change} updatedAt={'updatedAt' in node ? node.updatedAt : undefined} onfolder={() => openFolder(node.id, true)} />
 					{/each}
 				</ul>
 			{:else}
@@ -282,7 +282,7 @@
 		</div>
 	</section>
 {/if}
-{#if data.downloads === 'zip'}<div class="mt-4">{#key data.readingScope}<DownloadRoom disabled={appearance} linkId={data.linkId} />{/key}</div>{/if}
+{#if single && data.downloads === 'zip'}<div class="mt-4">{#key data.readingScope}<DownloadRoom disabled={appearance} linkId={data.linkId} />{/key}</div>{/if}
 
 <style>
 	.room-panel { margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }

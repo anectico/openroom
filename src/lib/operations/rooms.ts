@@ -47,6 +47,11 @@ const treeNode = z.object({
 	version: z.number().nullable(),
 	size: z.number().nullable(),
 	contentType: z.string().nullable(),
+	updatedAt: z
+		.number()
+		.nullable()
+		.describe('When the current version was added; for a folder, the newest document inside it.'),
+	viewerCount: z.number().describe('Investors who opened this document, or any document in this folder.'),
 });
 
 const roomId = z.object({ roomId: z.string() });
@@ -95,6 +100,52 @@ function present(r: RoomRow): z.input<typeof room> {
 	};
 }
 
+function treeWithStats(roomId: string) {
+	const tree = roomTree(roomId);
+	const db = database().sqlite;
+	const updated = new Map(
+		(
+			db
+				.prepare(
+					'SELECT f.id, v.created_at AS at FROM files f JOIN file_versions v ON v.file_id = f.id AND v.version = f.current_version WHERE f.room_id = ?',
+				)
+				.all(roomId) as { id: string; at: number }[]
+		).map((row) => [row.id, row.at]),
+	);
+	const readers = new Map<string, Set<string>>();
+	for (const row of db
+		.prepare(
+			`SELECT r.file_id AS fileId, r.viewer_id AS viewerId FROM page_reads r JOIN viewer_sessions s ON s.id = r.session_id
+			WHERE r.room_id = ? AND r.viewer_id IS NOT NULL AND s.preview_by IS NULL
+			UNION SELECT r.file_id, r.viewer_id FROM video_reads r JOIN viewer_sessions s ON s.id = r.session_id
+			WHERE r.room_id = ? AND r.viewer_id IS NOT NULL AND s.preview_by IS NULL`,
+		)
+		.all(roomId, roomId) as { fileId: string; viewerId: string }[]) {
+		const set = readers.get(row.fileId) ?? new Set<string>();
+		set.add(row.viewerId);
+		readers.set(row.fileId, set);
+	}
+	const parents = new Map(tree.map((node) => [node.id, node.parentId]));
+	const folderUpdated = new Map<string, number>();
+	const folderReaders = new Map<string, Set<string>>();
+	for (const node of tree) {
+		if (node.type !== 'file') continue;
+		const at = updated.get(node.id) ?? 0;
+		const who = readers.get(node.id) ?? new Set<string>();
+		for (let parent = node.parentId; parent; parent = parents.get(parent) ?? null) {
+			folderUpdated.set(parent, Math.max(folderUpdated.get(parent) ?? 0, at));
+			const set = folderReaders.get(parent) ?? new Set<string>();
+			for (const id of who) set.add(id);
+			folderReaders.set(parent, set);
+		}
+	}
+	return tree.map((node) => ({
+		...node,
+		updatedAt: node.type === 'file' ? (updated.get(node.id) ?? null) : folderUpdated.get(node.id) || null,
+		viewerCount: (node.type === 'file' ? readers.get(node.id) : folderReaders.get(node.id))?.size ?? 0,
+	}));
+}
+
 export const listRooms = defineOperation({
 	name: 'list_rooms',
 	summary: 'List every room with its file and active link counts.',
@@ -119,7 +170,7 @@ export const getRoom = defineOperation({
 	audit: false,
 	run: (input) => {
 		const r = loadRoom(input.roomId);
-		return { ...present(r), tree: roomTree(r.id) };
+		return { ...present(r), tree: treeWithStats(r.id) };
 	},
 });
 

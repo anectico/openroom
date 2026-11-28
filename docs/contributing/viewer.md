@@ -9,20 +9,38 @@ every request and serves byte ranges.
 - **PDF**: pdf.js (`src/lib/viewer/PdfViewer.svelte`) loads the file in 1 MB ranges and renders
   pages to canvas only as they come near the screen and frees pages far from it, with each page's
   canvas capped at 16 megapixels, so long decks don't exhaust the browser's memory. Page X of Y, jump to page, zoom, and the arrow
-  and Page Up/Down keys. The page fits the width again when the window is resized. The current page is the one taking up
+  and Page Up/Down keys. The page fits the width again when the window is resized. Zooming,
+  including a pinch, re-renders the pages at the new scale so text stays sharp; phones also get a
+  floating zoom control. On wide screens the reader grows to 88rem so landscape pages are larger. The current page is the one taking up
   the most of the window, recomputed on scroll; at the very end of the document it is the last page. "Ask about page
   N" sits in the sticky toolbar and keeps the page it was opened on. Its character maps, standard fonts and WebAssembly decoders come from
   `/pdfjs/...`, served from the installed `pdfjs-dist` package; the CSP allows
   `wasm-unsafe-eval` for those decoders and nothing else.
 - **Images** show at their natural size, shrunk to fit, with zoom.
 - **Video** plays in our own player (`src/lib/viewer/VideoPlayer.svelte`): play, seek, time,
-  mute, volume and Full screen, with Space, arrows, M and F on its toolbar. The browser's own
+  mute, volume and Full screen, with Space, arrows, M and F once the player has been clicked or
+  focused. Controls are 44 px on phones. Where the Fullscreen API is unavailable (iPhone Safari),
+  Full screen fills the window instead. Buffering shows a loading state and a failed load offers
+  Try again. The browser's own
   controls are never shown, because their full screen, picture-in-picture and AirPlay would show the
   video without the watermark; our Full screen puts the player and its watermark in full screen
   together. Safari's presentation-mode events are still caught and sent back inline, as a safety net.
 - PDF pages include a selectable text layer. Find and page thumbnails provide additional navigation.
   Modified arrow keys remain available to the browser.
 - **Download-only files** show a card with a Download button.
+
+On phones the PDF reader is immersive: the room header, tabs and footer are hidden, and one bar holds
+back, the title, page n of N and a menu with Find, Pages, Full screen, Zoom, Ask, Download and
+Previous/Next.
+
+A PDF that fails to load names the cause: a network failure (Try again), an ended session (401),
+a new version (409, Reload) or a document no longer available (403, 404); anything else offers Download
+when the link allows it. Download sends the expected version first and offers Reload when it changed.
+
+The reader resumes on the page saved in this tab (below); otherwise `lastReadPage()`
+(`src/lib/server/viewer/resume.ts`) returns the most recent page in `page_reads` for the current
+version, matched by investor when the session is verified and by session when it is not. Previews
+never resume. The toolbar then says "Resumed at page N · Start from page 1".
 
 The server counts a PDF's pages after upload (`files.pages` job, up to 100 MB) and stores them on
 the version.
@@ -31,9 +49,11 @@ the version.
 
 When the link uses a watermark, every page, image and video carries a repeated overlay with the
 investor's email, IP and the UTC time the page was opened (members' previews say "Preview"), dark
-with a light outline so it shows on light and dark content.
-Screenshot protection blurs the document when the window loses focus or the tab is hidden, hides it
-when printing, and blocks the context menu and dragging. Both are best effort: the original can
+with a light outline so it shows on light and dark content. It scales with the page; the identity
+footer is never smaller than 11 px.
+Screenshot protection hides the document as soon as the tab is hidden, or 1.5 seconds after the
+window loses focus, and shows a centred "Document hidden while you are away" message. It also hides
+the document when printing and blocks the context menu and dragging. Both are best effort: the original can
 still be saved from the browser's developer tools, and anyone can photograph the screen; the
 watermark is what identifies a leak.
 
@@ -42,7 +62,7 @@ watermark is what identifies a leak.
 | Link setting                 | Single files             | Zip |
 | ---------------------------- | ------------------------ | --- |
 | No downloads                 | only download-only files | no  |
-| Each file                    | yes                      | no  |
+| Individual documents         | yes                      | no  |
 | All allowed files as one zip | only download-only files | yes |
 
 A zip is built by the `export.zip` job from the files the session's link may see, with folders and
@@ -52,13 +72,14 @@ files it holds; a download is refused with "the room changed" when that no longe
 link may see, and a ready zip with the same fingerprint is shared by every session of the link.
 At most 2 zips build at once per link (or per room for members) and 5 in total, and each IP may
 start 10 an hour. Zips and page counts run in their own job lane, so they never delay emails. Investors see
-preparation progress, then an explicit Download zip action. `DownloadRoom.svelte` handles start and
+preparation progress, then an explicit Save ZIP action; "Download all as ZIP" sits in the All
+documents header. `DownloadRoom.svelte` handles start and
 poll failures, times out individual requests after 15 seconds, and retries an interrupted poll against
 the same export ID. Failed or missing jobs can be recreated. Unmount cancels polling and in-flight
 requests; the server job may still complete. Download authorization remains server-side. Members download a whole room with
-`export_room_zip` (Files tab: "Download the whole room"); the API downloads it from
+`export_room_zip` (Documents tab: "Download whole room as ZIP"); the API downloads it from
 `/api/v1/exports/<id>/download` with the same key. Members open or download any single file, and
-any version, from the Files tab.
+any version, from the Documents tab.
 
 ## Navigation and reading continuity
 
@@ -104,12 +125,12 @@ screenshot protection remains best effort, not copy protection.
 ## Follow-through and explicit reviews
 
 The home action summary combines changed documents, unread replies and requests needing action.
-First visits hide the change filter. Welcomes begin collapsed with a plain-text two-line excerpt and Read full welcome;
-explicit disclosure choices persist by session/link and content revision. A changed note starts fresh.
-Continue reading appears before the note and pinned documents.
+First visits hide the change filter. The welcome is a first-visit dialog, never shown over the
+document reader. When the link can read a document in the browser, it offers Start reading (the
+first visible pin that is not download-only, else the first readable document) and Browse documents;
+otherwise Enter room. Continue reading appears before pinned documents.
 
-The mobile PDF toolbar keeps navigation and primary actions in two rows; Zoom options contains
-secondary controls. Find and Pages use a bounded, focus-trapped dialog, with thumbnail pagination
+Find and Pages use a bounded, focus-trapped dialog, with thumbnail pagination
 outside its scrolling grid. Search survives closing the dialog. The sticky matching-page navigator
 keeps Previous/Next and the current result available; reopening Find shows the selected row.
 Snippets emphasize matches and preserve word boundaries. Rendered text highlights use plain DOM text
@@ -129,7 +150,6 @@ from reading analytics and team approval, with no owner review-status dashboard.
 
 ## Completion and return polish
 
-Welcome disclosure uses bound Svelte state so data invalidation cannot overwrite a collapsed choice.
 Reviewed pins use a compact disclosure, while unreviewed pins preserve their original guide numbers.
 Review actions return keyboard focus to the progress summary when a card moves between groups.
 PDFs have an end-of-document completion panel using the same version-checked review endpoint and

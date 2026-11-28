@@ -113,6 +113,6 @@
 			{/if}
 		</Card.Content>
 	</Card.Root>
-	<p class="flex items-center gap-1.5 text-[11px] text-muted-foreground"><LockKeyhole class="size-3" />A private workspace, hosted on your server.</p>
-	<p class="text-[10px] text-muted-foreground"><OpenRoomCredit /></p>
+	<p class="flex items-center gap-1.5 text-xs text-muted-foreground"><LockKeyhole class="size-3" />A private workspace, hosted on your server.</p>
+	<p class="text-xs text-muted-foreground"><OpenRoomCredit /></p>
 </main>

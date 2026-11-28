@@ -3,9 +3,10 @@
 	import { CircleX, Download, FileUp, Inbox, Link2, Plus } from '@lucide/svelte';
 	import { toast } from 'svelte-sonner';
 	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
-	import DangerAction from '#lib/admin/DangerAction.svelte';
 	import { attempt, formatBytes } from '#lib/admin/op.ts';
+	import SectionHeading from '#lib/admin/SectionHeading.svelte';
 	import When from '#lib/admin/When.svelte';
+	import * as AlertDialog from '#lib/components/ui/alert-dialog/index.js';
 	import { Badge } from '#lib/components/ui/badge/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import * as Dialog from '#lib/components/ui/dialog/index.js';
@@ -30,6 +31,17 @@
 		title = description = target = due = error = '';
 		maxSizeMb = 100;
 		open = true;
+	}
+
+	let closing = $state<{ id: string; title: string } | null>(null);
+	let closeBusy = $state(false);
+	async function closeRequest() {
+		if (!closing || closeBusy) return;
+		closeBusy = true;
+		const r = await attempt('close_file_request', { requestId: closing.id, confirm: true }, 'Request closed');
+		closeBusy = false;
+		if (r.ok) closing = null;
+		else toast.error(r.error);
 	}
 
 	async function create(event: SubmitEvent) {
@@ -57,13 +69,9 @@
 
 <svelte:head><title>{room.name} · File requests · OpenRoom</title></svelte:head>
 
-<header class="mb-5 flex flex-wrap items-center justify-between gap-3">
-	<div>
-		<h2 class="text-xl font-semibold tracking-tight">File requests</h2>
-		<p class="mt-1 text-sm text-muted-foreground">Collect files from investors. Only workspace members can download submissions.</p>
-	</div>
-	{#if canEdit && hasTargets && data.requests.length}<Button onclick={newRequest}><Plus />New request</Button>{/if}
-</header>
+<SectionHeading title="File requests" description="Collect files from investors. Only workspace members can download submissions.">
+	{#snippet actions()}{#if canEdit && hasTargets && data.requests.length}<Button onclick={newRequest}><Plus />New request</Button>{/if}{/snippet}
+</SectionHeading>
 
 {#if !hasTargets && canEdit && data.requests.length}
 	<div class="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-card p-5">
@@ -84,15 +92,13 @@
 		{#each data.requests as r (r.id)}
 			<li id="request-{r.id}" tabindex="-1" class="min-w-0 scroll-mt-6 overflow-hidden rounded-xl border bg-card target:border-primary target:ring-2 target:ring-ring/30">
 				<div class="space-y-3 px-4 py-4 sm:px-5">
-					<div class="flex flex-wrap items-center justify-between gap-2">
-						<div class="flex min-w-0 flex-wrap items-center gap-2">
+					<div class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+						<div class="min-w-0">
 							<h3 class="font-semibold [overflow-wrap:anywhere]">{r.title}</h3>
-							<Badge variant={r.closedAt ? 'outline' : r.overdue ? 'destructive' : 'secondary'}>{r.closedAt ? 'Closed' : r.overdue ? 'Overdue' : 'Open'}</Badge>
+							<Badge class="mt-1.5" variant={r.closedAt ? 'outline' : r.overdue ? 'destructive' : 'secondary'}>{r.closedAt ? 'Closed' : r.overdue ? 'Overdue' : 'Open'}</Badge>
 						</div>
 						{#if canEdit && !r.closedAt}
-							<DangerAction operation="close_file_request" input={{ requestId: r.id }} label="Close" confirmLabel="Close request" title="Close this request?" success="Request closed">
-								{#snippet icon()}<CircleX aria-hidden="true" />{/snippet}
-							</DangerAction>
+							<Button variant="outline" size="sm" onclick={() => (closing = { id: r.id, title: r.title })}><CircleX aria-hidden="true" />Close</Button>
 						{/if}
 					</div>
 					{#if r.description}<p class="whitespace-pre-line text-sm [overflow-wrap:anywhere]">{r.description}</p>{/if}
@@ -174,3 +180,16 @@
 		</form>
 	</Dialog.Content>
 </Dialog.Root>
+
+<AlertDialog.Root open={!!closing} onOpenChange={(value) => { if (!value && !closeBusy) closing = null; }}>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Close “{closing?.title}”?</AlertDialog.Title>
+			<AlertDialog.Description>Investors can no longer upload to this request. Files already submitted stay here.</AlertDialog.Description>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel disabled={closeBusy}>Keep open</AlertDialog.Cancel>
+			<Button variant="outline" disabled={closeBusy} onclick={closeRequest}>{closeBusy ? 'Closing…' : 'Close request'}</Button>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>

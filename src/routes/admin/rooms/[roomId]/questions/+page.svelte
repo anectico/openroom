@@ -3,9 +3,11 @@
 	import DangerAction from '#lib/admin/DangerAction.svelte';
 	import FaqEditor from '#lib/admin/FaqEditor.svelte';
 	import { act } from '#lib/admin/op.ts';
+	import SectionHeading from '#lib/admin/SectionHeading.svelte';
 	import When from '#lib/admin/When.svelte';
 	import { Badge } from '#lib/components/ui/badge/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
+	import { renderMarkdown } from '#lib/markdown.ts';
 
 	let { data } = $props();
 	const room = $derived(data.room);
@@ -16,6 +18,16 @@
 	let editorOpen = $state(false);
 	let editing = $state<(typeof data.faq)[number] | null>(null);
 
+	const entities: Record<string, string> = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'" };
+	function plain(markdown: string) {
+		return renderMarkdown(markdown)
+			.replace(/<\/(p|li|h\d)>/g, ' ')
+			.replace(/<[^>]+>/g, '')
+			.replace(/&(amp|lt|gt|quot|#39);/g, (entity) => entities[entity] ?? entity)
+			.replace(/\s+/g, ' ')
+			.trim();
+	}
+
 	function openEditor(entry: (typeof data.faq)[number] | null) {
 		editing = entry;
 		editorOpen = true;
@@ -24,9 +36,7 @@
 
 <svelte:head><title>{room.name} · Questions · OpenRoom</title></svelte:head>
 
-<header class="mb-4">
-	<h2 class="text-xl font-semibold tracking-tight">Questions</h2>
-</header>
+<SectionHeading title="Questions" description="Answer investors privately and publish common answers to the room FAQ." />
 
 <section class="mb-5 overflow-hidden rounded-xl border bg-card">
 	<header class="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-4 sm:px-5">
@@ -37,7 +47,7 @@
 		{#if data.conversations.length}
 			<fieldset aria-label="Filter conversations" class="flex flex-wrap gap-1 rounded-lg bg-muted p-1">
 				{#each [{ label: 'All', count: data.conversations.length, only: false }, { label: 'Awaiting answer', count: unanswered.length, only: true }] as item (item.label)}
-					<button type="button" aria-pressed={unansweredOnly === item.only} class="rounded-md px-2.5 py-1.5 text-sm font-medium text-muted-foreground aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:shadow-sm" onclick={() => (unansweredOnly = item.only)}>{item.label} <span class="ml-1 text-xs tabular-nums">{item.count}</span></button>
+					<button type="button" aria-pressed={unansweredOnly === item.only} class="min-h-11 rounded-md px-2.5 py-1.5 text-sm font-medium sm:min-h-8 text-muted-foreground aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:shadow-sm" onclick={() => (unansweredOnly = item.only)}>{item.label} <span class="ml-1 text-xs tabular-nums">{item.count}</span></button>
 				{/each}
 			</fieldset>
 		{/if}
@@ -90,7 +100,7 @@
 				<li class="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:px-5 sm:items-center sm:justify-between">
 					<div class="min-w-0 flex-1 [overflow-wrap:anywhere]">
 						<p class="font-medium">{f.question}</p>
-						<p class="line-clamp-2 text-sm text-muted-foreground">{f.answerMarkdown}</p>
+						<p class="line-clamp-2 text-sm text-muted-foreground">{plain(f.answerMarkdown)}</p>
 					</div>
 					{#if canEdit}
 						<div class="flex shrink-0 flex-wrap items-center gap-1 max-sm:[&_button]:min-h-11">

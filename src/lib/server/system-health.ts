@@ -45,6 +45,10 @@ export async function persistEnvironmentStorage() {
 		.immediate();
 }
 
+function replicationExpected() {
+	return typeof process.send === 'function';
+}
+
 export function systemStatus() {
 	const s3 = s3Config();
 	const disk = diskSpace();
@@ -59,7 +63,7 @@ export function systemStatus() {
 			text: 'Files and backups are on this server. Add S3 to protect them if the server is lost.',
 			href: '/admin/settings/storage',
 		});
-	if (!replicaOk)
+	if (!replicaOk && replicationExpected())
 		warnings.push({
 			code: 'replication_stopped',
 			text: 'The database backup has not been confirmed recently. Check replication before relying on backups.',
@@ -109,7 +113,9 @@ export function checkSystemHealth() {
 		['disk_low', status.diskLow],
 		[
 			'replication_stopped',
-			!status.replication.ok && Date.now() - Number(getSetting('replication.started_at') ?? 0) > 90_000,
+			!status.replication.ok &&
+				replicationExpected() &&
+				Date.now() - Number(getSetting('replication.started_at') ?? 0) > 90_000,
 		],
 	] as const) {
 		const key = `health.${event}`;

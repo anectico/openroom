@@ -5,8 +5,10 @@
  import { Badge } from '#lib/components/ui/badge/index.js';
  import { Button } from '#lib/components/ui/button/index.js';
 
- let { name, kind, size, folderPath, folder = false, childCount = 0, href, downloadHref, previewDownload = false, change, onfolder }: { name: string; kind: string | null; size: number | null; folderPath?: string; folder?: boolean; childCount?: number; href?: string; downloadHref?: string; previewDownload?: boolean; change?: string | null; onfolder?: () => void } = $props();
+ let { name, kind, size, folderPath, folder = false, childCount = 0, href, downloadHref, previewDownload = false, change, onfolder, updatedAt }: { updatedAt?: number | null; name: string; kind: string | null; size: number | null; folderPath?: string; folder?: boolean; childCount?: number; href?: string; downloadHref?: string; previewDownload?: boolean; change?: string | null; onfolder?: () => void } = $props();
  const labels: Record<string, string> = { pdf: 'PDF', image: 'Image', video: 'Video', download: 'Download' };
+ let updatedLabel = $state('');
+ $effect(() => { updatedLabel = updatedAt ? new Date(updatedAt).toLocaleDateString(undefined, { dateStyle: 'medium' }) : ''; });
 </script>
 {#snippet documentLabel()}
  <span class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1"><span class="break-words text-sm font-medium [overflow-wrap:anywhere]">{name}</span>{#if change && !folder}<Badge variant="secondary">{change === 'new' ? 'New' : 'Updated'}</Badge>{/if}</span>
@@ -14,6 +16,7 @@
   <span class="flex flex-wrap gap-x-2 text-xs text-muted-foreground [overflow-wrap:anywhere]"><span>{childCount} item{childCount === 1 ? '' : 's'}</span>{#if folderPath}<span>· {folderPath}</span>{/if}</span>
  {:else}
   <span class="whitespace-nowrap text-right text-xs text-muted-foreground">{labels[kind ?? 'download']} · {formatBytes(size)}</span>
+  {#if updatedAt}<span class="col-span-full text-xs text-muted-foreground">Updated <time datetime={new Date(updatedAt).toISOString()}>{updatedLabel || new Date(updatedAt).toISOString().slice(0, 10)}</time></span>{/if}
   {#if folderPath}<span class="col-span-full text-xs text-muted-foreground [overflow-wrap:anywhere]">{folderPath}</span>{/if}
  {/if}
 {/snippet}

@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { Activity, ArrowUpRight, FileQuestion, Files, Plus, ShieldCheck, Trash2 } from '@lucide/svelte';
 	import { tick, untrack } from 'svelte';
+	import { toast } from 'svelte-sonner';
 	import ChoiceSelect from '#lib/admin/ChoiceSelect.svelte';
-	import { attempt } from '#lib/admin/op.ts';
+	import { OpFailure, op } from '#lib/admin/op.ts';
+	import SectionHeading from '#lib/admin/SectionHeading.svelte';
 	import type { LinkSettings } from '#lib/admin/types.ts';
+	import * as AlertDialog from '#lib/components/ui/alert-dialog/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
 	import { Label } from '#lib/components/ui/label/index.js';
@@ -30,18 +33,36 @@
 		error = '';
 	}
 
+	let impact = $state('');
+	let pending = $state<Record<string, unknown> | null>(null);
+
+	async function send(updates: Record<string, unknown>, confirm: boolean) {
+		busy = true;
+		error = '';
+		try {
+			const r = await op<{ linkDefaults: LinkSettings }>('update_link_defaults', { roomId: room.id, settings: updates, ...(confirm ? { confirm: true } : {}) });
+			pending = null;
+			toast.success('Link defaults saved');
+			reset(r.linkDefaults);
+			await invalidateAll();
+		} catch (e) {
+			if (e instanceof OpFailure && e.code === 'confirmation_required') {
+				impact = String(e.detail.wouldChange ?? e.message);
+				pending = updates;
+			} else error = e instanceof Error ? e.message : 'Could not save the defaults.';
+		} finally {
+			busy = false;
+		}
+	}
+
 	async function save(event: SubmitEvent) {
 		event.preventDefault();
 		if (busy || !canEdit || !changed || percent === undefined) return;
-		busy = true;
 		const settings = $state.snapshot(draft);
 		if (percent !== asPercent(saved.readPastShare)) settings.readPastShare = percent / 100;
 		const updates = Object.fromEntries(Object.entries(settings).filter(([key, value]) =>
 			JSON.stringify(value) !== JSON.stringify(saved[key as keyof LinkSettings])));
-		const r = await attempt<{ linkDefaults: LinkSettings }>('update_link_defaults', { roomId: room.id, settings: updates }, 'Link defaults saved');
-		if (r.ok) reset(r.data.linkDefaults);
-		else error = r.error;
-		busy = false;
+		await send(updates, false);
 	}
 
 	async function addQuestion() {
@@ -75,10 +96,7 @@
 	</div>
 {/snippet}
 
-<header class="mb-5">
-	<h2 class="text-xl font-semibold tracking-tight">Default link protection</h2>
-	<p class="mt-1 text-sm leading-relaxed text-muted-foreground">New and existing sharing links inherit these settings. Each link can override individual defaults.</p>
-</header>
+<SectionHeading title="Link defaults" description="New and existing sharing links follow these settings. Each link can override individual defaults." />
 
 <form onsubmit={save} class="min-w-0">
 	<div class="grid items-start gap-4 xl:grid-cols-2">
@@ -138,8 +156,8 @@
 					<div class="grid gap-2 py-4">
 						<Label for="d-downloads">Downloads</Label>
 						<ChoiceSelect id="d-downloads" class="w-full" bind:value={draft.downloads} disabled={!canEdit || busy}
-							options={[{ value: 'none', label: 'No downloads' }, { value: 'per_file', label: 'Individual files' }, { value: 'zip', label: 'All allowed files as one ZIP' }]} />
-						<p class="text-xs leading-relaxed text-muted-foreground">Download-only files can always be downloaded by investors who have access.</p>
+							options={[{ value: 'none', label: 'No downloads' }, { value: 'per_file', label: 'Individual documents' }, { value: 'zip', label: 'ZIP of all allowed documents' }]} />
+						<p class="text-xs leading-relaxed text-muted-foreground">Download-only documents can always be downloaded by investors who have access.</p>
 					</div>
 				</div>
 			</section>
@@ -151,7 +169,7 @@
 						<div><Label for="d-read">Reading threshold</Label><p id="threshold-help" class="mt-1 text-xs leading-relaxed text-muted-foreground">Percentage of pages viewed or video watched to count as read.</p></div>
 						<div class="relative w-24 shrink-0"><Input id="d-read" type="number" required min={10} max={100} step="any" aria-describedby="threshold-help" class="pr-8" bind:value={percent} disabled={!canEdit || busy} /><span aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-xs text-muted-foreground">%</span></div>
 					</div>
-					<div class="py-4">{@render toggle('notifyEveryView', 'Notify on every visit', 'Send a notification each time an investor enters the room.')}</div>
+					<div class="py-4">{@render toggle('notifyEveryView', 'Notify me on every visit', 'Send a notification each time an investor enters the room.')}</div>
 				</div>
 			</section>
 		</div>
@@ -164,3 +182,16 @@
 		</footer>
 	{/if}
 </form>
+
+<AlertDialog.Root open={pending !== null} onOpenChange={(value) => { if (!value && !busy) pending = null; }}>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Change protection on active links?</AlertDialog.Title>
+			<AlertDialog.Description class="[overflow-wrap:anywhere]">{impact}</AlertDialog.Description>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel disabled={busy}>Keep current defaults</AlertDialog.Cancel>
+			<Button disabled={busy} onclick={() => pending && send(pending, true)}>{busy ? 'Saving…' : 'Save and apply'}</Button>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>

@@ -8,6 +8,7 @@ import {
 	codesLastDay,
 	dailyCap,
 	EmailError,
+	emailConfig,
 	emailReady,
 	sendEmail,
 	sentLastDay,
@@ -89,6 +90,33 @@ export function nextStep(link: LinkRow, settings: LinkSettings, gate: GateRow | 
 	if (settings.requireNda) return 'nda';
 	return 'done';
 }
+
+export function gateSteps(link: LinkRow, settings: LinkSettings): Exclude<Step, 'done'>[] {
+	const steps: Exclude<Step, 'done'>[] = [];
+	if (link.password_hash) steps.push('password');
+	steps.push('email');
+	if (settings.verifyEmail) steps.push('code');
+	if (settings.customFields.length) steps.push('fields');
+	if (settings.requireNda) steps.push('nda');
+	return steps;
+}
+
+export function sharedBy() {
+	const from = emailConfig()?.from ?? '';
+	const name = /^\s*"?([^"<]*?)"?\s*<[^>]+>\s*$/.exec(from)?.[1]?.trim();
+	return name ? name.slice(0, 80) : null;
+}
+
+export function ndaVersion(id: string | null) {
+	if (!id) return null;
+	return (
+		(sqlite().prepare('SELECT id, body_markdown, created_at FROM nda_versions WHERE id = ?').get(id) as
+			| { id: string; body_markdown: string; created_at: number }
+			| undefined) ?? null
+	);
+}
+
+export const codeMinutes = codeTtlMs / 60_000;
 
 export async function checkPassword(gate: GateRow, link: LinkRow, password: string, ip: string | null) {
 	if (!hit(`pw:${link.id}:${ipKey(ip)}`, limits.password.max, limits.password.windowMs))

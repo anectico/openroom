@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { defaultLinkSettings } from '../schemas/link-settings.ts';
 import { database } from '../server/db/index.ts';
 import { newId } from '../server/ids.ts';
 import { defineOperation } from './define.ts';
@@ -11,6 +12,16 @@ const version = z.object({
 	current: z.boolean(),
 	acceptances: z.number(),
 });
+
+function requiredBy(roomId: string, defaultsJson: string) {
+	const roomRequires = { ...defaultLinkSettings, ...JSON.parse(defaultsJson) }.requireNda === true;
+	const rows = database()
+		.sqlite.prepare(
+			'SELECT settings_json FROM links WHERE room_id = ? AND revoked_at IS NULL AND (expires_at IS NULL OR expires_at > ?)',
+		)
+		.all(roomId, Date.now()) as { settings_json: string }[];
+	return rows.filter((row) => (JSON.parse(row.settings_json).requireNda ?? roomRequires) === true).length;
+}
 
 function versions(roomId: string, currentId: string | null) {
 	const rows = database()
@@ -30,11 +41,19 @@ export const getNda = defineOperation({
 	role: 'observer',
 	http: { method: 'GET', path: '/rooms/{roomId}/nda' },
 	input: z.object({ roomId: z.string() }),
-	output: z.object({ roomId: z.string(), versions: z.array(version) }),
+	output: z.object({
+		roomId: z.string(),
+		versions: z.array(version),
+		requiredByActiveLinks: z.number().describe('Active links that ask investors to accept the NDA.'),
+	}),
 	audit: false,
 	run: (input) => {
 		const room = loadRoom(input.roomId);
-		return { roomId: room.id, versions: versions(room.id, room.current_nda_version_id) };
+		return {
+			roomId: room.id,
+			versions: versions(room.id, room.current_nda_version_id),
+			requiredByActiveLinks: requiredBy(room.id, room.defaults_json),
+		};
 	},
 });
 

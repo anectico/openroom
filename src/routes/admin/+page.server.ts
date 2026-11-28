@@ -10,6 +10,7 @@ export const load: PageServerLoad = async ({ locals }) => ({
 				fileCount: number;
 				activeLinkCount: number;
 				viewersLast7Days: number;
+				frozenAt: number | null;
 			}[];
 		}>(locals, 'list_rooms')
 	).rooms,

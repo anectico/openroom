@@ -28,7 +28,7 @@ export type Operation<I extends z.ZodType = z.ZodType, O extends z.ZodType = z.Z
 	http: { method: HttpMethod; path: string };
 	input: I;
 	output: O;
-	destructive?: (input: z.output<I>, ctx: Context) => string | Promise<string>;
+	destructive?: (input: z.output<I>, ctx: Context) => string | null | Promise<string | null>;
 	audit: AuditSpec<z.output<I>, z.output<O>> | false;
 	run: (input: z.output<I>, ctx: Context) => z.input<O> | Promise<z.input<O>>;
 };

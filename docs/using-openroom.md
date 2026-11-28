@@ -6,23 +6,42 @@ S3 and webhooks are optional; a new install works on its own server's disk.
 
 ## Your workspace
 
-The overview shows rooms, recent activity and setup items. The sidebar takes you to all investors,
-notifications and the audit log. On a phone, open the menu in the header. The backup notice stays
-visible until files and confirmed database replication are protected off the server.
+The overview shows rooms, recent activity and setup items. A new workspace starts with three steps:
+**Create a room**, **Upload documents** and **Send your first link**. **Needs attention** lists what
+is waiting for you, oldest first, each with a link to it: questions where the investor wrote last,
+file requests that are overdue or have uploads to review, and active links nobody has opened two
+days after they were sent or created. Frozen rooms are left out. The **Awaiting answer** and **File
+requests to review** tiles count the same items.
+
+The sidebar takes you to all investors, notifications and the audit log. Its rooms show the same
+counts; **All rooms** opens the full list and **User guide** opens this guide. The breadcrumb reads
+Data rooms › room › section. On a phone, open the menu in the header. Choose **Light**, **Dark** or
+**System** in the account menu; the choice applies to the admin pages only, never to the investor room.
+
+Without S3, one amber line says files and backups are on this server, with **Set up** and **Hide for
+now** (hidden until you close the tab). A red notice appears when the disk is nearly full, or when
+the app runs under the launcher and database replication has not been confirmed recently.
 The current-viewers panel refreshes every 15 seconds while Overview is visible, shows its last update,
 and keeps the last known activity with an updates-paused message if the connection fails. Use its
 refresh button to check immediately; returning to the tab or reconnecting also refreshes it.
 
-On a phone, the overview keeps a compact summary above the room list. Room pages keep Share,
-the section selector and Settings within reach, with document actions sized for touch.
+On a phone, the overview keeps a compact summary above the room list. Room pages keep Share and
+the section selector within reach, with document actions sized for touch.
+
+A room has six tabs: **Documents**, **Sharing**, **Analytics**, **Questions**, **File requests** and
+**Settings**. Questions and File requests show how many items need attention. Settings holds
+**General** (appearance, duplicate, freeze, delete), **Groups**, **Link defaults** and **NDA**.
 
 ![Workspace overview](reviews/ui-refinement/after-overview-desktop.jpg)
 
-## Rooms, folders and files
+## Rooms, folders and documents
 
-Create a room from **Data rooms → New room**. On the Documents page, **Room setup** tracks uploaded documents, an optional starting document and an active sharing link. Each step opens its corresponding action. The checklist disappears when all three are complete.
+Create a room from **Data rooms → New room**. On the Documents page, **Room setup** lists three
+steps: upload documents, create a sharing link and, optionally, pin a starting document. Each step
+opens its action. The checklist disappears once the room has documents and an active link; **Dismiss**
+hides it sooner and is remembered in this browser.
 
-Use **Upload files**, upload a folder from Document
+Use **Upload documents**, upload a folder from Document
 options, or drop files and folders into the document list. Open folders to browse them and use search to find a
 title anywhere in the room. Dropped folders retain their hierarchy and empty subfolders, including
 when a folder contains more than 100 entries. Hidden files and folders are skipped. **Import from a URL** copies a
@@ -33,8 +52,11 @@ expand it to see file names, destinations and failures. Completed batches collap
 can be dismissed. **Retry failed** sends the failed files again; clearing the receipt keeps uploaded
 documents. A lost connection keeps the retry controls on screen.
 
-Each row's menu can rename, move, reorder, delete or upload a new version. **Versions** lets you make
-an earlier version current. Deletion first explains its effect and asks you to confirm. The original
+The list shows when each document was last updated and how many investors opened it; the
+**Investors** count opens Analytics filtered to that document. Each row's menu can rename, upload a
+new version, delete, or **Move or reorder…** into a folder at a chosen position. Tick several rows to
+**Move…** or **Delete…** them together. **Versions** lets you make an earlier version current.
+Deletion first explains its effect and asks you to confirm. The original
 file type is detected from its bytes. PDFs, images and browser-supported video have an inline viewer;
 other types are download-only. See [viewer behavior](contributing/viewer.md) for the limits.
 
@@ -42,26 +64,32 @@ other types are download-only. See [viewer behavior](contributing/viewer.md) for
 
 ![Documents on a phone](reviews/ui-refinement/after-documents-phone.jpg)
 
-Export an index as PDF or CSV from Document options. Download whole-room zips from there too; the
+Export an index as PDF or CSV from Document options. **Download whole room as ZIP** is there too; the
 status shows while the archive is being prepared. Large exports need free space on the server even
 when documents live in S3.
 
 ## Share with the right people
 
 Open a room and choose **Share room** (or **Share** on a phone). Give it a label and choose approved email addresses or domains, or make
-it open. Each link has its own URL, optional password and expiry. Copy its URL directly from the
-list. After creating a link, review its audience, document group, protection, downloads and expiry
+it open. Each link has its own URL, optional password and expiry. A link stops working at the end of
+its expiry day in the workspace time zone. Copy its URL directly from the list. After creating a link, review its audience, document group, protection, downloads and expiry
 in the completion dialog. Generating a replacement address shows the same access summary.
 In the Sharing list, the Protection column shows whether visitors must enter an email code. Password, NDA and watermark requirements appear underneath when enabled. **Copy link** and **Preview as investor** are available immediately.
+Search links by name or allowed email, sort them by **Last opened**, **Created** or **Investors**, and
+filter to links **Never opened**. Select a link's name to edit it. **Duplicate…** opens the editor
+with a copy of a link's audience, group and settings under a new address. The password is never
+copied, and a past expiry date and blocks on erased investors are dropped.
 **Email invitation** appears when email is configured and the allow list contains individual email
 addresses; clicking it queues invitations and reports any skipped addresses. Domain entries are not
 emailed. Creating the link alone never sends an invitation.
 
-Links inherit **Room settings → Default link protection** unless they override a field. Choose email
+Links inherit **Settings → Link defaults** unless they override a field. Choose email
 verification and NDA requirements under **Investor access**. **Document protection** controls
 watermarks, screenshot protection and downloads. Add up to five entry questions and choose which
 are required. Under **Activity tracking**, set the reading threshold and visit notifications.
-**Save defaults** applies edited settings to links that inherit them. **Discard** restores the saved values.
+**Save defaults** applies edited settings to links that inherit them. When a change to email
+verification, NDA, watermark, screenshot protection or downloads reaches active links, OpenRoom names
+those links and asks you to confirm with **Save and apply**. **Discard** restores the saved values.
 In the link editor, **Email verification** sits below the audience choice. **Room default** shows
 the inherited value. When a provider is missing, owners can select **Set up email provider**,
 configure delivery in the new tab, then return to the draft and choose **On**.
@@ -72,9 +100,10 @@ revocation, allow/block rules, verification and expiry are checked on subsequent
 
 ![Sharing on a phone](reviews/ui-r1/sharing-phone.jpg)
 
-Use **Room settings → Investor groups & permissions** to limit an audience to selected folders or
+Use **Settings → Groups** to limit an audience to selected folders or
 files. A group has a default access choice; folders pass their choice to descendants unless a child
-overrides it. New items inherit those choices. Attach the group in the link editor. A link with no
+overrides it. New items inherit those choices. Each item says where an inherited choice comes from,
+folders can be collapsed, and each change shows when it is saved. Attach the group in the link editor. A link with no
 group sees the whole room, including future documents. **Document access** is always visible in
 the link editor. Expand **Choose specific documents** and use **Manage groups** to open group management in another tab.
 Return to the draft, use **Refresh groups**, and select the intended group. Download-only files remain
@@ -86,28 +115,67 @@ permissions together with the link's protection settings.
 
 ## NDA and the investor experience
 
-Publish your approved agreement under **Room settings → Non-disclosure agreement**, then enable the
-NDA requirement in defaults or a link. Publishing a replacement requires affected investors to
-accept the new version. Acceptance records retain the version, signed name, email, verification
-state, time and IP according to the documented privacy rules.
+Publish your approved agreement under **Settings → NDA**, then enable the NDA requirement in
+defaults or a link. Switch between **Edit** and **Preview** while writing. The page says how many
+active links require the NDA. Publishing a replacement requires affected investors to accept the new
+version. Earlier versions open read only; **Copy into the editor** starts a new draft from one. Acceptance records retain the version, signed name, email, verification
+state, time and IP according to the documented privacy rules. Without published NDA text, the link
+editor offers **Set up the NDA** in a new tab.
 
-Investors follow their link, pass the configured gates and enter the document list. A compact header shows the room title, logo and account controls throughout the investor room. A first-visit dialog presents the optional welcome and cover after access checks. A room with one visible document opens with its title and an **Open document** or **Download file** action. In larger rooms, **Start here** features the first outstanding recommendation and shows the remaining documents in reading order, with cards side by side on wider screens and a single list on phones. On phones, **Show all recommended documents** expands longer lists.
-**All documents** uses the same responsive layout for folders and files. Folder cards show the item count. File cards show the file type and size. Section numbers reflect the contents visible through the current sharing link. Opening a document
+Investors follow their link and pass the configured gates one step at a time. The gate shows **Step
+n of N** and, on wider screens, the steps ahead. **Shared by** shows the display name of the email
+sender (`Acme <rooms@acme.com>` shows "Acme"); without one the line is hidden. The first step lists
+**What this room records**, built from the link's settings: email, IP and browser, pages and time,
+downloads when allowed, the watermark and screenshot protection when on. An email code is valid for
+10 minutes; the field accepts one-time-code autofill and continues by itself at six digits. A gate
+left for 30 minutes times out and asks the investor to start again. On the NDA step the agreement
+flows with the page on phones, **I have read and agree to this NDA** confirms acceptance, and
+**Download a copy** saves the text as Markdown.
+
+When a session has ended, opening a room address from an email (an answer, a file request, a
+document) remembers that page for an hour; after the gate the investor lands there instead of the
+document list. Emails say so. **Sign out** ends the session and shows a signed-out page.
+
+The room footer repeats **What this room records** as a collapsible list, shows **Access until** when
+the link expires and offers **Your NDA**, the version this session accepted. A page that is no longer
+available, such as a removed document or a closed request, says what is missing and links back to
+Documents, Questions or Requests.
+
+Investors then enter the document list. A compact header shows the room title, logo and account controls throughout the investor room. A first-visit dialog presents the optional welcome and cover after access checks. **Start reading**
+opens the first pinned document, or the first readable one, and **Browse documents** closes the
+dialog. It never opens over the document reader. A room with one visible document opens with its title and an **Open document** or **Download file** action. In larger rooms, **Start here** features the first outstanding recommendation and shows the remaining documents in reading order, with cards side by side on wider screens and a single list on phones. On phones, **Show all recommended documents** expands longer lists.
+**All documents** uses the same responsive layout for folders and files. Folder cards show the item count. File cards show the file type and size. Section numbers reflect the contents visible through the current sharing link. Document rows show
+**Updated** with the date of the current version, and **Download all as ZIP** sits in the All
+documents header when the link allows it. Opening a document
 and using its return link restores the folder and scroll position. A document opened from
 Start here follows that reading order with Previous/Next controls, respecting current permissions.
 
-**Continue reading** returns to the last PDF page saved in this browser tab. Reopening that PDF also
-restores its page; a new document version starts at page one. Progress is scoped to the current
-investor session and is not shared with another investor or synchronized across devices. Browsers
-that block tab storage still support normal reading. **Fit width** resets PDF zoom.
+**Continue reading** returns to the last PDF page saved in this browser tab. Reopening a PDF restores
+the page saved in the tab, or else the last page this investor read of the current version on the
+server (a verified investor across sessions and devices; an unverified one in this session only).
+The toolbar then shows **Resumed at page N · Start from page 1**. A new document version starts at
+page one. **Fit width** resets PDF zoom.
 
 Document and PDF navigation controls
 have larger touch targets. The PDF viewer
-supports paging, zoom, fit and page jumps. Its watermark shows the investor identity. Screenshot
-protection is best effort; a browser cannot prevent someone photographing a screen. Downloads obey
-the link's current mode: no downloads, individual files or one zip of allowed files. ZIP preparation
-shows progress and then a **Download zip** action. A connection failure shows **Retry download**;
+supports paging, zoom, fit and page jumps. On a phone the PDF reader takes the whole screen with one
+bar: back, title, page n of N and a menu with Find, Pages, Full screen, Zoom, Ask, Download and
+Previous/Next. A floating zoom control stays in the corner, and pages are drawn sharply again after
+zooming or pinching. On wide screens landscape pages grow up to 88rem. If a document cannot load,
+the reader says why: a connection problem offers **Try again**, an ended session says to open the
+invitation link, a new version offers **Reload**, and other failures offer **Download** when allowed.
+Download checks the version first and offers **Reload** when it changed.
+
+Its watermark shows the investor identity and scales with the page. With screenshot protection, the
+document is hidden as soon as the tab is hidden, or after 1.5 seconds without window focus, with a
+message to return to the window. Screenshot protection is best effort; a browser cannot prevent
+someone photographing a screen. Downloads obey the link's current mode: no downloads, individual
+documents or one ZIP of allowed documents. ZIP preparation shows progress and then a **Save ZIP** action. A connection failure shows **Retry ZIP**;
 retrying an interrupted status check continues the existing job. Leaving the page stops its polling.
+
+Video controls are 44 px on phones. Where the browser has no full screen for the player (iPhone),
+**Full screen** fills the window instead. The player shows when it is buffering or cannot play, and
+its keyboard shortcuts work after you click it.
 
 ![Investor entry](reviews/ui-r1/gate-phone.jpg)
 
@@ -115,13 +183,22 @@ retrying an interrupted status check continues the existing job. Leaving the pag
 
 ## Activity and investors
 
-**Analytics** shows investors, firms, file/page reading, video coverage and the activity timeline.
+**Analytics** has **Investors**, **Firms**, **Documents** (page reading and video coverage),
+**Timeline** and, for admins and owners, **Not opened yet**: the emails on active links' allow lists
+that never entered the room. The selected view stays in the address. Investor columns sort by
+reading time (the default), visits, documents, downloads or last seen; unverified investors with no
+reading time are collected in one collapsed "N investors opened but didn't read" line.
 The totals at the top follow the applied time, sharing link and group filters. **Filter** and
 **Clear filters** keep the selected report open. **Export CSV** downloads that report with its applied filters.
 Reading time estimates active foreground
 viewing, not a guarantee that someone understood a page. Unverified viewers remain labeled.
-The workspace Investors page combines activity across rooms and opens an individual history.
-Under **Files read**, select **Reading details** to see each version, time on each page and the
+The workspace Investors page combines activity across rooms and filters as you type. Its block list
+takes an email or domain with **Block**; each row has **Unblock**. An investor's profile has an
+**Access** section listing their links with how they are allowed, the group, status and last visit.
+**Remove from link** stops them entering through one link and ends their sessions on it: their email
+leaves the allow list when other entries remain, otherwise (or on an open or domain link) their email
+is blocked on that link. **Block from all rooms** adds an install-wide block; **Unblock** removes it.
+Under **Documents read**, select **Reading details** to see each version, time on each page and the
 video segments watched across that investor's visits. Older versions remain separate from the
 current document. Deleting a file removes that file's reading activity along with its live versions.
 
@@ -150,7 +227,9 @@ disabled.
 Use **File requests → New request** for an investor, link or group. Set the requested document,
 instructions, maximum size and an optional due date. The deadline is the end of that day in the workspace time zone.
 Each request lists its recipient and submissions, including the uploader and file size. The investor sees the request in their room
-and uploads through it. Uploaded files stay outside the shared documents and are downloads for
+and uploads through it. Investors can pick several files at once; each shows its own progress and
+**Cancel**, and leaving the page during an upload asks first. The maximum size applies to each file.
+Uploaded files stay outside the shared documents and are downloads for
 members only. Close a request to stop new uploads. Late submissions remain marked.
 
 ![File requests](reviews/ui-release/requests-desktop.jpg)
@@ -159,13 +238,14 @@ members only. Close a request to stop new uploads. Late submissions remain marke
 
 ## Personalize the room
 
-Open the gear beside **Share room**. Under **General**, choose **Room settings & branding** to edit the room name, welcome introduction, logo, optional cover image and brand colour. Use public artwork for the cover.
+Open the room's **Settings** tab. Under **General**, use **Room appearance** to edit the room name, welcome introduction, logo, optional cover image and brand colour. Use public artwork for the cover.
 Preview your room’s documents, pins, FAQ and email entry at desktop or phone widths. Choose **Save appearance** to publish the
 changes together. **Cancel changes** discards your draft. Reset either logo or colour to inherit the
 workspace setting. Investor browser icons follow the effective logo.
 
 The investor header gives your logo a prominent place alongside the room identity. Your brand colour
-also accents the room header, navigation and primary actions. Select text to make it bold, italic, colored, or linked. Use **Heading** or **Subheading** to change the size of a paragraph, and the list buttons for reading steps. Select **Markdown** to edit the source. The introduction appears in a first-visit dialog. Choose **Enter room** to dismiss it. Later visits through the same link in this browser go directly to the room.
+also accents the room header, navigation and primary actions. Select text to make it bold, italic, colored, or linked. Use **Heading** or **Subheading** to change the size of a paragraph, and the list buttons for reading steps. Select **Markdown** to edit the source. The introduction appears in a first-visit dialog. Choose **Start reading** or **Browse documents**
+(**Enter room** when nothing can be read in the browser) to dismiss it. Later visits through the same link in this browser go directly to the room.
 See [workspace settings](settings.md) for inheritance and preview details.
 
 ### A personal welcome for an investor or audience
@@ -196,13 +276,14 @@ sharing links or personal notes. Owners and admins can edit these settings; obse
 
 ## Finish a deal and manage privacy
 
-Room settings can duplicate a room's structure, current files, groups, defaults, NDA and branding.
+**Settings → General** can duplicate a room's structure, current files, groups, defaults, NDA and branding.
 Links, investors and activity are not duplicated. Shared document objects are reference counted.
 
 **Freeze room** is permanent: links are revoked, requests close and the room becomes read only.
 OpenRoom builds an archive with files, index, activity, questions, audit and a SHA-256 manifest.
 The frozen-room banner shows progress, download or retry. Retention defaults to 730 days and can
-be changed within the allowed range. NDA evidence is retained separately.
+be changed within the allowed range. NDA evidence is retained separately. **Delete room…** asks you
+to type the room's name before it deletes anything.
 
 ![Frozen room and archive](reviews/ui-release/frozen-desktop.jpg)
 
@@ -214,6 +295,8 @@ retained file cleanup follows the database recovery window described in [storage
 ## Team and automation
 
 [Workspace settings](settings.md) covers branding, email delivery, members, API keys and webhooks.
+Under **Members** you cannot change your own role; making someone an owner, lowering a role and
+cancelling an invite each ask you to confirm.
 The header bell opens your five latest notices. Choose a notice to open it and mark it as read,
 or select **View all notifications** for the inbox. Choose **Unread** to focus on new notices. Open a notice to visit its destination, or use its checkmark to mark it as read in place. **Mark all as read** clears your unread count.
 Choose which notices send you email in **My account → Email preferences** or follow the
@@ -259,7 +342,7 @@ their current session. It is a personal checklist, not team approval or a read r
 **Requests** shows outstanding items in due-date order. Open **Submissions & history** for submitted
 or closed items. You can still add files to a submitted request while it remains open.
 
-On phones, PDF zoom controls are in **Reader options**. **Pages** opens a scrollable thumbnail dialog
+On phones, PDF zoom is in the reader menu and the floating zoom control. **Pages** opens a scrollable thumbnail dialog
 with pagination kept in view. Selecting a Find result closes the dialog and keeps result navigation
 beside the reading controls. Reopen Find to see the selected result; clear search to remove highlights.
 
@@ -282,7 +365,7 @@ request and opens its history; outstanding requests remain listed first.
 
 ## Clearer reading and submission controls
 
-The **All documents** heading changes when browsing a folder. **Questions** and **Requests** are available in the main navigation. Unread replies and outstanding requests have shortcuts beside the library. Permitted ZIP downloads appear below the list. File format, size and section share a compact metadata line.
+The **All documents** heading changes when browsing a folder. **Questions** and **Requests** are available in the main navigation. Unread replies and outstanding requests have shortcuts beside the library. Permitted ZIP downloads sit in the All documents header. File format, size and section share a compact metadata line.
 
 Request badges use both icons and words: amber **Action needed**, green **Uploaded**, and neutral
 **Closed**. Uploaded confirms receipt only. The newest receipt appears once; **Previous submissions**

@@ -8,6 +8,7 @@
 	import * as Field from '#lib/components/ui/field/index.js';
 	import * as Select from '#lib/components/ui/select/index.js';
 	import { Textarea } from '#lib/components/ui/textarea/index.js';
+	import LocalTime from '#lib/viewer/LocalTime.svelte';
 	import { goto } from '$app/navigation';
 
 	import type { PageData } from './$types';
@@ -53,7 +54,7 @@
 {:else}
 	<ul class="divide-y rounded-xl border bg-card">
 		{#each data.threads as thread (thread.id)}
-			<li><a class="flex min-h-24 flex-col gap-3 p-4 hover:bg-muted/30 sm:p-5" href="/v/{data.linkId}/questions/{thread.id}"><div class="flex flex-wrap items-center justify-between gap-2">{#if thread.unread}<Badge>{thread.unread} unread</Badge>{/if}<Badge variant={thread.status === 'Replied' ? 'secondary' : 'outline'}>{thread.status}</Badge><span class="text-xs text-muted-foreground">{new Date(thread.at).toLocaleDateString()}</span></div><span class="line-clamp-3 break-words text-sm font-medium [overflow-wrap:anywhere]">{thread.first}</span><span class="break-words text-xs text-muted-foreground">{thread.fileTitle ?? 'About the room'}{thread.page ? ` · page ${thread.page}` : ''} · {thread.replies} {thread.replies === 1 ? 'reply' : 'replies'}</span></a></li>
+			<li><a class="flex min-h-24 flex-col gap-3 p-4 hover:bg-muted/30 sm:p-5" href="/v/{data.linkId}/questions/{thread.id}"><div class="flex flex-wrap items-center justify-between gap-2">{#if thread.unread}<Badge>{thread.unread} unread</Badge>{/if}<Badge variant={thread.status === 'Replied' ? 'secondary' : 'outline'}>{thread.status}</Badge><span class="text-xs text-muted-foreground"><LocalTime at={thread.at} date /></span></div><span class="line-clamp-3 break-words text-sm font-medium [overflow-wrap:anywhere]">{thread.first}</span><span class="break-words text-xs text-muted-foreground">{thread.fileTitle ?? 'About the room'}{thread.page ? ` · page ${thread.page}` : ''} · {thread.replies} {thread.replies === 1 ? 'reply' : 'replies'}</span></a></li>
 		{/each}
 	</ul>
 {/if}
