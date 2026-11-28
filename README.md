@@ -113,4 +113,4 @@ node scripts/generate-cli.ts --check
 
 ## License
 
-OpenRoom by [Anectico](https://anectico.com) uses the [Functional Source License 1.1, MIT Future License](LICENSE.md) (**FSL-1.1-MIT**). Each version becomes available under MIT on the second anniversary of its release.
+OpenRoom by [Anectico](https://anectico.com) is licensed under the [GNU Affero General Public License v3.0](LICENSE) (**AGPL-3.0**). If you run a modified version as a network service, you must offer its users the source of your changes.

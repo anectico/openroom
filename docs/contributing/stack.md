@@ -1,7 +1,7 @@
 # Stack
 
 The libraries OpenRoom uses and why. A new dependency must be actively maintained, widely used,
-permissively licensed (MIT, Apache-2.0 or similar, never AGPL) and must not need an outside service.
+permissively licensed (MIT, Apache-2.0 or similar) and must not need an outside service.
 Prefer a library to writing the same thing ourselves.
 
 | Need                                   | Library                                                                                                                                                       | In use |

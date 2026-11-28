@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"description": "Run and automate your self-hosted OpenRoom investor data room",
 	"type": "module",
-	"license": "SEE LICENSE IN LICENSE.md",
+	"license": "AGPL-3.0-only",
 	"engines": {
 		"node": ">=24"
 	},
@@ -14,7 +14,7 @@
 		"bin",
 		"catalog.json",
 		"README.md",
-		"LICENSE.md"
+		"LICENSE"
 	],
 	"repository": {
 		"type": "git",

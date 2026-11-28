@@ -17,4 +17,4 @@ first describe their effect and require `--confirm` only after the person approv
 `openroom doctor` checks the server and reports local-only backups explicitly. The CLI warns when
 the server and CLI versions differ.
 
-OpenRoom by Anectico. See LICENSE.md.
+OpenRoom by Anectico. Licensed under AGPL-3.0. See LICENSE.
